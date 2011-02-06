@@ -76,7 +76,7 @@ namespace OAMS.Controllers
                     e.StyleList.Contains(r.Site.Type)
                 && (e.ContractorList == null || e.ContractorList.Contains(r.Site.ContractorID.ToInt()))
                 && (e.ClientList == null || e.ClientList.Contains(r.Product == null ? 0 : r.Product.ClientID.ToInt()))
-                        //&& (e.CatList == null || e.CatList.Contains(r.CategoryID1.ToString()) || e.CatList.Contains(r.CategoryID2.ToString()) || e.CatList.Contains(r.CategoryID3.ToString()))
+                && (e.ProductIDList == null || e.ProductIDList.Contains(r.ProductID.HasValue ? r.ProductID.Value : 0))
                 && (e.CatList == null
                     || (r.Product != null
                         && (e.CatList.Contains(r.Product.CategoryID1.ToString()) || e.CatList.Contains(r.Product.CategoryID2.ToString()) || e.CatList.Contains(r.Product.CategoryID3.ToString()))
@@ -94,8 +94,7 @@ namespace OAMS.Controllers
                 && (string.IsNullOrEmpty(e.ShopSignsBillboards) || r.Site.ShopSignsBillboards == e.ShopSignsBillboards.ToInt())
                 && (string.IsNullOrEmpty(e.FlagsTemporaryBannersPromotionalItems) || r.Site.FlagsTemporaryBannersPromotionalItems == e.FlagsTemporaryBannersPromotionalItems.ToInt())
                 && (string.IsNullOrEmpty(e.CompetitiveProductSigns) || r.Site.CompetitiveProductSigns == e.CompetitiveProductSigns.ToInt())
-                        //&& (e.ProductList == null || e.ProductList.Match(r.Product))
-                && (e.ProductList == null || e.ProductList.Match(r.Product == null ? "" : r.Product.Name))
+                //&& (e.ProductList == null || e.ProductList.Match(r.Product == null ? "" : r.Product.Name))
                 && (r.Site.Score.ToInt() >= e.ScoreFrom.ToInt() && r.Site.Score.ToInt() <= e.ScoreTo.ToInt())
                 && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName))
                 && ((string.IsNullOrEmpty(e.Geo1FullName) && e.Geo2List == null)
@@ -184,7 +183,7 @@ namespace OAMS.Controllers
                 .Where(r =>
                     e.StyleList.Contains(r.Site.Type)
                 && (e.ContractorList == null || e.ContractorList.Contains(r.Site.ContractorID.ToInt()))
-                //&& (e.ClientList == null || e.ClientList.Contains(r.ClientID.ToInt()))
+                        //&& (e.ClientList == null || e.ClientList.Contains(r.ClientID.ToInt()))
                 && (e.ClientList == null || e.ClientList.Contains(r.Product == null ? 0 : r.Product.ClientID.ToInt()))
 
                 //&& (e.CatList == null || e.CatList.Contains(r.CategoryID1.ToString()) || e.CatList.Contains(r.CategoryID2.ToString()) || e.CatList.Contains(r.CategoryID3.ToString()))
@@ -205,7 +204,7 @@ namespace OAMS.Controllers
                 && (string.IsNullOrEmpty(e.ShopSignsBillboards) || r.Site.ShopSignsBillboards == e.ShopSignsBillboards.ToInt())
                 && (string.IsNullOrEmpty(e.FlagsTemporaryBannersPromotionalItems) || r.Site.FlagsTemporaryBannersPromotionalItems == e.FlagsTemporaryBannersPromotionalItems.ToInt())
                 && (string.IsNullOrEmpty(e.CompetitiveProductSigns) || r.Site.CompetitiveProductSigns == e.CompetitiveProductSigns.ToInt())
-                //&& (e.ProductList == null || e.ProductList.Match(r.Product))
+                        //&& (e.ProductList == null || e.ProductList.Match(r.Product))
                 && (e.ProductList == null || e.ProductList.Match(r.Product == null ? "" : r.Product.Name))
                 && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName))
                 && ((string.IsNullOrEmpty(e.Geo1FullName) && e.Geo2List == null)

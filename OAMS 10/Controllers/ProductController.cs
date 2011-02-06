@@ -86,7 +86,13 @@ namespace OAMS.Controllers
 
         public ActionResult Delete(int id)
         {
-            return View();
+            var v = Repo.Get(id);
+            //if (v.Products.Count == 0)
+            //{
+            //    Repo.Delete(v);
+            //}
+            Repo.Delete(v);
+            return RedirectToAction("Index");
         }
 
         //
@@ -105,6 +111,26 @@ namespace OAMS.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        public JsonResult Replace(int id, int replaceID)
+        {
+            string str = "";
+
+            if (id == replaceID)
+            {
+                str = "The same items.";
+            }
+            else
+            {
+                bool r = Repo.Replace(id, replaceID);
+                if (r)
+                    str = "Replace Done.";
+                else
+                    str = "Replace Fail.";
+            }
+            return Json(str);
         }
     }
 }

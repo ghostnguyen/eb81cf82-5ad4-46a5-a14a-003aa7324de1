@@ -8,16 +8,11 @@ using OAMS.Models;
 namespace OAMS.Controllers
 {
     [CustomAuthorize]
-    public class ContractorController : Controller
+    public class ContractorController : BaseController<ContractorRepository>
     {
-        //
-        // GET: /Contractor/
-
-        ContractorRepository repo = new ContractorRepository();
-
         public ActionResult Index()
         {
-            var v = repo.GetAll();
+            var v = Repo.GetAll();
             return View(v);
         }
 
@@ -26,7 +21,7 @@ namespace OAMS.Controllers
 
         public ActionResult Details(int id)
         {
-            return View(repo.Get(id));
+            return View(Repo.Get(id));
         }
 
         //
@@ -46,7 +41,7 @@ namespace OAMS.Controllers
             // TODO: Add insert logic here
             var v = new Contractor();
             UpdateModel(v);
-            repo.Add(v);
+            Repo.Add(v);
             return RedirectToAction("Index");
         }
 
@@ -55,7 +50,7 @@ namespace OAMS.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View(repo.Get(id));
+            return View(Repo.Get(id));
         }
 
         //
@@ -65,9 +60,9 @@ namespace OAMS.Controllers
         public ActionResult Edit(int id, FormCollection collection)
         {
             // TODO: Add update logic here
-            var v = repo.Get(id);
+            var v = Repo.Get(id);
             UpdateModel(v);
-            repo.Update(v);
+            Repo.Update(v);
             return RedirectToAction("Index");
         }
 
@@ -76,8 +71,8 @@ namespace OAMS.Controllers
 
         public ActionResult Delete(int id)
         {
-            var v = repo.Get(id);
-            repo.Delete(v);
+            var v = Repo.Get(id);
+            Repo.Delete(v);
             return RedirectToAction("Index");
         }
 
@@ -95,7 +90,7 @@ namespace OAMS.Controllers
         [HttpPost]
         public JsonResult Replace(int id, int replaceID)
         {
-            bool r = repo.Replace(id, replaceID);
+            bool r = Repo.Replace(id, replaceID);
             string str = "";
             if (r)
                 str = "Replace Done.";

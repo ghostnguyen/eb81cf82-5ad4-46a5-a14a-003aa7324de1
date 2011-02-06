@@ -12,7 +12,7 @@
         });
     </script>
     <h2>
-        Index</h2>
+        Product</h2>
     <p>
         <%: Html.ActionLink("Create New", "Create") %>
     </p>
@@ -48,7 +48,6 @@
             <% 
                 var editTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.ProductController>("Edit", r => r.Edit(0), new RouteValueDictionary(new { id = "productID" }), null, false);
                 var deleteTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.ProductController>("Delete", r => r.Delete(0), new RouteValueDictionary(new { id = "productID" }), new Dictionary<string, object>() { { "onclick", "return confirm('Delete?');" } }, false);
-                var detailTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.ProductController>("Details", r => r.Details(0), new RouteValueDictionary(new { id = "productID" }), null, false);
             %>
             <% foreach (var item in Model)
                { %>
@@ -58,8 +57,6 @@
                 <%: Html.ActionLink("Details", "Details", new { id=item.ID })%> |
                 <%: Html.ActionLink("Delete", "Delete", new { id=item.ID })%>--%>
                     <%: MvcHtmlString.Create(editTemplate.ToString().Replace("productID", item.ID.ToString()))%>
-                    |
-                    <%: MvcHtmlString.Create(detailTemplate.ToString().Replace("productID", item.ID.ToString()))%>
                     |
                     <%: MvcHtmlString.Create(deleteTemplate.ToString().Replace("productID", item.ID.ToString()))%>
                 </td>

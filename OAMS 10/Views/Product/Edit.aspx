@@ -32,7 +32,7 @@
         <div class="editor-field">
             <%: Html.EditorFor(model => model.NewCategoryFullName, "AutoCompleteCategory")%>
         </div>
-       <div class="editor-label">
+        <div class="editor-label">
             Client
         </div>
         <div class="editor-field">
@@ -50,4 +50,29 @@
         <%--<%: Html.ActionLink("Back to List", "Index") %>--%>
         <%: Html.ActionLinkWithRoles<OAMS.Controllers.ProductController>("Back to List", r => r.Index(), null, null, false)%>
     </div>
+    <br />
+    <div>
+        Replace:
+        <%: Html.EditorFor(model => model.ReplaceFor, "AutoCompleteProduct")%>
+        <%: Html.ActionLinkWithRoles<OAMS.Controllers.ProductController>("Replace", r => r.Replace(0, 0), null, new Dictionary<string, object>() { { "href", "javascript:replace();" } }, true)%>
+        <input id="ProductID" name="ProductID" style="visibility: collapse;" type="text"
+            value="" />
+    </div>
+    <script type="text/javascript">
+
+        function replace() {
+
+            var id = $("#ID").val();
+            var replaceID = $("#ProductID").val();
+
+            $.ajax({
+                url: '<%= Url.Content("~/Product/Replace") %>', type: "POST", dataType: "json",
+                data: { "id": id, "replaceID": replaceID },
+                success: function (data) {
+                    alert(data);
+                }
+            });
+        }
+
+    </script>
 </asp:Content>

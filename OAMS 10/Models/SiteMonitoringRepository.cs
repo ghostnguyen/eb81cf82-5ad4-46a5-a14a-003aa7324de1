@@ -13,6 +13,19 @@ namespace OAMS.Models
             return DB.SiteMonitorings.Where(r => r.ID == id).SingleOrDefault();
         }
 
+        public SiteMonitoring GetPrevious(int id)
+        {
+            var v = Get(id);
+            SiteMonitoring pre = null;
+            if (v != null)
+            {
+                pre = DB.SiteMonitorings.Where(r => r.ContractDetailID == v.ContractDetailID
+                    && r.Order == v.Order - 1).FirstOrDefault();
+            }
+
+            return pre;
+        }
+
         public SiteMonitoring Create(Action<SiteMonitoring> updateMethod, IEnumerable<HttpPostedFileBase> files, int? contractDetailID, string[] noteList)
         {
             var contractDetailRepository = new ContractDetailRepository() { DB = DB };

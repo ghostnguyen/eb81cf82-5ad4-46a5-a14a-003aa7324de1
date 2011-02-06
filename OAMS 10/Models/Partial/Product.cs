@@ -41,5 +41,7 @@ namespace OAMS.Models
 
             return 0;
         }
+
+        public string ReplaceFor { get; set; }
     }
 }

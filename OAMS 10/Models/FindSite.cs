@@ -39,6 +39,7 @@ namespace OAMS.Models
         //public List<string> ClientList { get; set; }
         public List<int> ClientList { get; set; }
         public List<string> ProductList { get; set; }
+        public List<int> ProductIDList { get; set; }
         public List<string> CatList { get; set; }
         public string ScoreFrom { get; set; }
         public string ScoreTo { get; set; }

@@ -14,19 +14,19 @@
             <table class="notable">
                 <tr>
                     <td>
-                        <table width="100%">
+                        <table class="notable" style="vertical-align: top;">
                             <tr>
-                                <td>
+                                <td style="width: 120px;">
                                     Site ID:
                                 </td>
-                                <td>
+                                <td style="width: 90px;">
                                     <%: Model.ContractDetail.Site.ID %>
                                 </td>
-                                <td>
-                                    Site Monitoring ID:
+                                <td style="width: 140px;">
+                                    Site location:
                                 </td>
-                                <td>
-                                    <%: Model.ID %>
+                                <td style="width: 230px;">
+                                    <%: Model.ContractDetail.Site.AddressLine1 + " " + Model.ContractDetail.Site.AddressLine2  %>
                                 </td>
                             </tr>
                             <tr>
@@ -37,52 +37,53 @@
                                     <%: Model.ContractDetail.Site.Code %>
                                 </td>
                                 <td>
-                                    Supplier:
-                                </td>
-                                <td>
-                                    <%: Model.ContractDetail.Contract != null ? Model.ContractDetail.Contract.ContractorName : Model.Site.ContractorName %>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Site location:
-                                </td>
-                                <td>
-                                    <%: Model.ContractDetail.Site.AddressLine1 + " " + Model.ContractDetail.Site.AddressLine2 + " " + (Model.ContractDetail.Site.Geo3 == null ? "" : Model.ContractDetail.Site.Geo3.Name) %>
-                                </td>
-                                <td>
-                                    Current Client:
-                                </td>
-                                <td>
-                                    <%: Model.ContractDetail.Contract.ClientName%>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
                                     Province:
                                 </td>
                                 <td>
                                     <%: Model.ContractDetail.Site.Geo1.Name%>
                                 </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Site Monitoring ID:
+                                </td>
+                                <td>
+                                    <%: Model.ID %>
+                                </td>
+                                <td>
+                                    District:
+                                </td>
+                                <td>
+                                    <%: (Model.ContractDetail.Site.Geo3 == null ? "" : Model.ContractDetail.Site.Geo3.Name + ", ") +  Model.ContractDetail.Site.Geo2.Name%>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    GPS Longitude:
+                                </td>
+                                <td>
+                                    <%: Model.ContractDetail.Site.Lng%>
+                                </td>
+                                <td>
+                                    In/Outbound to CBC:
+                                </td>
+                                <td>
+                                    <%: Model.ContractDetail.Site.CBDViewed %>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>
                                     GPS Lattitude:
                                 </td>
                                 <td>
                                     <%: Model.ContractDetail.Site.Lat %>
                                 </td>
-                            </tr>
-                            <tr>
                                 <td>
-                                    District:
+                                    Size:
                                 </td>
                                 <td>
-                                    <%: Model.ContractDetail.Site.Geo2.Name%>
-                                </td>
-                                <td>
-                                    GPS Longitude:
-                                </td>
-                                <td>
-                                    <%: Model.ContractDetail.Site.Lng%>
+                                    <%: Model.ContractDetail.Site.Height %>m x
+                                    <%: Model.ContractDetail.Site.Width %>m
                                 </td>
                             </tr>
                         </table>
@@ -148,27 +149,27 @@
                                     foreach (var item in Model.SiteMonitoringPhotoes)
                                     { %>
                                 <%
-                                    if (i % 2 == 0)
-                                    { 
+                                        if (i % 2 == 0)
+                                        { 
                                 %>
                                 <td valign="top">
                                     <img src='<%= item.Url.ToUrlPicasaPhotoResize() %>' alt="" width="300" height="225" />
                                 </td>
                             </tr>
                             <%
-                                hasCloseTr = true;
-                                    }
-                                    else
-                                    {
+                                            hasCloseTr = true;
+                                        }
+                                        else
+                                        {
                             %>
                             <tr>
                                 <td valign="top">
                                     <img src='<%= item.Url.ToUrlPicasaPhotoResize() %>' alt="" width="300" height="225" />
                                 </td>
                                 <% 
-hasCloseTr = false;
-                                    }
-                                    i++;
+                                            hasCloseTr = false;
+                                        }
+                                        i++;
                                 %>
                                 <% } %>
                                 <%
@@ -179,7 +180,7 @@ hasCloseTr = false;
                                 </td>
                             </tr>
                             <%
-                                }
+                                    }
                             %>
                         </table>
                     </td>
@@ -190,7 +191,23 @@ hasCloseTr = false;
             <table class="notable">
                 <tr>
                     <td>
-                        <table>
+                        <table class="notable">
+                            <tr>
+                                <td>
+                                    Supplier:
+                                </td>
+                                <td>
+                                    <%: Model.ContractDetail.Contract != null ? Model.ContractDetail.Contract.ContractorName : Model.Site.ContractorName %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Current Client:
+                                </td>
+                                <td>
+                                    <%: Model.ContractDetail.Contract.ClientName%>
+                                </td>
+                            </tr>
                             <tr>
                                 <td>
                                     Current Product:
@@ -218,23 +235,6 @@ hasCloseTr = false;
                             </tr>
                             <tr>
                                 <td>
-                                    In/Outbound to CBC:
-                                </td>
-                                <td>
-                                    <%: Model.ContractDetail.Site.CBDViewed %>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Size:
-                                </td>
-                                <td>
-                                    <%: Model.ContractDetail.Site.Height %>m x
-                                    <%: Model.ContractDetail.Site.Width %>m
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
                                     <b>Latest Dates</b>
                                 </td>
                                 <td>
@@ -245,7 +245,9 @@ hasCloseTr = false;
                                     Latest Site Inspection:
                                 </td>
                                 <td>
-                                    <%: Model.LastUpdatedDate %>
+                                    <% OAMS.Models.SiteMonitoringRepository repo = new OAMS.Models.SiteMonitoringRepository();
+                                       var pre = repo.GetPrevious(Model.ID);%>
+                                    <%: pre != null ? pre.LastUpdatedDate.ToString() : "" %>
                                 </td>
                             </tr>
                             <tr>
@@ -267,7 +269,7 @@ hasCloseTr = false;
                                     %>
                                     <%: lastDate.ToShortDateString() %>
                                     <%
-}
+                                        }
                                     %>
                                 </td>
                             </tr>

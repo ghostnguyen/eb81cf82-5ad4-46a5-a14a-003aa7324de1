@@ -28,8 +28,8 @@
                 <br />
                 <div id="StyleList">
                     <%
-                        foreach (var category in (new OAMS.Models.CodeMasterRepository()).Get((new OAMS.Models.CodeMasterType()).Type))
-                        {
+           foreach (var category in (new OAMS.Models.CodeMasterRepository()).Get((new OAMS.Models.CodeMasterType()).Type))
+           {
                     %>
                     <input type="checkbox" name="StyleList" value="<%= category.Code %>" checked="checked"
                         id='StyleItem<%= category.ID %>' />
@@ -37,43 +37,43 @@
                         <%: category.Note %>
                     </label>
                     <% 
-                        string profileImageUrl = "";
-                        if (category.Code == "WMB")
-                        {
-                            profileImageUrl = Url.Content("~/Content/Image/wallmountedbannee.png");
-                        }
-                        else if (category.Code == "BRL")
-                        {
-                            profileImageUrl = Url.Content("~/Content/Image/britelite.png");
-                        }
-                        else if (category.Code == "BSH")
-                        {
-                            profileImageUrl = Url.Content("~/Content/Image/busshelter.png");
-                        }
-                        else if (category.Code == "CMR")
-                        {
-                            profileImageUrl = Url.Content("~/Content/Image/covermarket.png");
-                        }
-                        else if (category.Code == "ELV")
-                        {
-                            profileImageUrl = Url.Content("~/Content/Image/elevator.png");
-                        }
-                        else if (category.Code == "ITK")
-                        {
-                            profileImageUrl = Url.Content("~/Content/Image/itkiosk.png");
-                        }
-                        else if (category.Code == "Billboard")
-                        {
-                            profileImageUrl = Url.Content("~/Content/Image/billboard.png");
-                        }
-                        else if (category.Code == "BillboardPole")
-                        {
-                            profileImageUrl = Url.Content("~/Content/Image/billboardpole.png");
-                        }
-                        else if (category.Code == "Other")
-                        {
-                            profileImageUrl = Url.Content("~/Content/Image/other.png");
-                        }
+string profileImageUrl = "";
+if (category.Code == "WMB")
+{
+    profileImageUrl = Url.Content("~/Content/Image/wallmountedbannee.png");
+}
+else if (category.Code == "BRL")
+{
+    profileImageUrl = Url.Content("~/Content/Image/britelite.png");
+}
+else if (category.Code == "BSH")
+{
+    profileImageUrl = Url.Content("~/Content/Image/busshelter.png");
+}
+else if (category.Code == "CMR")
+{
+    profileImageUrl = Url.Content("~/Content/Image/covermarket.png");
+}
+else if (category.Code == "ELV")
+{
+    profileImageUrl = Url.Content("~/Content/Image/elevator.png");
+}
+else if (category.Code == "ITK")
+{
+    profileImageUrl = Url.Content("~/Content/Image/itkiosk.png");
+}
+else if (category.Code == "Billboard")
+{
+    profileImageUrl = Url.Content("~/Content/Image/billboard.png");
+}
+else if (category.Code == "BillboardPole")
+{
+    profileImageUrl = Url.Content("~/Content/Image/billboardpole.png");
+}
+else if (category.Code == "Other")
+{
+    profileImageUrl = Url.Content("~/Content/Image/other.png");
+}
                     %>
                     <img alt="" border="0" src="<%= profileImageUrl %>" width="20" id="ImgStyleItem<%= category.ID%>" />
                     <br />
@@ -120,20 +120,49 @@
                     var Productcount = 1;
                     function addMoreProduct() {
                         var divAddMore = $('#divMoreProduct');
+
                         var input = document.createElement('input');
                         input.setAttribute('type', 'text');
-                        input.setAttribute('id', 'Product' + Productcount);
+                        input.setAttribute('id', 'Product_' + Productcount);
                         input.setAttribute('name', 'ProductList');
                         input.setAttribute('class', 'text-box single-line');
+                        input.setAttribute('onblur', "javascript:if($('#Product_" + Productcount + "').val() == '') $('#ProductID_" + Productcount + "').val(0);");
                         divAddMore.append(input);
+
+                        var inputCollapse = document.createElement('input');
+                        inputCollapse.setAttribute('type', 'text');
+                        inputCollapse.setAttribute('style', 'display: none;');
+                        inputCollapse.setAttribute('name', 'ProductIDList');
+                        inputCollapse.setAttribute('id', 'ProductID_' + Productcount);
+                        divAddMore.append(inputCollapse);
 
                         var lnkDelete = document.createElement('a');
                         lnkDelete.setAttribute('id', 'LnkDelete' + Productcount);
-                        lnkDelete.setAttribute('onclick', "$('#Product" + Productcount + "').remove();$('#LnkDelete" + Productcount + "').remove();");
+                        lnkDelete.setAttribute('onclick', "$('#Product_" + Productcount + "').remove();$('#ProductID_" + count + "').remove();$('#LnkDelete" + Productcount + "').remove();");
                         lnkDelete.innerHTML = 'X';
                         lnkDelete.setAttribute('style', 'text-decoration:underline;cursor:pointer;');
                         lnkDelete.setAttribute('title', 'Remove this product out of search criteria');
                         divAddMore.append(" ").append(lnkDelete);
+
+                        $(function () {
+                            $("#Product_" + Productcount).autocomplete({
+                                select: function (event, ui) {
+                                    var index = this.id.substring(8);
+                                    $("#ProductID_" + index).val(ui.item.id);
+                                },
+                                source: function (request, response) {
+                                    $.ajax({
+                                        url: '../Listing/ListProduct', type: "POST", dataType: "json",
+                                        data: { searchText: request.term, maxResults: 10 },
+                                        success: function (data) {
+                                            response($.map(data, function (item) {
+                                                return { label: item.Name, value: item.Name, id: item.ID }
+                                            }))
+                                        }
+                                    })
+                                }
+                            });
+                        });
 
                         $("#Product" + Productcount).focus();
                         Productcount = Productcount + 1;
@@ -320,20 +349,14 @@
                 <br />
                 <br />
                 Score from
-                <input type="text" id="ScoreFrom" name="ScoreFrom" value="0" style="width:30px;"/>
+                <input type="text" id="ScoreFrom" name="ScoreFrom" value="0" style="width: 30px;" />
                 to
-                <input type="text" id="ScoreTo" name="ScoreTo" value="100" style="width:30px;"/>
+                <input type="text" id="ScoreTo" name="ScoreTo" value="100" style="width: 30px;" />
             </td>
             <td valign="top">
-                
-                
                 <%--<%: Html.ActionLinkWithRoles<OAMS.Controllers.FindSiteController>("Find", r => r.FindJson(null), null, new Dictionary<string, object>() { { "href", "javascript:search(this);" } }, true)%>--%>
-                
-
                 <input id="btnFind" type="button" onclick="search(this);" value="Find" />
-                
                 <a href="javascript:toggleSearchPane();">Show/Hide Search Criteria</a>
-
                 <table width="100%">
                     <tr>
                         <td>
@@ -711,8 +734,7 @@
 
 
                     if (VietnamBounds.contains(marker.position)
-                    || IndoBounds.contains(marker.position)) 
-                    {
+                    || IndoBounds.contains(marker.position)) {
                         bounds.extend(marker.position);
                     }
 
