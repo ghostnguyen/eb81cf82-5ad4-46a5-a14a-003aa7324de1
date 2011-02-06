@@ -49,38 +49,39 @@ namespace OAMS.Models
 
         public bool Replace(int id, int replaceID)
         {
-            //Product e = Get(id);
-            //Product replaceClient = Get(replaceID);
+            Product e = Get(id);
+            Product replaceClient = Get(replaceID);
 
-            //if (e == null || replaceClient == null)
-            //{
-            //    return false;
-            //}
-            //else
-            //{
-            //    var sL = DB.SiteDetails.Where(r => r.ClientID == replaceID);
-            //    IQueryable<Contract> cL = DB.Contracts.Where(r => r.ClientID == replaceID);
-            //    IQueryable<Campaign> caL = DB.Campaigns.Where(r => r.ClientID == replaceID);
-            //    foreach (var item in sL)
-            //    {
-            //        item.ClientID = id;
-            //    }
-            //    foreach (var item in cL)
-            //    {
-            //        item.ClientID = id;
-            //    }
-            //    foreach (var item in caL)
-            //    {
-            //        item.ClientID = id;
-            //    }
+            if (e == null || replaceClient == null)
+            {
+                return false;
+            }
+            else
+            {
+                var sL = DB.ContractDetails.Where(r => r.ProductID == replaceID);
+                IQueryable<SiteDetail> cL = DB.SiteDetails.Where(r => r.ProductID == replaceID);
+                IQueryable<SiteMonitoring> caL = DB.SiteMonitorings.Where(r => r.ProductID == replaceID);
 
-            //    Save();
-            //    DB.Products.DeleteObject(replaceClient);
-            //    Save();
+                foreach (var item in sL)
+                {
+                    item.ProductID = id;
+                }
+                foreach (var item in cL)
+                {
+                    item.ProductID = id;
+                }
+                foreach (var item in caL)
+                {
+                    item.ProductID = id;
+                }
 
-            //    return true;
-            //}
-            return false;
+                Save();
+
+                DB.Products.DeleteObject(replaceClient);
+                Save();
+
+                return true;
+            }
         }
     }
 }

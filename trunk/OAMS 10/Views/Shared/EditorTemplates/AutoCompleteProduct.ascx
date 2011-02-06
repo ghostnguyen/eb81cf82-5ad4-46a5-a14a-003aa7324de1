@@ -1,8 +1,12 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl" %>
 <%= Html.TextBox("", ViewData.TemplateInfo.FormattedModelValue, new { @class = "text-box single-line" }) %>
+
+
 <% var hiddenID = ViewData["HiddenID"] ?? "ProductID"; %>
 
 <script type="text/javascript" language="javascript">
+    
+
     $(function () {
         $("#<%= ViewData.ModelMetadata.PropertyName %>").autocomplete({
             select: function (event, ui) { $("#<%= hiddenID %>").val(ui.item.id); },

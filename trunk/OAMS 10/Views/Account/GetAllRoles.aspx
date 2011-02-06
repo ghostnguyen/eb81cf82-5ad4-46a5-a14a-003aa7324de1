@@ -6,7 +6,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <h2>
         GetAllRoles</h2>
-    <%: Html.ActionLinkWithRoles("Create", "CreateRole", "Account")%>
+    <%: Html.ActionLinkWithRoles<OAMS.Controllers.AccountController>("Create", r => r.CreateRole())%>
+    <br />
+    <br />
     <table>
         <thead>
             <tr>

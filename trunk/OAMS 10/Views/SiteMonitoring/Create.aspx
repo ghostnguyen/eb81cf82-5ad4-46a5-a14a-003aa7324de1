@@ -68,6 +68,18 @@
                         }
                     </script>
                     <div class="editor-label">
+                        <%: Html.LabelFor(model => model.Site.AddressLine1)%>
+                    </div>
+                    <div class="editor-field">
+                        <%: Html.EditorFor(model => model.Site.AddressLine1)%>
+                    </div>
+                    <div class="editor-label">
+                        <%: Html.LabelFor(model => model.Site.AddressLine2)%>
+                    </div>
+                    <div class="editor-field">
+                        <%: Html.EditorFor(model => model.Site.AddressLine2)%>
+                    </div>
+                    <div class="editor-label">
                         <%: Html.LabelFor(model => model.Site.GeoFullName)%>
                     </div>
                     <div class="editor-field">
