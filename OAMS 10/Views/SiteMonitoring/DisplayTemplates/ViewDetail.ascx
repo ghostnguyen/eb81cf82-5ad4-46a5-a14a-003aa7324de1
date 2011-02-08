@@ -296,6 +296,9 @@
                                     <%: Model.Working.ToCustomeString() %>
                                 </td>
                             </tr>
+                            <% if (Model.ContractDetail.Site.FrontlitNumerOfLamps.HasValue
+                           && Model.ContractDetail.Site.FrontlitNumerOfLamps > 0)
+                               {%>
                             <tr>
                                 <td>
                                     No. of bulbs:
@@ -312,6 +315,7 @@
                                     <%: Model.BullsWorking%>
                                 </td>
                             </tr>
+                            <%} %>
                             <tr>
                                 <td>
                                     Issues:

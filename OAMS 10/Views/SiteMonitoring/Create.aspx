@@ -100,20 +100,24 @@
                         <%: Html.EditorFor(model => model.Working) %>
                         <%: Html.ValidationMessageFor(model => model.Working) %>
                     </div>
+                    <% if (Model.Site.FrontlitNumerOfLamps.HasValue
+                           && Model.Site.FrontlitNumerOfLamps > 0)
+                       {%>
                     <div class="editor-label">
                         No. Of Bulbs
                     </div>
                     <div class="editor-field">
-                        <%: Html.TextBoxFor(model => model.NoOfBullbs) %>
-                        <%: Html.ValidationMessageFor(model => model.NoOfBullbs) %>
+                        <%: Html.TextBoxFor(model => model.NoOfBullbs)%>
+                        <%: Html.ValidationMessageFor(model => model.NoOfBullbs)%>
                     </div>
                     <div class="editor-label">
-                        <%: Html.LabelFor(model => model.BullsWorking) %>
+                        <%: Html.LabelFor(model => model.BullsWorking)%>
                     </div>
                     <div class="editor-field">
-                        <%: Html.TextBoxFor(model => model.BullsWorking) %>
-                        <%: Html.ValidationMessageFor(model => model.BullsWorking) %>
+                        <%: Html.TextBoxFor(model => model.BullsWorking)%>
+                        <%: Html.ValidationMessageFor(model => model.BullsWorking)%>
                     </div>
+                    <%} %>
                     <div class="editor-label">
                         <%: Html.LabelFor(model => model.IssuesCount) %>
                     </div>
@@ -268,9 +272,9 @@
             </td>
             <td>
                 <% 
-                    string albumUrl = Model.ContractDetail.Site.AlbumUrl;
-                    string AlbumID = string.IsNullOrEmpty(albumUrl) ? "" : Model.ContractDetail.Site.AlbumUrl.Split('/')[9].Split('?')[0];
-                    string AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Split('=')[1];
+string albumUrl = Model.ContractDetail.Site.AlbumUrl;
+string AlbumID = string.IsNullOrEmpty(albumUrl) ? "" : Model.ContractDetail.Site.AlbumUrl.Split('/')[9].Split('?')[0];
+string AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Split('=')[1];
                 %>
                 <embed type="application/x-shockwave-flash" src="http://picasaweb.google.com/s/c/bin/slideshow.swf"
                     width="600" height="400" flashvars="host=picasaweb.google.com&hl=en_US&feat=flashalbum&RGB=0x000000&feed=http%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F113917932111131696693%2Falbumid%2F<%=AlbumID%>%3Falt%3Drss%26kind%3Dphoto%26authkey%3D<%=AuthID%>%26hl%3Den_US"

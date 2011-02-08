@@ -116,22 +116,51 @@
                     var Productcount = 1;
                     function addMoreProduct() {
                         var divAddMore = $('#divMoreProduct');
+
                         var input = document.createElement('input');
                         input.setAttribute('type', 'text');
-                        input.setAttribute('id', 'Product' + Productcount);
+                        input.setAttribute('id', 'Product_' + Productcount);
                         input.setAttribute('name', 'ProductList');
                         input.setAttribute('class', 'text-box single-line');
+                        input.setAttribute('onblur', "javascript:if($('#Product_" + Productcount + "').val() == '') $('#ProductID_" + Productcount + "').val(0);");
                         divAddMore.append(input);
+
+                        var inputCollapse = document.createElement('input');
+                        inputCollapse.setAttribute('type', 'text');
+                        inputCollapse.setAttribute('style', 'display: none;');
+                        inputCollapse.setAttribute('name', 'ProductIDList');
+                        inputCollapse.setAttribute('id', 'ProductID_' + Productcount);
+                        divAddMore.append(inputCollapse);
 
                         var lnkDelete = document.createElement('a');
                         lnkDelete.setAttribute('id', 'LnkDelete' + Productcount);
-                        lnkDelete.setAttribute('onclick', "$('#Product" + Productcount + "').remove();$('#LnkDelete" + Productcount + "').remove();");
+                        lnkDelete.setAttribute('onclick', "$('#Product_" + Productcount + "').remove();$('#ProductID_" + count + "').remove();$('#LnkDelete" + Productcount + "').remove();");
                         lnkDelete.innerHTML = 'X';
                         lnkDelete.setAttribute('style', 'text-decoration:underline;cursor:pointer;');
                         lnkDelete.setAttribute('title', 'Remove this product out of search criteria');
                         divAddMore.append(" ").append(lnkDelete);
 
-                        $("#Product" + Productcount).focus();
+                        $(function () {
+                            $("#Product_" + Productcount).autocomplete({
+                                select: function (event, ui) {
+                                    var index = this.id.substring(8);
+                                    $("#ProductID_" + index).val(ui.item.id);
+                                },
+                                source: function (request, response) {
+                                    $.ajax({
+                                        url: '../Listing/ListProduct', type: "POST", dataType: "json",
+                                        data: { searchText: request.term, maxResults: 10 },
+                                        success: function (data) {
+                                            response($.map(data, function (item) {
+                                                return { label: item.Name, value: item.Name, id: item.ID }
+                                            }))
+                                        }
+                                    })
+                                }
+                            });
+                        });
+
+                        $("#Product_" + Productcount).focus();
                         Productcount = Productcount + 1;
                     }
                 </script>
@@ -315,9 +344,10 @@
                 <a id="addCat" href="javascript:addMoreCat();">More...</a>
             </td>
             <td valign="top">
-                <%--<input type="button" onclick="search(this)" value="Find" />--%>
-                <%: Html.ActionLinkWithRoles<OAMS.Controllers.FindSiteController>("Find", r => r.FindJson4Contract(null,0), null, new Dictionary<string, object>() { { "href", "javascript:search(this);" } }, true)%>
-                <input id="btnToggleSearchPane" type="button" onclick="toggleSearchPane()" value="Hide Search Criteria" />
+                <input id="btnFind" type="button" onclick="search(this);" value="Find" />
+                <a href="javascript:toggleSearchPane();">Show/Hide Search Criteria</a>
+                <%--<%: Html.ActionLinkWithRoles<OAMS.Controllers.FindSiteController>("Find", r => r.FindJson4Contract(null,0), null, new Dictionary<string, object>() { { "href", "javascript:search(this);" } }, true)%>
+                <input id="btnToggleSearchPane" type="button" onclick="toggleSearchPane()" value="Hide Search Criteria" />--%>
                 <table width="100%">
                     <tr>
                         <td>
@@ -336,6 +366,10 @@
                     Display columns:
                     <input type="checkbox" id="chkColID" checked="checked" />
                     ID
+                    <input type="checkbox" id="chkColSiteID" checked="checked" />
+                    SiteID
+                    <input type="checkbox" id="chkColName" checked="checked" />
+                    Name
                     <input type="checkbox" id="chkColType" checked="checked" />
                     Type
                     <input type="checkbox" id="chkColFormat" checked="checked" />
@@ -361,6 +395,12 @@
                         <tr>
                             <th>
                                 ID
+                            </th>
+                            <th>
+                                Site ID
+                            </th>
+                            <th>
+                                Name
                             </th>
                             <th>
                                 Type
@@ -436,15 +476,17 @@
 
 
             oTable.fnSetColumnVis(0, $('#chkColID').attr('checked'));
-            oTable.fnSetColumnVis(1, $('#chkColType').attr('checked'));
-            oTable.fnSetColumnVis(2, $('#chkColFormat').attr('checked'));
-            oTable.fnSetColumnVis(3, $('#chkColAddressLine1').attr('checked'));
-            oTable.fnSetColumnVis(4, $('#chkColAddressLine2').attr('checked'));
-            oTable.fnSetColumnVis(5, $('#chkColSize').attr('checked'));
-            oTable.fnSetColumnVis(6, $('#chkColCurrentProduct').attr('checked'));
-            oTable.fnSetColumnVis(7, $('#chkColCurrentClient').attr('checked'));
-            oTable.fnSetColumnVis(8, $('#chkColContractor').attr('checked'));
-            oTable.fnSetColumnVis(9, $('#chkColScore').attr('checked'));
+            oTable.fnSetColumnVis(1, $('#chkColSiteID').attr('checked'));
+            oTable.fnSetColumnVis(2, $('#chkColName').attr('checked'));
+            oTable.fnSetColumnVis(3, $('#chkColType').attr('checked'));
+            oTable.fnSetColumnVis(4, $('#chkColFormat').attr('checked'));
+            oTable.fnSetColumnVis(5, $('#chkColAddressLine1').attr('checked'));
+            oTable.fnSetColumnVis(6, $('#chkColAddressLine2').attr('checked'));
+            oTable.fnSetColumnVis(7, $('#chkColSize').attr('checked'));
+            oTable.fnSetColumnVis(8, $('#chkColCurrentProduct').attr('checked'));
+            oTable.fnSetColumnVis(9, $('#chkColCurrentClient').attr('checked'));
+            oTable.fnSetColumnVis(10, $('#chkColContractor').attr('checked'));
+            oTable.fnSetColumnVis(11, $('#chkColScore').attr('checked'));
 
         }
         function showGeo2(str) {
@@ -698,6 +740,14 @@
                     var cStyle = document.createElement('td');
                     cStyle.innerHTML = site.ID;
                     rSel.appendChild(cStyle);
+
+                    var cStyle101 = document.createElement('td');
+                    cStyle101.innerHTML = site.SiteID;
+                    rSel.appendChild(cStyle101);
+
+                    var cStyle102 = document.createElement('td');
+                    cStyle102.innerHTML = site.Name;
+                    rSel.appendChild(cStyle102);
 
                     //Type
                     var cStyle1 = document.createElement('td');

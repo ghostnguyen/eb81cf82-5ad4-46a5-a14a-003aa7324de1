@@ -7,7 +7,7 @@ using OAMS.Models;
 
 namespace OAMS.Controllers
 {
-    [CustomAuthorize]    
+    [CustomAuthorize]
     public class ListingController : Controller
     {
         [HttpPost]
@@ -110,6 +110,20 @@ namespace OAMS.Controllers
                 .Take(maxResults)
                 .Select(r => new { r.ID, r.Name })
                 .ToList();
+            return Json(result);
+        }
+
+        [HttpPost]
+        public JsonResult ListInstallationPosition1(string searchText)
+        {
+            OAMSEntities db = new OAMSEntities();
+            var result = db.CodeMasters.Where(r => r.Type == CodeMasterType.InstallationPosition1
+                && r.Note.Contains(searchText)
+                )
+                .Distinct()
+                .Select(r => new { ID = r.Code, FullName = r.Note })
+                .ToList();
+
             return Json(result);
         }
 

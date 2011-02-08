@@ -78,16 +78,74 @@ else if (category.Code == "Other")
                     <img alt="" border="0" src="<%= profileImageUrl %>" width="20" id="ImgStyleItem<%= category.ID%>" />
                     <br />
                     <%
-                        }
+           }
                     %>
                 </div>
                 <a id="StyleListMore" href="javascript:ShowAllStyle(document.forms[0].StyleList,'StyleListMore');"
                     style="display: none;">More...</a>
                 <br />
-                <br />
+                <%--<br />
                 InstallationPosition 1
                 <br />
                 <%: Html.CodeMasterDropDownListFor(r => r.InstallationPosition1, false)%>
+                <br />--%>
+                <br />
+                <script type="text/javascript" language="javascript">
+                    var installationPositionCount = 1;
+                    function addMoreInstallationPosition() {
+                        var divAddMore = $('#divMoreInstallationPosition');
+                        var input = document.createElement('input');
+                        input.setAttribute('type', 'text');
+                        input.setAttribute('id', 'InstallationPosition' + installationPositionCount);
+                        input.setAttribute('class', 'text-box single-line');
+                        input.setAttribute('onblur', "javascript:if($('#InstallationPosition" + installationPositionCount + "').val() == '') {$('#InstallationPositionMark" + installationPositionCount + "').val('');}");
+                        divAddMore.append(input);
+
+                        var inputCollapse = document.createElement('input');
+                        inputCollapse.setAttribute('type', 'text');
+                        inputCollapse.setAttribute('style', 'display: none;');
+                        inputCollapse.setAttribute('name', 'InstallationPosition1MarkList');
+                        inputCollapse.setAttribute('id', 'InstallationPositionMark' + installationPositionCount);
+                        divAddMore.append(inputCollapse);
+
+                        var lnkDelete = document.createElement('a');
+                        lnkDelete.setAttribute('id', 'LnkDeleteInstallationPosition' + installationPositionCount);
+                        lnkDelete.setAttribute('onclick', "$('#InstallationPosition" + installationPositionCount + "').remove();$('#InstallationPositionMark" + installationPositionCount + "').remove();$('#LnkDeleteInstallationPosition" + installationPositionCount + "').remove();");
+                        lnkDelete.innerHTML = 'X';
+                        lnkDelete.setAttribute('style', 'text-decoration:underline;cursor:pointer;');
+                        lnkDelete.setAttribute('title', 'Remove this InstallationPosition out of search criteria');
+                        divAddMore.append(" ").append(lnkDelete);
+
+                        $(function () {
+                            $("#InstallationPosition" + installationPositionCount).autocomplete({
+                                select: function (event, ui) {
+                                    var index = this.id.substring(20);
+                                    $("#InstallationPositionMark" + index).val(ui.item.id);
+                                },
+                                source: function (request, response) {
+                                    $.ajax({
+                                        url: '../Listing/ListInstallationPosition1', type: "POST", dataType: "json",
+                                        data: { searchText: request.term },
+                                        success: function (data) {
+                                            response($.map(data, function (item) {
+                                                return { label: item.FullName, value: item.FullName, id: item.ID }
+                                            }))
+                                        }
+                                    })
+                                }
+                            });
+                        });
+                        $("#InstallationPosition" + installationPositionCount).focus();
+                        installationPositionCount = installationPositionCount + 1;
+                    }
+                </script>
+                <br />
+                <div id="divMoreInstallationPosition">
+                    <br />
+                    Installation Position<br />
+                </div>
+                <a id="a3" href="javascript:addMoreInstallationPosition();">More...</a>
+                <br />
                 <br />
                 <%: Html.LabelFor(r => r.Format) %>
                 <br />
@@ -164,7 +222,7 @@ else if (category.Code == "Other")
                             });
                         });
 
-                        $("#Product" + Productcount).focus();
+                        $("#Product_" + Productcount).focus();
                         Productcount = Productcount + 1;
                     }
                 </script>
@@ -354,7 +412,6 @@ else if (category.Code == "Other")
                 <input type="text" id="ScoreTo" name="ScoreTo" value="100" style="width: 30px;" />
             </td>
             <td valign="top">
-                <%--<%: Html.ActionLinkWithRoles<OAMS.Controllers.FindSiteController>("Find", r => r.FindJson(null), null, new Dictionary<string, object>() { { "href", "javascript:search(this);" } }, true)%>--%>
                 <input id="btnFind" type="button" onclick="search(this);" value="Find" />
                 <a href="javascript:toggleSearchPane();">Show/Hide Search Criteria</a>
                 <table width="100%">
