@@ -343,11 +343,6 @@ namespace OAMS.Models
 
             if (httpContext.User.Identity.IsAuthenticated)
             {
-                //if (!AuthorizedRoles.Contains(ProjectRoles.Admin))
-                //{
-                //    AuthorizedRoles = AuthorizedRoles.Add(ProjectRoles.Admin);
-                //}
-
                 if (
                     //httpContext.User.IsInRole(ProjectRoles.Admin) || 
                     AuthorizedUsers.Contains(httpContext.User.Identity.Name)

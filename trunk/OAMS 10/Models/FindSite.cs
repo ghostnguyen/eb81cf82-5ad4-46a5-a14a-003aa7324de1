@@ -18,6 +18,7 @@ namespace OAMS.Models
         public string RoadType1 { get; set; }
         public string RoadType2 { get; set; }
         public string InstallationPosition1 { get; set; }
+        public List<int> InstallationPosition1MarkList { get; set; }        
         public string InstallationPosition2 { get; set; }
         public string ViewingDistance { get; set; }
        
@@ -36,9 +37,8 @@ namespace OAMS.Models
         public DateTime? To { get; set; }
 
         public List<int> ContractorList { get; set; }
-        //public List<string> ClientList { get; set; }
         public List<int> ClientList { get; set; }
-        public List<string> ProductList { get; set; }
+        //public List<string> ProductList { get; set; }
         public List<int> ProductIDList { get; set; }
         public List<string> CatList { get; set; }
         public string ScoreFrom { get; set; }

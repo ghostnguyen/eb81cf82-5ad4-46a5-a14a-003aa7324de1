@@ -58,9 +58,11 @@ namespace OAMS.Controllers
         public ActionResult Edit(int id)
         {
             SiteMonitoring e = repo.Get(id);
+            
             ContractDetailRepository cdrepo = new ContractDetailRepository();
             ContractDetail cd = cdrepo.Get(e.ContractDetailID.ToInt());
             e.Site = cd.Site;
+            
             return View(e);
         }
 

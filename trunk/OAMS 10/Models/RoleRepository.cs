@@ -10,7 +10,7 @@ namespace OAMS.Models
     {
         //now constants for the attribute values
         //public const string Account = "Account";
-        //public const string Admin = "Admin";
+        public const string Admin = "Admin";
         //public const string SiteSupervisor = "SiteSupervisor";
         //public const string SiteMonitoring = "SiteMonitoring";
         //public const string Sale = "Sale";

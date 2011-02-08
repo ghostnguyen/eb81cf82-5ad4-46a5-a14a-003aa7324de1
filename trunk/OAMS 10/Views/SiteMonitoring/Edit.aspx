@@ -103,20 +103,24 @@
                         <%: Html.EditorFor(model => model.Working) %>
                         <%: Html.ValidationMessageFor(model => model.Working) %>
                     </div>
+                    <% if (Model.Site.FrontlitNumerOfLamps.HasValue
+                           && Model.Site.FrontlitNumerOfLamps > 0)
+                       {%>
                     <div class="editor-label">
-                        <%: Html.LabelFor(model => model.NoOfBullbs) %>
+                        <%: Html.LabelFor(model => model.NoOfBullbs)%>
                     </div>
                     <div class="editor-field">
-                        <%: Html.TextBoxFor(model => model.NoOfBullbs) %>
-                        <%: Html.ValidationMessageFor(model => model.NoOfBullbs) %>
+                        <%: Html.TextBoxFor(model => model.NoOfBullbs)%>
+                        <%: Html.ValidationMessageFor(model => model.NoOfBullbs)%>
                     </div>
                     <div class="editor-label">
-                        <%: Html.LabelFor(model => model.BullsWorking) %>
+                        <%: Html.LabelFor(model => model.BullsWorking)%>
                     </div>
                     <div class="editor-field">
-                        <%: Html.TextBoxFor(model => model.BullsWorking) %>
-                        <%: Html.ValidationMessageFor(model => model.BullsWorking) %>
+                        <%: Html.TextBoxFor(model => model.BullsWorking)%>
+                        <%: Html.ValidationMessageFor(model => model.BullsWorking)%>
                     </div>
+                    <%} %>
                     <div class="editor-label">
                         <%: Html.LabelFor(model => model.IssuesCount) %>
                     </div>
