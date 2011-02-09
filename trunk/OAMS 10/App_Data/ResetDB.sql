@@ -1,82 +1,60 @@
-update Facility set CountingYY = substring(convert(nvarchar,getdate(),126),3,2), CountingNumber = 0
+truncate table aspnet_Profile 
 
-truncate table Log 
+declare @userID uniqueidentifier
+set @userID = (select top 1 UserId from aspnet_Users where UserName = 'bypasslogin@gmail.com')
+
+delete aspnet_UsersInRoles where UserId <> @userID
+-- 5E3571C2-C391-4FBA-9653-977AD68BB6D4	F8285997-7EB1-423F-AB1F-546E97B63844
+-- 5E3571C2-C391-4FBA-9653-977AD68BB6D4	C3F3ED51-F663-473C-B279-F1EF1C68A8FC
+
+delete aspnet_Membership where UserId <> @userID
+delete aspnet_Users where UserId <> @userID
 
 
-truncate table PackSideEffect
+--OAMS	oams	D0B3E743-1474-47BF-8B1C-D3CDBEADDEBF	NULL
+--D0B3E743-1474-47BF-8B1C-D3CDBEADDEBF	5E3571C2-C391-4FBA-9653-977AD68BB6D4	bypasslogin@gmail.com	bypasslogin@gmail.com	NULL	0	2010-10-03 14:07:06.000
 
 
-truncate table PackTransaction
-truncate table PackRemainDaily
+delete Campaign
 
-delete PackOrder 
-DBCC CHECKIDENT (PackOrder, RESEED, 0)
+truncate table SitePhoto
+truncate table SiteDetail
 
-truncate table StoreFinalize
+truncate table ContractDetailTimeline
+truncate table ContractTimeline
 
-delete Pack 
+truncate table SiteMonitoringPhoto
+truncate table SiteMonitoring
 
-truncate table DonationStatusLog 
-truncate table DonationTestLog 
-delete Donation 
+delete ContractDetail
+DBCC CHECKIDENT (ContractDetail, RESEED, 0)
 
-delete [Order] 
-DBCC CHECKIDENT ([Order], RESEED, 0)
-
-delete [Return] 
-DBCC CHECKIDENT ([Return], RESEED, 0)
-
-delete [People] 
-DBCC CHECKIDENT ([People], RESEED, 0)
-
-truncate table CampaignStatusHistory 
-
-delete [Campaign]
-DBCC CHECKIDENT ([Campaign], RESEED, 0)
-
-delete [Delete]
-DBCC CHECKIDENT ([Delete], RESEED, 0)
+delete [Contract]
+DBCC CHECKIDENT ([Contract], RESEED, 0)
 
 
 
+delete [Site]
+DBCC CHECKIDENT ([Site], RESEED, 0)
+
+truncate table ContractorContactDetail
+
+delete ContractorContact
+DBCC CHECKIDENT (ContractorContact, RESEED, 0)
+
+delete Contractor
+DBCC CHECKIDENT (Contractor, RESEED, 0)
+
+delete Product
+DBCC CHECKIDENT (Product, RESEED, 0)
 
 
+truncate table ClientContactDetail
 
+delete ClientContact
+DBCC CHECKIDENT (ClientContact, RESEED, 0)
 
+delete Client
+DBCC CHECKIDENT (Client, RESEED, 0)
 
-
-
-
-
-
-
-
-
-
---delete Org
---DBCC CHECKIDENT ([Org], RESEED, 0)
-
-
---declare @i int
---set @i = 0
---while @i < 30000
---begin
-
---insert into Pack([Status],TestResultStatus,DeliverStatus) values (0,0,0)
-
---set @i = @i + 1
-
---continue
---end
-
---update Excel set Imported = null 
-
-
-
--- delete People where ID in (select PeopleID from Pack where Autonum in (1020,1673,3017))
--- update Pack set PeopleID = null, [Status] = 0,CollectedDate = null,Volume = null,HospitalID = null,Note = null,ComponentID = null,Actor = null,CampaignID = null, TestResultStatus = 0, SubstanceID = null,DeliverStatus = 0,MSTM = null,MSNH = null where Autonum in (1020,1673,3017)
--- delete BloodType where PackID in (select ID from Pack where Autonum in (1020,1673,3017))
--- delete TestResult where PackID in (select ID from Pack where Autonum in (1020,1673,3017))
--- delete PackStatusHistory where PackID in (select ID from Pack where Autonum in (1020,1673,3017))
--- delete PackResultHistory where PackID in (select ID from Pack where Autonum in (1020,1673,3017))
--- update Excel set Imported = null where ID in (1020,1673,3017)
+delete Geo
