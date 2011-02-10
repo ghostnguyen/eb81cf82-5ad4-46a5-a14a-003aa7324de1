@@ -101,5 +101,14 @@ namespace OAMS.Controllers
         {
             return RedirectToAction("Index");
         }
+
+        public ActionResult UpdateDefaultGeoID(Guid id)
+        {
+            AppSettingRepository appSettingRepository = new AppSettingRepository();
+
+            appSettingRepository.InsertOrUpdate(PropertyName.For(() => AppSetting.DefaultGeoID), id.ToString());
+
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -41,6 +41,8 @@
                 |
                 <%: Html.ActionLink("Delete", "Delete", new { id=item.ID })%>
                 <%= item.Level < 3 ? "| " + Html.ActionLink(string.Format("Subs ({0})", item.Children.Count), "Index", new { parentID = item.ID }) : null %>--%>
+                <%: Html.ActionLink("UpdateDefaultGeoID", "UpdateDefaultGeoID", new { id = item.ID })%>
+                |
                 <%: MvcHtmlString.Create(editTemplate.ToString().Replace("geoID", item.ID.ToString()))%>
                 |
                 <%: MvcHtmlString.Create(deleteTemplate.ToString().Replace("geoID", item.ID.ToString()))%>
