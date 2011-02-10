@@ -63,8 +63,9 @@ namespace OAMS
 
         public static string Username
         {
-            get {
-                return HttpContext.Current.User.Identity.Name; 
+            get
+            {
+                return HttpContext.Current.User.Identity.Name;
             }
         }
 
@@ -168,8 +169,8 @@ namespace OAMS
             {
                 var memberExpression = (MemberExpression)expression;
 
-                if (memberExpression.Expression.NodeType ==
-                    ExpressionType.MemberAccess)
+                if (memberExpression.Expression != null
+                    && memberExpression.Expression.NodeType == ExpressionType.MemberAccess)
                 {
                     return GetMemberName(memberExpression.Expression)
                         + "."

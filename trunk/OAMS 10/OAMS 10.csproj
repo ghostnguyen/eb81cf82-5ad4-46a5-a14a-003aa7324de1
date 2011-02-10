@@ -138,8 +138,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper.cs" />
-    <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\AccountProfile.cs" />
+    <Compile Include="Models\ClientRepository.cs" />
+    <Compile Include="Models\Partial\AccountModels.cs" />
+    <Compile Include="Models\Partial\AccountProfile.cs" />
     <Compile Include="Models\AccountRepository.cs" />
     <Compile Include="Models\ClientContactDetailRepository.cs" />
     <Compile Include="Models\ClientContactRepository.cs" />
@@ -155,15 +156,16 @@
     <Compile Include="Models\ContractDetailRepository.cs" />
     <Compile Include="Models\ContractorRepository.cs" />
     <Compile Include="Models\ContractRepository.cs" />
-    <Compile Include="Models\ClientRepository.cs" />
+    <Compile Include="Models\AppSettingRepository.cs" />
     <Compile Include="Models\CategoryRepository.cs" />
     <Compile Include="Models\OAMS.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>OAMS.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Partial\AppSetting.cs" />
     <Compile Include="Models\Partial\SiteMonitoringPhoto.cs" />
-    <Compile Include="Models\Rpt01_Model_SiteMonitoring.cs" />
+    <Compile Include="Models\Partial\Rpt01_Model_SiteMonitoring.cs" />
     <Compile Include="Models\SiteMonitoringPhotoRepository.cs" />
     <Compile Include="Models\Partial\Product.cs" />
     <Compile Include="Models\ProductRepository.cs" />
@@ -183,7 +185,7 @@
     <Compile Include="Models\Partial\Contractor.cs" />
     <Compile Include="Models\PicasaRepository.cs" />
     <Compile Include="Models\Partial\Contract.cs" />
-    <Compile Include="Models\FindSite.cs" />
+    <Compile Include="Models\Partial\FindSite.cs" />
     <Compile Include="Models\Partial\Geo.cs" />
     <Compile Include="Models\Partial\Site.cs" />
     <Compile Include="Models\SitePhotoRepository.cs" />

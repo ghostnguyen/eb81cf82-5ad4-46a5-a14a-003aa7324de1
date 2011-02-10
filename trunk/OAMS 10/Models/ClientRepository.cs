@@ -5,6 +5,7 @@ using System.Web;
 
 namespace OAMS.Models
 {
+    
     public class ClientRepository : BaseRepository
     {
         public IQueryable<Client> GetAll()
