@@ -502,6 +502,22 @@ namespace OAMS.Models
             }
         }
         private ObjectSet<Contractor> _Contractors;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AppSetting> AppSettings
+        {
+            get
+            {
+                if ((_AppSettings == null))
+                {
+                    _AppSettings = base.CreateObjectSet<AppSetting>("AppSettings");
+                }
+                return _AppSettings;
+            }
+        }
+        private ObjectSet<AppSetting> _AppSettings;
 
         #endregion
         #region AddTo Methods
@@ -705,6 +721,14 @@ namespace OAMS.Models
         {
             base.AddObject("Contractors", contractor);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AppSettings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAppSettings(AppSetting appSetting)
+        {
+            base.AddObject("AppSettings", appSetting);
+        }
 
         #endregion
     }
@@ -713,6 +737,109 @@ namespace OAMS.Models
     #endregion
     
     #region Entities
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="OAMSModel", Name="AppSetting")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class AppSetting : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new AppSetting object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        public static AppSetting CreateAppSetting(global::System.Int32 id)
+        {
+            AppSetting appSetting = new AppSetting();
+            appSetting.ID = id;
+            return appSetting;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Key
+        {
+            get
+            {
+                return _Key;
+            }
+            set
+            {
+                OnKeyChanging(value);
+                ReportPropertyChanging("Key");
+                _Key = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Key");
+                OnKeyChanged();
+            }
+        }
+        private global::System.String _Key;
+        partial void OnKeyChanging(global::System.String value);
+        partial void OnKeyChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Value
+        {
+            get
+            {
+                return _Value;
+            }
+            set
+            {
+                OnValueChanging(value);
+                ReportPropertyChanging("Value");
+                _Value = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Value");
+                OnValueChanged();
+            }
+        }
+        private global::System.String _Value;
+        partial void OnValueChanging(global::System.String value);
+        partial void OnValueChanged();
+
+        #endregion
+    
+    }
     
     /// <summary>
     /// No Metadata Documentation available.
@@ -9411,6 +9538,54 @@ namespace OAMS.Models
         private global::System.String _Note;
         partial void OnNoteChanging(global::System.String value);
         partial void OnNoteChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Double> Lng
+        {
+            get
+            {
+                return _Lng;
+            }
+            set
+            {
+                OnLngChanging(value);
+                ReportPropertyChanging("Lng");
+                _Lng = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Lng");
+                OnLngChanged();
+            }
+        }
+        private Nullable<global::System.Double> _Lng;
+        partial void OnLngChanging(Nullable<global::System.Double> value);
+        partial void OnLngChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Double> Lat
+        {
+            get
+            {
+                return _Lat;
+            }
+            set
+            {
+                OnLatChanging(value);
+                ReportPropertyChanging("Lat");
+                _Lat = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Lat");
+                OnLatChanged();
+            }
+        }
+        private Nullable<global::System.Double> _Lat;
+        partial void OnLatChanging(Nullable<global::System.Double> value);
+        partial void OnLatChanged();
 
         #endregion
     
@@ -9627,6 +9802,54 @@ namespace OAMS.Models
         private global::System.String _Note;
         partial void OnNoteChanging(global::System.String value);
         partial void OnNoteChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Double> Lng
+        {
+            get
+            {
+                return _Lng;
+            }
+            set
+            {
+                OnLngChanging(value);
+                ReportPropertyChanging("Lng");
+                _Lng = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Lng");
+                OnLngChanged();
+            }
+        }
+        private Nullable<global::System.Double> _Lng;
+        partial void OnLngChanging(Nullable<global::System.Double> value);
+        partial void OnLngChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Double> Lat
+        {
+            get
+            {
+                return _Lat;
+            }
+            set
+            {
+                OnLatChanging(value);
+                ReportPropertyChanging("Lat");
+                _Lat = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Lat");
+                OnLatChanged();
+            }
+        }
+        private Nullable<global::System.Double> _Lat;
+        partial void OnLatChanging(Nullable<global::System.Double> value);
+        partial void OnLatChanged();
 
         #endregion
     
