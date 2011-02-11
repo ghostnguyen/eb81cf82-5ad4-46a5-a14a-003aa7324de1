@@ -31,5 +31,27 @@ namespace OAMS.Models
                 return result;
             }
         }
+
+        public bool IsValidGPS
+        {
+            get
+            {
+                bool result = false;
+
+                var v = SiteMonitoring.ContractDetail.Site;
+
+                if (!v.Lat.HasValue || !v.Lng.HasValue
+                    || !Lat.HasValue || !Lng.HasValue)
+                {                    
+                    result = true;
+                }
+                else
+                {
+                    result = Helper.DistanceBetweenPoints(v.Lat, v.Lng, Lat, Lng) * 1000 <= AppSetting.ValidRange;
+                }
+
+                return result;
+            }
+        }
     }
 }

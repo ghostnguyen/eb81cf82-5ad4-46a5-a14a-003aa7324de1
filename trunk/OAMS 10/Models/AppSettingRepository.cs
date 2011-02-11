@@ -26,8 +26,15 @@ namespace OAMS.Models
                 {
                     oVal = value.ToGuid();
                 }
+                else if (item.PropertyType == typeof(int))
+                {
+                    oVal = value.ToInt();
+                }
                 item.SetValue(type, oVal, null);
             }
+
+            GeoRepository geoRepository = new GeoRepository();
+            AppSetting.DefaultGeo1Name = geoRepository.GetName(AppSetting.DefaultGeoID);            
         }
 
         public void InsertOrUpdate(string key, string value)

@@ -30,7 +30,7 @@
         </tr>
         <% 
             var editTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.GeoController>("Edit", r => r.Edit(new Guid()), new RouteValueDictionary(new { id = "geoID" }), null, false);
-            var deleteTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.GeoController>("Delete", r => r.Delete(new Guid()), new RouteValueDictionary(new { id = "geoID" }), new Dictionary<string,object> (){{"onclick","return confirm('Delete?');"}}, false);
+            var deleteTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.GeoController>("Delete", r => r.Delete(new Guid()), new RouteValueDictionary(new { id = "geoID" }), new Dictionary<string, object>() { { "onclick", "return confirm('Delete?');" } }, false);
             var subTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.GeoController>("Subs ({0})", r => r.Index(null), new RouteValueDictionary(new { parentID = "geoID" }), null, false);
         %>
         <% foreach (var item in Model)
@@ -41,7 +41,7 @@
                 |
                 <%: Html.ActionLink("Delete", "Delete", new { id=item.ID })%>
                 <%= item.Level < 3 ? "| " + Html.ActionLink(string.Format("Subs ({0})", item.Children.Count), "Index", new { parentID = item.ID }) : null %>--%>
-                <%: Html.ActionLink("UpdateDefaultGeoID", "UpdateDefaultGeoID", new { id = item.ID })%>
+                <%: Html.ActionLink("UpdateDefaultGeoID", "UpdateDefaultGeoID","AppSetting", new { id = item.ID },null)%>
                 |
                 <%: MvcHtmlString.Create(editTemplate.ToString().Replace("geoID", item.ID.ToString()))%>
                 |

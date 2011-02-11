@@ -294,7 +294,12 @@ string AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Spl
                 <% if (!item.IsValidTakenDate)
                    {
                 %>
-                <span style="color: Red;">Wrong photo taken date.</span>
+                <span style="color: Red;">Wrong photo taken date. </span>
+                <%} %>
+                <% if (!item.IsValidGPS)
+                   {
+                %>
+                <span style="color: Red;">Possible wrong GPS. </span>
                 <%} %>
                 <br />
                 <img src='<%= item.Url %>' alt="" width="500" id='photo<%: item.ID %>' />

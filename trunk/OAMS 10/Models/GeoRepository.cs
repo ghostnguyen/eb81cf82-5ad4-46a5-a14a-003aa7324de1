@@ -21,17 +21,17 @@ namespace OAMS.Models
         //        ).SingleOrDefault();
         //}
 
-        public static string HCMC_Name
-        {
-            get
-            {
-                OAMS.Models.GeoRepository geoRepository = new OAMS.Models.GeoRepository();
-                var hcmc = geoRepository.Get(OAMSSetting.HCMC_ID);
-                string name = hcmc == null ? "" : hcmc.Name;
+        //public static string HCMC_Name
+        //{
+        //    get
+        //    {
+        //        OAMS.Models.GeoRepository geoRepository = new OAMS.Models.GeoRepository();
+        //        var hcmc = geoRepository.Get(OAMSSetting.HCMC_ID);
+        //        string name = hcmc == null ? "" : hcmc.Name;
 
-                return name;
-            }
-        }
+        //        return name;
+        //    }
+        //}
 
         public Geo GetByFullname(string fullname)
         {
@@ -60,6 +60,12 @@ namespace OAMS.Models
             Geo e = DB.Geos.Where(r => r.ID == ID).SingleOrDefault();
 
             return e;
+        }
+
+        public string GetName(Guid? ID = null)
+        {
+            Geo e = DB.Geos.Where(r => r.ID == ID).SingleOrDefault();
+            return e == null ? "" : e.Name;
         }
 
         public IQueryable<Geo> GetByParentID(Guid? parentID = null)
