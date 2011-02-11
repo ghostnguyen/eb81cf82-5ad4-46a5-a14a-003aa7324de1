@@ -10,6 +10,14 @@ namespace OAMS
 {
     public class Helper
     {
+        /// <summary>
+        /// In Km
+        /// </summary>
+        /// <param name="lat1"></param>
+        /// <param name="lng1"></param>
+        /// <param name="lat2"></param>
+        /// <param name="lng2"></param>
+        /// <returns></returns>
         public static double DistanceBetweenPoints(double? lat1, double? lng1, double? lat2, double? lng2)
         {
             if (lat1.HasValue && lng1.HasValue && lat2.HasValue && lng2.HasValue)
@@ -18,7 +26,6 @@ namespace OAMS
             {
                 return Double.MaxValue;
             }
-
 
             double R = 6371; // Radius of the Earth in km
             double dLat = (lat2.Value - lat1.Value) * Math.PI / 180;
@@ -37,21 +44,21 @@ namespace OAMS
     public class OAMSSetting
     {
         static public Message messageL = new Message();
-        static public string GoogleUsername
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings["GoogleUsername"];
-            }
-        }
+        //static public string GoogleUsername
+        //{
+        //    get
+        //    {
+        //        return ConfigurationManager.AppSettings["GoogleUsername"];
+        //    }
+        //}
 
-        static public string GooglePassword
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings["GooglePassword"];
-            }
-        }
+        //static public string GooglePassword
+        //{
+        //    get
+        //    {
+        //        return ConfigurationManager.AppSettings["GooglePassword"];
+        //    }
+        //}
 
         static public bool ByPassLogin
         {
@@ -69,13 +76,13 @@ namespace OAMS
             }
         }
 
-        public static Guid HCMC_ID
-        {
-            get
-            {
-                return Guid.Parse(ConfigurationManager.AppSettings["HCMC_ID"]);
-            }
-        }
+        //public static Guid HCMC_ID
+        //{
+        //    get
+        //    {
+        //        return Guid.Parse(ConfigurationManager.AppSettings["HCMC_ID"]);
+        //    }
+        //}
 
 
     }

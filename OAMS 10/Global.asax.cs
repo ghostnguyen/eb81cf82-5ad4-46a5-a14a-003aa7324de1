@@ -27,11 +27,11 @@ namespace OAMS
 
         protected void Application_Start()
         {
-            RoleRepository repo = new RoleRepository();
-            repo.InitRole();
-
             ControllerActionRepository actionAuthorizationRepo = new ControllerActionRepository();
             actionAuthorizationRepo.UpdateActionList();
+
+            AppSettingRepository appSettingRepository = new AppSettingRepository();
+            appSettingRepository.Reload();
 
             AreaRegistration.RegisterAllAreas();
             RegisterRoutes(RouteTable.Routes);

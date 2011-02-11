@@ -266,9 +266,6 @@ namespace OAMS.Controllers
         [CustomAuthorize]
         public ActionResult UpdateControllerAction()
         {
-            RoleRepository repo = new RoleRepository();
-            repo.InitRole();
-
             ControllerActionRepository actionAuthorizationRepo = new ControllerActionRepository();
             actionAuthorizationRepo.UpdateActionList();
 

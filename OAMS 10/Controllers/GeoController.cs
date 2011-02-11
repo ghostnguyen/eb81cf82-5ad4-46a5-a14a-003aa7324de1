@@ -100,15 +100,6 @@ namespace OAMS.Controllers
         public ActionResult Delete(int id, FormCollection collection)
         {
             return RedirectToAction("Index");
-        }
-
-        public ActionResult UpdateDefaultGeoID(Guid id)
-        {
-            AppSettingRepository appSettingRepository = new AppSettingRepository();
-
-            appSettingRepository.InsertOrUpdate(PropertyName.For(() => AppSetting.DefaultGeoID), id.ToString());
-
-            return RedirectToAction("Index");
-        }
+        }        
     }
 }

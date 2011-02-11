@@ -565,13 +565,9 @@ else if (category.Code == "Other")
     </div>
     </script>
     <script type="text/javascript">
-        //showGeo2('Hồ Chí Minh City', false, 'dis. 1, Hồ Chí Minh City');
 
-
-        $('#Geo1FullName').val('<%= OAMS.Models.GeoRepository.HCMC_Name %>');
-        showGeo2('<%= OAMS.Models.GeoRepository.HCMC_Name %>');
-        //$('#Geo2List1').setAttribute('checked', 'checked');
-
+        $('#Geo1FullName').val('<%= OAMS.Models.AppSetting.DefaultGeo1Name %>');
+        showGeo2('<%= OAMS.Models.AppSetting.DefaultGeo1Name %>');
 
         function updateDistanceFromTxt(txt) {
 
@@ -791,7 +787,8 @@ else if (category.Code == "Other")
 
 
                     if (VietnamBounds.contains(marker.position)
-                    || IndoBounds.contains(marker.position)) {
+                    //|| IndoBounds.contains(marker.position)
+                    ) {
                         bounds.extend(marker.position);
                     }
 
@@ -1026,13 +1023,16 @@ else if (category.Code == "Other")
 
         var infoWindow = new google.maps.InfoWindow;
 
-        var VietnamBounds = new google.maps.LatLngBounds(new google.maps.LatLng(6, 100), new google.maps.LatLng(24, 109));
-        var IndoBounds = new google.maps.LatLngBounds(new google.maps.LatLng(-6, 117), new google.maps.LatLng(5, 135));
+        //var VietnamBounds = new google.maps.LatLngBounds(new google.maps.LatLng(6, 100), new google.maps.LatLng(24, 109));
+        var VietnamBounds = new google.maps.LatLngBounds(new google.maps.LatLng('<%= OAMS.Models.AppSetting.MapBoundSWLat %>', '<%= OAMS.Models.AppSetting.MapBoundSWLng %>'), 
+                                                         new google.maps.LatLng('<%= OAMS.Models.AppSetting.MapBoundNELat %>', '<%= OAMS.Models.AppSetting.MapBoundNELng %>'));
+        //var IndoBounds = new google.maps.LatLngBounds(new google.maps.LatLng(-6, 117), new google.maps.LatLng(5, 135));
 
         function init() {
             var mapDiv = document.getElementById('map');
             map = new google.maps.Map(mapDiv, {
-                center: new google.maps.LatLng(10.77250, 106.69808),
+                //center: new google.maps.LatLng(10.77250, 106.69808),
+                center: new google.maps.LatLng(<%= OAMS.Models.AppSetting.FindMapCenterLat %>, <%= OAMS.Models.AppSetting.FindMapCenterLng %>),
                 zoom: 8,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });

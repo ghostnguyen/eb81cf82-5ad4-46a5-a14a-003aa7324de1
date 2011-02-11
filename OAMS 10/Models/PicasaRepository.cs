@@ -18,7 +18,8 @@ namespace OAMS.Models
         public PicasaService InitPicasaService()
         {
             PicasaService service = new PicasaService("OAMS");
-            service.setUserCredentials(OAMSSetting.GoogleUsername, OAMSSetting.GooglePassword);
+            //service.setUserCredentials(OAMSSetting.GoogleUsername, OAMSSetting.GooglePassword);
+            service.setUserCredentials(AppSetting.GoogleUsername, AppSetting.GooglePassword);
 
             service.AsyncOperationCompleted += new AsyncOperationCompletedEventHandler(service_AsyncOperationCompleted);
             return service;
@@ -141,7 +142,7 @@ namespace OAMS.Models
             newEntry.Title.Text = name + (isBackup ? "B" : "");
             newEntry.Summary.Text = newEntry.Title.Text;
 
-            Uri feedUri = new Uri(PicasaQuery.CreatePicasaUri(OAMSSetting.GoogleUsername));
+            Uri feedUri = new Uri(PicasaQuery.CreatePicasaUri(AppSetting.GoogleUsername));
 
             PicasaEntry createdEntry = (PicasaEntry)service.Insert(feedUri, newEntry);
 

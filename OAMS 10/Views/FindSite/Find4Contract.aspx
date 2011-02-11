@@ -443,11 +443,8 @@
     <% } %>
     <script type="text/javascript">
 
-        $('#Geo1FullName').val('<%= OAMS.Models.GeoRepository.HCMC_Name %>');
-        showGeo2('<%= OAMS.Models.GeoRepository.HCMC_Name %>');
-
-        //$('#Geo2List1').setAttribute('checked', 'checked');
-
+        $('#Geo1FullName').val('<%= OAMS.Models.AppSetting.DefaultGeo1Name %>');
+        showGeo2('<%= OAMS.Models.AppSetting.DefaultGeo1Name %>');
 
         function updateDistanceFromTxt(txt) {
 
@@ -919,11 +916,14 @@
 
         var infoWindow = new google.maps.InfoWindow;
 
-        var VietnamBounds = new google.maps.LatLngBounds(new google.maps.LatLng(6, 100), new google.maps.LatLng(24, 109));
+        //var VietnamBounds = new google.maps.LatLngBounds(new google.maps.LatLng(6, 100), new google.maps.LatLng(24, 109));
+        var VietnamBounds = new google.maps.LatLngBounds(new google.maps.LatLng('<%= OAMS.Models.AppSetting.MapBoundSWLat %>', '<%= OAMS.Models.AppSetting.MapBoundSWLng %>'), 
+                                                         new google.maps.LatLng('<%= OAMS.Models.AppSetting.MapBoundNELat %>', '<%= OAMS.Models.AppSetting.MapBoundNELng %>'));
         function init() {
             var mapDiv = document.getElementById('map');
             map = new google.maps.Map(mapDiv, {
-                center: new google.maps.LatLng(10.77250, 106.69808),
+                //center: new google.maps.LatLng(10.77250, 106.69808),
+                center: new google.maps.LatLng('<%= OAMS.Models.AppSetting.FindMapCenterLat %>', '<%= OAMS.Models.AppSetting.FindMapCenterLng %>'),
                 zoom: 8,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });

@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AppSettingController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CampaignController.cs" />
     <Compile Include="Controllers\ClientContactController.cs" />
@@ -164,6 +165,7 @@
       <DependentUpon>OAMS.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Partial\AppSetting.cs" />
+    <Compile Include="Models\Partial\SitePhoto.cs" />
     <Compile Include="Models\Partial\SiteMonitoringPhoto.cs" />
     <Compile Include="Models\Partial\Rpt01_Model_SiteMonitoring.cs" />
     <Compile Include="Models\SiteMonitoringPhotoRepository.cs" />
