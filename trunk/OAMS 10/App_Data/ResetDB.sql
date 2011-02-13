@@ -32,7 +32,11 @@ DBCC CHECKIDENT (ContractDetail, RESEED, 0)
 delete [Contract]
 DBCC CHECKIDENT ([Contract], RESEED, 0)
 
+delete QuoteDetail
+DBCC CHECKIDENT (QuoteDetail, RESEED, 0)
 
+delete [Quote]
+DBCC CHECKIDENT ([Quote], RESEED, 0)
 
 delete [Site]
 DBCC CHECKIDENT ([Site], RESEED, 0)
