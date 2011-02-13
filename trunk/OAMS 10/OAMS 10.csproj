@@ -124,6 +124,8 @@
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ContractTimelineController.cs" />
+    <Compile Include="Controllers\QuoteDetailController.cs" />
+    <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="Controllers\SiteMonitoringPhotoController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SiteDetailController.cs" />
@@ -140,6 +142,8 @@
     </Compile>
     <Compile Include="Helper.cs" />
     <Compile Include="Models\ClientRepository.cs" />
+    <Compile Include="Models\QuoteDetailRepository.cs" />
+    <Compile Include="Models\QuoteRepository.cs" />
     <Compile Include="Models\Partial\AccountModels.cs" />
     <Compile Include="Models\Partial\AccountProfile.cs" />
     <Compile Include="Models\AccountRepository.cs" />
@@ -165,6 +169,8 @@
       <DependentUpon>OAMS.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Partial\AppSetting.cs" />
+    <Compile Include="Models\Partial\QuoteDetail.cs" />
+    <Compile Include="Models\Partial\Quote.cs" />
     <Compile Include="Models\Partial\SitePhoto.cs" />
     <Compile Include="Models\Partial\SiteMonitoringPhoto.cs" />
     <Compile Include="Models\Partial\Rpt01_Model_SiteMonitoring.cs" />
@@ -296,6 +302,7 @@
     <Content Include="Views\Contract\Index.aspx" />
     <Content Include="Views\Contract\ManageContractTimeline.ascx" />
     <Content Include="Views\Contract\ViewReport.aspx" />
+    <Content Include="Views\FindSite\Find4Quote.aspx" />
     <Content Include="Views\FindSite\Find4Contract.aspx" />
     <Content Include="Views\FindSite\Find.aspx" />
     <Content Include="Views\Geo\Create.aspx" />
@@ -386,9 +393,15 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>OAMS.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Web.Release4Indo.config">
-      <DependentUpon>Web.config</DependentUpon>
+    <Content Include="Views\Quote\Index.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\SiteLayout.cshtml">
+      <SubType>Code</SubType>
     </Content>
+    <Content Include="Views\Quote\Create.cshtml" />
+    <Content Include="Views\Quote\Edit.cshtml" />
+    <Content Include="Views\QuoteDetail\Edit.cshtml" />
+    <Content Include="Views\AppSetting\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

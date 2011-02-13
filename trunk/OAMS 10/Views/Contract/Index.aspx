@@ -54,7 +54,7 @@
                     Email1
                 </th>
                 <th>
-                    ContractName2
+                    ContactName2
                 </th>
                 <th>
                     Phone2
@@ -121,7 +121,7 @@
                     <%: item.Email1 %>
                 </td>
                 <td>
-                    <%: item.ContractName2 %>
+                    <%: item.ContactName2 %>
                 </td>
                 <td>
                     <%: item.Phone2 %>

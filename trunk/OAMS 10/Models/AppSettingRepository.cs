@@ -53,5 +53,10 @@ namespace OAMS.Models
             DB.SaveChanges();
             Reload();
         }
+
+        public List<AppSetting> GetAll()
+        {
+            return DB.AppSettings.ToList();
+        }
     }
 }

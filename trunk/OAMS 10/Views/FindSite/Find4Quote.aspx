@@ -169,8 +169,7 @@
                 <div id="divMoreProduct">
                     <br />
                     Current Product<br />
-                </div>
-                <%--<input type="button" value="More..." onclick="addMoreContractor()" />--%>
+                </div>                
                 <a id="addProduct" href="javascript:addMoreProduct();">More...</a>
                 <br />
                 <script type="text/javascript" language="javascript">
@@ -228,7 +227,7 @@
                 <div id="divMoreContractor">
                     <br />Contractor<br />
                 </div>
-                <%--<input type="button" value="More..." onclick="addMoreContractor()" />--%>
+                
                 <a id="addContractor" href="javascript:addMoreContractor();">More...</a>
                 <br />
                 <script type="text/javascript" language="javascript">
@@ -346,8 +345,7 @@
             <td valign="top">
                 <input id="btnFind" type="button" onclick="search(this);" value="Find" />
                 <a href="javascript:toggleSearchPane();">Show/Hide Search Criteria</a>
-                <%--<%: Html.ActionLinkWithRoles<OAMS.Controllers.FindSiteController>("Find", r => r.FindJson4Contract(null,0), null, new Dictionary<string, object>() { { "href", "javascript:search(this);" } }, true)%>
-                <input id="btnToggleSearchPane" type="button" onclick="toggleSearchPane()" value="Hide Search Criteria" />--%>
+                
                 <table width="100%">
                     <tr>
                         <td>
@@ -609,9 +607,9 @@
 
         function addResults(json) {
 
-            var contractID = getURLParameter('ContractID');
+            //var contractID = getURLParameter('ContractID');            
             var quoteID = getURLParameter('QuoteID');
-            //HideUncheck(document.forms[0].StyleList);
+
 
             HideUncheck(document.forms[0].Geo2List, 'Geo2ListMore');
             HideUncheckStyle(document.forms[0].StyleList, 'StyleListMore');
@@ -622,7 +620,7 @@
 
             if (json.length) {
                 var profileImageUrl;
-                var addTemplate = '<%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("Add to Contract", r => r.AddSite(0,0), null, new Dictionary<string,object> (){{"href","javascript:Add2Contract(linkAdd2Cam, contractID, siteDetailID);"},{"id","aAdd2Cam"}},true) %>';
+                var addTemplate = '<%: Html.ActionLinkWithRoles<OAMS.Controllers.QuoteController>("Add to Quote", r => r.AddSite(0,0), null, new Dictionary<string,object> (){{"href","javascript:Add2Quote(linkAdd2Cam, quoteID, siteDetailID);"},{"id","aAdd2Cam"}},true) %>';
                 for (var i = 0, site; site = json[i]; i++) {
                     if (site.CodeType == 'WMB') {
                         profileImageUrl = '<%= Url.Content("~/Content/Image/wallmountedbannee.png") %>';
@@ -814,42 +812,12 @@
                     else {
                         if (addTemplate != null && addTemplate != '') {
                             aAdd2Cam.innerHTML = 'Add to';
-                            ////aAdd2Cam.onclick = Add2Contract(aAdd2Cam, contractID, siteID);
-                            aAdd2Cam.onclick = Add2Contract(aAdd2Cam, contractID, siteDetailID);
+                            aAdd2Cam.onclick = Add2Quote(aAdd2Cam, quoteID, siteDetailID);
                         }
-                        //aAdd2Cam.innerHTML = addTemplate.replace('contractID', contractID).replace('siteDetailID', siteDetailID);
                     }
 
                     cStyle10.appendChild(aAdd2Cam);
-
-//                    if (site.Added) {
-//                        cStyle10.innerHTML = "<a href='javascript:void(0);'>Added</a>";
-//                    }
-//                    else {
-//                        cStyle10.innerHTML = addTemplate.replace('contractID', contractID).replace('siteDetailID', siteDetailID).replace('aAdd2Cam', 'a' + siteDetailID).replace("linkAdd2Cam", "$(#a" + siteDetailID + ")");
-//                    }
                 }
-                //$('#example').dataTable();
-                //                $('#tblResult').dataTable({
-                //                    "aoColumnDefs": [
-                //                    { "asSorting": ["asc"], "aTargets": [0] },
-                //                    ]
-                //                });
-                //                oTable = $('#tblResult').dataTable({
-
-                //                    "aoColumnDefs": [
-
-                //                        { "bVisible": false, "aTargets": [0] }
-
-                //                                    ]
-                //                });
-
-                //                if (oTable != null) {
-                //                    oTable.fnDraw();
-                //                    //oTable = $('#tblResult').dataTable();
-                //                }
-                //                else
-                //                    oTable = $('#tblResult').dataTable();
 
                 oTable = $('#tblResult').dataTable();
 
@@ -874,10 +842,8 @@
             //$('#results-wrapper').show();
         }
 
-        function Add2Contract(link, contractID, siteDetailID) {
-            //function Add2Contract(link, contractID, siteID) {
-            //alert(link.innerHTML);
-            var url = '<%= Url.Content("~/Contract/AddSite?ContractID=") %>' + contractID + '&SiteDetailID=' + siteDetailID;
+        function Add2Quote(link, quoteID, siteDetailID) {
+            var url = '<%= Url.Content("~/Quote/AddSite?QuoteID=") %>' + quoteID + '&SiteDetailID=' + siteDetailID;
             return function () {
             $.ajax({
                 url: url, type: "POST", dataType: "json",
@@ -1038,53 +1004,16 @@
             }
             var tdata = $("form").serialize();
 
-            var contractID = getURLParameter("ContractID");
+            var quoteID = getURLParameter("QuoteID");
 
             $.ajax({
-                url: '<%= Url.Content("~/FindSite/FindJson4Contract?ContractID=") %>' + contractID, type: "POST", dataType: "json",
+                url: '<%= Url.Content("~/FindSite/FindJson4Quote?QuoteID=") %>' + quoteID, type: "POST", dataType: "json",
                 data: tdata,
                 success: function (data) {
-
                     clearMarkers();
-
-
                     addResults(data);
-
-                    //                    $.map(data, function (item) {
-                    //                        var latlng = new google.maps.LatLng(item.Latitude, item.Longitude);
-                    //                        var marker = new google.maps.Marker({ position: latlng, map: map, title: item.Code });
-                    //                        bindInfoWindow(marker, map, infoWindow, item.Note);
-                    //                    })
                 }
             })
-
-
-
-
-            //            e.preventDefault();
-            //            var q = $('#q').val();
-            //            if (q == '') {
-            //                return false;
-            //            }
-
-            //            var d = distanceWidget.get('distance');
-            //            var p = distanceWidget.get('position');
-
-            //            var url = 'http://search.twitter.com/search.json?callback=addResults' +
-            //    '&rrp=100&q=' + escape(q) + '&geocode=' + escape(p.lat() + ',' + p.lng() +
-            //    ',' + d + 'km');
-
-            //            clearMarkers();
-
-            //            $.getScript(url);
-
-            //            $('#results').html('Searching...');
-            //            var cols = $('#cols');
-            //            if (!cols.hasClass('has-cols')) {
-            //                $('#cols').addClass('has-cols');
-            //                google.maps.event.trigger(map, 'resize');
-            //                map.fitBounds(distanceWidget.get('bounds'));
-            //            }
         }
 
         function clearMarkers() {
