@@ -26,15 +26,6 @@ namespace OAMS.Controllers
             return View(e);
         }
 
-
-        //[HttpPost]
-        //public ActionResult Find(FindSite e)
-        //{
-        //    e.Results = SiteRepository.Repo.GetAll().ToList();
-
-        //    return View(e);
-        //}
-
         [HttpPost]
         public JsonResult FindJson(FindSite e)
         {
@@ -147,6 +138,14 @@ namespace OAMS.Controllers
             return View(e);
         }
 
+        public ActionResult Find4Quote(int campaignID = 0)
+        {
+            FindSite e = new FindSite();
+            e.From = DateTime.Now.Date;
+            e.CampaignID = campaignID;
+            return View(e);
+        }
+
         [HttpPost]
         public JsonResult FindJson4Contract(FindSite e, int contractID)
         {
@@ -214,6 +213,74 @@ namespace OAMS.Controllers
                 Added = r.Site.ContractDetails.Where(r1 => r1.ContractID == contractID && r1.SiteDetailName == r.Name).Count() > 0 ? true : false,
 
                 //Add = false,    
+            }));
+        }
+
+        [HttpPost]
+        public JsonResult FindJson4Quote(FindSite e, int quoteID)
+        {
+            var siteDetailRepo = new SiteDetailRepository();
+
+            var l = siteDetailRepo.DB.SiteDetails.Include("Site").ToList()
+                .Where(r =>
+                    e.StyleList.Contains(r.Site.Type)
+                && (e.ContractorList == null || e.ContractorList.Contains(r.Site.ContractorID.ToInt()))
+                && (e.ClientList == null || e.ClientList.Contains(r.Product == null ? 0 : r.Product.ClientID.ToInt()))
+                && (e.ProductIDList == null || e.ProductIDList.Contains(r.ProductID.HasValue ? r.ProductID.Value : 0))
+                && (e.CatList == null
+                    || (r.Product != null
+                        && (e.CatList.Contains(r.Product.CategoryID1.ToString()) || e.CatList.Contains(r.Product.CategoryID2.ToString()) || e.CatList.Contains(r.Product.CategoryID3.ToString()))
+                        )
+                    )
+                && (string.IsNullOrEmpty(e.Format) || r.Format == e.Format)
+                && (string.IsNullOrEmpty(e.RoadType1) || r.Site.RoadType1 == e.RoadType1.ToInt())
+                && (string.IsNullOrEmpty(e.RoadType2) || r.Site.RoadType2 == e.RoadType2.ToInt())
+                && (string.IsNullOrEmpty(e.InstallationPosition1) || r.Site.InstallationPosition1 == e.InstallationPosition1.ToInt())
+                && (string.IsNullOrEmpty(e.InstallationPosition2) || r.Site.InstallationPosition2 == e.InstallationPosition2.ToInt())
+                && (string.IsNullOrEmpty(e.ViewingDistance) || r.Site.ViewingDistance == e.ViewingDistance.ToInt())
+                && (string.IsNullOrEmpty(e.ViewingSpeed) || r.Site.ViewingSpeed == e.ViewingSpeed.ToInt())
+                && (string.IsNullOrEmpty(e.Height) || r.Site.Height == e.Height.ToInt())
+                && (string.IsNullOrEmpty(e.DirectionalTrafficPublicTransport) || r.Site.DirectionalTrafficPublicTransport == e.DirectionalTrafficPublicTransport.ToInt())
+                && (string.IsNullOrEmpty(e.ShopSignsBillboards) || r.Site.ShopSignsBillboards == e.ShopSignsBillboards.ToInt())
+                && (string.IsNullOrEmpty(e.FlagsTemporaryBannersPromotionalItems) || r.Site.FlagsTemporaryBannersPromotionalItems == e.FlagsTemporaryBannersPromotionalItems.ToInt())
+                && (string.IsNullOrEmpty(e.CompetitiveProductSigns) || r.Site.CompetitiveProductSigns == e.CompetitiveProductSigns.ToInt())
+                && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName))
+                && ((string.IsNullOrEmpty(e.Geo1FullName) && e.Geo2List == null)
+                    || (e.Geo2List != null && (e.Geo2List.FirstOrDefault() == null || (r.Site.Geo2 != null && e.Geo2List.Contains(r.Site.Geo2.FullName)))))
+
+                    ).ToList()
+                .Where(r => !e.IsWithinCircle || Helper.DistanceBetweenPoints(r.Site.Lat, r.Site.Lng, e.Lat, e.Long) <= e.Distance)
+                .ToList();
+
+            CodeMasterType cmt = new CodeMasterType();
+
+            CodeMasterRepository codeMasterRepo = new CodeMasterRepository();
+
+            return Json(l.Select(r => new
+            {
+                r.ID,
+                r.SiteID,
+                r.Name,
+                r.Site.Lat,
+                r.Site.Lng,
+                AddressLine1 = r.Site.AddressLine1 ?? "",
+                AddressLine2 = r.Site.AddressLine2 ?? "",
+                Code = r.Site.Code ?? "",
+                r.Format,
+                Type = string.IsNullOrEmpty(r.Site.Type) ? "" : codeMasterRepo.GetNote(cmt.Type, r.Site.Type),
+                CodeType = r.Site.Type,
+                r.Site.GeoFullName,
+                Address = r.Site.AddressLine1 + " " + r.Site.AddressLine2,
+                Orientation = r.Site.Width >= r.Site.Height ? "Horizontal" : "Vertical",
+                Size = string.Format("{0}m x {1}m", r.Site.Height.ToString(), r.Site.Width.ToString()),
+                Lighting = r.Site.FrontlitNumerOfLamps > 0 ? "Fontlit" : "Backlit",
+                Contractor = r.Site.Contractor != null ? r.Site.Contractor.Name : "",
+                CurrentProduct = r.Product == null ? "" : (r.Product.Name ?? ""),
+                CurrentClient = r.Product == null ? "" : (r.Product.Client == null ? "" : (r.Product.Client.Name ?? "")),
+                r.Site.Score,
+                AlbumID = string.IsNullOrEmpty(r.Site.AlbumUrl) ? "" : r.Site.AlbumUrl.Split('/')[9].Split('?')[0],
+                AuthID = string.IsNullOrEmpty(r.Site.AlbumUrl) ? "" : r.Site.AlbumUrl.Split('?')[1].Split('=')[1],
+                Added = r.Site.QuoteDetails.Where(r1 => r1.QuoteID == quoteID && r1.SiteDetailName == r.Name).Count() > 0 ? true : false,
             }));
         }
     }

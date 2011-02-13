@@ -108,11 +108,11 @@
             <%: Html.ValidationMessageFor(model => model.Email1) %>
         </div>
         <div class="editor-label">
-            <%: Html.LabelFor(model => model.ContractName2) %>
+            <%: Html.LabelFor(model => model.ContactName2) %>
         </div>
         <div class="editor-field">
-            <%: Html.TextBoxFor(model => model.ContractName2) %>
-            <%: Html.ValidationMessageFor(model => model.ContractName2) %>
+            <%: Html.TextBoxFor(model => model.ContactName2) %>
+            <%: Html.ValidationMessageFor(model => model.ContactName2) %>
         </div>
         <div class="editor-label">
             <%: Html.LabelFor(model => model.Phone2) %>

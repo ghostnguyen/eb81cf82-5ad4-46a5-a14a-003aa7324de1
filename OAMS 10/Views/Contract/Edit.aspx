@@ -157,11 +157,11 @@
                             <%: Html.ValidationMessageFor(model => model.Email1) %>
                         </div>
                         <div class="editor-label">
-                            <%: Html.LabelFor(model => model.ContractName2) %>
+                            <%: Html.LabelFor(model => model.ContactName2) %>
                         </div>
                         <div class="editor-field">
-                            <%: Html.TextBoxFor(model => model.ContractName2) %>
-                            <%: Html.ValidationMessageFor(model => model.ContractName2) %>
+                            <%: Html.TextBoxFor(model => model.ContactName2) %>
+                            <%: Html.ValidationMessageFor(model => model.ContactName2) %>
                         </div>
                         <div class="editor-label">
                             <%: Html.LabelFor(model => model.Phone2) %>
@@ -384,7 +384,7 @@
                                         <%: Model.ClientName %>
                                     </td>
                                     <td>
-                                        <%: item.Product %>
+                                        <%: item.Product == null ? "" : item.Product.Name%>
                                     </td>
                                     <td>
                                         <%: item.Site.ContractorName %>
@@ -405,7 +405,6 @@
     </div>
     <% } %>
     <div>
-        <%--<%: Html.ActionLink("Back to List", "Index") %>--%>
         <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("Back to List", r => r.Index(), null, null, false)%>
     </div>
     <script type="text/javascript" language="javascript">
