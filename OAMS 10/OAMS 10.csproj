@@ -252,7 +252,8 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\grid.base.js" />
-    <Content Include="Scripts\jquery-1.4.2.min.js" />
+    <Content Include="Scripts\jquery-1.5.js" />
+    <Content Include="Scripts\jquery-1.5.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.1.custom.min.js" />
     <Content Include="Scripts\jquery.dataTables.js" />
     <Content Include="Scripts\superfish.js" />
@@ -342,7 +343,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
@@ -361,9 +361,6 @@
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Scripts\jquery-1.4.4.js" />
-    <Content Include="Scripts\jquery-1.4.4-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.4.4.min.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -402,6 +399,7 @@
     <Content Include="Views\Quote\Edit.cshtml" />
     <Content Include="Views\QuoteDetail\Edit.cshtml" />
     <Content Include="Views\AppSetting\Index.cshtml" />
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
