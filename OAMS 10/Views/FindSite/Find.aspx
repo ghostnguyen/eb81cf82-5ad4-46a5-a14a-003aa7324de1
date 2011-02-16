@@ -139,6 +139,7 @@ else if (category.Code == "Other")
                         installationPositionCount = installationPositionCount + 1;
                     }
                 </script>
+                
                 <br />
                 <div id="divMoreInstallationPosition">
                     <br />
@@ -428,7 +429,7 @@ else if (category.Code == "Other")
     <table>
         <tr>
             <td style="width: 100%; vertical-align: top;">
-                <div id="divCol">
+                <%--<div id="divCol">
                     Display columns:
                     <input type="checkbox" id="chkColID" checked="checked" />
                     ID
@@ -459,7 +460,7 @@ else if (category.Code == "Other")
                     <input type="checkbox" id="chkColWard" checked="checked" />
                     Ward
                     <input type="button" id="hell" value="Ok" onclick='ShowHideCols();' />
-                </div>
+                </div>--%>
                 <table id="tblResult" class="display">
                     <thead>
                         <tr>
@@ -591,22 +592,22 @@ else if (category.Code == "Other")
         }
 
         var oTable;
-        function ShowHideCols() {
-            oTable.fnSetColumnVis(0, $('#chkColID').attr('checked'));
-            oTable.fnSetColumnVis(1, $('#chkColCat1').attr('checked'));
-            oTable.fnSetColumnVis(2, $('#chkColCat2').attr('checked'));
-            oTable.fnSetColumnVis(3, $('#chkColType').attr('checked'));
-            oTable.fnSetColumnVis(4, $('#chkColFormat').attr('checked'));
-            oTable.fnSetColumnVis(5, $('#chkColAddressLine1').attr('checked'));
-            oTable.fnSetColumnVis(6, $('#chkColAddressLine2').attr('checked'));
-            oTable.fnSetColumnVis(7, $('#chkColSize').attr('checked'));
-            oTable.fnSetColumnVis(8, $('#chkColCurrentProduct').attr('checked'));
-            oTable.fnSetColumnVis(9, $('#chkColCurrentClient').attr('checked'));
-            oTable.fnSetColumnVis(10, $('#chkColContractor').attr('checked'));
-            oTable.fnSetColumnVis(11, $('#chkColScore').attr('checked'));
-            oTable.fnSetColumnVis(12, $('#chkColDistrict').attr('checked'));
-            oTable.fnSetColumnVis(13, $('#chkColWard').attr('checked'));
-        }
+//        function ShowHideCols() {
+//            oTable.fnSetColumnVis(0, $('#chkColID').attr('checked'));
+//            oTable.fnSetColumnVis(1, $('#chkColCat1').attr('checked'));
+//            oTable.fnSetColumnVis(2, $('#chkColCat2').attr('checked'));
+//            oTable.fnSetColumnVis(3, $('#chkColType').attr('checked'));
+//            oTable.fnSetColumnVis(4, $('#chkColFormat').attr('checked'));
+//            oTable.fnSetColumnVis(5, $('#chkColAddressLine1').attr('checked'));
+//            oTable.fnSetColumnVis(6, $('#chkColAddressLine2').attr('checked'));
+//            oTable.fnSetColumnVis(7, $('#chkColSize').attr('checked'));
+//            oTable.fnSetColumnVis(8, $('#chkColCurrentProduct').attr('checked'));
+//            oTable.fnSetColumnVis(9, $('#chkColCurrentClient').attr('checked'));
+//            oTable.fnSetColumnVis(10, $('#chkColContractor').attr('checked'));
+//            oTable.fnSetColumnVis(11, $('#chkColScore').attr('checked'));
+//            oTable.fnSetColumnVis(12, $('#chkColDistrict').attr('checked'));
+//            oTable.fnSetColumnVis(13, $('#chkColWard').attr('checked'));
+//        }
         function showGeo2(str) {
             //alert(str);
             //var v = $("#geo2List").text();
@@ -974,7 +975,8 @@ else if (category.Code == "Other")
                 //                else
                 //                    oTable = $('#tblResult').dataTable();
 
-                oTable = $('#tblResult').dataTable();
+                oTable = $('#tblResult').dataTable({"sDom": 'C<"clear">lfrtip'});
+
 
             }
             else {

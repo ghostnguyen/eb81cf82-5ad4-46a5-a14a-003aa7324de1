@@ -7,8 +7,8 @@
     <script type="text/javascript" language="javascript">
         var oTable;
         $(document).ready(function () {
-            oTable = $('#tblResult').dataTable({ "aaSorting": [[0, "desc"]], "iDisplayLength": 20 });
-            ShowHideCols();
+            oTable = $('#tblResult').dataTable({ "aaSorting": [[0, "desc"]], "iDisplayLength": 20, "sDom": 'C<"clear">lfrtip' });
+            //ShowHideCols();
         });
     </script>
     <h2>
@@ -194,7 +194,7 @@
                 <td>
                     <%--<%: Html.ActionLink("Add Sites", "Find4Contract", "FindSite", new { ContractID = Model.ID},null)%>--%>
                     <%: Html.ActionLinkWithRoles<OAMS.Controllers.FindSiteController>("Add Sites", r => r.Find4Contract(0), new RouteValueDictionary(new { ContractID = Model.ID }), null, false)%>
-                    <div id="divCol" style="overflow: auto;">
+                    <%--<div id="divCol" style="overflow: auto;">
                         Display columns:
                         <input type="checkbox" id="chkColID" checked="checked" />
                         ID
@@ -227,7 +227,7 @@
                         <input type="checkbox" id="chkColPhotoCount" checked="checked" />
                         PhotoCount
                         <input type="button" id="hell" value="Ok" onclick='ShowHideCols();' />
-                    </div>
+                    </div>--%>
                     <br />
                     <div>
                         <table id="tblResult" class="display">
@@ -287,12 +287,12 @@
                             </thead>
                             <tbody>
                                 <% 
-                                    var editTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.ContractDetailController>("Edit", r => r.Edit(0), new RouteValueDictionary(new { id = "contractDetailID" }), null, false);
-                                    var removeTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.ContractDetailController>("Remove", r => r.Delete(0), new RouteValueDictionary(new { id = "contractDetailID" }), new Dictionary<string, object>() { { "onclick", "return confirm('Delete?');" } }, false);
+var editTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.ContractDetailController>("Edit", r => r.Edit(0), new RouteValueDictionary(new { id = "contractDetailID" }), null, false);
+var removeTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.ContractDetailController>("Remove", r => r.Delete(0), new RouteValueDictionary(new { id = "contractDetailID" }), new Dictionary<string, object>() { { "onclick", "return confirm('Delete?');" } }, false);
                                 %>
                                 <% 
-                                    foreach (var item in Model.ContractDetails)
-                                    { %>
+           foreach (var item in Model.ContractDetails)
+           { %>
                                 <tr>
                                     <td>
                                         <%:item.ID %>
@@ -312,12 +312,12 @@
                                             <%--<%: Html.ActionLink("New", "Create", "SiteMonitoring",  new { ContractDetailID=item.ID },null) %>--%>
                                             <%: Html.ActionLinkWithRoles<OAMS.Controllers.SiteMonitoringController>("New", r => r.Create(0), new RouteValueDictionary(new { ContractDetailID = item.ID }), null, false)%>
                                             <% 
-                                                var smEditTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteMonitoringController>("order", r => r.Edit(0), new RouteValueDictionary(new { id = "siteMonitoringID" }), null, false);
-                                                var smRedEditTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteMonitoringController>("order", r => r.Edit(0), new RouteValueDictionary(new { id = "siteMonitoringID" }), new Dictionary<string, object>() { { "style", "color:Red;" } }, false);
+var smEditTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteMonitoringController>("order", r => r.Edit(0), new RouteValueDictionary(new { id = "siteMonitoringID" }), null, false);
+var smRedEditTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteMonitoringController>("order", r => r.Edit(0), new RouteValueDictionary(new { id = "siteMonitoringID" }), new Dictionary<string, object>() { { "style", "color:Red;" } }, false);
                                             %>
                                             <% 
-                                                foreach (var sm in item.SiteMonitorings)
-                                                {
+                                        foreach (var sm in item.SiteMonitorings)
+                                        {
                                             %>
                                             <%: "|" %>
                                             <% if (!string.IsNullOrEmpty(sm.Issues) || sm.IssuesCount.HasValue)
@@ -408,22 +408,22 @@
         <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("Back to List", r => r.Index(), null, null, false)%>
     </div>
     <script type="text/javascript" language="javascript">
-        function ShowHideCols() {
-            oTable.fnSetColumnVis(3, $('#chkColID').attr('checked'));
-            oTable.fnSetColumnVis(4, $('#chkColPrice').attr('checked'));
-            oTable.fnSetColumnVis(5, $('#chkColProductionPrice').attr('checked'));
-            oTable.fnSetColumnVis(6, $('#chkColEffectiveDate').attr('checked'));
-            oTable.fnSetColumnVis(7, $('#chkColTermDate').attr('checked'));
-            oTable.fnSetColumnVis(8, $('#chkColGeoFullName').attr('checked'));
-            oTable.fnSetColumnVis(9, $('#chkColAddressLine1').attr('checked'));
-            oTable.fnSetColumnVis(10, $('#chkColAddressLine2').attr('checked'));
-            oTable.fnSetColumnVis(11, $('#chkColType').attr('checked'));
-            oTable.fnSetColumnVis(12, $('#chkColFormat').attr('checked'));
-            oTable.fnSetColumnVis(13, $('#chkColCurrentClient').attr('checked'));
-            oTable.fnSetColumnVis(14, $('#chkColCurrentProduct').attr('checked'));
-            oTable.fnSetColumnVis(15, $('#chkColContractor').attr('checked'));
-            oTable.fnSetColumnVis(16, $('#chkColPhotoCount').attr('checked'));
-        }
+        //        function ShowHideCols() {
+        //            oTable.fnSetColumnVis(3, $('#chkColID').attr('checked'));
+        //            oTable.fnSetColumnVis(4, $('#chkColPrice').attr('checked'));
+        //            oTable.fnSetColumnVis(5, $('#chkColProductionPrice').attr('checked'));
+        //            oTable.fnSetColumnVis(6, $('#chkColEffectiveDate').attr('checked'));
+        //            oTable.fnSetColumnVis(7, $('#chkColTermDate').attr('checked'));
+        //            oTable.fnSetColumnVis(8, $('#chkColGeoFullName').attr('checked'));
+        //            oTable.fnSetColumnVis(9, $('#chkColAddressLine1').attr('checked'));
+        //            oTable.fnSetColumnVis(10, $('#chkColAddressLine2').attr('checked'));
+        //            oTable.fnSetColumnVis(11, $('#chkColType').attr('checked'));
+        //            oTable.fnSetColumnVis(12, $('#chkColFormat').attr('checked'));
+        //            oTable.fnSetColumnVis(13, $('#chkColCurrentClient').attr('checked'));
+        //            oTable.fnSetColumnVis(14, $('#chkColCurrentProduct').attr('checked'));
+        //            oTable.fnSetColumnVis(15, $('#chkColContractor').attr('checked'));
+        //            oTable.fnSetColumnVis(16, $('#chkColPhotoCount').attr('checked'));
+        //        }
 
         function EditDetail(contractDetailID) {
 

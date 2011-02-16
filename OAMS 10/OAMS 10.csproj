@@ -207,6 +207,7 @@
     <Content Include="App_Data\OAMS_log.ldf">
       <DependentUpon>OAMS.MDF</DependentUpon>
     </Content>
+    <Content Include="Content\css\ColVis.css" />
     <Content Include="Content\css\demo_table.css" />
     <Content Include="Content\Image\ambient.png" />
     <Content Include="Content\Image\arrows-ffffff.png" />
@@ -250,8 +251,11 @@
     <Content Include="Content\smoothness\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\smoothness\jquery-ui-1.8.1.custom.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\ColVis.min.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\grid.base.js" />
+    <Content Include="Scripts\jquery-1.5-vsdoc-para.js" />
+    <Content Include="Scripts\jquery-1.5-vsdoc.js" />
     <Content Include="Scripts\jquery-1.5.js" />
     <Content Include="Scripts\jquery-1.5.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.1.custom.min.js" />
