@@ -221,70 +221,121 @@ function UpdateSiteMonitoringPhotoNote(url, siteMonitoringPhotoID, note) {
     })
 }
 
-function manyTxt(divAddMore,txtName,txtValue,listName,delName) {
 
-    var count = 0;
-    var lblCount = divAddMore.find('#lblCount');
-    if (lblCount == null) {
-        var lblCount = document.createElement('input');
-        inputCollapse.setAttribute('type', 'text');
-        inputCollapse.setAttribute('style', 'display: none;');
-        inputCollapse.setAttribute('value', '1');
-        inputCollapse.setAttribute('id', 'lblCount');
-        divAddMore.append(lblCount);
-        count = 1;
-    }
-    else {
-        count = lblCount.attr("id");
-    }
+; (function ($) {
 
-    //var divAddMore = $('#divMoreInstallationPosition');
-    var input = document.createElement('input');
-    var $input = $(input);
-    $input.attr('type', 'text');
-    $input.attr('id', txtName + count);
-    $input.attr('class', 'text-box single-line');
-    //input.setAttribute('onblur', "javascript:if($('#" + txtName + count + "').val() == '') {$('#" + txtValue + count + "').val('');}");
-    $input.blur(function () { });
-    divAddMore.append($input);
-    
+    $.manyTxt = function (el, options) {
+        // To avoid scope issues, use 'base' instead of 'this'
+        // to reference this class from internal events and functions.
+        var base = this;
 
-    var inputCollapse = document.createElement('input');
-    inputCollapse.setAttribute('type', 'text');
-    inputCollapse.setAttribute('style', 'display: none;');
-    inputCollapse.setAttribute('name', listName);
-    inputCollapse.setAttribute('id', txtValue + count);
-    divAddMore.append(inputCollapse);
+        // Access to jQuery and DOM versions of element
+        base.$el = $(el);
+        base.el = el;
 
-    var lnkDelete = document.createElement('a');
-    lnkDelete.setAttribute('id', delName + count);
-    lnkDelete.setAttribute('onclick', "$('#" + txtName + count + "').remove();$('#" + txtValue + count + "').remove();$('#LnkDeleteInstallationPosition" + installationPositionCount + "').remove();");
-    lnkDelete.innerHTML = 'X';
-    lnkDelete.setAttribute('style', 'text-decoration:underline;cursor:pointer;');
-    lnkDelete.setAttribute('title', 'Remove this InstallationPosition out of search criteria');
-    divAddMore.append(" ").append(lnkDelete);
+        // Add a reverse reference to the DOM object
+        base.$el.data("manyTxt", base);
 
-    $(function () {
-        $("#InstallationPosition" + installationPositionCount).autocomplete({
-            select: function (event, ui) {
-                var index = this.id.substring(20);
-                $("#InstallationPositionMark" + index).val(ui.item.id);
-            },
-            source: function (request, response) {
-                $.ajax({
-                    url: '../Listing/ListInstallationPosition1', type: "POST", dataType: "json",
-                    data: { searchText: request.term },
-                    success: function (data) {
-                        response($.map(data, function (item) {
-                            return { label: item.FullName, value: item.FullName, id: item.ID }
-                        }))
-                    }
-                })
-            }
+        base.init = function () {
+
+            base.options = $.extend({}, $.manyTxt.defaultOptions, options);
+
+            base.options = $.metadata ? $.extend({}, base.options, base.$el.metadata()) : base.options;
+
+            // Put your initialization code here
+            //alert(base.options.url);
+            var note = base.$el.metadata();
+            var asds = $.metadata.get(base.$el);
+            var asds1 = $.metadata.get(this);
+            var c = note.url;
+            //var bc = options.url;
+            var sdaw1 = 3;
+            //alert(c);
+        };
+
+        // Sample Function, Uncomment to use
+        // base.functionName = function(paramaters){
+        // 
+        // };
+
+        // Run initializer
+        base.init();
+    };
+
+    $.manyTxt.defaultOptions = {};
+
+    $.fn.manyTxt = function (options) {
+        return this.each(function () {
+            (new $.manyTxt(this, options));
         });
-    });
-    $("#InstallationPosition" + installationPositionCount).focus();
-    installationPositionCount = installationPositionCount + 1;
+    };
+
+})(jQuery);
+
+//function manyTxt(divAddMore, txtName, txtValue, listName, delName) {
+
+//    var count = 0;
+//    var lblCount = divAddMore.find('#lblCount');
+//    if (lblCount == null) {
+//        var lblCount = document.createElement('input');
+//        inputCollapse.setAttribute('type', 'text');
+//        inputCollapse.setAttribute('style', 'display: none;');
+//        inputCollapse.setAttribute('value', '1');
+//        inputCollapse.setAttribute('id', 'lblCount');
+//        divAddMore.append(lblCount);
+//        count = 1;
+//    }
+//    else {
+//        count = lblCount.attr("id");
+//    }
+
+//    //var divAddMore = $('#divMoreInstallationPosition');
+//    var input = document.createElement('input');
+//    var $input = $(input);
+//    $input.attr('type', 'text');
+//    $input.attr('id', txtName + count);
+//    $input.attr('class', 'text-box single-line');
+//    //input.setAttribute('onblur', "javascript:if($('#" + txtName + count + "').val() == '') {$('#" + txtValue + count + "').val('');}");
+//    $input.blur(function () { });
+//    divAddMore.append($input);
 
 
-}
+//    var inputCollapse = document.createElement('input');
+//    inputCollapse.setAttribute('type', 'text');
+//    inputCollapse.setAttribute('style', 'display: none;');
+//    inputCollapse.setAttribute('name', listName);
+//    inputCollapse.setAttribute('id', txtValue + count);
+//    divAddMore.append(inputCollapse);
+
+//    var lnkDelete = document.createElement('a');
+//    lnkDelete.setAttribute('id', delName + count);
+//    lnkDelete.setAttribute('onclick', "$('#" + txtName + count + "').remove();$('#" + txtValue + count + "').remove();$('#LnkDeleteInstallationPosition" + installationPositionCount + "').remove();");
+//    lnkDelete.innerHTML = 'X';
+//    lnkDelete.setAttribute('style', 'text-decoration:underline;cursor:pointer;');
+//    lnkDelete.setAttribute('title', 'Remove this InstallationPosition out of search criteria');
+//    divAddMore.append(" ").append(lnkDelete);
+
+//    $(function () {
+//        $("#InstallationPosition" + installationPositionCount).autocomplete({
+//            select: function (event, ui) {
+//                var index = this.id.substring(20);
+//                $("#InstallationPositionMark" + index).val(ui.item.id);
+//            },
+//            source: function (request, response) {
+//                $.ajax({
+//                    url: '../Listing/ListInstallationPosition1', type: "POST", dataType: "json",
+//                    data: { searchText: request.term },
+//                    success: function (data) {
+//                        response($.map(data, function (item) {
+//                            return { label: item.FullName, value: item.FullName, id: item.ID }
+//                        }))
+//                    }
+//                })
+//            }
+//        });
+//    });
+//    $("#InstallationPosition" + installationPositionCount).focus();
+//    installationPositionCount = installationPositionCount + 1;
+
+
+//}
