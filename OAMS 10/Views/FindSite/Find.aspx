@@ -139,7 +139,6 @@ else if (category.Code == "Other")
                         installationPositionCount = installationPositionCount + 1;
                     }
                 </script>
-                
                 <br />
                 <div id="divMoreInstallationPosition">
                     <br />
@@ -233,6 +232,8 @@ else if (category.Code == "Other")
                     <br />
                     Current Product<br />
                 </div>
+                
+                <br />
                 <%--<input type="button" value="More..." onclick="addMoreContractor()" />--%>
                 <a id="addProduct" href="javascript:addMoreProduct();">More...</a>
                 <br />
@@ -284,6 +285,21 @@ else if (category.Code == "Other")
                         $("#ContractorName" + count).focus();
                         count = count + 1;
                     }
+                </script>
+                <br />
+                <br />
+                <div id="divMoreProduct1" data-url="'<%= Url.Content("~/Listing/ListProduct")%>'" 
+                data-name="'ProductIDList'">
+                    <br />
+                    Current Product<br />
+                </div>
+                <script type="text/javascript" language="javascript">
+                    $(document).ready(function () {
+
+                        var e = $("#divMoreProduct1").manyTxt();
+
+
+                    });
                 </script>
                 <br />
                 <%--Contractor--%>

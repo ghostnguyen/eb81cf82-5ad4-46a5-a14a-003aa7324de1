@@ -260,6 +260,11 @@
     <Content Include="Scripts\jquery-1.5.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.1.custom.min.js" />
     <Content Include="Scripts\jquery.dataTables.js" />
+    <Content Include="Scripts\jquery.metadata.js" />
+    <Content Include="Scripts\jquery.ui.core.js" />
+    <Content Include="Scripts\jquery.ui.core.min.js" />
+    <Content Include="Scripts\jquery.ui.widget.js" />
+    <Content Include="Scripts\jquery.ui.widget.min.js" />
     <Content Include="Scripts\superfish.js" />
     <Content Include="Views\Account\EditAccountInRole.aspx" />
     <Content Include="Views\Account\CreateRole.aspx" />
