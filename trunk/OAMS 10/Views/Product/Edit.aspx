@@ -58,14 +58,14 @@
         <input id="ProductID" name="ProductID" style="visibility: collapse;" type="text"
             value="" />
     </div>
-    
+    <div id="divTest" data-url='<%= Url.Content("~/Listing/ListProduct")%>' >
+    </div>
     <script type="text/javascript">
 
         $(document).ready(function () {
 
-            //var e = $("#abcDiv").manyTxt({ url: "123456" });
-            //var c = e.metadata();
-            //alert(c.url);
+            var e = $("#divTest").manyTxt();
+            
 
         });
 
