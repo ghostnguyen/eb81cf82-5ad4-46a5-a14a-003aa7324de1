@@ -325,7 +325,7 @@
                                         data: { searchText: request.term },
                                         success: function (data) {
                                             response($.map(data, function (item) {
-                                                return { label: item.FullName, value: item.FullName, id: item.ID }
+                                                return { label: item.Name, value: item.Name, id: item.ID }
                                             }))
                                         }
                                     })

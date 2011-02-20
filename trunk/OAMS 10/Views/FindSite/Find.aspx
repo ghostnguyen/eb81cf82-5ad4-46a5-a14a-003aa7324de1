@@ -84,68 +84,11 @@ else if (category.Code == "Other")
                 <a id="StyleListMore" href="javascript:ShowAllStyle(document.forms[0].StyleList,'StyleListMore');"
                     style="display: none;">More...</a>
                 <br />
-                <%--<br />
-                InstallationPosition 1
-                <br />
-                <%: Html.CodeMasterDropDownListFor(r => r.InstallationPosition1, false)%>
-                <br />--%>
-                <br />
-                <script type="text/javascript" language="javascript">
-                    var installationPositionCount = 1;
-                    function addMoreInstallationPosition() {
-                        var divAddMore = $('#divMoreInstallationPosition');
-                        var input = document.createElement('input');
-                        input.setAttribute('type', 'text');
-                        input.setAttribute('id', 'InstallationPosition' + installationPositionCount);
-                        input.setAttribute('class', 'text-box single-line');
-                        input.setAttribute('onblur', "javascript:if($('#InstallationPosition" + installationPositionCount + "').val() == '') {$('#InstallationPositionMark" + installationPositionCount + "').val('');}");
-                        divAddMore.append(input);
-
-                        var inputCollapse = document.createElement('input');
-                        inputCollapse.setAttribute('type', 'text');
-                        inputCollapse.setAttribute('style', 'display: none;');
-                        inputCollapse.setAttribute('name', 'InstallationPosition1MarkList');
-                        inputCollapse.setAttribute('id', 'InstallationPositionMark' + installationPositionCount);
-                        divAddMore.append(inputCollapse);
-
-                        var lnkDelete = document.createElement('a');
-                        lnkDelete.setAttribute('id', 'LnkDeleteInstallationPosition' + installationPositionCount);
-                        lnkDelete.setAttribute('onclick', "$('#InstallationPosition" + installationPositionCount + "').remove();$('#InstallationPositionMark" + installationPositionCount + "').remove();$('#LnkDeleteInstallationPosition" + installationPositionCount + "').remove();");
-                        lnkDelete.innerHTML = 'X';
-                        lnkDelete.setAttribute('style', 'text-decoration:underline;cursor:pointer;');
-                        lnkDelete.setAttribute('title', 'Remove this InstallationPosition out of search criteria');
-                        divAddMore.append(" ").append(lnkDelete);
-
-                        $(function () {
-                            $("#InstallationPosition" + installationPositionCount).autocomplete({
-                                select: function (event, ui) {
-                                    var index = this.id.substring(20);
-                                    $("#InstallationPositionMark" + index).val(ui.item.id);
-                                },
-                                source: function (request, response) {
-                                    $.ajax({
-                                        url: '../Listing/ListInstallationPosition1', type: "POST", dataType: "json",
-                                        data: { searchText: request.term },
-                                        success: function (data) {
-                                            response($.map(data, function (item) {
-                                                return { label: item.FullName, value: item.FullName, id: item.ID }
-                                            }))
-                                        }
-                                    })
-                                }
-                            });
-                        });
-                        $("#InstallationPosition" + installationPositionCount).focus();
-                        installationPositionCount = installationPositionCount + 1;
-                    }
-                </script>
-                <br />
-                <div id="divMoreInstallationPosition">
+                <div id="divMoreInstallationPosition" data-url="'<%= Url.Content("~/Listing/ListInstallationPosition1")%>'"
+                    data-name="'InstallationPosition1MarkList'">
                     <br />
                     Installation Position<br />
                 </div>
-                <a id="a3" href="javascript:addMoreInstallationPosition();">More...</a>
-                <br />
                 <br />
                 <%: Html.LabelFor(r => r.Format) %>
                 <br />
@@ -155,7 +98,6 @@ else if (category.Code == "Other")
                 <br />
                 <%: Html.CodeMasterDropDownListFor(r => r.RoadType2, false)%>
                 <br />
-                <%--<%: Html.LabelFor(r => r.InstallationPosition2) %>--%>
                 Angle to Road
                 <br />
                 <%: Html.CodeMasterDropDownListFor(r => r.InstallationPosition2, false)%>
@@ -164,8 +106,6 @@ else if (category.Code == "Other")
                 <br />
                 <%: Html.CodeMasterDropDownListFor(r => r.ViewingDistance, false)%>
                 <br />
-                <%--<%: Html.EditorFor(model => model.IsWithinCircle) %>--%>
-                <%--<input type="checkbox" name="IsWithinCircle" id="IsWithinCircle" onclick="Click_WithinCircle(this);" />--%>
                 <input class="check-box" id="IsWithinCircle" name="IsWithinCircle" type="checkbox"
                     value="true" onclick="Click_WithinCircle(this);" />
                 Within
@@ -174,254 +114,31 @@ else if (category.Code == "Other")
                 <br />
                 <%: Html.HiddenFor(r => r.Lat) %>
                 <%: Html.HiddenFor(r => r.Long) %>
-                <script type="text/javascript" language="javascript">
-                    var Productcount = 1;
-                    function addMoreProduct() {
-                        var divAddMore = $('#divMoreProduct');
-
-                        var input = document.createElement('input');
-                        input.setAttribute('type', 'text');
-                        input.setAttribute('id', 'Product_' + Productcount);
-                        input.setAttribute('name', 'ProductList');
-                        input.setAttribute('class', 'text-box single-line');
-                        input.setAttribute('onblur', "javascript:if($('#Product_" + Productcount + "').val() == '') $('#ProductID_" + Productcount + "').val(0);");
-                        divAddMore.append(input);
-
-                        var inputCollapse = document.createElement('input');
-                        inputCollapse.setAttribute('type', 'text');
-                        inputCollapse.setAttribute('style', 'display: none;');
-                        inputCollapse.setAttribute('name', 'ProductIDList');
-                        inputCollapse.setAttribute('id', 'ProductID_' + Productcount);
-                        divAddMore.append(inputCollapse);
-
-                        var lnkDelete = document.createElement('a');
-                        lnkDelete.setAttribute('id', 'LnkDelete' + Productcount);
-                        lnkDelete.setAttribute('onclick', "$('#Product_" + Productcount + "').remove();$('#ProductID_" + count + "').remove();$('#LnkDelete" + Productcount + "').remove();");
-                        lnkDelete.innerHTML = 'X';
-                        lnkDelete.setAttribute('style', 'text-decoration:underline;cursor:pointer;');
-                        lnkDelete.setAttribute('title', 'Remove this product out of search criteria');
-                        divAddMore.append(" ").append(lnkDelete);
-
-                        $(function () {
-                            $("#Product_" + Productcount).autocomplete({
-                                select: function (event, ui) {
-                                    var index = this.id.substring(8);
-                                    $("#ProductID_" + index).val(ui.item.id);
-                                },
-                                source: function (request, response) {
-                                    $.ajax({
-                                        url: '../Listing/ListProduct', type: "POST", dataType: "json",
-                                        data: { searchText: request.term, maxResults: 10 },
-                                        success: function (data) {
-                                            response($.map(data, function (item) {
-                                                return { label: item.Name, value: item.Name, id: item.ID }
-                                            }))
-                                        }
-                                    })
-                                }
-                            });
-                        });
-
-                        $("#Product_" + Productcount).focus();
-                        Productcount = Productcount + 1;
-                    }
-                </script>
                 <br />
-                <%--Product--%>
-                <div id="divMoreProduct">
+                <div id="divMoreProduct" data-url="'<%= Url.Content("~/Listing/ListProduct")%>'"
+                    data-name="'ProductIDList'">
                     <br />
                     Current Product<br />
                 </div>
-                
-                <br />
-                <%--<input type="button" value="More..." onclick="addMoreContractor()" />--%>
-                <a id="addProduct" href="javascript:addMoreProduct();">More...</a>
-                <br />
-                <script type="text/javascript" language="javascript">
-                    var count = 1;
-                    function addMoreContractor() {
-                        var divAddMore = $('#divMoreContractor');
-                        var input = document.createElement('input');
-                        input.setAttribute('type', 'text');
-                        input.setAttribute('id', 'ContractorName' + count);
-                        input.setAttribute('class', 'text-box single-line');
-                        input.setAttribute('onblur', "javascript:if($('#ContractorName" + count + "').val() == '') $('#ContractorID" + count + "').val(0);");
-                        divAddMore.append(input);
-
-                        var inputCollapse = document.createElement('input');
-                        inputCollapse.setAttribute('type', 'text');
-                        inputCollapse.setAttribute('style', 'display: none;');
-                        inputCollapse.setAttribute('name', 'ContractorList');
-                        inputCollapse.setAttribute('id', 'ContractorID' + count);
-                        divAddMore.append(inputCollapse);
-
-                        var lnkDelete = document.createElement('a');
-                        lnkDelete.setAttribute('id', 'LnkDelete' + count);
-                        lnkDelete.setAttribute('onclick', "$('#ContractorName" + count + "').remove();$('#ContractorID" + count + "').remove();$('#LnkDelete" + count + "').remove();");
-                        lnkDelete.innerHTML = 'X';
-                        lnkDelete.setAttribute('style', 'text-decoration:underline;cursor:pointer;');
-                        lnkDelete.setAttribute('title', 'Remove this contractor out of search criteria');
-                        divAddMore.append(" ").append(lnkDelete);
-
-                        $(function () {
-                            $("#ContractorName" + count).autocomplete({
-                                select: function (event, ui) {
-                                    var index = this.id.substring(14);
-                                    $("#ContractorID" + index).val(ui.item.id);
-                                },
-                                source: function (request, response) {
-                                    $.ajax({
-                                        url: '../Listing/ListContractor', type: "POST", dataType: "json",
-                                        data: { searchText: request.term, maxResults: 10, type: "ContractorName" },
-                                        success: function (data) {
-                                            response($.map(data, function (item) {
-                                                return { label: item.Name, value: item.Name, id: item.ID }
-                                            }))
-                                        }
-                                    })
-                                }
-                            });
-                        });
-                        $("#ContractorName" + count).focus();
-                        count = count + 1;
-                    }
-                </script>
                 <br />
                 <br />
-                <div id="divMoreProduct1" data-url="'<%= Url.Content("~/Listing/ListProduct")%>'" 
-                data-name="'ProductIDList'">
-                    <br />
-                    Current Product<br />
-                </div>
-                <script type="text/javascript" language="javascript">
-                    $(document).ready(function () {
-
-                        var e = $("#divMoreProduct1").manyTxt();
-
-
-                    });
-                </script>
-                <br />
-                <%--Contractor--%>
-                <div id="divMoreContractor">
+                <div id="divContractor" data-url="'<%= Url.Content("~/Listing/ListContractor")%>'"
+                    data-name="'ContractorList'">
                     <br />
                     Contractor<br />
                 </div>
-                <%--<input type="button" value="More..." onclick="addMoreContractor()" />--%>
-                <a id="addContractor" href="javascript:addMoreContractor();">More...</a>
                 <br />
-                <script type="text/javascript" language="javascript">
-                    var clientcount = 1;
-                    function addMoreClient() {
-                        var divAddMore = $('#divMoreClient');
-                        var input = document.createElement('input');
-                        input.setAttribute('type', 'text');
-                        input.setAttribute('id', 'ClientName' + clientcount);
-                        input.setAttribute('class', 'text-box single-line');
-                        input.setAttribute('onblur', "javascript:if($('#ClientName" + clientcount + "').val() == '') $('#ClientID" + clientcount + "').val(0);");
-                        divAddMore.append(input);
-
-                        var inputCollapse = document.createElement('input');
-                        inputCollapse.setAttribute('type', 'text');
-                        inputCollapse.setAttribute('style', 'display: none;');
-                        inputCollapse.setAttribute('name', 'ClientList');
-                        inputCollapse.setAttribute('id', 'ClientID' + clientcount);
-                        divAddMore.append(inputCollapse);
-
-                        var lnkDelete = document.createElement('a');
-                        lnkDelete.setAttribute('id', 'LnkDeleteClient' + clientcount);
-                        lnkDelete.setAttribute('onclick', "$('#ClientName" + clientcount + "').remove();$('#ClientID" + clientcount + "').remove();$('#LnkDeleteClient" + clientcount + "').remove();");
-                        lnkDelete.innerHTML = 'X';
-                        lnkDelete.setAttribute('style', 'text-decoration:underline;cursor:pointer;');
-                        lnkDelete.setAttribute('title', 'Remove this Client out of search criteria');
-                        divAddMore.append(" ").append(lnkDelete);
-
-                        $(function () {
-                            $("#ClientName" + clientcount).autocomplete({
-                                select: function (event, ui) {
-                                    var index = this.id.substring(10);
-                                    $("#ClientID" + index).val(ui.item.id);
-                                },
-                                source: function (request, response) {
-                                    $.ajax({
-                                        url: '../Listing/ListClient', type: "POST", dataType: "json",
-                                        data: { searchText: request.term, maxResults: 10, type: "ClientName" },
-                                        success: function (data) {
-                                            response($.map(data, function (item) {
-                                                return { label: item.Name, value: item.Name, id: item.ID }
-                                            }))
-                                        }
-                                    })
-                                }
-                            });
-                        });
-                        $("#ClientName" + clientcount).focus();
-                        clientcount = clientcount + 1;
-                    }
-                </script>
                 <br />
-                <div id="divMoreClient">
+                <div id="divClient" data-url="'<%= Url.Content("~/Listing/ListClient")%>'" data-name="'ClientList'">
                     <br />
                     Client<br />
                 </div>
-                <a id="addClient" href="javascript:addMoreClient();">More...</a>
                 <br />
-                <script type="text/javascript" language="javascript">
-                    var catcount = 1;
-                    function addMoreCat() {
-                        var divAddMore = $('#divMoreCat');
-                        var input = document.createElement('input');
-                        input.setAttribute('type', 'text');
-                        input.setAttribute('id', 'CatName' + catcount);
-                        input.setAttribute('class', 'text-box single-line');
-                        input.setAttribute('onblur', "javascript:if($('#CatName" + catcount + "').val() == '') $('#CatID" + catcount + "').val('');");
-                        divAddMore.append(input);
-
-                        var inputCollapse = document.createElement('input');
-                        inputCollapse.setAttribute('type', 'text');
-                        inputCollapse.setAttribute('style', 'display: none;');
-                        inputCollapse.setAttribute('name', 'CatList');
-                        inputCollapse.setAttribute('id', 'CatID' + catcount);
-                        divAddMore.append(inputCollapse);
-
-                        var lnkDelete = document.createElement('a');
-                        lnkDelete.setAttribute('id', 'LnkDeleteCat' + catcount);
-                        lnkDelete.setAttribute('onclick', "$('#CatName" + catcount + "').remove();$('#CatID" + catcount + "').remove();$('#LnkDeleteCat" + catcount + "').remove();");
-                        lnkDelete.innerHTML = 'X';
-                        lnkDelete.setAttribute('style', 'text-decoration:underline;cursor:pointer;');
-                        lnkDelete.setAttribute('title', 'Remove this Cat out of search criteria');
-                        divAddMore.append(" ").append(lnkDelete);
-
-                        $(function () {
-                            $("#CatName" + catcount).autocomplete({
-                                select: function (event, ui) {
-                                    var index = this.id.substring(7);
-                                    $("#CatID" + index).val(ui.item.id);
-                                },
-                                source: function (request, response) {
-                                    $.ajax({
-                                        url: '../Listing/ListCats', type: "POST", dataType: "json",
-                                        data: { searchText: request.term },
-                                        success: function (data) {
-                                            response($.map(data, function (item) {
-                                                return { label: item.FullName, value: item.FullName, id: item.ID }
-                                            }))
-                                        }
-                                    })
-                                }
-                            });
-                        });
-                        $("#CatName" + catcount).focus();
-                        catcount = catcount + 1;
-                    }
-                </script>
                 <br />
-                <div id="divMoreCat">
+                <div id="divCategory" data-url="'<%= Url.Content("~/Listing/ListCats")%>'" data-name="'CatList'">
                     <br />
                     Category<br />
                 </div>
-                <a id="addCat" href="javascript:addMoreCat();">More...</a>
-                <br />
                 <br />
                 Score from
                 <input type="text" id="ScoreFrom" name="ScoreFrom" value="0" style="width: 30px;" />
@@ -445,38 +162,6 @@ else if (category.Code == "Other")
     <table>
         <tr>
             <td style="width: 100%; vertical-align: top;">
-                <%--<div id="divCol">
-                    Display columns:
-                    <input type="checkbox" id="chkColID" checked="checked" />
-                    ID
-                    <input type="checkbox" id="chkColCat1" checked="checked" />
-                    Category Level 1
-                    <input type="checkbox" id="chkColCat2" checked="checked" />
-                    Category Level 2
-                    <input type="checkbox" id="chkColType" checked="checked" />
-                    Type
-                    <input type="checkbox" id="chkColFormat" checked="checked" />
-                    Format
-                    <input type="checkbox" id="chkColAddressLine1" checked="checked" />
-                    Address Line 1
-                    <input type="checkbox" id="chkColAddressLine2" checked="checked" />
-                    Address Line 2
-                    <input type="checkbox" id="chkColSize" checked="checked" />
-                    Size
-                    <input type="checkbox" id="chkColCurrentProduct" checked="checked" />
-                    Current Product
-                    <input type="checkbox" id="chkColCurrentClient" checked="checked" />
-                    Current Client
-                    <input type="checkbox" id="chkColContractor" checked="checked" />
-                    Contractor
-                    <input type="checkbox" id="chkColScore" checked="checked" />
-                    Total
-                    <input type="checkbox" id="chkColDistrict" checked="checked" />
-                    District
-                    <input type="checkbox" id="chkColWard" checked="checked" />
-                    Ward
-                    <input type="button" id="hell" value="Ok" onclick='ShowHideCols();' />
-                </div>--%>
                 <table id="tblResult" class="display">
                     <thead>
                         <tr>
@@ -540,12 +225,11 @@ else if (category.Code == "Other")
             <tr>
                 <td>
                     <div class="score_summary">
-                        
                         <dl class="main_score">
-                                <dt>Ambient Score</dt>
-                                <dt class="pc">${Score}</dt>
-                                <dt class="rating">${Rating}</dt>
-                            </dl>
+                            <dt>Ambient Score</dt>
+                            <dt class="pc">${Score}</dt>
+                            <dt class="rating">${Rating}</dt>
+                        </dl>
                     </div>
                     ID: ${ID}
                     <br />
@@ -570,16 +254,25 @@ else if (category.Code == "Other")
             </tr>
             <tr>
                 <td>
-                    {{if AlbumID.length}}
-                    <br />
-                    <embed type="application/x-shockwave-flash" src="http://picasaweb.google.com/s/c/bin/slideshow.swf"
-                        width="400" height="267" flashvars="host=picasaweb.google.com&hl=en_US&feat=flashalbum&RGB=0x000000&feed=http%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F113917932111131696693%2Falbumid%2F${AlbumID}%3Falt%3Drss%26kind%3Dphoto%26authkey%3D${AuthID}%26hl%3Den_US"
-                        pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>
+                    {{if AlbumID.length}}<div style='float: left; position: relative'>
+                        <embed type="application/x-shockwave-flash" src="http://picasaweb.google.com/s/c/bin/slideshow.swf"
+                            width="400" height="267" flashvars="host=picasaweb.google.com&hl=en_US&feat=flashalbum&RGB=0x000000&feed=http%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F113917932111131696693%2Falbumid%2F${AlbumID}%3Falt%3Drss%26kind%3Dphoto%26authkey%3D${AuthID}%26hl%3Den_US"
+                            pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></div>
                     {{/if}}
                 </td>
             </tr>
         </table>
     </div>
+    </script>
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+            $("#divMoreProduct").manyTxt();
+            $("#divMoreInstallationPosition").manyTxt();
+            $("#divContractor").manyTxt();
+            $("#divClient").manyTxt();
+            $("#divCategory").manyTxt();
+
+        });
     </script>
     <script type="text/javascript">
 
@@ -587,13 +280,11 @@ else if (category.Code == "Other")
         showGeo2('<%= OAMS.Models.AppSetting.DefaultGeo1Name %>');
 
         function updateDistanceFromTxt(txt) {
-
             //alert(txt.value);
             //distanceWidget.pRadiusWidget.set('distance', txt.value);
             distanceWidget.set('distance', txt.value);
             distanceWidget.pRadiusWidget.setSizerChangeFromTxt();
             map.fitBounds(distanceWidget.get('bounds'));
-
         }
 
         function Click_WithinCircle(chk) {
@@ -813,55 +504,14 @@ else if (category.Code == "Other")
 
                     profileMarkers.push(marker);
                     var html = "";
-                    //                    html += "<table><tr><td>";
-                    //                    html += "ID: " + site.ID;
-                    //                    html += "<br />";
-                    //                    html += "Site Code: " + site.Code;
-                    //                    html += "<br />";
-                    //                    html += "Address: " + site.Address;
-                    //                    html += "<br />";
-                    //                    html += "Location: " + site.GeoFullName;
-                    //                    html += "<br />";
-                    //                    html += "Type: " + site.Type;
-                    //                    html += "<br />";
-                    //                    html += "Orientation: " + site.Orientation;
-                    //                    html += "<br />";
-                    //                    html += "Size: " + site.Size;
-                    //                    html += "<br />";
-                    //                    html += "Lighting: " + site.Lighting;
-                    //                    html += "<br />";
-                    //                    html += "Contractor: " + site.Contractor;
-                    //                    html += "<br />";
-                    //                    html += "CurrentProduct: " + site.CurrentProduct;
-                    //                    html += "</td></tr>";
-                    //                    html += "<tr><td>";
-                    //                    if (site.AlbumID != '') {
-                    //                        html += "<br />";
-                    //                        html += '<embed type="application/x-shockwave-flash" src="http://picasaweb.google.com/s/c/bin/slideshow.swf" width="400" height="267" flashvars="host=picasaweb.google.com&hl=en_US&feat=flashalbum&RGB=0x000000&feed=http%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F113917932111131696693%2Falbumid%2F';
-                    //                        html += site.AlbumID;
-                    //                        html += '%3Falt%3Drss%26kind%3Dphoto%26authkey%3D';
-                    //                        html += site.AuthID;
-                    //                        html += '%26hl%3Den_US" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>';
-                    //                    }
-
-                    //                    html += "</td></tr>";
-                    //                    html += "</table>";
-
-                    //$("#infoWindowTemplate").tmpl(site).appendTo("#divTest");
+                    
                     html += $("#infoWindowTemplate").tmpl(site).html();
 
 
-
                     bindInfoWindow(marker, map, infoWindow, html);
-                    //bindInfoWindow(marker, map, infoWindow, 'asdsa');
-
-                    //                    if (oTable != null) {
-                    //                        oTable.fnDestroy();
-                    //                    }
 
                     var tbl = $('#tblResult tbody');
                     tbl.innerHTML = '';
-                    //html = [];
 
                     var rSel = document.createElement('tr');
                     tbl.append(rSel);

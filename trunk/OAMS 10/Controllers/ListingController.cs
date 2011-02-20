@@ -44,21 +44,21 @@ namespace OAMS.Controllers
                 )
                 .Distinct()
                 //.Take(maxResults)
-                .Select(r => new { r.ID, r.FullName })
+                .Select(r => new { r.ID, Name = r.FullName })
                 .ToList();
 
             return Json(result);
         }
 
-        [HttpPost]
-        public JsonResult ListCats2(string parentFullName)
-        {
-            CategoryRepository categoryRepository = new CategoryRepository();
+        //[HttpPost]
+        //public JsonResult ListCats2(string parentFullName)
+        //{
+        //    CategoryRepository categoryRepository = new CategoryRepository();
 
-            Category e = categoryRepository.GetByFullname(parentFullName);
+        //    Category e = categoryRepository.GetByFullname(parentFullName);
 
-            return Json(e.Children.Select(r => new { r.ID, r.FullName }).OrderBy(r => r.FullName));
-        }
+        //    return Json(e.Children.Select(r => new { r.ID, r.FullName }).OrderBy(r => r.FullName));
+        //}
 
         [HttpPost]
         public JsonResult ListCodeMaster(string searchText, int maxResults, string type)
@@ -121,7 +121,7 @@ namespace OAMS.Controllers
                 && r.Note.Contains(searchText)
                 )
                 .Distinct()
-                .Select(r => new { ID = r.Code, FullName = r.Note })
+                .Select(r => new { ID = r.Code, Name = r.Note })
                 .ToList();
 
             return Json(result);
