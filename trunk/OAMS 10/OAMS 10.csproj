@@ -265,6 +265,7 @@
     <Content Include="Scripts\jquery.ui.core.min.js" />
     <Content Include="Scripts\jquery.ui.widget.js" />
     <Content Include="Scripts\jquery.ui.widget.min.js" />
+    <Content Include="Scripts\markerclusterer_packed.js" />
     <Content Include="Scripts\superfish.js" />
     <Content Include="Views\Account\EditAccountInRole.aspx" />
     <Content Include="Views\Account\CreateRole.aspx" />

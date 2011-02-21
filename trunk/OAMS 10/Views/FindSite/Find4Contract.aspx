@@ -23,64 +23,65 @@
                 </div>
                 <a id="Geo2ListMore" href="javascript:ShowAll(document.forms[0].Geo2List,'Geo2ListMore');"
                     style="display: none;">More...</a>
-                <br /><br />
+                <br />
+                <br />
                 Style List: <a id="lnkCheckAllStyle" href="javascript:checkAll(document.forms[0].StyleList, true);">
                     All</a>&nbsp;/&nbsp;<a id="lnkUnCheckAllStyle" href="javascript:checkAll(document.forms[0].StyleList, false);">Clear</a>
                 <%--  <input type="checkbox" name="StyleList" value="All" onclick="checkAll(document.forms[0].StyleList)"
                     style="display: none;" checked="checked" />--%>
                 <br />
                 <%
-                    foreach (var category in (new OAMS.Models.CodeMasterRepository()).Get((new OAMS.Models.CodeMasterType()).Type))
-                    {
+           foreach (var category in (new OAMS.Models.CodeMasterRepository()).Get((new OAMS.Models.CodeMasterType()).Type))
+           {
                 %>
                 <div>
-                <input type="checkbox" name="StyleList" value="<%= category.Code %>" checked="checked"
-                    id='StyleItem<%= category.ID %>' />
-                <label for='StyleItem<%= category.ID %>'>
-                    <%: category.Note %>
-                </label>
-                <% 
-                    string profileImageUrl = "";
-                    if (category.Code == "WMB")
-                    {
-                        profileImageUrl = Url.Content("~/Content/Image/wallmountedbannee.png");
-                    }
-                    else if (category.Code == "BRL")
-                    {
-                        profileImageUrl = Url.Content("~/Content/Image/britelite.png");
-                    }
-                    else if (category.Code == "BSH")
-                    {
-                        profileImageUrl = Url.Content("~/Content/Image/busshelter.png");
-                    }
-                    else if (category.Code == "CMR")
-                    {
-                        profileImageUrl = Url.Content("~/Content/Image/covermarket.png");
-                    }
-                    else if (category.Code == "ELV")
-                    {
-                        profileImageUrl = Url.Content("~/Content/Image/elevator.png");
-                    }
-                    else if (category.Code == "ITK")
-                    {
-                        profileImageUrl = Url.Content("~/Content/Image/itkiosk.png");
-                    }
-                    else if (category.Code == "Billboard")
-                    {
-                        profileImageUrl = Url.Content("~/Content/Image/billboard.png");
-                    }
-                    else if (category.Code == "BillboardPole")
-                    {
-                        profileImageUrl = Url.Content("~/Content/Image/billboardpole.png");
-                    }
-                    else if (category.Code == "Other")
-                    {
-                        profileImageUrl = Url.Content("~/Content/Image/other.png");
-                    }
-                %>
-                <img alt="" border="0" src="<%= profileImageUrl %>" width="20" id="ImgStyleItem<%= category.ID%>"/></div>
+                    <input type="checkbox" name="StyleList" value="<%= category.Code %>" checked="checked"
+                        id='StyleItem<%= category.ID %>' />
+                    <label for='StyleItem<%= category.ID %>'>
+                        <%: category.Note %>
+                    </label>
+                    <% 
+string profileImageUrl = "";
+if (category.Code == "WMB")
+{
+    profileImageUrl = Url.Content("~/Content/Image/wallmountedbannee.png");
+}
+else if (category.Code == "BRL")
+{
+    profileImageUrl = Url.Content("~/Content/Image/britelite.png");
+}
+else if (category.Code == "BSH")
+{
+    profileImageUrl = Url.Content("~/Content/Image/busshelter.png");
+}
+else if (category.Code == "CMR")
+{
+    profileImageUrl = Url.Content("~/Content/Image/covermarket.png");
+}
+else if (category.Code == "ELV")
+{
+    profileImageUrl = Url.Content("~/Content/Image/elevator.png");
+}
+else if (category.Code == "ITK")
+{
+    profileImageUrl = Url.Content("~/Content/Image/itkiosk.png");
+}
+else if (category.Code == "Billboard")
+{
+    profileImageUrl = Url.Content("~/Content/Image/billboard.png");
+}
+else if (category.Code == "BillboardPole")
+{
+    profileImageUrl = Url.Content("~/Content/Image/billboardpole.png");
+}
+else if (category.Code == "Other")
+{
+    profileImageUrl = Url.Content("~/Content/Image/other.png");
+}
+                    %>
+                    <img alt="" border="0" src="<%= profileImageUrl %>" width="20" id="ImgStyleItem<%= category.ID%>" /></div>
                 <%
-                    }
+           }
                 %>
                 <a id="StyleListMore" href="javascript:ShowAllStyle(document.forms[0].StyleList,'StyleListMore');"
                     style="display: none;">More...</a>
@@ -103,8 +104,6 @@
                 <br />
                 <%: Html.CodeMasterDropDownListFor(r => r.ViewingDistance, false)%>
                 <br />
-                <%--<%: Html.EditorFor(model => model.IsWithinCircle) %>--%>
-                <%--<input type="checkbox" name="IsWithinCircle" id="IsWithinCircle" onclick="Click_WithinCircle(this);" />--%>
                 <input class="check-box" id="IsWithinCircle" name="IsWithinCircle" type="checkbox"
                     value="true" onclick="Click_WithinCircle(this);" />
                 Within
@@ -112,242 +111,35 @@
                     onblur="updateDistanceFromTxt(this);" />
                 <%: Html.HiddenFor(r => r.Lat) %>
                 <%: Html.HiddenFor(r => r.Long) %>
-                <script type="text/javascript" language="javascript">
-                    var Productcount = 1;
-                    function addMoreProduct() {
-                        var divAddMore = $('#divMoreProduct');
-
-                        var input = document.createElement('input');
-                        input.setAttribute('type', 'text');
-                        input.setAttribute('id', 'Product_' + Productcount);
-                        input.setAttribute('name', 'ProductList');
-                        input.setAttribute('class', 'text-box single-line');
-                        input.setAttribute('onblur', "javascript:if($('#Product_" + Productcount + "').val() == '') $('#ProductID_" + Productcount + "').val(0);");
-                        divAddMore.append(input);
-
-                        var inputCollapse = document.createElement('input');
-                        inputCollapse.setAttribute('type', 'text');
-                        inputCollapse.setAttribute('style', 'display: none;');
-                        inputCollapse.setAttribute('name', 'ProductIDList');
-                        inputCollapse.setAttribute('id', 'ProductID_' + Productcount);
-                        divAddMore.append(inputCollapse);
-
-                        var lnkDelete = document.createElement('a');
-                        lnkDelete.setAttribute('id', 'LnkDelete' + Productcount);
-                        lnkDelete.setAttribute('onclick', "$('#Product_" + Productcount + "').remove();$('#ProductID_" + count + "').remove();$('#LnkDelete" + Productcount + "').remove();");
-                        lnkDelete.innerHTML = 'X';
-                        lnkDelete.setAttribute('style', 'text-decoration:underline;cursor:pointer;');
-                        lnkDelete.setAttribute('title', 'Remove this product out of search criteria');
-                        divAddMore.append(" ").append(lnkDelete);
-
-                        $(function () {
-                            $("#Product_" + Productcount).autocomplete({
-                                select: function (event, ui) {
-                                    var index = this.id.substring(8);
-                                    $("#ProductID_" + index).val(ui.item.id);
-                                },
-                                source: function (request, response) {
-                                    $.ajax({
-                                        url: '../Listing/ListProduct', type: "POST", dataType: "json",
-                                        data: { searchText: request.term, maxResults: 10 },
-                                        success: function (data) {
-                                            response($.map(data, function (item) {
-                                                return { label: item.Name, value: item.Name, id: item.ID }
-                                            }))
-                                        }
-                                    })
-                                }
-                            });
-                        });
-
-                        $("#Product_" + Productcount).focus();
-                        Productcount = Productcount + 1;
-                    }
-                </script>
                 <br />
-                <%--Product--%>
-                <div id="divMoreProduct">
+                <div id="div1" data-url="'<%= Url.Content("~/Listing/ListProduct")%>'" data-name="'ProductIDList'">
                     <br />
                     Current Product<br />
                 </div>
-                <%--<input type="button" value="More..." onclick="addMoreContractor()" />--%>
-                <a id="addProduct" href="javascript:addMoreProduct();">More...</a>
                 <br />
-                <script type="text/javascript" language="javascript">
-                    var count = 1;
-                    function addMoreContractor() {
-                        var divAddMore = $('#divMoreContractor');
-                        var input = document.createElement('input');
-                        input.setAttribute('type', 'text');
-                        input.setAttribute('id', 'ContractorName' + count);
-                        input.setAttribute('class', 'text-box single-line');
-                        input.setAttribute('onblur', "javascript:if($('#ContractorName" + count + "').val() == '') $('#ContractorID" + count + "').val(0);");
-                        divAddMore.append(input);
-
-                        var inputCollapse = document.createElement('input');
-                        inputCollapse.setAttribute('type', 'text');
-                        inputCollapse.setAttribute('style', 'display: none;');
-                        inputCollapse.setAttribute('name', 'ContractorList');
-                        inputCollapse.setAttribute('id', 'ContractorID' + count);
-                        divAddMore.append(inputCollapse);
-
-                        var lnkDelete = document.createElement('a');
-                        lnkDelete.setAttribute('id', 'LnkDelete' + count);
-                        lnkDelete.setAttribute('onclick', "$('#ContractorName" + count + "').remove();$('#ContractorID" + count + "').remove();$('#LnkDelete" + count + "').remove();");
-                        lnkDelete.innerHTML = 'X';
-                        lnkDelete.setAttribute('style', 'text-decoration:underline;cursor:pointer;');
-                        lnkDelete.setAttribute('title', 'Remove this contractor out of search criteria');
-                        divAddMore.append(" ").append(lnkDelete);
-
-                        $(function () {
-                            $("#ContractorName" + count).autocomplete({
-                                select: function (event, ui) {
-                                    var index = this.id.substring(14);
-                                    $("#ContractorID" + index).val(ui.item.id);
-                                },
-                                source: function (request, response) {
-                                    $.ajax({
-                                        url: '../Listing/ListContractor', type: "POST", dataType: "json",
-                                        data: { searchText: request.term, maxResults: 10, type: "ContractorName" },
-                                        success: function (data) {
-                                            response($.map(data, function (item) {
-                                                return { label: item.Name, value: item.Name, id: item.ID }
-                                            }))
-                                        }
-                                    })
-                                }
-                            });
-                        });
-                        $("#ContractorName" + count).focus();
-                        count = count + 1;
-                    }
-                </script>
                 <br />
-                <%--Contractor--%>
-                
-                <div id="divMoreContractor">
-                    <br />Contractor<br />
+                <div id="divContractor" data-url="'<%= Url.Content("~/Listing/ListContractor")%>'"
+                    data-name="'ContractorList'">
+                    <br />
+                    Contractor<br />
                 </div>
-                <%--<input type="button" value="More..." onclick="addMoreContractor()" />--%>
-                <a id="addContractor" href="javascript:addMoreContractor();">More...</a>
                 <br />
-                <script type="text/javascript" language="javascript">
-                    var clientcount = 1;
-                    function addMoreClient() {
-                        var divAddMore = $('#divMoreClient');
-                        var input = document.createElement('input');
-                        input.setAttribute('type', 'text');
-                        input.setAttribute('id', 'ClientName' + clientcount);
-                        input.setAttribute('class', 'text-box single-line');
-                        input.setAttribute('onblur', "javascript:if($('#ClientName" + count + "').val() == '') $('#ClientID" + clientcount + "').val(0);");
-                        divAddMore.append(input);
-
-                        var inputCollapse = document.createElement('input');
-                        inputCollapse.setAttribute('type', 'text');
-                        inputCollapse.setAttribute('style', 'display: none;');
-                        inputCollapse.setAttribute('name', 'ClientList');
-                        inputCollapse.setAttribute('id', 'ClientID' + clientcount);
-                        divAddMore.append(inputCollapse);
-
-                        var lnkDelete = document.createElement('a');
-                        lnkDelete.setAttribute('id', 'LnkDeleteClient' + clientcount);
-                        lnkDelete.setAttribute('onclick', "$('#ClientName" + clientcount + "').remove();$('#ClientID" + clientcount + "').remove();$('#LnkDeleteClient" + clientcount + "').remove();");
-                        lnkDelete.innerHTML = 'X';
-                        lnkDelete.setAttribute('style', 'text-decoration:underline;cursor:pointer;');
-                        lnkDelete.setAttribute('title', 'Remove this Client out of search criteria');
-                        divAddMore.append(" ").append(lnkDelete);
-
-                        $(function () {
-                            $("#ClientName" + clientcount).autocomplete({
-                                select: function (event, ui) {
-                                    var index = this.id.substring(10);
-                                    $("#ClientID" + index).val(ui.item.id);
-                                },
-                                source: function (request, response) {
-                                    $.ajax({
-                                        url: '../Listing/ListClient', type: "POST", dataType: "json",
-                                        data: { searchText: request.term, maxResults: 10, type: "ClientName" },
-                                        success: function (data) {
-                                            response($.map(data, function (item) {
-                                                return { label: item.Name, value: item.Name, id: item.ID }
-                                            }))
-                                        }
-                                    })
-                                }
-                            });
-                        });
-                        $("#ClientName" + clientcount).focus();
-                        clientcount = clientcount + 1;
-                    }
-                </script>
                 <br />
-                <div id="divMoreClient">
+                <div id="divClient" data-url="'<%= Url.Content("~/Listing/ListClient")%>'" data-name="'ClientList'">
                     <br />
                     Client<br />
                 </div>
-                <a id="addClient" href="javascript:addMoreClient();">More...</a>
                 <br />
-                <script type="text/javascript" language="javascript">
-                    var catcount = 1;
-                    function addMoreCat() {
-                        var divAddMore = $('#divMoreCat');
-                        var input = document.createElement('input');
-                        input.setAttribute('type', 'text');
-                        input.setAttribute('id', 'CatName' + catcount);
-                        input.setAttribute('class', 'text-box single-line');
-                        input.setAttribute('onblur', "javascript:if($('#CatName" + catcount + "').val() == '') $('#CatID" + catcount + "').val('');");
-                        divAddMore.append(input);
-
-                        var inputCollapse = document.createElement('input');
-                        inputCollapse.setAttribute('type', 'text');
-                        inputCollapse.setAttribute('style', 'display: none;');
-                        inputCollapse.setAttribute('name', 'CatList');
-                        inputCollapse.setAttribute('id', 'CatID' + catcount);
-                        divAddMore.append(inputCollapse);
-
-                        var lnkDelete = document.createElement('a');
-                        lnkDelete.setAttribute('id', 'LnkDeleteCat' + catcount);
-                        lnkDelete.setAttribute('onclick', "$('#CatName" + catcount + "').remove();$('#CatID" + catcount + "').remove();$('#LnkDeleteCat" + catcount + "').remove();");
-                        lnkDelete.innerHTML = 'X';
-                        lnkDelete.setAttribute('style', 'text-decoration:underline;cursor:pointer;');
-                        lnkDelete.setAttribute('title', 'Remove this Cat out of search criteria');
-                        divAddMore.append(" ").append(lnkDelete);
-
-                        $(function () {
-                            $("#CatName" + catcount).autocomplete({
-                                select: function (event, ui) {
-                                    var index = this.id.substring(7);
-                                    $("#CatID" + index).val(ui.item.id);
-                                },
-                                source: function (request, response) {
-                                    $.ajax({
-                                        url: '../Listing/ListCats', type: "POST", dataType: "json",
-                                        data: { searchText: request.term },
-                                        success: function (data) {
-                                            response($.map(data, function (item) {
-                                                return { label: item.Name, value: item.Name, id: item.ID }
-                                            }))
-                                        }
-                                    })
-                                }
-                            });
-                        });
-                        $("#CatName" + catcount).focus();
-                        catcount = catcount + 1;
-                    }
-                </script>
                 <br />
-                <div id="divMoreCat">
+                <div id="divCategory" data-url="'<%= Url.Content("~/Listing/ListCats")%>'" data-name="'CatList'">
                     <br />
                     Category<br />
                 </div>
-                <a id="addCat" href="javascript:addMoreCat();">More...</a>
+                <br />
             </td>
             <td valign="top">
                 <input id="btnFind" type="button" onclick="search(this);" value="Find" />
                 <a href="javascript:toggleSearchPane();">Show/Hide Search Criteria</a>
-                <%--<%: Html.ActionLinkWithRoles<OAMS.Controllers.FindSiteController>("Find", r => r.FindJson4Contract(null,0), null, new Dictionary<string, object>() { { "href", "javascript:search(this);" } }, true)%>
-                <input id="btnToggleSearchPane" type="button" onclick="toggleSearchPane()" value="Hide Search Criteria" />--%>
                 <table width="100%">
                     <tr>
                         <td>
@@ -362,34 +154,6 @@
     <table>
         <tr>
             <td style="width: 100%;" style="vertical-align: top;">
-                <%--<div id="divCol">
-                    Display columns:
-                    <input type="checkbox" id="chkColID" checked="checked" />
-                    ID
-                    <input type="checkbox" id="chkColSiteID" checked="checked" />
-                    SiteID
-                    <input type="checkbox" id="chkColName" checked="checked" />
-                    Name
-                    <input type="checkbox" id="chkColType" checked="checked" />
-                    Type
-                    <input type="checkbox" id="chkColFormat" checked="checked" />
-                    Format
-                    <input type="checkbox" id="chkColAddressLine1" checked="checked" />
-                    Address Line 1
-                    <input type="checkbox" id="chkColAddressLine2" checked="checked" />
-                    Address Line 2
-                    <input type="checkbox" id="chkColSize" checked="checked" />
-                    Size
-                    <input type="checkbox" id="chkColCurrentProduct" checked="checked" />
-                    Current Product
-                    <input type="checkbox" id="chkColCurrentClient" checked="checked" />
-                    Current Client
-                    <input type="checkbox" id="chkColContractor" checked="checked" />
-                    Contractor
-                    <input type="checkbox" id="chkColScore" checked="checked" />
-                    Total
-                    <input type="button" id="hell" value="Ok" onclick='ShowHideCols();' />
-                </div>--%>
                 <table id="tblResult" class="display">
                     <thead>
                         <tr>
@@ -468,24 +232,7 @@
         }
 
         var oTable;
-//        function ShowHideCols() {
 
-
-
-//            oTable.fnSetColumnVis(0, $('#chkColID').attr('checked'));
-//            oTable.fnSetColumnVis(1, $('#chkColSiteID').attr('checked'));
-//            oTable.fnSetColumnVis(2, $('#chkColName').attr('checked'));
-//            oTable.fnSetColumnVis(3, $('#chkColType').attr('checked'));
-//            oTable.fnSetColumnVis(4, $('#chkColFormat').attr('checked'));
-//            oTable.fnSetColumnVis(5, $('#chkColAddressLine1').attr('checked'));
-//            oTable.fnSetColumnVis(6, $('#chkColAddressLine2').attr('checked'));
-//            oTable.fnSetColumnVis(7, $('#chkColSize').attr('checked'));
-//            oTable.fnSetColumnVis(8, $('#chkColCurrentProduct').attr('checked'));
-//            oTable.fnSetColumnVis(9, $('#chkColCurrentClient').attr('checked'));
-//            oTable.fnSetColumnVis(10, $('#chkColContractor').attr('checked'));
-//            oTable.fnSetColumnVis(11, $('#chkColScore').attr('checked'));
-
-//        }
         function showGeo2(str) {
             //alert(str);
             //var v = $("#geo2List").text();
@@ -501,7 +248,7 @@
                 url: '<%= Url.Content("~/Listing/ListGeo2") %>', type: "POST", dataType: "json",
                 data: { parentFullName: str },
                 success: function (data) {
-                    
+
                     var index = 0;
                     $.map(data, function (item) {
 
@@ -822,12 +569,12 @@
 
                     cStyle10.appendChild(aAdd2Cam);
 
-//                    if (site.Added) {
-//                        cStyle10.innerHTML = "<a href='javascript:void(0);'>Added</a>";
-//                    }
-//                    else {
-//                        cStyle10.innerHTML = addTemplate.replace('contractID', contractID).replace('siteDetailID', siteDetailID).replace('aAdd2Cam', 'a' + siteDetailID).replace("linkAdd2Cam", "$(#a" + siteDetailID + ")");
-//                    }
+                    //                    if (site.Added) {
+                    //                        cStyle10.innerHTML = "<a href='javascript:void(0);'>Added</a>";
+                    //                    }
+                    //                    else {
+                    //                        cStyle10.innerHTML = addTemplate.replace('contractID', contractID).replace('siteDetailID', siteDetailID).replace('aAdd2Cam', 'a' + siteDetailID).replace("linkAdd2Cam", "$(#a" + siteDetailID + ")");
+                    //                    }
                 }
                 //$('#example').dataTable();
                 //                $('#tblResult').dataTable({
@@ -880,15 +627,15 @@
             //alert(link.innerHTML);
             var url = '<%= Url.Content("~/Contract/AddSite?ContractID=") %>' + contractID + '&SiteDetailID=' + siteDetailID;
             return function () {
-            $.ajax({
-                url: url, type: "POST", dataType: "json",
-                success: function (data) {
-                    //alert(link.innerHTML);
-                    link.innerHTML = 'Added';
-                    link.href = "javascript:void(0);";
-                    link.onclick = null;
-                }
-            });
+                $.ajax({
+                    url: url, type: "POST", dataType: "json",
+                    success: function (data) {
+                        //alert(link.innerHTML);
+                        link.innerHTML = 'Added';
+                        link.href = "javascript:void(0);";
+                        link.onclick = null;
+                    }
+                });
             };
         }
 
@@ -919,7 +666,7 @@
         var infoWindow = new google.maps.InfoWindow;
 
         //var VietnamBounds = new google.maps.LatLngBounds(new google.maps.LatLng(6, 100), new google.maps.LatLng(24, 109));
-        var VietnamBounds = new google.maps.LatLngBounds(new google.maps.LatLng('<%= OAMS.Models.AppSetting.MapBoundSWLat %>', '<%= OAMS.Models.AppSetting.MapBoundSWLng %>'), 
+        var VietnamBounds = new google.maps.LatLngBounds(new google.maps.LatLng('<%= OAMS.Models.AppSetting.MapBoundSWLat %>', '<%= OAMS.Models.AppSetting.MapBoundSWLng %>'),
                                                          new google.maps.LatLng('<%= OAMS.Models.AppSetting.MapBoundNELat %>', '<%= OAMS.Models.AppSetting.MapBoundNELng %>'));
         function init() {
             var mapDiv = document.getElementById('map');

@@ -255,7 +255,7 @@ else if (category.Code == "Other")
             <tr>
                 <td>
                     {{if AlbumID.length}}<div style='float: left; position: relative'>
-                        <embed type="application/x-shockwave-flash" src="http://picasaweb.google.com/s/c/bin/slideshow.swf"
+                        <embed type="application/x-shockwave-flash" src="https://picasaweb.google.com/s/c/bin/slideshow.swf"
                             width="400" height="267" flashvars="host=picasaweb.google.com&hl=en_US&feat=flashalbum&RGB=0x000000&feed=http%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F113917932111131696693%2Falbumid%2F${AlbumID}%3Falt%3Drss%26kind%3Dphoto%26authkey%3D${AuthID}%26hl%3Den_US"
                             pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></div>
                     {{/if}}
@@ -280,8 +280,7 @@ else if (category.Code == "Other")
         showGeo2('<%= OAMS.Models.AppSetting.DefaultGeo1Name %>');
 
         function updateDistanceFromTxt(txt) {
-            //alert(txt.value);
-            //distanceWidget.pRadiusWidget.set('distance', txt.value);
+            
             distanceWidget.set('distance', txt.value);
             distanceWidget.pRadiusWidget.setSizerChangeFromTxt();
             map.fitBounds(distanceWidget.get('bounds'));
@@ -299,22 +298,7 @@ else if (category.Code == "Other")
         }
 
         var oTable;
-//        function ShowHideCols() {
-//            oTable.fnSetColumnVis(0, $('#chkColID').attr('checked'));
-//            oTable.fnSetColumnVis(1, $('#chkColCat1').attr('checked'));
-//            oTable.fnSetColumnVis(2, $('#chkColCat2').attr('checked'));
-//            oTable.fnSetColumnVis(3, $('#chkColType').attr('checked'));
-//            oTable.fnSetColumnVis(4, $('#chkColFormat').attr('checked'));
-//            oTable.fnSetColumnVis(5, $('#chkColAddressLine1').attr('checked'));
-//            oTable.fnSetColumnVis(6, $('#chkColAddressLine2').attr('checked'));
-//            oTable.fnSetColumnVis(7, $('#chkColSize').attr('checked'));
-//            oTable.fnSetColumnVis(8, $('#chkColCurrentProduct').attr('checked'));
-//            oTable.fnSetColumnVis(9, $('#chkColCurrentClient').attr('checked'));
-//            oTable.fnSetColumnVis(10, $('#chkColContractor').attr('checked'));
-//            oTable.fnSetColumnVis(11, $('#chkColScore').attr('checked'));
-//            oTable.fnSetColumnVis(12, $('#chkColDistrict').attr('checked'));
-//            oTable.fnSetColumnVis(13, $('#chkColWard').attr('checked'));
-//        }
+
         function showGeo2(str) {
             //alert(str);
             //var v = $("#geo2List").text();
@@ -434,7 +418,7 @@ else if (category.Code == "Other")
 
         function addResults(json) {
 
-
+        var markers = [];
             //HideUncheck(document.forms[0].StyleList);
 
             HideUncheck(document.forms[0].Geo2List, 'Geo2ListMore');
@@ -493,6 +477,8 @@ else if (category.Code == "Other")
                         zIndex: 10
                     });
 
+                    markers.push(marker);
+                    
 
                     if (VietnamBounds.contains(marker.position)
                     //|| IndoBounds.contains(marker.position)
@@ -507,7 +493,6 @@ else if (category.Code == "Other")
                     
                     html += $("#infoWindowTemplate").tmpl(site).html();
 
-
                     bindInfoWindow(marker, map, infoWindow, html);
 
                     var tbl = $('#tblResult tbody');
@@ -515,17 +500,6 @@ else if (category.Code == "Other")
 
                     var rSel = document.createElement('tr');
                     tbl.append(rSel);
-
-                    //ID
-                    //                    var cSel = document.createElement('td');
-                    //                    rSel.appendChild(cSel);
-                    //                    var aSel = document.createElement('a');
-                    //                    aSel.href = 'javascript:void(0);';
-                    //                    aSel.innerHTML = site.ID;
-                    //                    aSel.onclick = generateTriggerCallback(marker, 'click');
-                    //                    cSel.appendChild(aSel);
-
-
 
                     var cStyle = document.createElement('td');
                     cStyle.innerHTML = site.ID;
@@ -598,52 +572,11 @@ else if (category.Code == "Other")
 
                     //Edit
                     var cEdit = document.createElement('td');
-                    //cEdit.innerHTML = '<%: Html.ActionLink("Edit", "Edit", "Site", new {id=-1},null) %>';
-                    //cEdit.innerHTML = cEdit.innerHTML.replace('siteID', site.ID);
                     cEdit.innerHTML = editTemplate.replace('siteID', site.ID);
                     rSel.appendChild(cEdit);
-
-                    //Add2Campaign
-                    //var cAdd2Cam = document.createElement('td');
-                    //rSel.appendChild(cAdd2Cam);
-
-                    //var aAdd2Cam = document.createElement('a');
-                    //aAdd2Cam.href = 'javascript:void(0);';
-                    //aAdd2Cam.innerHTML = 'Add to Campaign';
-
-
-                    //cAdd2Cam.appendChild(aAdd2Cam);
-
-                    //aAdd2Cam.onclick = Add2Campaign(aAdd2Cam, $("#CampaignID").val(), site.ContractDetailID);
-
-
-
                 }
-                //$('#example').dataTable();
-                //                $('#tblResult').dataTable({
-                //                    "aoColumnDefs": [
-                //                    { "asSorting": ["asc"], "aTargets": [0] },
-                //                    ]
-                //                });
-                //                oTable = $('#tblResult').dataTable({
-
-                //                    "aoColumnDefs": [
-
-                //                        { "bVisible": false, "aTargets": [0] }
-
-                //                                    ]
-                //                });
-
-                //                if (oTable != null) {
-                //                    oTable.fnDraw();
-                //                    //oTable = $('#tblResult').dataTable();
-                //                }
-                //                else
-                //                    oTable = $('#tblResult').dataTable();
 
                 oTable = $('#tblResult').dataTable({"sDom": 'C<"clear">lfrtip'});
-
-
             }
             else {
 
@@ -660,26 +593,13 @@ else if (category.Code == "Other")
 
             //  Fit these bounds to the map
             map.fitBounds(bounds);
-
-            //$(results).html(html.join(''));
-            //$('#results-wrapper').show();
-        }
-
-        function bindInfoWindowToA(marker, map, infoWindow, html, link) {
-            google.maps.event.addListener(link, 'click', function () {
-                //                infoWindow.setContent(html);
-                //                infoWindow.open(map, marker);
-                alert('aa');
-            });
+            mc.addMarkers(markers);
         }
 
         function bindInfoWindow(marker, map, infoWindow, html) {
 
             google.maps.event.addListener(marker, 'click', function () {
-                //var s = html + "";
-
                 infoWindow.setContent(html);
-                //infoWindow.setContent('asd');
                 infoWindow.open(map, marker);
             });
         }
@@ -688,18 +608,16 @@ else if (category.Code == "Other")
         var map;
         var geocodeTimer;
         var profileMarkers = [];
-
+        var mc;
         var infoWindow = new google.maps.InfoWindow;
 
-        //var VietnamBounds = new google.maps.LatLngBounds(new google.maps.LatLng(6, 100), new google.maps.LatLng(24, 109));
+        
         var VietnamBounds = new google.maps.LatLngBounds(new google.maps.LatLng('<%= OAMS.Models.AppSetting.MapBoundSWLat %>', '<%= OAMS.Models.AppSetting.MapBoundSWLng %>'), 
                                                          new google.maps.LatLng('<%= OAMS.Models.AppSetting.MapBoundNELat %>', '<%= OAMS.Models.AppSetting.MapBoundNELng %>'));
-        //var IndoBounds = new google.maps.LatLngBounds(new google.maps.LatLng(-6, 117), new google.maps.LatLng(5, 135));
 
         function init() {
             var mapDiv = document.getElementById('map');
             map = new google.maps.Map(mapDiv, {
-                //center: new google.maps.LatLng(10.77250, 106.69808),
                 center: new google.maps.LatLng(<%= OAMS.Models.AppSetting.FindMapCenterLat %>, <%= OAMS.Models.AppSetting.FindMapCenterLng %>),
                 zoom: 8,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -725,13 +643,16 @@ else if (category.Code == "Other")
 
             updateDistance();
             updatePosition();
-            addActions();
+            //addActions();
             distanceWidget.setVisible(false);
 
             google.maps.event.addListener(map, 'dragstart',
             function () {
                 infoWindow.close();
             });
+
+            mc = new MarkerClusterer(map);
+            mc.setMaxZoom(17);
         }
 
 
@@ -776,22 +697,13 @@ else if (category.Code == "Other")
         function updateDistance() {
             var distance = distanceWidget.get('distance');
 
-
             //cast to number to function toFixed() working
             distance = distance * 1;
-            //            $('#dist').html(distance.toFixed(2));
             $('#Distance').val(distance.toFixed(2));
 
         }
 
-
-
-
-
         function addActions() {
-
-
-
 
             var s = $('#s').submit(search);
 
@@ -814,30 +726,9 @@ else if (category.Code == "Other")
                     url: url, type: "POST", dataType: "json",
                     success: function (data) {
 
-                        //aAdd2Cam.setAttribute('visible', 'invisible');
-
                         link.innerHTML = 'Added';
                         link.onclick = null;
                         link.setAttribute('visible', 'invisible');
-
-                        //link.visible = false;
-
-                        //                        if (data == 0) {
-                        //                            alert('Added.');
-                        //                        }
-                        //                        else { 
-
-                        //                        }
-
-                        //clearMarkers();
-
-                        //addResults(data);
-
-                        //                    $.map(data, function (item) {
-                        //                        var latlng = new google.maps.LatLng(item.Latitude, item.Longitude);
-                        //                        var marker = new google.maps.Marker({ position: latlng, map: map, title: item.Code });
-                        //                        bindInfoWindow(marker, map, infoWindow, item.Note);
-                        //                    })
                     }
                 });
             };
@@ -854,47 +745,10 @@ else if (category.Code == "Other")
                 url: '<%= Url.Content("~/FindSite/FindJson") %>', type: "POST", dataType: "json",
                 data: tdata,
                 success: function (data) {
-
                     clearMarkers();
-
-
                     addResults(data);
-
-                    //                    $.map(data, function (item) {
-                    //                        var latlng = new google.maps.LatLng(item.Latitude, item.Longitude);
-                    //                        var marker = new google.maps.Marker({ position: latlng, map: map, title: item.Code });
-                    //                        bindInfoWindow(marker, map, infoWindow, item.Note);
-                    //                    })
                 }
             })
-
-
-
-
-            //            e.preventDefault();
-            //            var q = $('#q').val();
-            //            if (q == '') {
-            //                return false;
-            //            }
-
-            //            var d = distanceWidget.get('distance');
-            //            var p = distanceWidget.get('position');
-
-            //            var url = 'http://search.twitter.com/search.json?callback=addResults' +
-            //    '&rrp=100&q=' + escape(q) + '&geocode=' + escape(p.lat() + ',' + p.lng() +
-            //    ',' + d + 'km');
-
-            //            clearMarkers();
-
-            //            $.getScript(url);
-
-            //            $('#results').html('Searching...');
-            //            var cols = $('#cols');
-            //            if (!cols.hasClass('has-cols')) {
-            //                $('#cols').addClass('has-cols');
-            //                google.maps.event.trigger(map, 'resize');
-            //                map.fitBounds(distanceWidget.get('bounds'));
-            //            }
         }
 
         function clearMarkers() {
@@ -1291,14 +1145,12 @@ else if (category.Code == "Other")
         }
 
         function toggleSearchPane() {
-            var opt = {};
+            
             if ($('#SearchPane').is(":visible")) {
-                //$('#tblAll').toggleColumns(1, opt);
                 $('#SearchPane').toggle();
                 $('#btnToggleSearchPane').val("Show Search Criteria");
             }
             else {
-                //$('#tblAll').toggleColumns(1, opt);
                 $('#SearchPane').toggle();
                 $('#btnToggleSearchPane').val("Hide Search Criteria");
             }
