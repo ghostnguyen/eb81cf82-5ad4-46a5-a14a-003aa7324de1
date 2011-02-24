@@ -5,7 +5,7 @@
             <h1>
                 Inspection Report</h1>
         </td>
-        <td>
+        <td align="right">
             <img src="<%= Url.Content("~/Content/Image/ambient.png")%>" alt="Ambient" />
         </td>
     </tr>
