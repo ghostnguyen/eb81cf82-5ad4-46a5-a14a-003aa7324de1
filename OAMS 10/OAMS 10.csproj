@@ -226,6 +226,7 @@
     <Content Include="Content\Image\forward_enabled.jpg" />
     <Content Include="Content\Image\itkiosk.png" />
     <Content Include="Content\Image\logo.png" />
+    <Content Include="Content\Image\logo_au2.jpg" />
     <Content Include="Content\Image\other.png" />
     <Content Include="Content\Image\resize-off.png" />
     <Content Include="Content\Image\shadow.png" />
