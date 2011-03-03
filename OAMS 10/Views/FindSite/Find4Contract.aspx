@@ -112,7 +112,8 @@ else if (category.Code == "Other")
                 <%: Html.HiddenFor(r => r.Lat) %>
                 <%: Html.HiddenFor(r => r.Long) %>
                 <br />
-                <div id="div1" data-url="'<%= Url.Content("~/Listing/ListProduct")%>'" data-name="'ProductIDList'">
+                <div id="divMoreProduct" data-url="'<%= Url.Content("~/Listing/ListProduct")%>'"
+                    data-name="'ProductIDList'">
                     <br />
                     Current Product<br />
                 </div>
@@ -205,6 +206,15 @@ else if (category.Code == "Other")
         </tr>
     </table>
     <% } %>
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+            $("#divMoreProduct").manyTxt();
+            $("#divContractor").manyTxt();
+            $("#divClient").manyTxt();
+            $("#divCategory").manyTxt();
+
+        });
+    </script>
     <script type="text/javascript">
 
         $('#Geo1FullName').val('<%= OAMS.Models.AppSetting.DefaultGeo1Name %>');

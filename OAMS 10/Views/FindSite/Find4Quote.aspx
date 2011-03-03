@@ -79,7 +79,7 @@ else if (category.Code == "Other")
                     %>
                     <img alt="" border="0" src="<%= profileImageUrl %>" width="20" id="ImgStyleItem<%= category.ID%>" /></div>
                 <%
-                    }
+           }
                 %>
                 <a id="StyleListMore" href="javascript:ShowAllStyle(document.forms[0].StyleList,'StyleListMore');"
                     style="display: none;">More...</a>
@@ -112,7 +112,7 @@ else if (category.Code == "Other")
                 <%: Html.HiddenFor(r => r.Lat) %>
                 <%: Html.HiddenFor(r => r.Long) %>
                 <br />
-                <div id="div1" data-url="'<%= Url.Content("~/Listing/ListProduct")%>'" data-name="'ProductIDList'">
+                <div id="divMoreProduct" data-url="'<%= Url.Content("~/Listing/ListProduct")%>'" data-name="'ProductIDList'">
                     <br />
                     Current Product<br />
                 </div>
@@ -154,7 +154,6 @@ else if (category.Code == "Other")
     <table>
         <tr>
             <td style="width: 100%;" style="vertical-align: top;">
-            
                 <table id="tblResult" class="display">
                     <thead>
                         <tr>
@@ -206,6 +205,15 @@ else if (category.Code == "Other")
         </tr>
     </table>
     <% } %>
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+            $("#divMoreProduct").manyTxt();
+            $("#divContractor").manyTxt();
+            $("#divClient").manyTxt();
+            $("#divCategory").manyTxt();
+
+        });
+    </script>
     <script type="text/javascript">
 
         $('#Geo1FullName').val('<%= OAMS.Models.AppSetting.DefaultGeo1Name %>');
@@ -233,7 +241,7 @@ else if (category.Code == "Other")
         }
 
         var oTable;
-       
+
         function showGeo2(str) {
             //alert(str);
             //var v = $("#geo2List").text();
