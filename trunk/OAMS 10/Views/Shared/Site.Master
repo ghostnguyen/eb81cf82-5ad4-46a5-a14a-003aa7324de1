@@ -42,72 +42,37 @@
                 <% Html.RenderPartial("LogOnUserControl"); %>
             </div>
             <div id="menucontainer">
-                <%--<ul id="menu">
-                    <li>
-                        <%: Html.ActionLinkWithRoles("Home", "Index", "Home")%></li>
-                    <li>
-                        <%: Html.ActionLinkWithRoles("Find Site", "Find","FindSite")%>
-                    </li>
-                    <li>
-                        <%: Html.ActionLinkWithRoles("Site", "Index", "Site")%>
-                    </li>
-                    <li>
-                        <%: Html.ActionLinkWithRoles("Contract", "Index", "Contract")%></li>
-                    <li>
-                        <%: Html.ActionLinkWithRoles("Contractor", "Index", "Contractor")%></li>
-                    <li>
-                        <%: Html.ActionLinkWithRoles("Geo", "Index", "Geo")%></li>
-                    <li>
-                        <%: Html.ActionLinkWithRoles("Category", "Index", "Category")%></li>
-                    <li>
-                        <%: Html.ActionLinkWithRoles("Client", "Index", "Client")%></li>
-                    <li>
-                        <%: Html.ActionLinkWithRoles("Product", "Index", "Product")%></li>
-                    <li>
-                        <%: Html.ActionLink("About", "About", "Home")%>
-                        <ul>
-                            <li>
-                                <%: Html.ActionLinkWithRoles("Product", "Index", "Product")%></li>
-                        </ul>
-                    </li>
-                </ul>--%>
                 <ul id="Ul1" class="sf-menu">
                     <li>
-                        <%--<%: Html.ActionLinkWithRoles("Home", "Index", "Home")%>--%>
                         <%: Html.ActionLinkWithRoles<OAMS.Controllers.HomeController>("Home", r => r.Index(), null, null, false)%>
                     </li>
                     <li>
-                        <%--<%: Html.ActionLinkWithRoles("Find Site", "Find","FindSite")%>--%>
                         <%: Html.ActionLinkWithRoles<OAMS.Controllers.FindSiteController>("Find Site", r => r.Find(0), null, null, false)%>
                     </li>
                     <li>
-                        <%--<%: Html.ActionLinkWithRoles("Site", "Index", "Site")%>--%>
                         <%: Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Site", r => r.Index(), null, null, false)%>
                     </li>
                     <li>
-                        <%--<%: Html.ActionLinkWithRoles("Contract", "Index", "Contract")%>--%>
                         <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("Contract", r => r.Index(), null, null, false)%>
+                    </li>
+                    <li>
+                        <%: Html.ActionLinkWithRoles<OAMS.Controllers.QuoteController>("Quote", r => r.Index(), null, null, false)%>
                     </li>
                     <li><a href="javascript:void(0);">Master Data</a>
                         <ul>
                             <li>
-                                <%--<%: Html.ActionLinkWithRoles("Contractor", "Index", "Contractor")%>--%>
                                 <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractorController>("Contractor", r => r.Index(), null, null, false)%>
                             </li>
                             <li>
-                                <%--<%: Html.ActionLinkWithRoles("Geo", "Index", "Geo")%>--%>
                                 <%: Html.ActionLinkWithRoles<OAMS.Controllers.GeoController>("Geo", r => r.Index(null), null, null, false)%>
                             </li>
                             <li>
-                                <%--<%: Html.ActionLinkWithRoles("Category", "Index", "Category")%>--%>
                                 <%: Html.ActionLinkWithRoles<OAMS.Controllers.CategoryController>("Category", r => r.Index(null), null, null, false)%>
                             </li>
                             <li>
-                                <%--<%: Html.ActionLinkWithRoles("Client", "Index", "Client")%>--%>
                                 <%: Html.ActionLinkWithRoles<OAMS.Controllers.ClientController>("Client", r => r.Index(), null, null, false)%>
                             </li>
                             <li>
-                                <%--<%: Html.ActionLinkWithRoles("Product", "Index", "Product")%>--%>
                                 <%: Html.ActionLinkWithRoles<OAMS.Controllers.ProductController>("Product", r => r.Index(), null, null, false)%>
                             </li>
                         </ul>
@@ -116,7 +81,6 @@
                         <%: Html.ActionLink("Account", "Index", "Account")%>
                         <ul>
                             <li>
-                                <%--<%: Html.ActionLinkWithRoles("Roles", "GetAllRoles", "Account")%>--%>
                                 <%: Html.ActionLinkWithRoles<OAMS.Controllers.AccountController>("Roles", r => r.GetAllRoles(), null, null, false)%>
                             </li>
                         </ul>
