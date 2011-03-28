@@ -240,10 +240,10 @@
                         <%: Html.HiddenFor(model => model.Site.Lng)%>
                     </div>
                     <div class="editor-label">
-                        <%: Html.LabelFor(model => model.Site.Type) %>
+                        <%: Html.LabelFor(model => model.ContractDetail.Type)%>
                     </div>
                     <div class="editor-field">
-                        <%: Html.DisplayFor(r => r.Site.Type)%>
+                        <%: Html.DisplayFor(r => r.ContractDetail.Type)%>
                     </div>
                     <div class="editor-label">
                         <%: Html.LabelFor(model => model.ContractDetail.Format)%>
@@ -252,16 +252,16 @@
                         <%: Html.DisplayFor(r => r.ContractDetail.Format)%>
                     </div>
                     <div class="editor-label">
-                        <%: Html.LabelFor(model => model.Site.Height)%>
+                        <%: Html.LabelFor(model => model.ContractDetail.Height)%>
                     </div>
                     <div class="editor-field">
-                        <%: Html.DisplayFor(model => model.Site.Height)%>
+                        <%: Html.DisplayFor(model => model.ContractDetail.Height)%>
                     </div>
                     <div class="editor-label">
-                        <%: Html.LabelFor(model => model.Site.Width) %>
+                        <%: Html.LabelFor(model => model.ContractDetail.Width)%>
                     </div>
                     <div class="editor-field">
-                        <%: Html.DisplayFor(model => model.Site.Width)%>
+                        <%: Html.DisplayFor(model => model.ContractDetail.Width)%>
                     </div>
                     <p>
                         <%: Html.ActionLinkWithRoles<OAMS.Controllers.SiteMonitoringController>("Save", r => r.Edit(0), null, null, true)%>

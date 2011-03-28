@@ -237,11 +237,11 @@
                         <%: Html.HiddenFor(model => model.Site.Lng)%>
                     </div>
                     <div class="editor-label">
-                        <%: Html.LabelFor(model => model.Site.Type) %>
+                        <%: Html.LabelFor(model => model.ContractDetail.Type)%>
                     </div>
                     <div class="editor-field">
-                        <%: Html.CodeMasterDropDownListFor(r => r.Site.Type)%>
-                        <%: Html.ValidationMessageFor(model => model.Site.Type)%>
+                        <%: Html.CodeMasterDropDownListFor(r => r.ContractDetail.Type)%>
+                        <%: Html.ValidationMessageFor(model => model.ContractDetail.Type)%>
                     </div>
                     <div class="editor-label">
                         <%: Html.LabelFor(model => model.ContractDetail.Format)%>
@@ -251,18 +251,18 @@
                         <%: Html.ValidationMessageFor(model => model.ContractDetail.Format)%>
                     </div>
                     <div class="editor-label">
-                        <%: Html.LabelFor(model => model.Site.Height)%>
+                        <%: Html.LabelFor(model => model.ContractDetail.Height)%>
                     </div>
                     <div class="editor-field">
-                        <%: Html.TextBoxFor(model => model.Site.Height)%>
-                        <%: Html.ValidationMessageFor(model => model.Site.Height)%>
+                        <%: Html.TextBoxFor(model => model.ContractDetail.Height)%>
+                        <%: Html.ValidationMessageFor(model => model.ContractDetail.Height)%>
                     </div>
                     <div class="editor-label">
-                        <%: Html.LabelFor(model => model.Site.Width) %>
+                        <%: Html.LabelFor(model => model.ContractDetail.Width)%>
                     </div>
                     <div class="editor-field">
-                        <%: Html.TextBoxFor(model => model.Site.Width)%>
-                        <%: Html.ValidationMessageFor(model => model.Site.Width)%>
+                        <%: Html.TextBoxFor(model => model.ContractDetail.Width)%>
+                        <%: Html.ValidationMessageFor(model => model.ContractDetail.Width)%>
                     </div>
                     <p>
                         <%--<input type="submit" value="Create" />--%>

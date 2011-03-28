@@ -42,7 +42,6 @@
         </tbody>
     </table>
     <div>
-        <%--<%: Html.ActionLink("Add", "Add", "ContractorContact", new { href = string.Format("javascript:AddContractorContact({0})", Model.ID) })%>--%>
         <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractorContactController>("Add", r => r.Add(0), null, new Dictionary<string, object>() { { "href", string.Format("javascript:AddContractorContact({0})", Model.ID) } }, false)%>
     </div>
     <script type="text/javascript" language="javascript">

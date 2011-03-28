@@ -375,7 +375,7 @@ var smRedEditTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteMonitoring
                                         <%: item.Site.AddressLine2 %>
                                     </td>
                                     <td>
-                                        <%: item.Site.Type %>
+                                        <%: item.Type %>
                                     </td>
                                     <td>
                                         <%: item.Format %>

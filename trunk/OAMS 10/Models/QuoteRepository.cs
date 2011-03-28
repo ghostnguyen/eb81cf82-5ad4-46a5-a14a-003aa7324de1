@@ -39,6 +39,7 @@ namespace OAMS.Models
             e.SiteID = siteDetail.SiteID;
 
             e.Format = siteDetail.Format;
+            e.Type = siteDetail.Type;
             e.SiteDetailName = siteDetail.Name;
 
             DB.QuoteDetails.AddObject(e);

@@ -38,6 +38,9 @@
                         Email
                     </th>
                     <th>
+                        Total Site
+                    </th>
+                    <th>
                         Note
                     </th>
                 </tr>
@@ -77,6 +80,9 @@
                         <%: item.Email %>
                     </td>
                     <td>
+                        <%: item.Products.SelectMany(r => r.SiteDetails).Select(r => r.Site).Distinct().Count()  %>
+                    </td>
+                    <td>
                         <%: item.Note %>
                     </td>
                 </tr>
@@ -84,6 +90,8 @@
             </tbody>
             <tfoot>
                 <tr>
+                    <th>
+                    </th>
                     <th>
                     </th>
                     <th>

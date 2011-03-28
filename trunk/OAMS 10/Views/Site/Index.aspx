@@ -53,7 +53,7 @@
         <tbody>
             <% 
                 var editTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Edit", r => r.Edit(0), new RouteValueDictionary(new { id = "siteID" }), null, false);
-                var deleteTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Delete", r => r.Delete(0), new RouteValueDictionary(new { id = "siteID" }), new Dictionary<string,object> (){{"onclick","return confirm('Delete?');"}}, false);
+                var deleteTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Delete", r => r.Delete(0), new RouteValueDictionary(new { id = "siteID" }), new Dictionary<string, object>() { { "onclick", "return confirm('Delete?');" } }, false);
             %>
             <% foreach (var item in Model)
                { %>
@@ -84,7 +84,7 @@
                     <%: item.AddressLine2 %>
                 </td>
                 <td>
-                    <%: item.Type %>
+                    <%: string.Join(",",item.SiteDetails.Select(r => r.Type).Distinct().ToArray()) %>
                 </td>
                 <td>
                     <%--<%: item.Format %>--%>
