@@ -48,6 +48,18 @@
                 <th>
                     Photo Count
                 </th>
+                <th>
+                    Last Updated Date
+                </th>
+                <th>
+                    Last Updated By
+                </th>
+                <th>
+                    Created Date
+                </th>
+                <th>
+                    Created By
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -87,15 +99,12 @@
                     <%: string.Join(",",item.SiteDetails.Select(r => r.Type).Distinct().ToArray()) %>
                 </td>
                 <td>
-                    <%--<%: item.Format %>--%>
                     <%: string.Join(", ", item.SiteDetails.Select(r => r.Format)) %>
                 </td>
                 <td>
-                    <%--<%: item.CurrentClientName %>--%>
                     <%: string.Join(", ", item.SiteDetails.Where(r => r.Product != null).Select(r => r.Product.NewClientName)) %>
                 </td>
                 <td>
-                    <%--<%: item.CurrentProduct %>--%>
                     <%: string.Join(", ", item.SiteDetails.Where(r => r.Product != null).Select(r => r.Product.Name)) %>
                 </td>
                 <td>
@@ -104,11 +113,31 @@
                 <td>
                     <%: item.SitePhotoes.Count() %>
                 </td>
+                <td>
+                    <%: item.LastUpdatedDate %>
+                </td>
+                <td>
+                    <%: item.LastUpdatedBy %>
+                </td>
+                <td>
+                    <%: item.CreatedDate %>
+                </td>
+                <td>
+                    <%: item.CreatedBy %>
+                </td>
             </tr>
             <% } %>
         </tbody>
         <tfoot>
             <tr>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
                 <th>
                 </th>
                 <th>
