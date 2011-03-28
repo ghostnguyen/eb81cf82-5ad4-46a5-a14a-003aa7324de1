@@ -39,6 +39,9 @@ namespace OAMS.Models
             e.SiteID = siteDetail.SiteID;
 
             e.Format = siteDetail.Format;
+            e.Type = siteDetail.Type;
+            e.Height = siteDetail.Height;
+            e.Width = siteDetail.Width;
             e.SiteDetailName = siteDetail.Name;
 
             DB.ContractDetails.AddObject(e);
@@ -91,7 +94,7 @@ namespace OAMS.Models
             {
                 int index = 1;
 
-                foreach (OAMS.Models.ContractDetail cd in contract.ContractDetails.OrderBy(r => r.Site.Type))
+                foreach (OAMS.Models.ContractDetail cd in contract.ContractDetails.OrderBy(r => r.Type))
                 {
                     Rpt01_Model_SiteMonitoringDetail detail = new Rpt01_Model_SiteMonitoringDetail();
 
@@ -111,10 +114,10 @@ namespace OAMS.Models
                     detail.Province = cd.Site.Geo1 != null ? cd.Site.Geo1.FullName : "";
                     detail.District = cd.Site.Geo2 != null ? cd.Site.Geo2.Name : "";
                     detail.Street = string.Format("{0} {1} {2}", cd.Site.AddressLine1, cd.Site.AddressLine2, cd.Site.Geo3 == null ? "" : cd.Site.Geo3.Name);
-                    detail.Size = string.Format("{0}m x {1}m", cd.Site.Width.ToString(), cd.Site.Height.ToString());
+                    detail.Size = string.Format("{0}m x {1}m", cd.Width.ToString(), cd.Site.ToString());
                     detail.Product = sm.Product == null ? "" : sm.Product.Name;
                     detail.Client = sm.Product == null ? "" : sm.Product.NewClientName;
-                    detail.SiteType = cd.Site.Type;
+                    detail.SiteType = cd.Type;
                     detail.SiteFormat = cd.Format;
                     detail.LastestPhotoDate = lastDate;
                     detail.BackFront = cd.Site.BacklitFormat != null ? "Backlit" : "Frontlit";
@@ -157,7 +160,7 @@ namespace OAMS.Models
             var contract = Get(contractID);
             if (contract != null)
             {
-                foreach (OAMS.Models.ContractDetail cd in contract.ContractDetails.OrderBy(r => r.Site.Type))
+                foreach (OAMS.Models.ContractDetail cd in contract.ContractDetails.OrderBy(r => r.Type))
                 {
                     SiteMonitoring sm = siteMonitoringRepository.Find(cd, from, to);
 

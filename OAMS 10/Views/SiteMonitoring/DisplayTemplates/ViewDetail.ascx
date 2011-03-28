@@ -82,8 +82,8 @@
                                     Size:
                                 </td>
                                 <td>
-                                    <%: Model.ContractDetail.Site.Height %>m x
-                                    <%: Model.ContractDetail.Site.Width %>m
+                                    <%: Model.ContractDetail.Height %>m x
+                                    <%: Model.ContractDetail.Width %>m
                                 </td>
                             </tr>
                         </table>
@@ -221,7 +221,7 @@
                                     Advertising Type:
                                 </td>
                                 <td>
-                                    <%: Model.ContractDetail.Site.Type %>
+                                    <%: Model.ContractDetail.Type %>
                                 </td>
                             </tr>
                             <tr>

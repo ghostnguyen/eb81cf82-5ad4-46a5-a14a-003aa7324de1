@@ -7,26 +7,32 @@
         <%: Model.Name %>
     </td>
     <td>
+        <%: Model.Type %>
+    </td>
+    <td>
         <%: Model.Format %>
     </td>
     <td>
-        <%: Model.Product == null ? "" : Model.Product.NewClientName %>
+        <%: Model.Height %>
     </td>
     <td>
-        <%: Model.Product == null ? "" : Model.Product.Name %>
+        <%: Model.Width %>
     </td>
     <td>
-        <%: Model.Product == null ? "" : Model.Product.CategoryFullName%>
+        <%: Model.Size %>
     </td>
     <td>
-        <%--<%: Html.ActionLink("Edit", "Edit", "SiteDetail", new { href = string.Format("javascript:AjaxEdit({0},'{1}','{2}');", Model.ID, "divSiteDetail_" + Model.ID.ToString(), Url.Content("~/SiteDetail/Edit")) })%>
-        |
-        <%: Html.ActionLink("Delete", "Delete", "SiteDetail", new { href = string.Format("javascript:AjaxDelete({0},'{1}','{2}');", Model.ID, "divSiteDetail_" + Model.ID.ToString(), Url.Content("~/SiteDetail/Delete")) })%>--%>
         <%: MvcHtmlString.Create(Session["SiteDetailEditTemplate"].ToString().Replace("siteDetailID", Model.ID.ToString()))%>
         |
         <%: MvcHtmlString.Create(Session["SiteDetailDeleteTemplate"].ToString().Replace("siteDetailID", Model.ID.ToString()))%>
     </td>
     <% if (Request.HttpMethod == "GET")
        { %>
+</tr>
+<tr id='<%= "divSubSiteDetail_" + Model.ID.ToString() %>'>
+    <td colspan="7" style="padding-left: 50px;">
+        <% Html.RenderPartial("~/Views/SiteDetail/ManageSiteDetailMore.ascx", Model); %>
+        <br />
+    </td>
 </tr>
 <%} %>

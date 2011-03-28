@@ -59,78 +59,7 @@
 
         });
 
-        //        function addMoreFileInput() {
-
-        //            var divAddMore = $('#divMoreFile');
-
-        //            var lbl = document.createElement('label');
-        //            lbl.innerHTML = 'Filename:';
-
-        //            divAddMore.append(lbl);
-
-
-        //            var input = document.createElement('input');
-        //            input.setAttribute('type', 'file');
-        //            input.setAttribute('name', 'files');
-        //            input.setAttribute('size', '65');
-
-        //            divAddMore.append(input);
-        //            divAddMore.append('<br />');
-        //        }
-
-        //        index = 4;
-        //        function addMoreFileInput() {
-
-        //            var divAddMore = $('#divMoreFile');
-
-        //            var lbl = document.createElement('label');
-        //            lbl.setAttribute('id', 'lblfile' + index);
-        //            lbl.innerHTML = 'Filename:';
-
-        //            divAddMore.append(lbl);
-
-        //            var input = document.createElement('input');
-        //            input.setAttribute('type', 'file');
-        //            input.setAttribute('name', 'files');
-        //            input.setAttribute('size', '65');
-        //            input.setAttribute('id', 'file' + index);
-        //            input.setAttribute('onchange', 'preview(this, ' + index + ')');
-
-        //            divAddMore.append(input);
-
-        //            var lnkDelete = document.createElement('a');
-        //            lnkDelete.setAttribute('id', 'LnkDeleteFile' + index);
-        //            lnkDelete.setAttribute('onclick', "$('#lblfile" + index + "').remove();$('#file" + index + "').remove();$('#previewField" + index + "').remove();$('#LnkDeleteFile" + index + "').remove();");
-        //            lnkDelete.innerHTML = 'X';
-        //            lnkDelete.setAttribute('style', 'text-decoration:underline;cursor:pointer;');
-        //            lnkDelete.setAttribute('title', 'Remove this Image');
-        //            divAddMore.append(" ").append(lnkDelete);
-
-        //            divAddMore.append('<br />');
-
-        //            var previewImg = document.createElement('img');
-        //            previewImg.setAttribute('id', 'previewField' + index + '');
-        //            previewImg.setAttribute('alt', 'Graphic will preview here');
-
-        //            divAddMore.append(previewImg);
-        //            divAddMore.append('<br />');
-        //            index = index + 1;
-        //        }
-
-        //        function deleteSitePhoto(btn, id) {
-
-        //            var input = document.createElement('input');
-        //            input.setAttribute('type', 'text');
-        //            input.setAttribute('name', 'DeletePhotoList');
-        //            input.setAttribute('value', id);
-        //            input.style.visibility = "hidden";
-
-        //            $('#divDeletePhotoList').append(input);
-
-        //            btn.style.visibility = "hidden";
-        //            $('#photo' + id).hide();
-
-        //        }
+        
 
         var map;
         var marker;
@@ -269,34 +198,6 @@
                     <div class="editor-field">
                         <%: Html.EditorFor(r => r.AddressLine2)%>
                         <%: Html.ValidationMessageFor(model => model.AddressLine2)%>
-                    </div>
-                    <div class="editor-label">
-                        <%: Html.LabelFor(model => model.Type) %>
-                    </div>
-                    <div class="editor-field">
-                        <%: Html.CodeMasterDropDownListFor(r => r.Type)%>
-                        <%: Html.ValidationMessageFor(model => model.Type)%>
-                    </div>
-                    <%--<div class="editor-label">
-                        <%: Html.LabelFor(model => model.Format) %>
-                    </div>
-                    <div class="editor-field">
-                        <%: Html.CodeMasterDropDownListFor(r => r.Format)%>
-                        <%: Html.ValidationMessageFor(model => model.Format)%>
-                    </div>--%>
-                    <div class="editor-label">
-                        <%: Html.LabelFor(model => model.Height) %>
-                    </div>
-                    <div class="editor-field">
-                        <%: Html.TextBoxFor(model => model.Height) %>
-                        <%: Html.ValidationMessageFor(model => model.Height) %>
-                    </div>
-                    <div class="editor-label">
-                        <%: Html.LabelFor(model => model.Width) %>
-                    </div>
-                    <div class="editor-field">
-                        <%: Html.TextBoxFor(model => model.Width) %>
-                        <%: Html.ValidationMessageFor(model => model.Width) %>
                     </div>
                     <div class="editor-label">
                         <%: Html.LabelFor(model => model.Contractor) %>

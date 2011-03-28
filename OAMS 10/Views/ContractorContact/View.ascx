@@ -13,9 +13,6 @@
         <%: Model.Note!=null?Model.Note:"_"%>
     </td>
     <td>
-        <%--<%: Html.ActionLink("Edit", "Edit", "ContractorContact", new { href = string.Format("javascript:AjaxEdit({0},'{1}','{2}');", Model.ID, "divContractorContact_" + Model.ID.ToString(), Url.Content("~/ContractorContact/Edit")) })%>
-        |
-        <%: Html.ActionLink("Delete", "Delete", "ContractorContact", new { href = string.Format("javascript:AjaxDelete2({0},'{1}','{2}','{3}');", Model.ID, "divContractorContact_" + Model.ID.ToString(), Url.Content("~/ContractorContact/Delete"), "divSubContractorContact_" + Model.ID.ToString()) })%>--%>
         <%: MvcHtmlString.Create(Session["ContractorContactEditTemplate"].ToString().Replace("contractorContactID", Model.ID.ToString()))%>
         |
         <%: MvcHtmlString.Create(Session["ContractorContactDeleteTemplate"].ToString().Replace("contractorContactID", Model.ID.ToString()))%>

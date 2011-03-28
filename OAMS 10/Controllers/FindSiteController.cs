@@ -29,42 +29,11 @@ namespace OAMS.Controllers
         [HttpPost]
         public JsonResult FindJson(FindSite e)
         {
-            //SiteRepository siteRepo = new SiteRepository();
-
-            //List<Site> l = siteRepo.GetAll().ToList()
-            //    .Where(r =>
-            //        e.StyleList.Contains(r.Type)
-            //    && (e.ContractorList == null || e.ContractorList.Contains(r.ContractorID.ToInt()))
-            //            && (e.ClientList == null || e.ClientList.Contains(r.CurrentClientID.ToInt()))
-            //    //&& (e.ClientList == null || e.ClientList.Join(r.SiteDetails.Select(r1 => r1.ClientID), r1 => r1, r1 => r1.ToInt(), (r1, r2) => r1).Count() > 0)
-            //    && (e.CatList == null || e.CatList.Contains(r.CategoryID1.ToString()) || e.CatList.Contains(r.CategoryID2.ToString()) || e.CatList.Contains(r.CategoryID3.ToString()))
-            //    && (string.IsNullOrEmpty(e.Format) || r.Format == e.Format)
-            //    && (string.IsNullOrEmpty(e.RoadType1) || r.RoadType1 == e.RoadType1.ToInt())
-            //    && (string.IsNullOrEmpty(e.RoadType2) || r.RoadType2 == e.RoadType2.ToInt())
-            //    && (string.IsNullOrEmpty(e.InstallationPosition1) || r.InstallationPosition1 == e.InstallationPosition1.ToInt())
-            //    && (string.IsNullOrEmpty(e.InstallationPosition2) || r.InstallationPosition2 == e.InstallationPosition2.ToInt())
-            //    && (string.IsNullOrEmpty(e.ViewingDistance) || r.ViewingDistance == e.ViewingDistance.ToInt())
-            //    && (string.IsNullOrEmpty(e.ViewingSpeed) || r.ViewingSpeed == e.ViewingSpeed.ToInt())
-            //    && (string.IsNullOrEmpty(e.Height) || r.Height == e.Height.ToInt())
-            //    && (string.IsNullOrEmpty(e.DirectionalTrafficPublicTransport) || r.DirectionalTrafficPublicTransport == e.DirectionalTrafficPublicTransport.ToInt())
-            //    && (string.IsNullOrEmpty(e.ShopSignsBillboards) || r.ShopSignsBillboards == e.ShopSignsBillboards.ToInt())
-            //    && (string.IsNullOrEmpty(e.FlagsTemporaryBannersPromotionalItems) || r.FlagsTemporaryBannersPromotionalItems == e.FlagsTemporaryBannersPromotionalItems.ToInt())
-            //    && (string.IsNullOrEmpty(e.CompetitiveProductSigns) || r.CompetitiveProductSigns == e.CompetitiveProductSigns.ToInt())
-            //    && (e.ProductList == null || e.ProductList.Match(r.CurrentProduct))
-            //    && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Geo1 != null && r.Geo1.FullName == e.Geo1FullName))
-            //    && ((string.IsNullOrEmpty(e.Geo1FullName) && e.Geo2List == null)
-            //        || (e.Geo2List != null && (e.Geo2List.FirstOrDefault() == null || (r.Geo2 != null && e.Geo2List.Contains(r.Geo2.FullName)))))
-
-            //        ).ToList()
-            //    .Where(r => !e.IsWithinCircle || Helper.DistanceBetweenPoints(r.Lat, r.Lng, e.Lat, e.Long) <= e.Distance)
-            //    .ToList();
-
             var siteDetailRepo = new SiteDetailRepository();
-
 
             List<SiteDetail> l = siteDetailRepo.DB.SiteDetails.Include("Site").ToList()
                 .Where(r =>
-                    e.StyleList.Contains(r.Site.Type)
+                    e.StyleList.Intersect(r.Site.SiteDetails.Select(r1 => r1.Type)).Count() > 0
                 && (e.ContractorList == null || e.ContractorList.Contains(r.Site.ContractorID.ToInt()))
                 && (e.ClientList == null || e.ClientList.Contains(r.Product == null ? 0 : r.Product.ClientID.ToInt()))
                 && (e.ProductIDList == null || e.ProductIDList.Contains(r.ProductID.HasValue ? r.ProductID.Value : 0))
@@ -81,7 +50,7 @@ namespace OAMS.Controllers
                 && (string.IsNullOrEmpty(e.InstallationPosition2) || r.Site.InstallationPosition2 == e.InstallationPosition2.ToInt())
                 && (string.IsNullOrEmpty(e.ViewingDistance) || r.Site.ViewingDistance == e.ViewingDistance.ToInt())
                 && (string.IsNullOrEmpty(e.ViewingSpeed) || r.Site.ViewingSpeed == e.ViewingSpeed.ToInt())
-                && (string.IsNullOrEmpty(e.Height) || r.Site.Height == e.Height.ToInt())
+                && (string.IsNullOrEmpty(e.Height) || r.Height == e.Height.ToInt())
                 && (string.IsNullOrEmpty(e.DirectionalTrafficPublicTransport) || r.Site.DirectionalTrafficPublicTransport == e.DirectionalTrafficPublicTransport.ToInt())
                 && (string.IsNullOrEmpty(e.ShopSignsBillboards) || r.Site.ShopSignsBillboards == e.ShopSignsBillboards.ToInt())
                 && (string.IsNullOrEmpty(e.FlagsTemporaryBannersPromotionalItems) || r.Site.FlagsTemporaryBannersPromotionalItems == e.FlagsTemporaryBannersPromotionalItems.ToInt())
@@ -109,12 +78,12 @@ namespace OAMS.Controllers
 
                 Code = r.Site.Code ?? "",
                 r.Format,
-                Type = string.IsNullOrEmpty(r.Site.Type) ? "" : codeMasterRepo.GetNote(cmt.Type, r.Site.Type),
-                CodeType = r.Site.Type,
+                Type = string.IsNullOrEmpty(r.Type) ? "" : codeMasterRepo.GetNote(cmt.Type, r.Type),
+                CodeType = r.Type,
                 r.Site.GeoFullName,
                 Address = r.Site.AddressLine1 + " " + r.Site.AddressLine2,
-                Orientation = r.Site.Width >= r.Site.Height ? "Horizontal" : "Vertical",
-                Size = string.Format("{0}m x {1}m", r.Site.Height.ToString(), r.Site.Width.ToString()),
+                Orientation = r.Width >= r.Height ? "Horizontal" : "Vertical",
+                Size = string.Format("{0}m x {1}m", r.Height.ToString(), r.Width.ToString()),
                 Lighting = r.Site.FrontlitNumerOfLamps > 0 ? "Fontlit" : "Backlit",
                 Contractor = r.Site.Contractor != null ? r.Site.Contractor.Name : "",
                 CurrentProduct = r.Product == null ? "" : (r.Product.Name ?? ""),
@@ -153,7 +122,7 @@ namespace OAMS.Controllers
 
             var l = siteDetailRepo.DB.SiteDetails.Include("Site").ToList()
                 .Where(r =>
-                    e.StyleList.Contains(r.Site.Type)
+                    e.StyleList.Contains(r.Type)
                 && (e.ContractorList == null || e.ContractorList.Contains(r.Site.ContractorID.ToInt()))
                 && (e.ClientList == null || e.ClientList.Contains(r.Product == null ? 0 : r.Product.ClientID.ToInt()))
                 && (e.ProductIDList == null || e.ProductIDList.Contains(r.ProductID.HasValue ? r.ProductID.Value : 0))
@@ -169,7 +138,7 @@ namespace OAMS.Controllers
                 && (string.IsNullOrEmpty(e.InstallationPosition2) || r.Site.InstallationPosition2 == e.InstallationPosition2.ToInt())
                 && (string.IsNullOrEmpty(e.ViewingDistance) || r.Site.ViewingDistance == e.ViewingDistance.ToInt())
                 && (string.IsNullOrEmpty(e.ViewingSpeed) || r.Site.ViewingSpeed == e.ViewingSpeed.ToInt())
-                && (string.IsNullOrEmpty(e.Height) || r.Site.Height == e.Height.ToInt())
+                && (string.IsNullOrEmpty(e.Height) || r.Height == e.Height.ToInt())
                 && (string.IsNullOrEmpty(e.DirectionalTrafficPublicTransport) || r.Site.DirectionalTrafficPublicTransport == e.DirectionalTrafficPublicTransport.ToInt())
                 && (string.IsNullOrEmpty(e.ShopSignsBillboards) || r.Site.ShopSignsBillboards == e.ShopSignsBillboards.ToInt())
                 && (string.IsNullOrEmpty(e.FlagsTemporaryBannersPromotionalItems) || r.Site.FlagsTemporaryBannersPromotionalItems == e.FlagsTemporaryBannersPromotionalItems.ToInt())
@@ -197,12 +166,12 @@ namespace OAMS.Controllers
                 AddressLine2 = r.Site.AddressLine2 ?? "",
                 Code = r.Site.Code ?? "",
                 r.Format,
-                Type = string.IsNullOrEmpty(r.Site.Type) ? "" : codeMasterRepo.GetNote(cmt.Type, r.Site.Type),
-                CodeType = r.Site.Type,
+                Type = string.IsNullOrEmpty(r.Type) ? "" : codeMasterRepo.GetNote(cmt.Type, r.Type),
+                CodeType = r.Type,
                 r.Site.GeoFullName,
                 Address = r.Site.AddressLine1 + " " + r.Site.AddressLine2,
-                Orientation = r.Site.Width >= r.Site.Height ? "Horizontal" : "Vertical",
-                Size = string.Format("{0}m x {1}m", r.Site.Height.ToString(), r.Site.Width.ToString()),
+                Orientation = r.Width >= r.Height ? "Horizontal" : "Vertical",
+                Size = string.Format("{0}m x {1}m", r.Height.ToString(), r.Width.ToString()),
                 Lighting = r.Site.FrontlitNumerOfLamps > 0 ? "Fontlit" : "Backlit",
                 Contractor = r.Site.Contractor != null ? r.Site.Contractor.Name : "",
                 CurrentProduct = r.Product == null ? "" : (r.Product.Name ?? ""),
@@ -223,7 +192,7 @@ namespace OAMS.Controllers
 
             var l = siteDetailRepo.DB.SiteDetails.Include("Site").ToList()
                 .Where(r =>
-                    e.StyleList.Contains(r.Site.Type)
+                    e.StyleList.Contains(r.Type)
                 && (e.ContractorList == null || e.ContractorList.Contains(r.Site.ContractorID.ToInt()))
                 && (e.ClientList == null || e.ClientList.Contains(r.Product == null ? 0 : r.Product.ClientID.ToInt()))
                 && (e.ProductIDList == null || e.ProductIDList.Contains(r.ProductID.HasValue ? r.ProductID.Value : 0))
@@ -239,7 +208,7 @@ namespace OAMS.Controllers
                 && (string.IsNullOrEmpty(e.InstallationPosition2) || r.Site.InstallationPosition2 == e.InstallationPosition2.ToInt())
                 && (string.IsNullOrEmpty(e.ViewingDistance) || r.Site.ViewingDistance == e.ViewingDistance.ToInt())
                 && (string.IsNullOrEmpty(e.ViewingSpeed) || r.Site.ViewingSpeed == e.ViewingSpeed.ToInt())
-                && (string.IsNullOrEmpty(e.Height) || r.Site.Height == e.Height.ToInt())
+                && (string.IsNullOrEmpty(e.Height) || r.Height == e.Height.ToInt())
                 && (string.IsNullOrEmpty(e.DirectionalTrafficPublicTransport) || r.Site.DirectionalTrafficPublicTransport == e.DirectionalTrafficPublicTransport.ToInt())
                 && (string.IsNullOrEmpty(e.ShopSignsBillboards) || r.Site.ShopSignsBillboards == e.ShopSignsBillboards.ToInt())
                 && (string.IsNullOrEmpty(e.FlagsTemporaryBannersPromotionalItems) || r.Site.FlagsTemporaryBannersPromotionalItems == e.FlagsTemporaryBannersPromotionalItems.ToInt())
@@ -267,12 +236,12 @@ namespace OAMS.Controllers
                 AddressLine2 = r.Site.AddressLine2 ?? "",
                 Code = r.Site.Code ?? "",
                 r.Format,
-                Type = string.IsNullOrEmpty(r.Site.Type) ? "" : codeMasterRepo.GetNote(cmt.Type, r.Site.Type),
-                CodeType = r.Site.Type,
+                Type = string.IsNullOrEmpty(r.Type) ? "" : codeMasterRepo.GetNote(cmt.Type, r.Type),
+                CodeType = r.Type,
                 r.Site.GeoFullName,
                 Address = r.Site.AddressLine1 + " " + r.Site.AddressLine2,
-                Orientation = r.Site.Width >= r.Site.Height ? "Horizontal" : "Vertical",
-                Size = string.Format("{0}m x {1}m", r.Site.Height.ToString(), r.Site.Width.ToString()),
+                Orientation = r.Width >= r.Height ? "Horizontal" : "Vertical",
+                Size = string.Format("{0}m x {1}m", r.Height.ToString(), r.Width.ToString()),
                 Lighting = r.Site.FrontlitNumerOfLamps > 0 ? "Fontlit" : "Backlit",
                 Contractor = r.Site.Contractor != null ? r.Site.Contractor.Name : "",
                 CurrentProduct = r.Product == null ? "" : (r.Product.Name ?? ""),

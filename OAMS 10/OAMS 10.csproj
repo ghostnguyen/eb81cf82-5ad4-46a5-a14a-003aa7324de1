@@ -14,6 +14,7 @@
     <AssemblyName>OAMS 10</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>true</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -124,6 +125,7 @@
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ContractTimelineController.cs" />
+    <Compile Include="Controllers\SiteDetailMoreController.cs" />
     <Compile Include="Controllers\QuoteDetailController.cs" />
     <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="Controllers\SiteMonitoringPhotoController.cs" />
@@ -142,6 +144,8 @@
     </Compile>
     <Compile Include="Helper.cs" />
     <Compile Include="Models\ClientRepository.cs" />
+    <Compile Include="Models\Partial\SiteDetailMore.cs" />
+    <Compile Include="Models\SiteDetailMoreRepository.cs" />
     <Compile Include="Models\QuoteDetailRepository.cs" />
     <Compile Include="Models\QuoteRepository.cs" />
     <Compile Include="Models\Partial\AccountModels.cs" />
@@ -331,7 +335,10 @@
     <Content Include="Views\Shared\EditorTemplates\DateTime.ascx" />
     <Content Include="Content\Image\resize.png" />
     <Content Include="Views\ContractTimeline\View.ascx" />
+    <Content Include="Views\SiteDetailMore\Edit.ascx" />
+    <Content Include="Views\SiteDetailMore\View.ascx" />
     <Content Include="Views\SiteDetail\Edit.ascx" />
+    <Content Include="Views\SiteDetail\ManageSiteDetailMore.ascx" />
     <Content Include="Views\SiteDetail\View.ascx" />
     <Content Include="Views\SiteMonitoring\Create.aspx" />
     <Content Include="Views\SiteMonitoring\DisplayTemplates\ViewDetail.ascx" />
