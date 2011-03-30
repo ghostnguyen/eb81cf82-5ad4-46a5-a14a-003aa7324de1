@@ -91,7 +91,7 @@ else if (category.Code == "Other")
                 <br />
                 <%: Html.CodeMasterDropDownListFor(r => r.Format, false)%>
                 <br />
-                <%: Html.LabelFor(r => r.RoadType1) %>
+                <%: Html.LabelFor(r => r.RoadType2) %>
                 <br />
                 <%: Html.CodeMasterDropDownListFor(r => r.RoadType2, false)%>
                 <br />

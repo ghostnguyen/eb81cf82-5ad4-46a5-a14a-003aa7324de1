@@ -31,41 +31,34 @@ namespace OAMS.Controllers
         {
             var siteDetailRepo = new SiteDetailRepository();
 
-            List<SiteDetail> l = siteDetailRepo.DB.SiteDetails.Include("Site").ToList()
-                .Where(r =>
-                    e.StyleList.Intersect(r.Site.SiteDetails.Select(r1 => r1.Type)).Count() > 0
-                && (e.ContractorList == null || e.ContractorList.Contains(r.Site.ContractorID.ToInt()))
-                && (e.ClientList == null || e.ClientList.Contains(r.Product == null ? 0 : r.Product.ClientID.ToInt()))
-                && (e.ProductIDList == null || e.ProductIDList.Contains(r.ProductID.HasValue ? r.ProductID.Value : 0))
-                && (e.InstallationPosition1MarkList == null || e.InstallationPosition1MarkList.Contains(r.Site.InstallationPosition1.HasValue ? r.Site.InstallationPosition1.Value : 0))
-                && (e.CatList == null
-                    || (r.Product != null
-                        && (e.CatList.Contains(r.Product.CategoryID1.ToString()) || e.CatList.Contains(r.Product.CategoryID2.ToString()) || e.CatList.Contains(r.Product.CategoryID3.ToString()))
-                        )
-                    )
-                && (string.IsNullOrEmpty(e.Format) || r.Format == e.Format)
-                && (string.IsNullOrEmpty(e.RoadType1) || r.Site.RoadType1 == e.RoadType1.ToInt())
-                && (string.IsNullOrEmpty(e.RoadType2) || r.Site.RoadType2 == e.RoadType2.ToInt())
-                //&& (string.IsNullOrEmpty(e.InstallationPosition1) || r.Site.InstallationPosition1 == e.InstallationPosition1.ToInt())
-                && (string.IsNullOrEmpty(e.InstallationPosition2) || r.Site.InstallationPosition2 == e.InstallationPosition2.ToInt())
-                && (string.IsNullOrEmpty(e.ViewingDistance) || r.Site.ViewingDistance == e.ViewingDistance.ToInt())
-                && (string.IsNullOrEmpty(e.ViewingSpeed) || r.Site.ViewingSpeed == e.ViewingSpeed.ToInt())
-                && (string.IsNullOrEmpty(e.Height) || r.Height == e.Height.ToInt())
-                && (string.IsNullOrEmpty(e.DirectionalTrafficPublicTransport) || r.Site.DirectionalTrafficPublicTransport == e.DirectionalTrafficPublicTransport.ToInt())
-                && (string.IsNullOrEmpty(e.ShopSignsBillboards) || r.Site.ShopSignsBillboards == e.ShopSignsBillboards.ToInt())
-                && (string.IsNullOrEmpty(e.FlagsTemporaryBannersPromotionalItems) || r.Site.FlagsTemporaryBannersPromotionalItems == e.FlagsTemporaryBannersPromotionalItems.ToInt())
-                && (string.IsNullOrEmpty(e.CompetitiveProductSigns) || r.Site.CompetitiveProductSigns == e.CompetitiveProductSigns.ToInt())                
-                && (r.Site.Score.ToInt() >= e.ScoreFrom.ToInt() && r.Site.Score.ToInt() <= e.ScoreTo.ToInt())
-                && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName))
-                && ((string.IsNullOrEmpty(e.Geo1FullName) && e.Geo2List == null)
-                    || (e.Geo2List != null && (e.Geo2List.FirstOrDefault() == null || (r.Site.Geo2 != null && e.Geo2List.Contains(r.Site.Geo2.FullName)))))
+            //List<SiteDetail> l = siteDetailRepo.DB.SiteDetails.Include("Site").Include("SiteDetailMore").ToList()
 
+            List<SiteDetail> l = siteDetailRepo.DB.SiteDetails
+                .Where(r =>
+                    e.StyleList.Contains(r.Type)
+                    && (string.IsNullOrEmpty(e.Format) || r.Format == e.Format)
+                    && (!e.ViewingDistance.HasValue || r.Site.ViewingDistance == e.ViewingDistance)
+                    && (!e.InstallationPosition2.HasValue || r.Site.InstallationPosition2 == e.InstallationPosition2) // Angle to Road
+                    && (!e.RoadType2.HasValue || r.Site.RoadType2 == e.RoadType2) //Traffic
+                    && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName))
                     ).ToList()
-                .Where(r => !e.IsWithinCircle || Helper.DistanceBetweenPoints(r.Site.Lat, r.Site.Lng, e.Lat, e.Long) <= e.Distance)
-                .ToList();
+                .Where(r =>
+                    (e.ContractorList == null || e.ContractorList.Contains(r.Site.ContractorID))
+                    && (e.ClientList == null || e.ClientList.Intersect(r.SiteDetailMores.Select(r1 => r1.Product == null ? 0 : r1.Product.ClientID.ToInt())).Count() > 0)
+                    && (e.ProductIDList == null || e.ProductIDList.Contains(r.ProductID.HasValue ? r.ProductID.Value : 0))
+                    && (e.InstallationPosition1MarkList == null || e.InstallationPosition1MarkList.Contains(r.Site.InstallationPosition1.HasValue ? r.Site.InstallationPosition1.Value : 0))
+                    && (e.CatList == null
+                        || (r.Product != null
+                            && (e.CatList.Contains(r.Product.CategoryID1.ToString()) || e.CatList.Contains(r.Product.CategoryID2.ToString()) || e.CatList.Contains(r.Product.CategoryID3.ToString()))
+                            )
+                        )
+                    && (r.Site.Score.ToInt() >= e.ScoreFrom.ToInt() && r.Site.Score.ToInt() <= e.ScoreTo.ToInt())
+                    && ((string.IsNullOrEmpty(e.Geo1FullName) && e.Geo2List == null)
+                        || (e.Geo2List != null && (e.Geo2List.FirstOrDefault() == null || (r.Site.Geo2 != null && e.Geo2List.Contains(r.Site.Geo2.FullName)))))
+                    && (!e.IsWithinCircle || Helper.DistanceBetweenPoints(r.Site.Lat, r.Site.Lng, e.Lat, e.Long) <= e.Distance)
+                    ).ToList();
 
             CodeMasterType cmt = new CodeMasterType();
-
             CodeMasterRepository codeMasterRepo = new CodeMasterRepository();
 
             return Json(l.Distinct().Select(r => new
@@ -124,7 +117,7 @@ namespace OAMS.Controllers
                 .Where(r =>
                     e.StyleList.Contains(r.Type)
                 && (e.ContractorList == null || e.ContractorList.Contains(r.Site.ContractorID.ToInt()))
-                && (e.ClientList == null || e.ClientList.Contains(r.Product == null ? 0 : r.Product.ClientID.ToInt()))
+                && (e.ClientList == null || e.ClientList.Intersect(r.SiteDetailMores.Select(r1 => r1.Product == null ? 0 : r1.Product.ClientID.ToInt())).Count() > 0)
                 && (e.ProductIDList == null || e.ProductIDList.Contains(r.ProductID.HasValue ? r.ProductID.Value : 0))
                 && (e.CatList == null
                     || (r.Product != null
@@ -132,17 +125,10 @@ namespace OAMS.Controllers
                         )
                     )
                 && (string.IsNullOrEmpty(e.Format) || r.Format == e.Format)
-                && (string.IsNullOrEmpty(e.RoadType1) || r.Site.RoadType1 == e.RoadType1.ToInt())
-                && (string.IsNullOrEmpty(e.RoadType2) || r.Site.RoadType2 == e.RoadType2.ToInt())
-                && (string.IsNullOrEmpty(e.InstallationPosition1) || r.Site.InstallationPosition1 == e.InstallationPosition1.ToInt())
-                && (string.IsNullOrEmpty(e.InstallationPosition2) || r.Site.InstallationPosition2 == e.InstallationPosition2.ToInt())
-                && (string.IsNullOrEmpty(e.ViewingDistance) || r.Site.ViewingDistance == e.ViewingDistance.ToInt())
+                && (!e.RoadType2.HasValue || r.Site.RoadType2 == e.RoadType2) //Traffic
+                && (!e.ViewingDistance.HasValue || r.Site.ViewingDistance == e.ViewingDistance)
+                && (!e.InstallationPosition2.HasValue || r.Site.InstallationPosition2 == e.InstallationPosition2) // Angle to Road
                 && (string.IsNullOrEmpty(e.ViewingSpeed) || r.Site.ViewingSpeed == e.ViewingSpeed.ToInt())
-                && (string.IsNullOrEmpty(e.Height) || r.Height == e.Height.ToInt())
-                && (string.IsNullOrEmpty(e.DirectionalTrafficPublicTransport) || r.Site.DirectionalTrafficPublicTransport == e.DirectionalTrafficPublicTransport.ToInt())
-                && (string.IsNullOrEmpty(e.ShopSignsBillboards) || r.Site.ShopSignsBillboards == e.ShopSignsBillboards.ToInt())
-                && (string.IsNullOrEmpty(e.FlagsTemporaryBannersPromotionalItems) || r.Site.FlagsTemporaryBannersPromotionalItems == e.FlagsTemporaryBannersPromotionalItems.ToInt())
-                && (string.IsNullOrEmpty(e.CompetitiveProductSigns) || r.Site.CompetitiveProductSigns == e.CompetitiveProductSigns.ToInt())                
                 && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName))
                 && ((string.IsNullOrEmpty(e.Geo1FullName) && e.Geo2List == null)
                     || (e.Geo2List != null && (e.Geo2List.FirstOrDefault() == null || (r.Site.Geo2 != null && e.Geo2List.Contains(r.Site.Geo2.FullName)))))
@@ -194,7 +180,7 @@ namespace OAMS.Controllers
                 .Where(r =>
                     e.StyleList.Contains(r.Type)
                 && (e.ContractorList == null || e.ContractorList.Contains(r.Site.ContractorID.ToInt()))
-                && (e.ClientList == null || e.ClientList.Contains(r.Product == null ? 0 : r.Product.ClientID.ToInt()))
+                && (e.ClientList == null || e.ClientList.Intersect(r.SiteDetailMores.Select(r1 => r1.Product == null ? 0 : r1.Product.ClientID.ToInt())).Count() > 0)
                 && (e.ProductIDList == null || e.ProductIDList.Contains(r.ProductID.HasValue ? r.ProductID.Value : 0))
                 && (e.CatList == null
                     || (r.Product != null
@@ -202,17 +188,12 @@ namespace OAMS.Controllers
                         )
                     )
                 && (string.IsNullOrEmpty(e.Format) || r.Format == e.Format)
-                && (string.IsNullOrEmpty(e.RoadType1) || r.Site.RoadType1 == e.RoadType1.ToInt())
-                && (string.IsNullOrEmpty(e.RoadType2) || r.Site.RoadType2 == e.RoadType2.ToInt())
-                && (string.IsNullOrEmpty(e.InstallationPosition1) || r.Site.InstallationPosition1 == e.InstallationPosition1.ToInt())
-                && (string.IsNullOrEmpty(e.InstallationPosition2) || r.Site.InstallationPosition2 == e.InstallationPosition2.ToInt())
-                && (string.IsNullOrEmpty(e.ViewingDistance) || r.Site.ViewingDistance == e.ViewingDistance.ToInt())
+                
+                && (!e.RoadType2.HasValue || r.Site.RoadType2 == e.RoadType2) //Traffic
+                && (!e.ViewingDistance.HasValue || r.Site.ViewingDistance == e.ViewingDistance)
+                && (!e.InstallationPosition2.HasValue || r.Site.InstallationPosition2 == e.InstallationPosition2) // Angle to Road
                 && (string.IsNullOrEmpty(e.ViewingSpeed) || r.Site.ViewingSpeed == e.ViewingSpeed.ToInt())
-                && (string.IsNullOrEmpty(e.Height) || r.Height == e.Height.ToInt())
-                && (string.IsNullOrEmpty(e.DirectionalTrafficPublicTransport) || r.Site.DirectionalTrafficPublicTransport == e.DirectionalTrafficPublicTransport.ToInt())
-                && (string.IsNullOrEmpty(e.ShopSignsBillboards) || r.Site.ShopSignsBillboards == e.ShopSignsBillboards.ToInt())
-                && (string.IsNullOrEmpty(e.FlagsTemporaryBannersPromotionalItems) || r.Site.FlagsTemporaryBannersPromotionalItems == e.FlagsTemporaryBannersPromotionalItems.ToInt())
-                && (string.IsNullOrEmpty(e.CompetitiveProductSigns) || r.Site.CompetitiveProductSigns == e.CompetitiveProductSigns.ToInt())
+                
                 && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName))
                 && ((string.IsNullOrEmpty(e.Geo1FullName) && e.Geo2List == null)
                     || (e.Geo2List != null && (e.Geo2List.FirstOrDefault() == null || (r.Site.Geo2 != null && e.Geo2List.Contains(r.Site.Geo2.FullName)))))
