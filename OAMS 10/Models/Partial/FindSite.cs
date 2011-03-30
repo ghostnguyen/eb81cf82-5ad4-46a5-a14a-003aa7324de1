@@ -15,19 +15,13 @@ namespace OAMS.Models
         public List<string> StyleList { get; set; }
         public string Format { get; set; }
 
-        public string RoadType1 { get; set; }
-        public string RoadType2 { get; set; }
-        public string InstallationPosition1 { get; set; }
+        
+        public int? RoadType2 { get; set; }
         public List<int> InstallationPosition1MarkList { get; set; }        
-        public string InstallationPosition2 { get; set; }
-        public string ViewingDistance { get; set; }
+        public int? InstallationPosition2 { get; set; }
+        public int? ViewingDistance { get; set; }
        
         public string ViewingSpeed { get; set; }
-        public string Height { get; set; }
-        public string DirectionalTrafficPublicTransport { get; set; }
-        public string ShopSignsBillboards { get; set; }
-        public string FlagsTemporaryBannersPromotionalItems { get; set; }
-        public string CompetitiveProductSigns { get; set; }
 
         public bool IsWithinCircle { get; set; }
         public double Distance { get; set; }
@@ -36,7 +30,7 @@ namespace OAMS.Models
         public DateTime? From { get; set; }
         public DateTime? To { get; set; }
 
-        public List<int> ContractorList { get; set; }
+        public List<int?> ContractorList { get; set; }
         public List<int> ClientList { get; set; }
         //public List<string> ProductList { get; set; }
         public List<int> ProductIDList { get; set; }
