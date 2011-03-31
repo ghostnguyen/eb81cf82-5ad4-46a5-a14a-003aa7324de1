@@ -10,39 +10,11 @@ namespace OAMS.Models
 
     public partial class SiteDetail : IEquatable<SiteDetail>
     {
-        //public string CategoryFullName
-        //{
-        //    get
-        //    {
-        //        CategoryRepository catRepository = new CategoryRepository();
-        //        return catRepository.GetFullname(Category1, Category2, Category3);
-        //    }
-        //}
+        public string ToStringClient { get { return string.Join(",", SiteDetailMores.Select(r1 => r1.Product == null ? "" : (r1.Product.Client == null ? "" : (r1.Product.Client.Name ?? "")))); } }
+        public string ToStringProduct { get { return string.Join(",", SiteDetailMores.Select(r1 => r1.Product == null ? "" : (r1.Product.Name ?? ""))); } }
+        public string ToStringCategoryLevel1 { get { return string.Join(",", SiteDetailMores.Select(r => r.Product == null ? "" : (r.Product.Category1 != null ? r.Product.Category1.Name : ""))); } }
+        public string ToStringCategoryLevel2 { get { return string.Join(",", SiteDetailMores.Select(r => r.Product == null ? "" : (r.Product.Category2 != null ? r.Product.Category2.Name : ""))); } }
 
-        //public string NewCategoryFullName
-        //{
-        //    get;
-        //    set;
-        //}
-
-        public string CurrentProductName
-        {
-            get
-            {
-                return Product != null ? Product.Name : "";
-            }
-        }
-
-
-
-        //public int UpdateCategory(Guid? catID1, Guid? catID2, Guid? catID3)
-        //{
-        //    CategoryID1 = catID1;
-        //    CategoryID2 = catID2;
-        //    CategoryID3 = catID3;
-
-        //    return 0;
-        //}
 
         public bool Equals(SiteDetail other)
         {
@@ -59,7 +31,6 @@ namespace OAMS.Models
 
         // If Equals() returns true for a pair of objects 
         // then GetHashCode() must return the same value for these objects.
-
         public override int GetHashCode()
         {
             //Get hash code for the Code field.
