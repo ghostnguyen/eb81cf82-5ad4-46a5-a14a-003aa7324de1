@@ -29,34 +29,8 @@ namespace OAMS.Controllers
         [HttpPost]
         public JsonResult FindJson(FindSite e)
         {
-            var siteDetailRepo = new SiteDetailRepository();
 
-            //List<SiteDetail> l = siteDetailRepo.DB.SiteDetails.Include("Site").Include("SiteDetailMore").ToList()
-
-            List<SiteDetail> l = siteDetailRepo.DB.SiteDetails
-                .Where(r =>
-                    e.StyleList.Contains(r.Type)
-                    && (string.IsNullOrEmpty(e.Format) || r.Format == e.Format)
-                    && (!e.ViewingDistance.HasValue || r.Site.ViewingDistance == e.ViewingDistance)
-                    && (!e.InstallationPosition2.HasValue || r.Site.InstallationPosition2 == e.InstallationPosition2) // Angle to Road
-                    && (!e.RoadType2.HasValue || r.Site.RoadType2 == e.RoadType2) //Traffic
-                    && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName))
-                    ).ToList()
-                .Where(r =>
-                    (e.ContractorList == null || e.ContractorList.Contains(r.Site.ContractorID))
-                    && (e.ClientList == null || e.ClientList.Intersect(r.SiteDetailMores.Select(r1 => r1.Product == null ? 0 : r1.Product.ClientID.ToInt())).Count() > 0)
-                    && (e.ProductIDList == null || e.ProductIDList.Contains(r.ProductID.HasValue ? r.ProductID.Value : 0))
-                    && (e.InstallationPosition1MarkList == null || e.InstallationPosition1MarkList.Contains(r.Site.InstallationPosition1.HasValue ? r.Site.InstallationPosition1.Value : 0))
-                    && (e.CatList == null
-                        || (r.Product != null
-                            && (e.CatList.Contains(r.Product.CategoryID1.ToString()) || e.CatList.Contains(r.Product.CategoryID2.ToString()) || e.CatList.Contains(r.Product.CategoryID3.ToString()))
-                            )
-                        )
-                    && (r.Site.Score.ToInt() >= e.ScoreFrom.ToInt() && r.Site.Score.ToInt() <= e.ScoreTo.ToInt())
-                    && ((string.IsNullOrEmpty(e.Geo1FullName) && e.Geo2List == null)
-                        || (e.Geo2List != null && (e.Geo2List.FirstOrDefault() == null || (r.Site.Geo2 != null && e.Geo2List.Contains(r.Site.Geo2.FullName)))))
-                    && (!e.IsWithinCircle || Helper.DistanceBetweenPoints(r.Site.Lat, r.Site.Lng, e.Lat, e.Long) <= e.Distance)
-                    ).ToList();
+            List<SiteDetail> l = Find(e);
 
             CodeMasterType cmt = new CodeMasterType();
             CodeMasterRepository codeMasterRepo = new CodeMasterRepository();
@@ -92,6 +66,44 @@ namespace OAMS.Controllers
             }));
         }
 
+        private static List<SiteDetail> Find(FindSite e)
+        {
+            OAMSEntities DB = new OAMSEntities();
+            List<SiteDetail> l = DB.SiteDetails
+                .Where(r => true
+
+                    //Find on its own properties
+                    && e.StyleList.Contains(r.Type)
+                    && (string.IsNullOrEmpty(e.Format) || r.Format == e.Format)
+
+                    //Find on 1 level relationship properties
+                    && (!e.ViewingDistance.HasValue || r.Site.ViewingDistance == e.ViewingDistance)
+                    && (!e.InstallationPosition2.HasValue || r.Site.InstallationPosition2 == e.InstallationPosition2) // Angle to Road
+                    && (!e.RoadType2.HasValue || r.Site.RoadType2 == e.RoadType2) //Traffic
+                    && (e.ContractorList.Count == 0 || e.ContractorList.Contains(r.Site.ContractorID))
+                    && (!e.ScoreFrom.HasValue || !e.ScoreTo.HasValue || (r.Site.Score >= e.ScoreFrom && r.Site.Score <= e.ScoreTo))
+                    && (e.InstallationPosition1MarkList.Count == 0 || e.InstallationPosition1MarkList.Contains(r.Site.InstallationPosition1.HasValue ? r.Site.InstallationPosition1.Value : 0))
+
+                    //Find on 2 level relationship properties
+                    && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName))
+                    && (e.Geo2List.Count == 0 || (r.Site.Geo2 != null && e.Geo2List.Contains(r.Site.Geo2.FullName)))
+
+                    //Find on 3 level relationship properties
+                    && (e.ProductIDList.Count == 0 || e.ProductIDList.Intersect(r.SiteDetailMores.Select(r2 => r2.ProductID)).Count() > 0)
+                    && (e.ClientList.Count == 0 || e.ClientList.Intersect(r.SiteDetailMores.Select(r1 => r1.Product == null ? 0 : r1.Product.ClientID)).Count() > 0)
+                    && (e.CatList.Count == 0
+                        || (e.CatList.Intersect(r.SiteDetailMores.Select(r1 => r1.Product.CategoryID1)).Count() > 0
+                            || e.CatList.Intersect(r.SiteDetailMores.Select(r1 => r1.Product.CategoryID2)).Count() > 0
+                            || e.CatList.Intersect(r.SiteDetailMores.Select(r1 => r1.Product.CategoryID3)).Count() > 0
+                            )
+                        )
+                    ).ToList()
+                .Where(r => true
+                    && (!e.IsWithinCircle || Helper.DistanceBetweenPoints(r.Site.Lat, r.Site.Lng, e.Lat, e.Long) <= e.Distance)
+                    ).ToList();
+            return l;
+        }
+
         public ActionResult Find4Contract(int campaignID = 0)
         {
             FindSite e = new FindSite();
@@ -111,31 +123,33 @@ namespace OAMS.Controllers
         [HttpPost]
         public JsonResult FindJson4Contract(FindSite e, int contractID)
         {
-            var siteDetailRepo = new SiteDetailRepository();
+            //var siteDetailRepo = new SiteDetailRepository();
 
-            var l = siteDetailRepo.DB.SiteDetails.Include("Site").ToList()
-                .Where(r =>
-                    e.StyleList.Contains(r.Type)
-                && (e.ContractorList == null || e.ContractorList.Contains(r.Site.ContractorID.ToInt()))
-                && (e.ClientList == null || e.ClientList.Intersect(r.SiteDetailMores.Select(r1 => r1.Product == null ? 0 : r1.Product.ClientID.ToInt())).Count() > 0)
-                && (e.ProductIDList == null || e.ProductIDList.Contains(r.ProductID.HasValue ? r.ProductID.Value : 0))
-                && (e.CatList == null
-                    || (r.Product != null
-                        && (e.CatList.Contains(r.Product.CategoryID1.ToString()) || e.CatList.Contains(r.Product.CategoryID2.ToString()) || e.CatList.Contains(r.Product.CategoryID3.ToString()))
-                        )
-                    )
-                && (string.IsNullOrEmpty(e.Format) || r.Format == e.Format)
-                && (!e.RoadType2.HasValue || r.Site.RoadType2 == e.RoadType2) //Traffic
-                && (!e.ViewingDistance.HasValue || r.Site.ViewingDistance == e.ViewingDistance)
-                && (!e.InstallationPosition2.HasValue || r.Site.InstallationPosition2 == e.InstallationPosition2) // Angle to Road
-                && (string.IsNullOrEmpty(e.ViewingSpeed) || r.Site.ViewingSpeed == e.ViewingSpeed.ToInt())
-                && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName))
-                && ((string.IsNullOrEmpty(e.Geo1FullName) && e.Geo2List == null)
-                    || (e.Geo2List != null && (e.Geo2List.FirstOrDefault() == null || (r.Site.Geo2 != null && e.Geo2List.Contains(r.Site.Geo2.FullName)))))
+            //var l = siteDetailRepo.DB.SiteDetails.Include("Site").ToList()
+            //    .Where(r =>
+            //        e.StyleList.Contains(r.Type)
+            //    && (e.ContractorList == null || e.ContractorList.Contains(r.Site.ContractorID.ToInt()))
+            //    && (e.ClientList == null || e.ClientList.Intersect(r.SiteDetailMores.Select(r1 => r1.Product == null ? 0 : r1.Product.ClientID.ToInt())).Count() > 0)
+            //    && (e.ProductIDList == null || e.ProductIDList.Contains(r.ProductID.HasValue ? r.ProductID.Value : 0))
+            //    && (e.CatList == null
+            //        || (r.Product != null
+            //            && (e.CatList.Contains(r.Product.CategoryID1.ToString()) || e.CatList.Contains(r.Product.CategoryID2.ToString()) || e.CatList.Contains(r.Product.CategoryID3.ToString()))
+            //            )
+            //        )
+            //    && (string.IsNullOrEmpty(e.Format) || r.Format == e.Format)
+            //    && (!e.RoadType2.HasValue || r.Site.RoadType2 == e.RoadType2) //Traffic
+            //    && (!e.ViewingDistance.HasValue || r.Site.ViewingDistance == e.ViewingDistance)
+            //    && (!e.InstallationPosition2.HasValue || r.Site.InstallationPosition2 == e.InstallationPosition2) // Angle to Road
+            //    && (string.IsNullOrEmpty(e.ViewingSpeed) || r.Site.ViewingSpeed == e.ViewingSpeed.ToInt())
+            //    && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName))
+            //    && ((string.IsNullOrEmpty(e.Geo1FullName) && e.Geo2List == null)
+            //        || (e.Geo2List != null && (e.Geo2List.FirstOrDefault() == null || (r.Site.Geo2 != null && e.Geo2List.Contains(r.Site.Geo2.FullName)))))
 
-                    ).ToList()
-                .Where(r => !e.IsWithinCircle || Helper.DistanceBetweenPoints(r.Site.Lat, r.Site.Lng, e.Lat, e.Long) <= e.Distance)
-                .ToList();
+            //        ).ToList()
+            //    .Where(r => !e.IsWithinCircle || Helper.DistanceBetweenPoints(r.Site.Lat, r.Site.Lng, e.Lat, e.Long) <= e.Distance)
+            //    .ToList();
+
+            var l = Find(e);
 
             CodeMasterType cmt = new CodeMasterType();
 
@@ -166,41 +180,13 @@ namespace OAMS.Controllers
                 AlbumID = string.IsNullOrEmpty(r.Site.AlbumUrl) ? "" : r.Site.AlbumUrl.Split('/')[9].Split('?')[0],
                 AuthID = string.IsNullOrEmpty(r.Site.AlbumUrl) ? "" : r.Site.AlbumUrl.Split('?')[1].Split('=')[1],
                 Added = r.Site.ContractDetails.Where(r1 => r1.ContractID == contractID && r1.SiteDetailName == r.Name).Count() > 0 ? true : false,
-
-                //Add = false,    
             }));
         }
 
         [HttpPost]
         public JsonResult FindJson4Quote(FindSite e, int quoteID)
         {
-            var siteDetailRepo = new SiteDetailRepository();
-
-            var l = siteDetailRepo.DB.SiteDetails.Include("Site").ToList()
-                .Where(r =>
-                    e.StyleList.Contains(r.Type)
-                && (e.ContractorList == null || e.ContractorList.Contains(r.Site.ContractorID.ToInt()))
-                && (e.ClientList == null || e.ClientList.Intersect(r.SiteDetailMores.Select(r1 => r1.Product == null ? 0 : r1.Product.ClientID.ToInt())).Count() > 0)
-                && (e.ProductIDList == null || e.ProductIDList.Contains(r.ProductID.HasValue ? r.ProductID.Value : 0))
-                && (e.CatList == null
-                    || (r.Product != null
-                        && (e.CatList.Contains(r.Product.CategoryID1.ToString()) || e.CatList.Contains(r.Product.CategoryID2.ToString()) || e.CatList.Contains(r.Product.CategoryID3.ToString()))
-                        )
-                    )
-                && (string.IsNullOrEmpty(e.Format) || r.Format == e.Format)
-                
-                && (!e.RoadType2.HasValue || r.Site.RoadType2 == e.RoadType2) //Traffic
-                && (!e.ViewingDistance.HasValue || r.Site.ViewingDistance == e.ViewingDistance)
-                && (!e.InstallationPosition2.HasValue || r.Site.InstallationPosition2 == e.InstallationPosition2) // Angle to Road
-                && (string.IsNullOrEmpty(e.ViewingSpeed) || r.Site.ViewingSpeed == e.ViewingSpeed.ToInt())
-                
-                && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName))
-                && ((string.IsNullOrEmpty(e.Geo1FullName) && e.Geo2List == null)
-                    || (e.Geo2List != null && (e.Geo2List.FirstOrDefault() == null || (r.Site.Geo2 != null && e.Geo2List.Contains(r.Site.Geo2.FullName)))))
-
-                    ).ToList()
-                .Where(r => !e.IsWithinCircle || Helper.DistanceBetweenPoints(r.Site.Lat, r.Site.Lng, e.Lat, e.Long) <= e.Distance)
-                .ToList();
+            var l = Find(e);
 
             CodeMasterType cmt = new CodeMasterType();
 
