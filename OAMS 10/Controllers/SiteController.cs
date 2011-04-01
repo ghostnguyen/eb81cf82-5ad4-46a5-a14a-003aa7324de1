@@ -18,21 +18,8 @@ namespace OAMS.Controllers
 
         public ActionResult Index()
         {
-            repo.FixDB();
-
             return View(repo.GetAll());
         }
-
-        //
-        // GET: /Site/Details/5
-
-        //public ActionResult Details(int id)
-        //{
-        //    return View();
-        //}
-
-        //
-        // GET: /Site/Create
 
         public ActionResult Create(int? contractID)
         {
@@ -40,13 +27,7 @@ namespace OAMS.Controllers
             return View(e);
         }
 
-        //
-        // POST: /Site/Create
-
-
-
         [HttpPost]
-        //public ActionResult Create(IEnumerable<HttpPostedFileBase> files)
         public ActionResult Create(int? contractID, IEnumerable<HttpPostedFileBase> files, string[] noteList, bool? IsFirstSave)
         {
             var site = repo.Add(UpdateModel, files, noteList);
@@ -61,9 +42,6 @@ namespace OAMS.Controllers
             }
         }
 
-        //
-        // GET: /Site/Edit/5
-
         public ActionResult Edit(int id)
         {
             Site e = repo.Get(id);
@@ -71,9 +49,6 @@ namespace OAMS.Controllers
             //e.NewCategoryFullName = e.CategoryFullName;
             return View(e);
         }
-
-        //
-        // POST: /Site/Edit/5
 
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection, IEnumerable<HttpPostedFileBase> files, List<int> DeletePhotoList, string[] noteList)
@@ -85,19 +60,6 @@ namespace OAMS.Controllers
             return RedirectToAction("Index");
         }
 
-        //public ActionResult EditCompleted(string[] headlines)
-        //public ActionResult EditCompleted()
-        //{
-        //    return RedirectToAction("Index");
-        //    //return View("News", new ViewStringModel
-        //    //{
-        //    //    NewsHeadlines = headlines
-        //    //});
-        //}
-
-        //
-        // GET: /Site/Delete/5
-
         public ActionResult Delete(int id)
         {
             //repo.DeletePhoto(id);
@@ -106,17 +68,6 @@ namespace OAMS.Controllers
 
             //return View();
         }
-
-        //
-        // POST: /Site/Delete/5
-
-        //[HttpPost]
-        //public ActionResult Delete(int id, FormCollection collection)
-        //{
-        //    //repo.DeletePhoto(id);
-        //    repo.Delete(id);
-        //    return RedirectToAction("Index");
-        //}
 
         [HttpPost]
         public JsonResult JsonList()
@@ -128,8 +79,5 @@ namespace OAMS.Controllers
 
             return Json(result);
         }
-
-
-
     }
 }
