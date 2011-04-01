@@ -102,10 +102,10 @@
                     <%: string.Join(", ", item.SiteDetails.Select(r => r.Format)) %>
                 </td>
                 <td>
-                    <%: string.Join(", ", item.SiteDetails.Where(r => r.Product != null).Select(r => r.Product.NewClientName)) %>
+                    <%: string.Join(", ", item.SiteDetails.Select(r => r.ToStringClient)) %>
                 </td>
                 <td>
-                    <%: string.Join(", ", item.SiteDetails.Where(r => r.Product != null).Select(r => r.Product.Name)) %>
+                    <%: string.Join(", ", item.SiteDetails.Select(r => r.ToStringProduct)) %>
                 </td>
                 <td>
                     <%: item.Score %>
@@ -251,7 +251,24 @@
             //            });
 
             //var oTable = $('#tblResult').dataTable({ "aaSorting": [[1, "desc"]], "sScrollX": "100%" });
-            var oTable = $('#tblResult').dataTable({ "aaSorting": [[1, "desc"]] });
+            var oTable = $('#tblResult').dataTable({ "aaSorting": [[1, "desc"]],
+                "sDom": 'CT<"clear">lfrtip',
+
+                "oTableTools": { "sSwfPath": "content/copy_cvs_xls_pdf.swf", "aButtons": ["copy"] },
+
+                "oLanguage": {
+                    "sLengthMenu": 'Display <select>' +
+				'<option value="10">10</option>' +
+				'<option value="25">25</option>' +
+				'<option value="50">50</option>' +
+				'<option value="100">100</option>' +
+				'<option value="-1">All</option>' +
+				'</select> records'
+                },
+
+
+
+            });
 
             /* Add a select menu for each TH element in the table footer */
             $("tfoot th").each(function (i) {

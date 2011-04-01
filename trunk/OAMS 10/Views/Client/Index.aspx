@@ -80,7 +80,7 @@
                         <%: item.Email %>
                     </td>
                     <td>
-                        <%: item.Products.SelectMany(r => r.SiteDetails).Select(r => r.Site).Distinct().Count()  %>
+                        <%: item.Products.SelectMany(r => r.SiteDetailMores).Select(r => r.SiteDetail).Distinct().Count()  %>
                     </td>
                     <td>
                         <%: item.Note %>

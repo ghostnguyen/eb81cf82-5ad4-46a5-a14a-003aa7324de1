@@ -211,6 +211,8 @@
     <Content Include="App_Data\OAMS_log.ldf">
       <DependentUpon>OAMS.MDF</DependentUpon>
     </Content>
+    <Content Include="Content\copy_cvs_xls.swf" />
+    <Content Include="Content\copy_cvs_xls_pdf.swf" />
     <Content Include="Content\css\ColVis.css" />
     <Content Include="Content\css\demo_table.css" />
     <Content Include="Content\Image\ambient.png" />
@@ -272,6 +274,8 @@
     <Content Include="Scripts\jquery.ui.widget.min.js" />
     <Content Include="Scripts\markerclusterer_packed.js" />
     <Content Include="Scripts\superfish.js" />
+    <Content Include="Scripts\TableTools.js" />
+    <Content Include="Scripts\ZeroClipboard.js" />
     <Content Include="Views\Account\EditAccountInRole.aspx" />
     <Content Include="Views\Account\CreateRole.aspx" />
     <Content Include="Views\Account\Edit.aspx" />

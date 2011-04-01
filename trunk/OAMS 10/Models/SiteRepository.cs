@@ -170,43 +170,5 @@ namespace OAMS.Models
                 Save();
             }
         }
-
-        public void FixDB()
-        {
-            //List<Site> l = DB.Sites.Where(r => !string.IsNullOrEmpty(r.Contractor)).ToList();
-            //foreach (var item in l)
-            //{
-
-            //    Contractor e = DB.Contractors.Where(r => r.Name == item.Contractor).FirstOrDefault();
-
-            //    if (e == null)
-            //    {
-            //        e = new Contractor();
-            //        e.Name = item.Contractor;
-            //    }
-
-            //    item.Contractor1 = e;
-            //    Save();
-            //}
-
-
-            //List<Site> l = DB.Sites.Where(r => !string.IsNullOrEmpty(r.CurrentClient)).ToList();
-            //foreach (var item in l)
-            //{
-
-            //    Client e = DB.Clients.Where(r => r.Name == item.CurrentClient).FirstOrDefault();
-
-            //    if (e == null)
-            //    {
-            //        e = new Client();
-            //        e.Name = item.CurrentClient;
-            //    }
-
-            //    item.Client = e;
-
-            //    //To eleminated duplicated client
-            //    Save();
-            //}
-        }
     }
 }
