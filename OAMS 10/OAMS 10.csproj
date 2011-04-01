@@ -343,6 +343,7 @@
     <Content Include="Views\SiteDetailMore\View.ascx" />
     <Content Include="Views\SiteDetail\Edit.ascx" />
     <Content Include="Views\SiteDetail\ManageSiteDetailMore.ascx" />
+    <Content Include="Views\SiteDetail\ManageSiteDetailPhoto.ascx" />
     <Content Include="Views\SiteDetail\View.ascx" />
     <Content Include="Views\SiteMonitoring\Create.aspx" />
     <Content Include="Views\SiteMonitoring\DisplayTemplates\ViewDetail.ascx" />
