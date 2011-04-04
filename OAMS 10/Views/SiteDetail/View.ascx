@@ -35,10 +35,10 @@
         <br />
     </td>
 </tr>
-<%--<tr id='<%= "divSubSiteDetailPhoto_" + Model.ID.ToString() %>'>
+<tr id='<%= "divSubSiteDetailPhoto_" + Model.ID.ToString() %>'>
     <td colspan="7" style="padding-left: 50px;">
         <% Html.RenderPartial("~/Views/SiteDetail/ManageSiteDetailPhoto.ascx", Model); %>
         <br />
     </td>
-</tr>--%>
+</tr>
 <%} %>

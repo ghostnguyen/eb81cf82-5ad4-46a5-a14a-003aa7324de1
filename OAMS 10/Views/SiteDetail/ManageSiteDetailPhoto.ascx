@@ -20,8 +20,8 @@
     <br />
     <% } %>
     <br />
-    <div id="divMoreFile">
+    <div id='divMoreSiteDetailFile_<%: Model.ID %>'>
     </div>
     <br />
-    <input type="button" value="Add more" onclick="addMoreFileInput2('divMoreFile','files',<%: Model.ID %>)" />
+    <input type="button" value="Add more" onclick="addMoreFileInput2('divMoreSiteDetailFile_<%: Model.ID %>','siteDetailFiles',<%: Model.ID %>)" />
 </div>

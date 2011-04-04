@@ -51,12 +51,10 @@ namespace OAMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection, IEnumerable<HttpPostedFileBase> files, List<int> DeletePhotoList, string[] noteList)
+        public ActionResult Edit(int id, FormCollection collection, IEnumerable<HttpPostedFileBase> files, List<int> DeletePhotoList, string[] noteList, IDictionary<int, SDP> siteDetailFiles)
         {
-            // TODO: Add update logic here
-            repo.Update(id, UpdateModel, files, DeletePhotoList, noteList);
-
-            //return View(e);
+            //repo.Update(id, UpdateModel, files, DeletePhotoList, noteList);
+            
             return RedirectToAction("Index");
         }
 
