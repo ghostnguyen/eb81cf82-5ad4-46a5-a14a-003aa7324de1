@@ -142,7 +142,7 @@ function applyChanges(index, outImageName) {
     field.height = y;
 }
 
-index = 4;
+index = 0;
 function addMoreFileInput(divId, nameOfFileInput, nameOfNoteList) {
 
     var divAddMore = $('#' + divId);
@@ -191,7 +191,11 @@ function addMoreFileInput(divId, nameOfFileInput, nameOfNoteList) {
 
 function addMoreFileInput2(divId, nameOfParam, siteDetailID) {
 
-    var divAddMore = $('#' + divId);
+    var divAddMoreOut = $('#' + divId);
+
+    var divAddMore = $(document.createElement('div'));
+
+    divAddMoreOut.append(divAddMore);
 
     var lbl = document.createElement('label');
     lbl.setAttribute('id', 'lblSiteDetailFile' + index);
@@ -201,26 +205,24 @@ function addMoreFileInput2(divId, nameOfParam, siteDetailID) {
 
     var hiddenIndex = document.createElement('input');
     hiddenIndex.setAttribute('type', 'hidden');
-    hiddenIndex.setAttribute('name', nameOfParam + '.Index');
+    hiddenIndex.setAttribute('name', nameOfParam + '[' + index + '].Index');
     hiddenIndex.setAttribute('value', index);
     divAddMore.append(hiddenIndex);
 
     var hiddenSiteDetailID = document.createElement('input');
     hiddenSiteDetailID.setAttribute('type', 'hidden');
-    hiddenSiteDetailID.setAttribute('name', nameOfParam + '.[' + index + '].SiteDetailID');
+    hiddenSiteDetailID.setAttribute('name', nameOfParam + '[' + index + '].Value.SiteDetailID');
     hiddenSiteDetailID.setAttribute('value', siteDetailID);
     divAddMore.append(hiddenSiteDetailID);
 
     var input = document.createElement('input');
     input.setAttribute('type', 'file');
-    input.setAttribute('name', nameOfParam + '.[' + index + '].File');
+    input.setAttribute('name', nameOfParam + '[' + index + '].Value.File');
     input.setAttribute('size', '65');
-    input.setAttribute('id', 'file' + index);
     input.setAttribute('onchange', 'preview(this, ' + index + ',"previewSiteDetailField")');
     divAddMore.append(input);
 
     var lnkDelete = document.createElement('a');
-    lnkDelete.setAttribute('id', 'LnkDeleteSiteDetailFile' + index);
 
     lnkDelete.innerHTML = 'X';
     lnkDelete.setAttribute('style', 'text-decoration:underline;cursor:pointer;');
@@ -230,9 +232,9 @@ function addMoreFileInput2(divId, nameOfParam, siteDetailID) {
 
     var inputNote = document.createElement('input');
     inputNote.setAttribute('type', 'text');
-    inputNote.setAttribute('name', nameOfParam + '.[' + index + '].Note');
+    inputNote.setAttribute('name', nameOfParam + '[' + index + '].Value.Note');
     inputNote.setAttribute('size', '65');
-    inputNote.setAttribute('id', 'note' + index);
+
 
     divAddMore.append(inputNote);
     divAddMore.append('<br />');
@@ -245,13 +247,14 @@ function addMoreFileInput2(divId, nameOfParam, siteDetailID) {
     divAddMore.append('<br />');
 
     $(lnkDelete).click(function (e) {
-        $(lbl).remove();
-        $(hiddenIndex).remove();
-        $(hiddenSiteDetailID).remove();
-        $(input).remove();
-        $(inputNote).remove();
-        $(lnkDelete).remove();
-        $(previewImg).remove();
+        //        $(lbl).remove();
+        //        $(hiddenIndex).remove();
+        //        $(hiddenSiteDetailID).remove();
+        //        $(input).remove();
+        //        $(inputNote).remove();
+        //        $(lnkDelete).remove();
+        //        $(previewImg).remove();
+        divAddMore.remove();
     });
 
     index = index + 1;
