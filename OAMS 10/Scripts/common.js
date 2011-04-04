@@ -99,7 +99,7 @@ var outImage = "previewField";
 // what to display when the image is not valid
 var defaultPic = "spacer.gif";
 /***** DO NOT EDIT BELOW *****/
-function preview(what, index) {
+function preview(what, index, outImageName) {
     var source = what.value;
     var ext = source.substring(source.lastIndexOf(".") + 1, source.length).toLowerCase();
     for (var i = 0; i < fileTypes.length; i++) {
@@ -118,14 +118,14 @@ function preview(what, index) {
         }
     } else {
         globalPic.src = defaultPic;
-        alert("ESTA NO ES UNA IMAGEN VALIDA por favor escoge una imagen de tipo:nn" + fileTypes.join(", "));
+        alert("Invalid picture type. Must be:nn" + fileTypes.join(", "));
     }
-    setTimeout("applyChanges(" + index + ")", 200);
+    setTimeout("applyChanges(" + index + "," + outImageName + ")", 200);
 }
 
 var globalPic;
-function applyChanges(index) {
-    var field = document.getElementById(outImage + index);
+function applyChanges(index, outImageName) {
+    var field = document.getElementById(outImageName + index);
     var x = parseInt(globalPic.width);
     var y = parseInt(globalPic.height);
     if (x > maxWidth) {
@@ -158,11 +158,9 @@ function addMoreFileInput(divId, nameOfFileInput, nameOfNoteList) {
     input.setAttribute('name', nameOfFileInput);
     input.setAttribute('size', '65');
     input.setAttribute('id', 'file' + index);
-    input.setAttribute('onchange', 'preview(this, ' + index + ')');
+    input.setAttribute('onchange', 'preview(this, ' + index + ',"previewField")');
 
     divAddMore.append(input);
-
-
 
     var lnkDelete = document.createElement('a');
     lnkDelete.setAttribute('id', 'LnkDeleteFile' + index);
@@ -191,30 +189,39 @@ function addMoreFileInput(divId, nameOfFileInput, nameOfNoteList) {
     index = index + 1;
 }
 
-function addMoreFileInput2(divId, nameOfFileInput, nameOfNoteList) {
+function addMoreFileInput2(divId, nameOfParam, siteDetailID) {
 
     var divAddMore = $('#' + divId);
 
     var lbl = document.createElement('label');
-    lbl.setAttribute('id', 'lblfile' + index);
+    lbl.setAttribute('id', 'lblSiteDetailFile' + index);
     lbl.innerHTML = 'Filename:';
 
     divAddMore.append(lbl);
 
+    var hiddenIndex = document.createElement('input');
+    hiddenIndex.setAttribute('type', 'hidden');
+    hiddenIndex.setAttribute('name', nameOfParam + '.Index');
+    hiddenIndex.setAttribute('value', index);
+    divAddMore.append(hiddenIndex);
+
+    var hiddenSiteDetailID = document.createElement('input');
+    hiddenSiteDetailID.setAttribute('type', 'hidden');
+    hiddenSiteDetailID.setAttribute('name', nameOfParam + '.[' + index + '].SiteDetailID');
+    hiddenSiteDetailID.setAttribute('value', siteDetailID);
+    divAddMore.append(hiddenSiteDetailID);
+
     var input = document.createElement('input');
     input.setAttribute('type', 'file');
-    input.setAttribute('name', nameOfFileInput);
+    input.setAttribute('name', nameOfParam + '.[' + index + '].File');
     input.setAttribute('size', '65');
     input.setAttribute('id', 'file' + index);
-    input.setAttribute('onchange', 'preview(this, ' + index + ')');
-
+    input.setAttribute('onchange', 'preview(this, ' + index + ',"previewSiteDetailField")');
     divAddMore.append(input);
 
-
-
     var lnkDelete = document.createElement('a');
-    lnkDelete.setAttribute('id', 'LnkDeleteFile' + index);
-    lnkDelete.setAttribute('onclick', "$('#lblfile" + index + "').remove();$('#file" + index + "').remove();$('#previewField" + index + "').remove();$('#LnkDeleteFile" + index + "').remove();$('#note" + index + "').remove();");
+    lnkDelete.setAttribute('id', 'LnkDeleteSiteDetailFile' + index);
+
     lnkDelete.innerHTML = 'X';
     lnkDelete.setAttribute('style', 'text-decoration:underline;cursor:pointer;');
     lnkDelete.setAttribute('title', 'Remove this Image');
@@ -223,7 +230,7 @@ function addMoreFileInput2(divId, nameOfFileInput, nameOfNoteList) {
 
     var inputNote = document.createElement('input');
     inputNote.setAttribute('type', 'text');
-    inputNote.setAttribute('name', nameOfNoteList);
+    inputNote.setAttribute('name', nameOfParam + '.[' + index + '].Note');
     inputNote.setAttribute('size', '65');
     inputNote.setAttribute('id', 'note' + index);
 
@@ -231,11 +238,22 @@ function addMoreFileInput2(divId, nameOfFileInput, nameOfNoteList) {
     divAddMore.append('<br />');
 
     var previewImg = document.createElement('img');
-    previewImg.setAttribute('id', 'previewField' + index + '');
+    previewImg.setAttribute('id', 'previewSiteDetailField' + index + '');
     previewImg.setAttribute('alt', 'Graphic will preview here');
 
     divAddMore.append(previewImg);
     divAddMore.append('<br />');
+
+    $(lnkDelete).click(function (e) {
+        $(lbl).remove();
+        $(hiddenIndex).remove();
+        $(hiddenSiteDetailID).remove();
+        $(input).remove();
+        $(inputNote).remove();
+        $(lnkDelete).remove();
+        $(previewImg).remove();
+    });
+
     index = index + 1;
 }
 
