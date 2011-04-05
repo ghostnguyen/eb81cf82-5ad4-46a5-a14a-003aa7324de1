@@ -264,8 +264,6 @@
     <Content Include="Scripts\ColVis.min.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\grid.base.js" />
-    <Content Include="Scripts\jquery-1.5-vsdoc-para.js" />
-    <Content Include="Scripts\jquery-1.5-vsdoc.js" />
     <Content Include="Scripts\jquery-1.5.js" />
     <Content Include="Scripts\jquery-1.5.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.1.custom.min.js" />
