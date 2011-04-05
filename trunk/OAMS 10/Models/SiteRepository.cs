@@ -41,26 +41,30 @@ namespace OAMS.Models
             return e;
         }
 
-        public void Update(int ID, Action<Site> updateMethod, IEnumerable<HttpPostedFileBase> files, List<int> DeletePhotoList, string[] noteList)
+        public void Update(int ID, Action<Site> updateMethod, IEnumerable<HttpPostedFileBase> files, List<int> DeletePhotoList, string[] noteList, List<SDP> siteDetailFiles, List<int> DeleteSiteDetailPhotoList)
         {
             Site e = Get(ID);
 
             updateMethod(e);
 
             UpdateGeo(e);
-            //UpdateCategory(e);
 
             UpdateFrontBackLit(e);
 
             Save();
 
-
             PicasaRepository picasaRepository = new PicasaRepository();
             picasaRepository.DB = DB;
 
             picasaRepository.UploadPhoto(e, files, noteList);
+            Save();
 
             DeletePhoto(DeletePhotoList);
+
+            picasaRepository.UploadPhoto(siteDetailFiles);
+            Save();
+
+            DeleteSiteDetailPhoto(DeleteSiteDetailPhotoList);
 
             Save();
         }
@@ -160,6 +164,22 @@ namespace OAMS.Models
             if (IDList != null)
             {
                 List<SitePhoto> l = DB.SitePhotoes.Where(r => IDList.Contains(r.ID)).ToList();
+                PicasaRepository picasaRepository = new PicasaRepository();
+                foreach (var item in l)
+                {
+                    picasaRepository.DeletePhoto(item);
+                    DB.DeleteObject(item);
+                }
+
+                Save();
+            }
+        }
+
+        public void DeleteSiteDetailPhoto(List<int> IDList)
+        {
+            if (IDList != null)
+            {
+                var l = DB.SiteDetailPhotoes.Where(r => IDList.Contains(r.ID)).ToList();
                 PicasaRepository picasaRepository = new PicasaRepository();
                 foreach (var item in l)
                 {

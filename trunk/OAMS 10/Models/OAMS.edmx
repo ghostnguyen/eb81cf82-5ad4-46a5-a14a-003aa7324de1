@@ -586,6 +586,8 @@
           <Property Name="Height" Type="decimal" Scale="2" />
           <Property Name="Width" Type="decimal" Scale="2" />
           <Property Name="Size" Type="decimal" Precision="37" Scale="4" StoreGeneratedPattern="Computed" />
+          <Property Name="AlbumUrl" Type="nvarchar(max)" />
+          <Property Name="BackupAlbumUrl" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="SiteDetailMore">
           <Key>
@@ -1832,6 +1834,8 @@
           <Property Type="Decimal" Name="Size" Precision="37" Scale="4" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="SiteDetailMores" Relationship="OAMSModel.FK_SiteDetailMore_SiteDetail" FromRole="SiteDetail" ToRole="SiteDetailMore" />
           <NavigationProperty Name="SiteDetailPhotoes" Relationship="OAMSModel.FK_SiteDetailPhoto_SiteDetail" FromRole="SiteDetail" ToRole="SiteDetailPhoto" />
+          <Property Type="String" Name="AlbumUrl" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BackupAlbumUrl" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_SiteDetail_Site">
           <End Type="OAMSModel.Site" Role="Site" Multiplicity="0..1" />
@@ -2682,6 +2686,8 @@
           <EntitySetMapping Name="SiteDetails">
             <EntityTypeMapping TypeName="OAMSModel.SiteDetail">
               <MappingFragment StoreEntitySet="SiteDetail">
+                <ScalarProperty Name="BackupAlbumUrl" ColumnName="BackupAlbumUrl" />
+                <ScalarProperty Name="AlbumUrl" ColumnName="AlbumUrl" />
                 <ScalarProperty Name="Size" ColumnName="Size" />
                 <ScalarProperty Name="Width" ColumnName="Width" />
                 <ScalarProperty Name="Height" ColumnName="Height" />

@@ -554,7 +554,6 @@
                     <% Html.RenderPartial("ManageSiteDetail", Model); %>
                 </div>
                 <div id="divDeletePhotoList" style="visibility: collapse;">
-                    <%--<input type="text" id="Text1" name="DeletePhotoList" />--%>
                 </div>
                 <% foreach (var item in Model.SitePhotoes)
                    { %>
@@ -573,10 +572,6 @@
                 <br />
                 <% } %>
                 <br />
-                <%--<label for="file1">
-                    Filename:</label>
-                <input type="file" name="files" id="file3" size="65" />
-                <br />--%>
                 <div id="divMoreFile">
                 </div>
                 <br />
@@ -584,14 +579,11 @@
             </td>
         </tr>
     </table>
-    <%--<% Html.RenderPartial("GMap"); %>--%>
     <p>
-        <%--<input type="submit" value="Save" />--%>
         <%: Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Save", r => r.Edit(0), null, null, true)%>
     </p>
     <% } %>
     <div>
-        <%--<%: Html.ActionLink("Back to List", "Index") %>--%>
         <%: Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Back to List", r => r.Index(), null, null, false)%>
     </div>
 </asp:Content>
