@@ -269,7 +269,7 @@ function deleteSitePhoto(btn, id) {
     }
 }
 
-function deleteSitePhoto(btn, id, strDeletePhotoList, divDeletePhotoList, photo) {
+function deleteSitePhoto2(divDisplay, id, strDeletePhotoList, divDeletePhotoList) {
     if (confirm('Delete photo?')) {
 
         var input = document.createElement('input');
@@ -279,9 +279,7 @@ function deleteSitePhoto(btn, id, strDeletePhotoList, divDeletePhotoList, photo)
         input.style.visibility = "hidden";
 
         divDeletePhotoList.append(input);
-
-        $(btn).hide();
-        photo.hide();
+        divDisplay.hide();
     }
 }
 

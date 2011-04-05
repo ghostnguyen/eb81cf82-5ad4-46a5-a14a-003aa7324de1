@@ -125,6 +125,7 @@
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ContractTimelineController.cs" />
+    <Compile Include="Controllers\SiteDetailPhotoController.cs" />
     <Compile Include="Controllers\SiteDetailMoreController.cs" />
     <Compile Include="Controllers\QuoteDetailController.cs" />
     <Compile Include="Controllers\QuoteController.cs" />
@@ -144,6 +145,7 @@
     </Compile>
     <Compile Include="Helper.cs" />
     <Compile Include="Models\ClientRepository.cs" />
+    <Compile Include="Models\SiteDetailPhotoRepository.cs" />
     <Compile Include="Models\Partial\SiteDetailPhoto.cs" />
     <Compile Include="Models\Partial\SiteDetailMore.cs" />
     <Compile Include="Models\SiteDetailMoreRepository.cs" />

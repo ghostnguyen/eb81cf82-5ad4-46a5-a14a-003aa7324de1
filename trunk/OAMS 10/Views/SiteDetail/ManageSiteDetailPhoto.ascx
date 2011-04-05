@@ -4,18 +4,20 @@
     <% foreach (var item in Model.SiteDetailPhotoes)
        { %>
     <br />
-    <input type="text" value='<%: item.Note %>' id='siteDetailPhotoNote<%: item.ID %>' />
-    <input type="button" value="Save Note" onclick="UpdateSitePhotoNote('<%= Url.Content("~/SiteDetailPhoto/EditNote") %>','<%= item.ID %>',$('#siteDetailPhotoNote<%: item.ID %>').val())" />
-    <input type="button" value="Delete this image" onclick="deleteSitePhoto(this,'<%= item.ID %>','DeleteSiteDetailPhotoList',$('#divDeleteSiteDetailPhotoList'),$('#siteDetailPhoto<%: item.ID %>'))" />
-    <br />
-    <% if (!item.IsValidGPS)
-       {
-    %>
-    <span style="color: Red;">Possible wrong GPS. </span>
-    <%} %>
-    <br />
-    <img src='<%= item.Url %>' alt="" width="500" id='siteDetailPhoto<%: item.ID %>' />
-    <br />
+    <div id='divSiteDetailPhoto<%: item.ID %>'>
+        <input type="text" value='<%: item.Note %>' id='siteDetailPhotoNote<%: item.ID %>' />
+        <input type="button" value="Save Note" onclick="UpdateSitePhotoNote('<%= Url.Content("~/SiteDetailPhoto/EditNote") %>','<%= item.ID %>',$('#siteDetailPhotoNote<%: item.ID %>').val())" />
+        <input type="button" value="Delete this image" onclick="deleteSitePhoto2($('#divSiteDetailPhoto<%: item.ID %>'),'<%= item.ID %>','DeleteSiteDetailPhotoList',$('#divDeleteSiteDetailPhotoList'))" />
+        <br />
+        <% if (!item.IsValidGPS)
+           {
+        %>
+        <span style="color: Red;">Possible wrong GPS. </span>
+        <%} %>
+        <br />
+        <img src='<%= item.Url %>' alt="" width="500" id='siteDetailPhoto<%: item.ID %>' />
+        <br />
+    </div>
     <% } %>
     <br />
     <div id='divMoreSiteDetailFile_<%: Model.ID %>'>
