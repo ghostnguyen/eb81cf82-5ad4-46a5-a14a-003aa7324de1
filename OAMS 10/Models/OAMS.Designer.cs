@@ -9791,6 +9791,54 @@ namespace OAMS.Models
         private Nullable<global::System.Decimal> _Size;
         partial void OnSizeChanging(Nullable<global::System.Decimal> value);
         partial void OnSizeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String AlbumUrl
+        {
+            get
+            {
+                return _AlbumUrl;
+            }
+            set
+            {
+                OnAlbumUrlChanging(value);
+                ReportPropertyChanging("AlbumUrl");
+                _AlbumUrl = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("AlbumUrl");
+                OnAlbumUrlChanged();
+            }
+        }
+        private global::System.String _AlbumUrl;
+        partial void OnAlbumUrlChanging(global::System.String value);
+        partial void OnAlbumUrlChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String BackupAlbumUrl
+        {
+            get
+            {
+                return _BackupAlbumUrl;
+            }
+            set
+            {
+                OnBackupAlbumUrlChanging(value);
+                ReportPropertyChanging("BackupAlbumUrl");
+                _BackupAlbumUrl = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("BackupAlbumUrl");
+                OnBackupAlbumUrlChanged();
+            }
+        }
+        private global::System.String _BackupAlbumUrl;
+        partial void OnBackupAlbumUrlChanging(global::System.String value);
+        partial void OnBackupAlbumUrlChanged();
 
         #endregion
     

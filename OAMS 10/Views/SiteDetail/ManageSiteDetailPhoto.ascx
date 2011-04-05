@@ -1,8 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<OAMS.Models.SiteDetail>" %>
 <%@ Import Namespace="OAMS.Controllers" %>
 <div id='<%= "divManageSiteDetailPhoto" + Model.ID.ToString()%>'>
-    <div id="divDeleteSiteDetailPhotoList" style="visibility: collapse;">
-    </div>
     <% foreach (var item in Model.SiteDetailPhotoes)
        { %>
     <br />
@@ -10,11 +8,11 @@
     <input type="button" value="Save Note" onclick="UpdateSitePhotoNote('<%= Url.Content("~/SiteDetailPhoto/EditNote") %>','<%= item.ID %>',$('#siteDetailPhotoNote<%: item.ID %>').val())" />
     <input type="button" value="Delete this image" onclick="deleteSitePhoto(this,'<%= item.ID %>','DeleteSiteDetailPhotoList',$('#divDeleteSiteDetailPhotoList'),$('#siteDetailPhoto<%: item.ID %>'))" />
     <br />
-    <%--<% if (!item.IsValidGPS)
+    <% if (!item.IsValidGPS)
        {
     %>
     <span style="color: Red;">Possible wrong GPS. </span>
-    <%} %>--%>
+    <%} %>
     <br />
     <img src='<%= item.Url %>' alt="" width="500" id='siteDetailPhoto<%: item.ID %>' />
     <br />

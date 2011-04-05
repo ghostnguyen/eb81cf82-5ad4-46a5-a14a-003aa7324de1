@@ -120,7 +120,7 @@ function preview(what, index, outImageName) {
         globalPic.src = defaultPic;
         alert("Invalid picture type. Must be:nn" + fileTypes.join(", "));
     }
-    setTimeout("applyChanges(" + index + "," + outImageName + ")", 200);
+    setTimeout('applyChanges(' + index + ',"' + outImageName + '")', 200);
 }
 
 var globalPic;
@@ -205,19 +205,19 @@ function addMoreFileInput2(divId, nameOfParam, siteDetailID) {
 
     var hiddenIndex = document.createElement('input');
     hiddenIndex.setAttribute('type', 'hidden');
-    hiddenIndex.setAttribute('name', nameOfParam + '[' + index + '].Index');
+    hiddenIndex.setAttribute('name', nameOfParam + '.Index');
     hiddenIndex.setAttribute('value', index);
     divAddMore.append(hiddenIndex);
 
     var hiddenSiteDetailID = document.createElement('input');
     hiddenSiteDetailID.setAttribute('type', 'hidden');
-    hiddenSiteDetailID.setAttribute('name', nameOfParam + '[' + index + '].Value.SiteDetailID');
+    hiddenSiteDetailID.setAttribute('name', nameOfParam + '[' + index + '].SiteDetailID');
     hiddenSiteDetailID.setAttribute('value', siteDetailID);
     divAddMore.append(hiddenSiteDetailID);
 
     var input = document.createElement('input');
     input.setAttribute('type', 'file');
-    input.setAttribute('name', nameOfParam + '[' + index + '].Value.File');
+    input.setAttribute('name', nameOfParam + '[' + index + '].File');
     input.setAttribute('size', '65');
     input.setAttribute('onchange', 'preview(this, ' + index + ',"previewSiteDetailField")');
     divAddMore.append(input);
@@ -232,7 +232,7 @@ function addMoreFileInput2(divId, nameOfParam, siteDetailID) {
 
     var inputNote = document.createElement('input');
     inputNote.setAttribute('type', 'text');
-    inputNote.setAttribute('name', nameOfParam + '[' + index + '].Value.Note');
+    inputNote.setAttribute('name', nameOfParam + '[' + index + '].Note');
     inputNote.setAttribute('size', '65');
 
 
@@ -247,13 +247,6 @@ function addMoreFileInput2(divId, nameOfParam, siteDetailID) {
     divAddMore.append('<br />');
 
     $(lnkDelete).click(function (e) {
-        //        $(lbl).remove();
-        //        $(hiddenIndex).remove();
-        //        $(hiddenSiteDetailID).remove();
-        //        $(input).remove();
-        //        $(inputNote).remove();
-        //        $(lnkDelete).remove();
-        //        $(previewImg).remove();
         divAddMore.remove();
     });
 

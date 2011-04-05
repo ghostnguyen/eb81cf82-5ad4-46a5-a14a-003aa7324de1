@@ -37,6 +37,8 @@
 </tr>
 <tr id='<%= "divSubSiteDetailPhoto_" + Model.ID.ToString() %>'>
     <td colspan="7" style="padding-left: 50px;">
+        <div id="divDeleteSiteDetailPhotoList" style="visibility: collapse;">
+        </div>
         <% Html.RenderPartial("~/Views/SiteDetail/ManageSiteDetailPhoto.ascx", Model); %>
         <br />
     </td>
