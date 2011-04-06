@@ -28,7 +28,7 @@
                 <br />
                 <div id="StyleList">
                     <%
-           foreach (var category in (new OAMS.Models.CodeMasterRepository()).Get((new OAMS.Models.CodeMasterType()).Type))
+           foreach (var category in (new OAMS.Models.CodeMasterRepository()).Get(OAMS.Models.CodeMasterType.Type))
            {
                     %>
                     <input type="checkbox" name="StyleList" value="<%= category.Code %>" checked="checked"
@@ -652,7 +652,7 @@ else if (category.Code == "Other")
             });
 
             mc = new MarkerClusterer(map);
-            mc.setMaxZoom(17);
+            mc.setMaxZoom(15);
         }
 
 

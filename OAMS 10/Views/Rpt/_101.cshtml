@@ -1,0 +1,55 @@
+﻿@model OAMS.Models.Rpt101
+@using OAMS.Models
+@{
+    ViewBag.Title = "_101";
+}
+<h2>
+    _101</h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <p>
+        Geo1: @(Html.EditorFor(model => model.Geo1FullName, "AutoCompleteGeo", new { level = 1 }))
+        <input type="submit" value="Save" />
+    </p>
+    <div>
+        @if (Model != null && Model.sdList != null)
+        { 
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            GEO2
+                        </th>
+                        @{ CodeMasterRepository codeMasterRepository = new CodeMasterRepository();
+                           var typeL = codeMasterRepository.Get(CodeMasterType.Type); }
+                        @foreach (var item in typeL)
+                        {
+                            <th>
+                                @item.Code
+                            </th>
+                        }
+                    </tr>
+                </thead>
+                @{ var v = Model.sdList.GroupBy(r => r.Site.Geo2.Name); }
+                <tbody>
+                    @foreach (var item in v)
+                    {
+                        <tr>
+                            <td>
+                                @item.Key
+                            </td>
+                            @foreach (var type in typeL)
+                            {
+                                <td>
+                                    @item.Count(r => r.Type == type.Code)
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+    
+}

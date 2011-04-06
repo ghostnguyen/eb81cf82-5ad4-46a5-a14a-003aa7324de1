@@ -114,7 +114,7 @@ namespace OAMS.Models
                     detail.Province = cd.Site.Geo1 != null ? cd.Site.Geo1.FullName : "";
                     detail.District = cd.Site.Geo2 != null ? cd.Site.Geo2.Name : "";
                     detail.Street = string.Format("{0} {1} {2}", cd.Site.AddressLine1, cd.Site.AddressLine2, cd.Site.Geo3 == null ? "" : cd.Site.Geo3.Name);
-                    detail.Size = string.Format("{0}m x {1}m", cd.Width.ToString(), cd.Site.ToString());
+                    detail.Size = string.Format("{0}m x {1}m", cd.Width.ToString(), cd.Height.ToString());
                     detail.Product = sm.Product == null ? "" : sm.Product.Name;
                     detail.Client = sm.Product == null ? "" : sm.Product.NewClientName;
                     detail.SiteType = cd.Type;

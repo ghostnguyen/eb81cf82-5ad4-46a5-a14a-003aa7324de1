@@ -31,7 +31,7 @@
                     style="display: none;" checked="checked" />--%>
                 <br />
                 <%
-           foreach (var category in (new OAMS.Models.CodeMasterRepository()).Get((new OAMS.Models.CodeMasterType()).Type))
+           foreach (var category in (new OAMS.Models.CodeMasterRepository()).Get(OAMS.Models.CodeMasterType.Type))
            {
                 %>
                 <div>

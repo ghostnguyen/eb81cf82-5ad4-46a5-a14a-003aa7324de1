@@ -32,7 +32,6 @@ namespace OAMS.Controllers
 
             List<SiteDetail> l = Find(e);
 
-            CodeMasterType cmt = new CodeMasterType();
             CodeMasterRepository codeMasterRepo = new CodeMasterRepository();
 
             return Json(l.Distinct().Select(r => new
@@ -44,7 +43,7 @@ namespace OAMS.Controllers
                 AddressLine2 = r.Site.AddressLine2 ?? "",
                 Code = r.Site.Code ?? "",
                 r.Format,
-                Type = string.IsNullOrEmpty(r.Type) ? "" : codeMasterRepo.GetNote(cmt.Type, r.Type),
+                Type = string.IsNullOrEmpty(r.Type) ? "" : codeMasterRepo.GetNote(CodeMasterType.Type, r.Type),
                 CodeType = r.Type,
                 r.Site.GeoFullName,
                 Address = r.Site.AddressLine1 + " " + r.Site.AddressLine2,
@@ -150,8 +149,6 @@ namespace OAMS.Controllers
 
             var l = Find(e);
 
-            CodeMasterType cmt = new CodeMasterType();
-
             CodeMasterRepository codeMasterRepo = new CodeMasterRepository();
 
             return Json(l.Select(r => new
@@ -165,7 +162,7 @@ namespace OAMS.Controllers
                 AddressLine2 = r.Site.AddressLine2 ?? "",
                 Code = r.Site.Code ?? "",
                 r.Format,
-                Type = string.IsNullOrEmpty(r.Type) ? "" : codeMasterRepo.GetNote(cmt.Type, r.Type),
+                Type = string.IsNullOrEmpty(r.Type) ? "" : codeMasterRepo.GetNote(CodeMasterType.Type, r.Type),
                 CodeType = r.Type,
                 r.Site.GeoFullName,
                 Address = r.Site.AddressLine1 + " " + r.Site.AddressLine2,
@@ -187,8 +184,6 @@ namespace OAMS.Controllers
         {
             var l = Find(e);
 
-            CodeMasterType cmt = new CodeMasterType();
-
             CodeMasterRepository codeMasterRepo = new CodeMasterRepository();
 
             return Json(l.Select(r => new
@@ -202,7 +197,7 @@ namespace OAMS.Controllers
                 AddressLine2 = r.Site.AddressLine2 ?? "",
                 Code = r.Site.Code ?? "",
                 r.Format,
-                Type = string.IsNullOrEmpty(r.Type) ? "" : codeMasterRepo.GetNote(cmt.Type, r.Type),
+                Type = string.IsNullOrEmpty(r.Type) ? "" : codeMasterRepo.GetNote(CodeMasterType.Type, r.Type),
                 CodeType = r.Type,
                 r.Site.GeoFullName,
                 Address = r.Site.AddressLine1 + " " + r.Site.AddressLine2,

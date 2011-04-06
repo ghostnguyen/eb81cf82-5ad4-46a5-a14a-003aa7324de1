@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<OAMS.Models.FindSite>" %>
-
+<%@ Import Namespace="OAMS.Models" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
     Find
 </asp:Content>
@@ -29,7 +29,7 @@
                     All</a>&nbsp;/&nbsp;<a id="lnkUnCheckAllStyle" href="javascript:checkAll(document.forms[0].StyleList, false);">Clear</a>
                 <br />
                 <%
-           foreach (var category in (new OAMS.Models.CodeMasterRepository()).Get((new OAMS.Models.CodeMasterType()).Type))
+           foreach (var category in (new OAMS.Models.CodeMasterRepository()).Get(CodeMasterType.Type))
            {
                 %>
                 <div>
