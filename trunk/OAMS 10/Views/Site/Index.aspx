@@ -254,7 +254,7 @@
             var oTable = $('#tblResult').dataTable({ "aaSorting": [[1, "desc"]],
                 "sDom": 'CT<"clear">lfrtip',
 
-                "oTableTools": { "sSwfPath": "content/copy_cvs_xls_pdf.swf", "aButtons": ["copy"] },
+                "oTableTools": { "sSwfPath": "content/copy_cvs_xls_pdf.swf", "aButtons": ["copy","xls"] },
 
                 "oLanguage": {
                     "sLengthMenu": 'Display <select>' +

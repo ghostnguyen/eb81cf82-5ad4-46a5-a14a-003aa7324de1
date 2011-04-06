@@ -125,6 +125,7 @@
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ContractTimelineController.cs" />
+    <Compile Include="Controllers\RptController.cs" />
     <Compile Include="Controllers\SiteDetailPhotoController.cs" />
     <Compile Include="Controllers\SiteDetailMoreController.cs" />
     <Compile Include="Controllers\QuoteDetailController.cs" />
@@ -145,6 +146,7 @@
     </Compile>
     <Compile Include="Helper.cs" />
     <Compile Include="Models\ClientRepository.cs" />
+    <Compile Include="Models\Rpt.cs" />
     <Compile Include="Models\SiteDetailPhotoRepository.cs" />
     <Compile Include="Models\Partial\SiteDetailPhoto.cs" />
     <Compile Include="Models\Partial\SiteDetailMore.cs" />
@@ -424,6 +426,7 @@
     <Content Include="Views\QuoteDetail\Edit.cshtml" />
     <Content Include="Views\AppSetting\Index.cshtml" />
     <Content Include="packages.config" />
+    <Content Include="Views\Rpt\_101.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
