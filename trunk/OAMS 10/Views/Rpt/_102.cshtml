@@ -1,25 +1,28 @@
-﻿@model OAMS.Models.Rpt101
+﻿@model OAMS.Models.Rpt102
 @using OAMS.Models
 @{
-    ViewBag.Title = "Summary Geo";
+    ViewBag.Title = "Summary Category";
 }
 <h2>
-    @ViewBag.Title</h2>
+    Summary Category</h2>
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary(true)
     <p>
-        Geo1: @(Html.EditorFor(model => model.Geo1FullName, "AutoCompleteGeo", new { level = 1 }))
+        Geo1: @(Html.EditorFor(model => model.Cat1FullName, "AutoCompleteCategory", new { level = 1 }))
         <input type="submit" value="Ok" />
     </p>
     <div>
-        @if (Model != null && Model.sdList != null)
+        @if (Model != null && Model.List != null)
         { 
             <table id="tblResult" class="display">
                 <thead>
                     <tr>
                         <th>
-                            GEO2
+                            Category 1
+                        </th>
+                        <th>
+                            Category 2
                         </th>
                         @{ CodeMasterRepository codeMasterRepository = new CodeMasterRepository();
                            var typeL = codeMasterRepository.Get(CodeMasterType.Type); }
@@ -34,18 +37,20 @@
                         </th>
                     </tr>
                 </thead>
-                @{ var v = Model.sdList.GroupBy(r => r.Site.Geo2.Name); }
+                @{ var v1 = Model.List.GroupBy(r => r.Product.Category1.Name); }
                 <tbody>
-                    @foreach (var item in v)
+                    @foreach (var item in v1)
                     {
                         int total = 0;
                         <tr>
                             <td>
                                 @item.Key
                             </td>
+                            <td>
+                            </td>
                             @foreach (var type in typeL)
                             {
-                                int c = item.Count(r => r.Type == type.Code);
+                                int c = item.Count(r => r.SiteDetail.Type == type.Code);
                                 total += c;
                                 <td>
                                     @c
@@ -55,6 +60,37 @@
                                 @total
                             </td>
                         </tr>
+                        
+                        
+                            var v2 = item.Where(r => r.Product.Category2 != null)
+                                .GroupBy(r => r.Product.Category2.Name);
+
+                            foreach (var item2 in v2)
+                            {
+
+                                int total2 = 0;
+                        <tr>
+                            <td>
+                                @item.Key
+                            </td>
+                            <td>
+                                @item2.Key
+                            </td>
+                            @foreach (var type in typeL)
+                            {
+                                int c = item2.Count(r => r.SiteDetail.Type == type.Code);
+                                total2 += c;
+                                <td>
+                                    @c
+                                </td>
+                            }
+                            <td>
+                                @total2
+                            </td>
+                        </tr>   
+	
+                            }
+
                     }
                 </tbody>
             </table>

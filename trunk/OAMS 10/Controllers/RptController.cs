@@ -18,11 +18,10 @@ namespace OAMS.Controllers
             return View();
         }
 
-
-
         [HttpPost]
         public ActionResult _101(Rpt101 e)
         {
+
             OAMSEntities db = new OAMSEntities();
 
             e.sdList = db.Sites.Where(r => true
@@ -31,5 +30,24 @@ namespace OAMS.Controllers
 
             return View(e);
         }
+
+        public ActionResult _102(Rpt102 e)
+        {
+            if (e == null) e = new Rpt102();
+            OAMSEntities db = new OAMSEntities();
+
+            e.List = db.SiteDetailMores
+                .Where(r =>
+                    r.Product != null
+                    && r.Product.Category1 != null
+                    &&
+                    (string.IsNullOrEmpty(e.Cat1FullName)
+                        || r.Product.Category1.FullName == e.Cat1FullName))
+                .OrderBy(r => r.Product.Category1.Name).ToList();
+
+            return View(e);
+        }
+
+
     }
 }
