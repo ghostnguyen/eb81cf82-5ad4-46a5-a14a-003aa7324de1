@@ -13,7 +13,7 @@
         <input type="submit" value="Ok" />
     </p>
     <div>
-        @if (Model != null && Model.sdList != null)
+        @if (Model != null && Model.List != null)
         { 
             <table id="tblResult" class="display">
                 <thead>
@@ -34,7 +34,7 @@
                         </th>
                     </tr>
                 </thead>
-                @{ var v = Model.sdList.GroupBy(r => r.Site.Geo2.Name); }
+                @{ var v = Model.List.GroupBy(r => r.Geo2); }
                 <tbody>
                     @foreach (var item in v)
                     {
@@ -45,7 +45,7 @@
                             </td>
                             @foreach (var type in typeL)
                             {
-                                int c = item.Count(r => r.Type == type.Code);
+                                int c = item.Where(r => r.Type == type.Code).Sum(r => r.Count);
                                 total += c;
                                 <td>
                                     @c
@@ -64,18 +64,11 @@
 
         $(document).ready(function () {
 
-            var oTable = $('#tblResult').dataTable({ "aaSorting": [[1, "desc"]],
+            var oTable = $('#tblResult').dataTable({ "aaSorting": [[0, "asc"]],
                 "sDom": 'CT<"clear">lfrtip',
                 "oTableTools": { "sSwfPath": '@Url.Content("~/content/copy_cvs_xls_pdf.swf")', "aButtons": ["copy"] },
-                "oLanguage": {
-                    "sLengthMenu": 'Display <select>' +
-				'<option value="10">10</option>' +
-				'<option value="25">25</option>' +
-				'<option value="50">50</option>' +
-				'<option value="100">100</option>' +
-				'<option value="-1">All</option>' +
-				'</select> records'
-                }
+                "iDisplayLength": 100,
+                "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
             });
         });
     </script>

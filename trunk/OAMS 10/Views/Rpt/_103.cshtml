@@ -1,16 +1,15 @@
-﻿@model OAMS.Models.Rpt102
+﻿@model OAMS.Models.Rpt103
 @using OAMS.Models
 @{
-    ViewBag.Title = "Summary Category";
+    ViewBag.Title = "Summary Client";
 }
 <h2>
-    Summary Category</h2>
+    @ViewBag.Title</h2>
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary(true)
     <p>
-        Geo1: @(Html.EditorFor(model => model.Cat1FullName, "AutoCompleteCategory", new { level = 1 }))
-        Hide Cat2: @Html.EditorFor(r => r.HideCat2)
+        Geo1: @(Html.EditorFor(model => model.Geo1FullName, "AutoCompleteGeo", new { level = 1 }))
         <input type="submit" value="Ok" />
     </p>
     <div>
@@ -20,10 +19,7 @@
                 <thead>
                     <tr>
                         <th>
-                            Category 1
-                        </th>
-                        <th>
-                            Category 2
+                            Client
                         </th>
                         @{ CodeMasterRepository codeMasterRepository = new CodeMasterRepository();
                            var typeL = codeMasterRepository.Get(CodeMasterType.Type); }
@@ -38,16 +34,14 @@
                         </th>
                     </tr>
                 </thead>
-                @{ var v1 = Model.List.GroupBy(r => r.Cat1).ToList(); }
+                @{ var v = Model.List.GroupBy(r => r.Client); }
                 <tbody>
-                    @foreach (var item in v1)
+                    @foreach (var item in v)
                     {
                         int total = 0;
                         <tr>
                             <td>
                                 @item.Key
-                            </td>
-                            <td>
                             </td>
                             @foreach (var type in typeL)
                             {
@@ -61,40 +55,6 @@
                                 @total
                             </td>
                         </tr>
-                            if (Model.HideCat2)
-                            {
-                            }
-                            else
-                            {
-                                var v2 = item.Where(r => r.Cat2 != null)
-                                    .GroupBy(r => r.Cat2).ToList();
-
-                                foreach (var item2 in v2)
-                                {
-
-                                    int total2 = 0;
-                        <tr>
-                            <td>
-                                @item.Key
-                            </td>
-                            <td>
-                                @item2.Key
-                            </td>
-                            @foreach (var type in typeL)
-                            {
-                                int c = item2.Where(r => r.Type == type.Code).Sum(r => r.Count);
-                                total2 += c;
-                                <td>
-                                    @c
-                                </td>
-                            }
-                            <td>
-                                @total2
-                            </td>
-                        </tr>   
-	
-                                }
-                            }
                     }
                 </tbody>
             </table>
@@ -104,7 +64,8 @@
 
         $(document).ready(function () {
 
-            var oTable = $('#tblResult').dataTable({ "aaSorting": [[0, "asc"], [1, "asc"]],
+            var oTable = $('#tblResult').dataTable(
+            { "aaSorting": [[10, "desc"]],
                 "sDom": 'CT<"clear">lfrtip',
                 "oTableTools": { "sSwfPath": '@Url.Content("~/content/copy_cvs_xls_pdf.swf")', "aButtons": ["copy"] },
                 "iDisplayLength": 100,

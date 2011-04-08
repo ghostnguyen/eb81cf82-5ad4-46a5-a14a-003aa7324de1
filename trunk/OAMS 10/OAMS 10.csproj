@@ -428,6 +428,8 @@
     <Content Include="packages.config" />
     <Content Include="Views\Rpt\_101.cshtml" />
     <Content Include="Views\Rpt\_102.cshtml" />
+    <Content Include="Views\Rpt\_103.cshtml" />
+    <Content Include="Views\Rpt\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

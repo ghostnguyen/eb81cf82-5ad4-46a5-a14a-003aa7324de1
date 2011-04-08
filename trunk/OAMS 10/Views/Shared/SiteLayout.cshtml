@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 @using OAMS
+@using OAMS.Controllers
 <head>
     <title>@ViewBag.Title</title>
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
@@ -39,51 +40,50 @@
             <div id="menucontainer">
                 <ul id="Ul1" class="sf-menu">
                     <li>
-                        @(Html.ActionLinkWithRoles<OAMS.Controllers.HomeController>("Home", r => r.Index(), null, null, false))
+                        @(Html.ActionLinkWithRoles<HomeController>("Home", r => r.Index()))
                     </li>
                     <li>
-                        @(Html.ActionLinkWithRoles<OAMS.Controllers.FindSiteController>("Find Site", r => r.Find(0), null, null, false))
+                        @(Html.ActionLinkWithRoles<FindSiteController>("Find Site", r => r.Find(0)))
                     </li>
                     <li>
-                        @(Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Site", r => r.Index(), null, null, false))
+                        @(Html.ActionLinkWithRoles<SiteController>("Site", r => r.Index()))
                     </li>
                     <li>
-                        @(Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("Contract", r => r.Index(), null, null, false))
+                        @(Html.ActionLinkWithRoles<ContractController>("Contract", r => r.Index()))
                     </li>
                     <li>
-                        @(Html.ActionLinkWithRoles<OAMS.Controllers.QuoteController>("Contract", r => r.Index(), null, null, false))
+                        @(Html.ActionLinkWithRoles<QuoteController>("Contract", r => r.Index()))
                     </li>
                     <li><a href="javascript:void(0);">Master Data</a>
                         <ul>
                             <li>
-                                @(Html.ActionLinkWithRoles<OAMS.Controllers.ContractorController>("Contractor",
-                                r => r.Index(), null, null, false))
+                                @(Html.ActionLinkWithRoles<ContractorController>("Contractor",
+                                r => r.Index()))
                             </li>
                             <li>
-                                @(Html.ActionLinkWithRoles<OAMS.Controllers.GeoController>("Geo", r => r.Index(null),
-                                null, null, false))
+                                @(Html.ActionLinkWithRoles<GeoController>("Geo", r => r.Index(null)))
                             </li>
                             <li>
-                                @(Html.ActionLinkWithRoles<OAMS.Controllers.CategoryController>("Category", r =>
-                                r.Index(null), null, null, false))
+                                @(Html.ActionLinkWithRoles<CategoryController>("Category", r =>
+                                r.Index(null)))
                             </li>
                             <li>
-                                @(Html.ActionLinkWithRoles<OAMS.Controllers.ClientController>("Client", r => r.Index(),
-                                null, null, false))
+                                @(Html.ActionLinkWithRoles<ClientController>("Client", r => r.Index()))
                             </li>
                             <li>
-                                @(Html.ActionLinkWithRoles<OAMS.Controllers.ProductController>("Product", r => r.Index(),
-                                null, null, false))
+                                @(Html.ActionLinkWithRoles<ProductController>("Product", r => r.Index()))
                             </li>
                         </ul>
                     </li>
                     <li>@Html.ActionLink("Account", "Index", "Account")
                         <ul>
                             <li>
-                                @(Html.ActionLinkWithRoles<OAMS.Controllers.AccountController>("Roles", r => r.GetAllRoles(),
-                                null, null, false))
+                                @(Html.ActionLinkWithRoles<AccountController>("Roles", r => r.GetAllRoles()))
                             </li>
                         </ul>
+                    </li>
+                    <li>
+                        @(Html.ActionLinkWithRoles<RptController>("Summary", r => r.Index()))
                     </li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                 </ul>
