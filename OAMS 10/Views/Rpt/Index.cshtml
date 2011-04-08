@@ -1,0 +1,16 @@
+﻿@using OAMS.Controllers
+@{
+    ViewBag.Title = "Summary";
+}
+<h2>@ViewBag.Title</h2>
+<ul>
+    <li>
+        @(Html.ActionLinkWithRoles<RptController>("By Geo", r => r._101()))
+    </li>
+    <li>
+        @(Html.ActionLinkWithRoles<RptController>("By Category", r => r._102(null)))
+    </li>
+    <li>
+        @(Html.ActionLinkWithRoles<RptController>("By Client", r => r._103(null)))
+    </li>
+</ul>
