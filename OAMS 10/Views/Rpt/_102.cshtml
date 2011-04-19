@@ -9,7 +9,7 @@
 {
     @Html.ValidationSummary(true)
     <p>
-        Geo1: @(Html.EditorFor(model => model.Cat1FullName, "AutoCompleteCategory", new { level = 1 }))
+        Cat1: @(Html.EditorFor(model => model.Cat1FullName, "AutoCompleteCategory", new { level = 1 }))
         Hide Cat2: @Html.EditorFor(r => r.HideCat2)
         <input type="submit" value="Ok" />
     </p>
