@@ -7,7 +7,11 @@
     <script type="text/javascript" language="javascript">
         var oTable;
         $(document).ready(function () {
-            oTable = $('#tblResult').dataTable({ "aaSorting": [[0, "desc"]], "iDisplayLength": 20, "sDom": 'C<"clear">lfrtip' });
+            oTable = $('#tblResult').dataTable({ "aaSorting": [[0, "desc"]],
+                "iDisplayLength": 50,
+                "sDom": 'C<"clear">lfrtip' ,
+                "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
+            });
             //ShowHideCols();
         });
     </script>
