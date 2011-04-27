@@ -37,43 +37,43 @@
                         <%: category.Note %>
                     </label>
                     <% 
-string profileImageUrl = "";
-if (category.Code == "WMB")
-{
-    profileImageUrl = Url.Content("~/Content/Image/wallmountedbannee.png");
-}
-else if (category.Code == "BRL")
-{
-    profileImageUrl = Url.Content("~/Content/Image/britelite.png");
-}
-else if (category.Code == "BSH")
-{
-    profileImageUrl = Url.Content("~/Content/Image/busshelter.png");
-}
-else if (category.Code == "CMR")
-{
-    profileImageUrl = Url.Content("~/Content/Image/covermarket.png");
-}
-else if (category.Code == "ELV")
-{
-    profileImageUrl = Url.Content("~/Content/Image/elevator.png");
-}
-else if (category.Code == "ITK")
-{
-    profileImageUrl = Url.Content("~/Content/Image/itkiosk.png");
-}
-else if (category.Code == "Billboard")
-{
-    profileImageUrl = Url.Content("~/Content/Image/billboard.png");
-}
-else if (category.Code == "BillboardPole")
-{
-    profileImageUrl = Url.Content("~/Content/Image/billboardpole.png");
-}
-else if (category.Code == "Other")
-{
-    profileImageUrl = Url.Content("~/Content/Image/other.png");
-}
+               string profileImageUrl = "";
+               if (category.Code == "WMB")
+               {
+                   profileImageUrl = Url.Content("~/Content/Image/wallmountedbannee.png");
+               }
+               else if (category.Code == "BRL")
+               {
+                   profileImageUrl = Url.Content("~/Content/Image/britelite.png");
+               }
+               else if (category.Code == "BSH")
+               {
+                   profileImageUrl = Url.Content("~/Content/Image/busshelter.png");
+               }
+               else if (category.Code == "CMR")
+               {
+                   profileImageUrl = Url.Content("~/Content/Image/covermarket.png");
+               }
+               else if (category.Code == "ELV")
+               {
+                   profileImageUrl = Url.Content("~/Content/Image/elevator.png");
+               }
+               else if (category.Code == "ITK")
+               {
+                   profileImageUrl = Url.Content("~/Content/Image/itkiosk.png");
+               }
+               else if (category.Code == "Billboard")
+               {
+                   profileImageUrl = Url.Content("~/Content/Image/billboard.png");
+               }
+               else if (category.Code == "BillboardPole")
+               {
+                   profileImageUrl = Url.Content("~/Content/Image/billboardpole.png");
+               }
+               else if (category.Code == "Other")
+               {
+                   profileImageUrl = Url.Content("~/Content/Image/other.png");
+               }
                     %>
                     <img alt="" border="0" src="<%= profileImageUrl %>" width="20" id="ImgStyleItem<%= category.ID%>" />
                     <br />
@@ -254,16 +254,24 @@ else if (category.Code == "Other")
             </tr>
             <tr>
                 <td>
-                    {{if AlbumID.length}}<div style='float: left; position: relative'>
-                        <embed type="application/x-shockwave-flash" src="https://picasaweb.google.com/s/c/bin/slideshow.swf"
-                            width="400" height="267" flashvars="host=picasaweb.google.com&hl=en_US&feat=flashalbum&RGB=0x000000&feed=http%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F113917932111131696693%2Falbumid%2F${AlbumID}%3Falt%3Drss%26kind%3Dphoto%26authkey%3D${AuthID}%26hl%3Den_US"
-                            pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></div>
-                    {{/if}}
+                    <div style="height:300px;width:320px;">
+                        {{each(i, url) PhotoUrlList}}
+                            <img src='${url}' alt="" width="300" height="225" />
+                            <br />
+                        {{/each}}
+                    </div>                
                 </td>
             </tr>
         </table>
     </div>
     </script>
+    
+    <%--{{if AlbumID.length}}<div style='float: left; position: relative'>
+                        <embed type="application/x-shockwave-flash" src="https://picasaweb.google.com/s/c/bin/slideshow.swf"
+                            width="400" height="267" flashvars="host=picasaweb.google.com&hl=en_US&feat=flashalbum&RGB=0x000000&feed=https%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F113917932111131696693%2Falbumid%2F${AlbumID}%3Falt%3Drss%26kind%3Dphoto%26authkey%3D${AuthID}%26hl%3Den_US"
+                            pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></div>
+                    {{/if}}
+                    <br />--%>
     <script type="text/javascript" language="javascript">
         $(document).ready(function () {
             $("#divMoreProduct").manyTxt();
