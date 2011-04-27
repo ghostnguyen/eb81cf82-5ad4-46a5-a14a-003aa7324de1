@@ -57,6 +57,7 @@ namespace OAMS.Controllers
                 Rating = r.Site.Score.ToRating(),
                 AlbumID = string.IsNullOrEmpty(r.Site.AlbumUrl) ? "" : r.Site.AlbumUrl.Split('/')[9].Split('?')[0],
                 AuthID = string.IsNullOrEmpty(r.Site.AlbumUrl) ? "" : r.Site.AlbumUrl.Split('?')[1].Split('=')[1],
+                PhotoUrlList = r.Site.SitePhotoes.Select(r1 => r1.Url.ToUrlPicasaPhotoResize()).ToList(),
                 CategoryLevel1 = r.ToStringCategoryLevel1,
                 CategoryLevel2 = r.ToStringCategoryLevel2,
                 Geo2 = r.Site.Geo2 != null ? r.Site.Geo2.Name : "",
