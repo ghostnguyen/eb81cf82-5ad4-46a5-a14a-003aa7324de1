@@ -254,7 +254,7 @@
             </tr>
             <tr>
                 <td>
-                    <div>
+                    <div style='height:300px;'>
                         {{each(i, url) PhotoUrlList}}
                             <img src='${url}' alt="" />
                             <br />
@@ -280,6 +280,8 @@
             $("#divCategory").manyTxt();
 
         });
+    </script>
+    <script id="Script1" type="text/x-jquery-tmpl">
     </script>
     <script type="text/javascript">
 
@@ -423,9 +425,18 @@
             $("#" + btnMoreID).hide();
         }
 
-        function addResults(json) {
+        function showMarker(mk)
+        {
+            mk.show();
+        };
 
         var markers = [];
+        var infoContents = [];
+
+        function addResults(json) {
+
+        markers = [];
+        infoContents = [];
             //HideUncheck(document.forms[0].StyleList);
 
             HideUncheck(document.forms[0].Geo2List, 'Geo2ListMore');
@@ -438,6 +449,7 @@
             if (json.length) {
                 var profileImageUrl;
                 var editTemplate = '<%: Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Edit", r => r.Edit(0), new RouteValueDictionary(new { id = "siteID" }), null,false) %>';
+
                 for (var i = 0, site; site = json[i]; i++) {
                     if (site.CodeType == 'WMB') {
                         profileImageUrl = '<%= Url.Content("~/Content/Image/wallmountedbannee.png") %>';
@@ -475,8 +487,6 @@
 
                     var pos = new google.maps.LatLng(site.Lat, site.Lng);
 
-
-
                     var marker = new google.maps.Marker({
                         map: map,
                         position: pos,
@@ -488,7 +498,6 @@
                     
 
                     if (VietnamBounds.contains(marker.position)
-                    //|| IndoBounds.contains(marker.position)
                     ) {
                         bounds.extend(marker.position);
                     }
@@ -496,9 +505,12 @@
                     bounds.extend(marker.position);
 
                     profileMarkers.push(marker);
-                    var html = "";
                     
-                    html += $("#infoWindowTemplate").tmpl(site).html();
+                    var infoHtml = $("#infoWindowTemplate").tmpl(site).html();
+                    infoContents.push(infoHtml);
+
+                    var html = "";
+                    html += infoHtml;
 
                     bindInfoWindow(marker, map, infoWindow, html);
 
@@ -509,8 +521,18 @@
                     tbl.append(rSel);
 
                     var cStyle = document.createElement('td');
-                    cStyle.innerHTML = site.ID;
+                    //cStyle.innerHTML = site.ID;
                     rSel.appendChild(cStyle);
+                    
+                    var a = $("<a></a>",{ 
+                    'href':"javascript:showInfoWindow('"+i+"');", text: site.ID
+                    }); 
+
+                   
+
+                    $(cStyle).append(a);
+
+                    
 
                     //Cat1
                     var cStyleCat1 = document.createElement('td');
@@ -601,6 +623,11 @@
             //  Fit these bounds to the map
             map.fitBounds(bounds);
             mc.addMarkers(markers);
+        }
+
+        function showInfoWindow(i) {
+            infoWindow.setContent(infoContents[i]);            
+            infoWindow.open(map, markers[i]);
         }
 
         function bindInfoWindow(marker, map, infoWindow, html) {
