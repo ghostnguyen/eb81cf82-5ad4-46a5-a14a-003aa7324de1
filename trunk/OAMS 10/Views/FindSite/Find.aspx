@@ -221,7 +221,7 @@
     <% } %>
     <script id="infoWindowTemplate" type="text/x-jquery-tmpl">
     <div>
-        <table>
+        <table style="width:350px;">
             <tr>
                 <td>
                     <div class="score_summary">
@@ -254,9 +254,9 @@
             </tr>
             <tr>
                 <td>
-                    <div style="height:300px;width:320px;">
+                    <div>
                         {{each(i, url) PhotoUrlList}}
-                            <img src='${url}' alt="" width="300" height="225" />
+                            <img src='${url}' alt="" />
                             <br />
                         {{/each}}
                     </div>                
@@ -265,7 +265,6 @@
         </table>
     </div>
     </script>
-    
     <%--{{if AlbumID.length}}<div style='float: left; position: relative'>
                         <embed type="application/x-shockwave-flash" src="https://picasaweb.google.com/s/c/bin/slideshow.swf"
                             width="400" height="267" flashvars="host=picasaweb.google.com&hl=en_US&feat=flashalbum&RGB=0x000000&feed=https%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F113917932111131696693%2Falbumid%2F${AlbumID}%3Falt%3Drss%26kind%3Dphoto%26authkey%3D${AuthID}%26hl%3Den_US"
