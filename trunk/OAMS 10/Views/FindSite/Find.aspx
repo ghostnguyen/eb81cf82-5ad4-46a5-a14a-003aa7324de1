@@ -435,16 +435,16 @@
 
         function addResults(json) {
 
-        markers = [];
-        infoContents = [];
-            //HideUncheck(document.forms[0].StyleList);
+            
+            markers = [];
+            infoContents = [];
+            profileMarkers = []
 
             HideUncheck(document.forms[0].Geo2List, 'Geo2ListMore');
             HideUncheckStyle(document.forms[0].StyleList, 'StyleListMore');
+
             //  Create a new viewpoint bound
             var bounds = new google.maps.LatLngBounds();
-
-
 
             if (json.length) {
                 var profileImageUrl;
@@ -786,9 +786,23 @@
         }
 
         function clearMarkers() {
-            for (var i = 0, marker; marker = profileMarkers[i]; i++) {
-                marker.setMap(null);
+            mc.clearMarkers();
+//            for (var i = 0, marker; marker = profileMarkers[i]; i++) {
+//                marker.setMap(null);
+//            }
+
+            if (profileMarkers) {
+                 for (i in profileMarkers) {
+                profileMarkers[i].setMap(null);
+                }
             }
+
+            if (markers) {
+                 for (i in markers) {
+                markers[i].setMap(null);
+                }
+            }
+
             infoWindow.close();
             $("#tblResult tbody tr").remove();
         }
