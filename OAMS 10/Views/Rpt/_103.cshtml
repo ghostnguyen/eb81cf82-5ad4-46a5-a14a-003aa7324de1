@@ -10,6 +10,7 @@
     @Html.ValidationSummary(true)
     <p>
         Geo1: @(Html.EditorFor(model => model.Geo1FullName, "AutoCompleteGeo", new { level = 1 }))
+        Hide Product: @Html.EditorFor(r => r.HideProduct)
         <input type="submit" value="Ok" />
     </p>
     <div>
@@ -20,6 +21,9 @@
                     <tr>
                         <th>
                             Client
+                        </th>
+                        <th>
+                            Product
                         </th>
                         @{ CodeMasterRepository codeMasterRepository = new CodeMasterRepository();
                            var typeL = codeMasterRepository.Get(CodeMasterType.Type); }
@@ -43,6 +47,8 @@
                             <td>
                                 @item.Key
                             </td>
+                            <td>
+                            </td>
                             @foreach (var type in typeL)
                             {
                                 int c = item.Where(r => r.Type == type.Code).Sum(r => r.Count);
@@ -55,6 +61,40 @@
                                 @total
                             </td>
                         </tr>
+                            if (Model.HideProduct)
+                            {
+                            }
+                            else
+                            {
+                                var v2 = item.Where(r => r.Product != null)
+                                    .GroupBy(r => r.Product).ToList();
+
+                                foreach (var item2 in v2)
+                                {
+
+                                    int total2 = 0;
+                        <tr>
+                            <td>
+                                @item.Key
+                            </td>
+                            <td>
+                                @item2.Key
+                            </td>
+                            @foreach (var type in typeL)
+                            {
+                                int c = item2.Where(r => r.Type == type.Code).Sum(r => r.Count);
+                                total2 += c;
+                                <td>
+                                    @c
+                                </td>
+                            }
+                            <td>
+                                @total2
+                            </td>
+                        </tr>   
+	
+                                }
+                            }
                     }
                 </tbody>
             </table>
@@ -65,7 +105,7 @@
         $(document).ready(function () {
 
             var oTable = $('#tblResult').dataTable(
-            { "aaSorting": [[10, "desc"]],
+            { "aaSorting": [[0, "asc"], [1, "asc"]],
                 "sDom": 'CT<"clear">lfrtip',
                 "oTableTools": { "sSwfPath": '@Url.Content("~/content/copy_cvs_xls_pdf.swf")', "aButtons": ["copy"] },
                 "iDisplayLength": 100,

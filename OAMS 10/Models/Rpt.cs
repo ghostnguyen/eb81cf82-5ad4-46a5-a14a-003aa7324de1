@@ -26,6 +26,7 @@ namespace OAMS.Models
     public class Rpt102
     {
         public string Cat1FullName { get; set; }
+        public string Geo1FullName { get; set; }
         public List<Rpt102Row> List { get; set; }
         public bool HideCat2 { get; set; }
     }
@@ -43,11 +44,13 @@ namespace OAMS.Models
     {
         public string Geo1FullName { get; set; }
         public List<Rpt103Row> List { get; set; }
+        public bool HideProduct { get; set; }
     }
 
     public class Rpt103Row
     {
         public string Client { get; set; }
+        public string Product { get; set; }
         public string Type { get; set; }
         public int Count { get; set; }
     }
