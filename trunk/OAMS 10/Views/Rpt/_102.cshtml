@@ -11,6 +11,7 @@
     <p>
         Cat1: @(Html.EditorFor(model => model.Cat1FullName, "AutoCompleteCategory", new { level = 1 }))
         Hide Cat2: @Html.EditorFor(r => r.HideCat2)
+        Geo1: @(Html.EditorFor(model => model.Geo1FullName, "AutoCompleteGeo", new { level = 1 }))
         <input type="submit" value="Ok" />
     </p>
     <div>

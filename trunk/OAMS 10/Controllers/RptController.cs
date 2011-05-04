@@ -52,6 +52,7 @@ namespace OAMS.Controllers
                     r.Product != null
                     && r.Product.Category1 != null
                     && !string.IsNullOrEmpty(r.SiteDetail.Type)
+                    && (string.IsNullOrEmpty(e.Geo1FullName) || (r.SiteDetail.Site.Geo1 != null && r.SiteDetail.Site.Geo1.FullName == e.Geo1FullName))
                     && (string.IsNullOrEmpty(e.Cat1FullName)
                         || r.Product.Category1.FullName == e.Cat1FullName))
             .GroupBy(r => new { r.SiteDetail.Type, Cat1 = r.Product.Category1.Name, Cat2 = r.Product.Category2.Name })
@@ -79,13 +80,15 @@ namespace OAMS.Controllers
                 && !string.IsNullOrEmpty(r.SiteDetail.Type)
                 ).GroupBy(r => new
                 {
-                    Type = r.SiteDetail.Type,
                     Client = r.Product.Client.Name,
+                    Product = r.Product.Name,
+                    Type = r.SiteDetail.Type,
                 })
                 .Select(r => new Rpt103Row
                 {
                     Type = r.Key.Type,
                     Client = r.Key.Client,
+                    Product = r.Key.Product,
                     Count = r.Count(),
                 }).ToList();
 

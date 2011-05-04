@@ -75,13 +75,40 @@ namespace OAMS.Controllers
         public JsonResult ListContractor(string searchText, int maxResults)
         {
             OAMSEntities db = new OAMSEntities();
+
             var result = db.Contractors
                 .ToList()
                 .Where(r => r.Name != null)
-                .Where(r => r.Name.ToLower().Contains(searchText.ToLower()) || r.Name.ToLower().RemoveDiacritics().Contains(searchText.ToLower()))
+                .Where(r => r.Name.ToLower().Contains(searchText.ToLower())
+                    || r.Name.ToLower().RemoveDiacritics().Contains(searchText.ToLower())
+                    || r.Name.Replace(" ", "").ToLower().Contains(searchText.Replace(" ","").ToLower())
+                    || (r.ContractorContacts.Count > 0
+                        && r.ContractorContacts.SelectMany(r1 => r1.ContractorContactDetails).Count() > 0
+                        && r.ContractorContacts
+                            .SelectMany(r1 => r1.ContractorContactDetails)
+                            .Where(r1 => r1.Value != null)
+                            .Select(r1 => r1.Value.Replace(" ", "").ToLower())
+                            .Where(r1 => r1.Contains(searchText.Replace(" ", "").ToLower()))
+                            .Count() > 0
+                        )
+                    )
                 .Take(maxResults)
                 .Select(r => new { r.ID, r.Name })
                 .ToList();
+
+            //var result = db.ContractorContactDetails
+            //    .ToList()
+            //    .Where(r => r.ContractorContact.Contractor.Name != null )
+            //    .Where(r => r.ContractorContact.Contractor.Name.ToLower().Contains(searchText.ToLower())
+            //        || r.ContractorContact.Contractor.Name.ToLower().RemoveDiacritics().Contains(searchText.ToLower())
+            //        || (r.Value != null && r.Value.Replace(" ", "").ToLower().Contains(searchText.Replace(" ", "").ToLower()))
+            //        )
+            //    .Select(r => r.ContractorContact.Contractor)
+            //    .Distinct()
+            //    .Take(maxResults)
+            //    .Select(r => new { r.ID, r.Name })
+            //    .ToList();
+
             return Json(result);
         }
 
