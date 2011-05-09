@@ -94,5 +94,31 @@ namespace OAMS.Controllers
 
             return View(e);
         }
+
+        public ActionResult _104(Rpt104 e)
+        {
+            if (e == null) e = new Rpt104();
+
+            OAMSEntities db = new OAMSEntities();
+
+            e.List = db.SiteDetailMores.Where(r => true
+                && (string.IsNullOrEmpty(e.Geo1FullName) || (r.SiteDetail.Site.Geo1 != null && r.SiteDetail.Site.Geo1.FullName == e.Geo1FullName))
+                && !string.IsNullOrEmpty(r.SiteDetail.Type)
+                ).GroupBy(r => new
+                {
+                    Contractor = r.SiteDetail.Site.Contractor.Name,
+                    Product = r.Product.Name,
+                    Type = r.SiteDetail.Type,
+                })
+                .Select(r => new Rpt104Row
+                {
+                    Type = r.Key.Type,
+                    Contractor = r.Key.Contractor,
+                    Product = r.Key.Product,
+                    Count = r.Count(),
+                }).ToList();
+
+            return View(e);
+        }
     }
 }

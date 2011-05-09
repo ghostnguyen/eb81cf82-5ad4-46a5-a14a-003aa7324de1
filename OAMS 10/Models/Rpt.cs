@@ -54,4 +54,19 @@ namespace OAMS.Models
         public string Type { get; set; }
         public int Count { get; set; }
     }
+
+    public class Rpt104
+    {
+        public string Geo1FullName { get; set; }
+        public List<Rpt104Row> List { get; set; }
+        public bool HideProduct { get; set; }
+    }
+
+    public class Rpt104Row
+    {
+        public string Contractor { get; set; }
+        public string Product { get; set; }
+        public string Type { get; set; }
+        public int Count { get; set; }
+    }
 }
