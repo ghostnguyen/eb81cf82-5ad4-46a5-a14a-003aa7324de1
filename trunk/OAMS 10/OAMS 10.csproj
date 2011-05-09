@@ -72,6 +72,12 @@
       <HintPath>GoogleDLL\Google.GData.Photos.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="RazorEngine">
+      <HintPath>..\packages\RazorJS.0.4.3\lib\RazorEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="RazorJS">
+      <HintPath>..\packages\RazorJS.0.4.3\lib\RazorJS.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -430,6 +436,7 @@
     <Content Include="Views\Rpt\_102.cshtml" />
     <Content Include="Views\Rpt\_103.cshtml" />
     <Content Include="Views\Rpt\Index.cshtml" />
+    <Content Include="Views\Rpt\_104.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

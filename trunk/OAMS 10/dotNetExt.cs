@@ -199,7 +199,12 @@ public static class dotNetExt
 
     public static string ToUrlPicasaPhotoResize(this string s, string strResize = "s320")
     {
-        return s.Insert(s.LastIndexOf('/'), "/" + strResize);
+        s = s.Insert(s.LastIndexOf('/'), "/" + strResize);
+        if (s.IndexOf("http://") == 0)
+        {
+            s = s.Insert(4, "s");
+        }
+        return s;
     }
 
     //public static bool IsValidProductCode(this string s)

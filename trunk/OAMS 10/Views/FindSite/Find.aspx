@@ -78,6 +78,7 @@
                     <img alt="" border="0" src="<%= profileImageUrl %>" width="20" id="ImgStyleItem<%= category.ID%>" />
                     <br />
                     <%
+                        
            }
                     %>
                 </div>
@@ -231,7 +232,7 @@
                             <dt class="rating">${Rating}</dt>
                         </dl>
                     </div>
-                    ID: ${ID}
+                    ID: <a href='javascript:window.open("<%= Url.Content("~/Site/Edit/${ID}")%>")'>${ID}</a>
                     <br />
                     Site Code: ${Code}
                     <br />
