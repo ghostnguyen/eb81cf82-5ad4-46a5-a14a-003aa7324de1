@@ -232,7 +232,7 @@
                             <dt class="rating">${Rating}</dt>
                         </dl>
                     </div>
-                    ID: <a href='javascript:window.open("<%= Url.Content("~/Site/Edit/${ID}")%>")'>${ID}</a>
+                    ID: <a href='<%= Url.Content("~/Site/Edit/${ID}")%>'>${ID}</a>
                     <br />
                     Site Code: ${Code}
                     <br />
