@@ -10,6 +10,7 @@ using System.Net;
 
 using System.Drawing;
 using System.Drawing.Imaging;
+using ExifLibrary;
 
 namespace OAMS.Models
 {
@@ -79,6 +80,10 @@ namespace OAMS.Models
                 {
                     DateTime? takenDate = GetMetadata_TakenDate(item);
 
+                    float? lng = null;
+                    float? lat = null;
+                    GetMetadata_GPS(item, out lng, out lat);
+
                     MemoryStream mStream = new MemoryStream();
 
                     item.InputStream.Position = 0;
@@ -99,6 +104,8 @@ namespace OAMS.Models
                         photo.Url = createdEntry.Media.Content.Url;
                         photo.AtomUrl = createdEntry.EditUri.Content;
                         photo.TakenDate = takenDate;
+                        photo.Lng = lng;
+                        photo.Lat = lat;
                         photo.Note = noteList[i];
                         e.SitePhotoes.Add(photo);
                     }
@@ -109,6 +116,7 @@ namespace OAMS.Models
         private static DateTime? GetMetadata_TakenDate(HttpPostedFileBase item)
         {
             DateTime? takenDate = null;
+            item.InputStream.Position = 0;
             Image img = Image.FromStream(item.InputStream);
             //http://msdn.microsoft.com/en-us/library/system.drawing.imaging.propertyitem.id.aspx
             PropertyItem prop = img.PropertyItems.Where(r => r.Id == 306).FirstOrDefault();
@@ -119,6 +127,24 @@ namespace OAMS.Models
             }
             return takenDate;
         }
+
+        private static void GetMetadata_GPS(HttpPostedFileBase item, out float? lng, out float? lat)
+        {
+            MemoryStream mStream = new MemoryStream();
+
+            item.InputStream.Position = 0;
+            item.InputStream.CopyTo(mStream);
+            mStream.Position = 0;
+
+            var data = ExifFile.Read(mStream);
+            GPSLatitudeLongitude gps_lng = data.Properties[ExifTag.GPSLongitude] as GPSLatitudeLongitude;
+            GPSLatitudeLongitude gps_lat = data.Properties[ExifTag.GPSLatitude] as GPSLatitudeLongitude;
+
+            lng = gps_lng.ToFloat();
+            lat = gps_lat.ToFloat();
+        }
+
+
 
 
         public string CreateAlbum(string name, bool isBackup = false)
@@ -190,6 +216,10 @@ namespace OAMS.Models
                 if (item != null)
                 {
                     DateTime? takenDate = GetMetadata_TakenDate(item);
+                    
+                    float? lng = null;
+                    float? lat = null;
+                    GetMetadata_GPS(item, out lng, out lat);
 
                     ContractDetailTimeline timeline = e.ContractDetail.ContractDetailTimelines.Where(r => r.Order == e.Order).FirstOrDefault();
                     if (
@@ -225,6 +255,8 @@ namespace OAMS.Models
                             photo.Url = createdEntry.Media.Content.Url;
                             photo.AtomUrl = createdEntry.EditUri.Content;
                             photo.TakenDate = takenDate;
+                            photo.Lng = lng;
+                            photo.Lat = lat;
                             photo.Note = noteList[i];
                             photo.IsReview = IsReview;
 
@@ -359,6 +391,10 @@ namespace OAMS.Models
                     {
                         DateTime? takenDate = GetMetadata_TakenDate(file);
 
+                        float? lng = null;
+                        float? lat = null;
+                        GetMetadata_GPS(file, out lng, out lat);
+
                         MemoryStream mStream = new MemoryStream();
 
                         file.InputStream.Position = 0;
@@ -379,6 +415,8 @@ namespace OAMS.Models
                             photo.Url = createdEntry.Media.Content.Url;
                             photo.AtomUrl = createdEntry.EditUri.Content;
                             photo.TakenDate = takenDate;
+                            photo.Lng = lng;
+                            photo.Lat = lat;
                             photo.Note = note;
                             siteDetail.SiteDetailPhotoes.Add(photo);
                         }
