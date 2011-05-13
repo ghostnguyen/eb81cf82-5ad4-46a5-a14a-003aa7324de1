@@ -270,16 +270,29 @@
                 </fieldset>
             </td>
             <td>
-                <% 
-string albumUrl = Model.ContractDetail.Site.AlbumUrl;
-string AlbumID = string.IsNullOrEmpty(albumUrl) ? "" : Model.ContractDetail.Site.AlbumUrl.Split('/')[9].Split('?')[0];
-string AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Split('=')[1];
+                <%                    
+                       string albumUrl = "";
+                       string AlbumID = "";
+                       string AuthID = "";
+
+                       var sd = Model.Site.SiteDetails.Where(r => r.Name == Model.ContractDetail.SiteDetailName).FirstOrDefault();
+                       if (sd != null)
+                       {
+                           albumUrl = sd.AlbumUrl;
+                           AlbumID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('/')[9].Split('?')[0];
+                           AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Split('=')[1];
+                       }
+                       
+                       //string albumUrl = Model.ContractDetail.Site.AlbumUrl;
+                       //string AlbumID = string.IsNullOrEmpty(albumUrl) ? "" : Model.ContractDetail.Site.AlbumUrl.Split('/')[9].Split('?')[0];
+                       //string AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Split('=')[1];
                 %>
-                <embed type="application/x-shockwave-flash" src="http://picasaweb.google.com/s/c/bin/slideshow.swf"
-                    width="600" height="400" flashvars="host=picasaweb.google.com&hl=en_US&feat=flashalbum&RGB=0x000000&feed=http%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F113917932111131696693%2Falbumid%2F<%=AlbumID%>%3Falt%3Drss%26kind%3Dphoto%26authkey%3D<%=AuthID%>%26hl%3Den_US"
+                <embed type="application/x-shockwave-flash" src="https://picasaweb.google.com/s/c/bin/slideshow.swf"
+                    width="600" height="400" flashvars="host=picasaweb.google.com&hl=en_US&feat=flashalbum&RGB=0x000000&feed=https%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F113917932111131696693%2Falbumid%2F<%=AlbumID%>%3Falt%3Drss%26kind%3Dphoto%26authkey%3D<%=AuthID%>%26hl%3Den_US"
                     pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>
                 <br />
-                <%= Model.ContractDetail != null ? Model.ContractDetail.SiteDetailName : "" %>
+                SiteID: <%= Model.ContractDetail.SiteID%> - 
+                Site Detail Name: <%= Model.ContractDetail != null ?  Model.ContractDetail.SiteDetailName : "" %>                
                 <div id="divDeletePhotoList" style="visibility: collapse;">
                     <%--<input type="text" id="Text1" name="DeletePhotoList" />--%>
                 </div>
@@ -302,7 +315,7 @@ string AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Spl
                 <span style="color: Red;">Possible wrong GPS. </span>
                 <%} %>
                 <br />
-                <img src='<%= item.Url %>' alt="" width="500" id='photo<%: item.ID %>' />
+                <img src='<%= item.Url.ToUrlPicasaPhotoResize("s480") %>' alt="" width="500" id='photo<%: item.ID %>' />
                 <br />
                 <% } %>
                 <br />

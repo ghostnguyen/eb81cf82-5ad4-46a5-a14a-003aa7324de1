@@ -15,7 +15,7 @@
         <span style="color: Red;">Possible wrong GPS. </span>
         <%} %>
         <br />
-        <img src='<%= item.Url %>' alt="" width="500" id='siteDetailPhoto<%: item.ID %>' />
+        <img src='<%= item.Url.ToUrlPicasaPhotoResize("s480") %>' alt="" width="500" id='siteDetailPhoto<%: item.ID %>' />
         <br />
     </div>
     <% } %>
