@@ -70,7 +70,7 @@ namespace OAMS.Models
                 e.AlbumUrl = CreateAlbum(e.ID.ToString());
             }
 
-            Uri postUri = new Uri(e.AlbumUrl.Replace("entry", "feed"));
+            Uri postUri = new Uri(e.AlbumUrl.Replace("entry", "feed").ToHttpsUri());
 
             for (int i = 0; i < files.Count(); i++)
             {
@@ -156,7 +156,7 @@ namespace OAMS.Models
             newEntry.Title.Text = name + (isBackup ? "B" : "");
             newEntry.Summary.Text = newEntry.Title.Text;
 
-            Uri feedUri = new Uri(PicasaQuery.CreatePicasaUri(AppSetting.GoogleUsername));
+            Uri feedUri = new Uri(PicasaQuery.CreatePicasaUri(AppSetting.GoogleUsername).ToHttpsUri());
 
             PicasaEntry createdEntry = (PicasaEntry)service.Insert(feedUri, newEntry);
 
