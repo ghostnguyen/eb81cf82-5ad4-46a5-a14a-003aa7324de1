@@ -207,6 +207,15 @@ public static class dotNetExt
         return s;
     }
 
+    public static string ToHttpsUri(this string s)
+    {
+        if (s.IndexOf("http://") == 0)
+        {
+            s = s.Insert(4, "s");
+        }
+        return s;
+    }
+
     //public static bool IsValidProductCode(this string s)
     //{
     //    return BarcodeBLL.IsValidProductCode(s);
