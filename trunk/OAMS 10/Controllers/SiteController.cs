@@ -46,25 +46,20 @@ namespace OAMS.Controllers
         {
             Site e = repo.Get(id);
             e.NewGeoFullName = e.GeoFullName;
-            //e.NewCategoryFullName = e.CategoryFullName;
             return View(e);
         }
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection, IEnumerable<HttpPostedFileBase> files, List<int> DeletePhotoList, string[] noteList, List<SDP> siteDetailFiles, List<int> DeleteSiteDetailPhotoList)
+        public ActionResult Edit(int id, FormCollection collection, IEnumerable<HttpPostedFileBase> files, List<int> DeletePhotoList, string[] noteList, List<SDP> siteDetailFiles, List<int> DeleteSiteDetailPhotoList, List<MoveSP> movedL)
         {
-            repo.Update(id, UpdateModel, files, DeletePhotoList, noteList, siteDetailFiles, DeleteSiteDetailPhotoList);
-
+            repo.Update(id, UpdateModel, files, DeletePhotoList, noteList, siteDetailFiles, DeleteSiteDetailPhotoList, movedL);
             return RedirectToAction("Index");
         }
 
         public ActionResult Delete(int id)
         {
-            //repo.DeletePhoto(id);
             repo.Delete(id);
             return RedirectToAction("Index");
-
-            //return View();
         }
 
         [HttpPost]

@@ -555,8 +555,11 @@
                 </div>
                 <div id="divDeletePhotoList" style="visibility: collapse;">
                 </div>
-                <% foreach (var item in Model.SitePhotoes)
-                   { %>
+                <% 
+           for (int i = 0; i < Model.SitePhotoes.Count; i++)
+           {
+               var item = Model.SitePhotoes.ElementAt(i);
+                %>
                 <br />
                 <div id='divSitePhoto<%: item.ID %>'>
                     <input type="text" value='<%: item.Note %>' />
@@ -570,7 +573,22 @@
                     <span style="color: Red;">Possible wrong GPS. </span>
                     <%} %>
                     <br />
-                    <img src='<%= item.Url.ToUrlPicasaPhotoResize("s480") %>' alt="" width="500" id='photo<%: item.ID %>' />                    
+                    <input type="hidden" name="movedL[<%: i %>].SitePhotoID" value="<%: item.ID %>" />
+                    Move to
+                    <select name="movedL[<%: i %>].SiteDetailID">
+                        <% foreach (var sd in item.Site.SiteDetails)
+                           {
+                        %>
+                        <option value="" selected="selected"></option>
+                        <option value='<%: sd.ID %>'>
+                            <%: sd.Name %>
+                        </option>
+                        <%    
+                           }
+                        %>
+                    </select>
+                    <br />
+                    <img src='<%= item.Url.ToUrlPicasaPhotoResize("s480") %>' alt="" width="500" id='photo<%: item.ID %>' />
                     <br />
                 </div>
                 <% } %>

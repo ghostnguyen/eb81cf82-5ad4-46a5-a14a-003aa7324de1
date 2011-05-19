@@ -162,7 +162,6 @@ namespace OAMS.Models
 
             //5507469898148065681
             return createdEntry.EditUri.Content;
-            //return createdEntry.Id.AbsoluteUri;
         }
 
         public void DeletePhoto(SitePhoto item)
@@ -189,11 +188,59 @@ namespace OAMS.Models
             a.Delete();
         }
 
+        public PicasaEntry MovingPhoto(string photoUrl, string photoAtomUrl, string albumUrl, string note)
+        {
+            PicasaService service = InitPicasaService();
+
+            byte[] b;
+            HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(photoUrl.ToHttpsUri());
+            WebResponse myResp = myReq.GetResponse();
+            Stream stream = myResp.GetResponseStream();
+
+            using (BinaryReader br = new BinaryReader(stream))
+            {
+                b = br.ReadBytes(500000);
+                br.Close();
+            }
+            myResp.Close();
+
+            MemoryStream mem = new MemoryStream(b);
+
+            var entry = UploadPhoto(albumUrl, mem, note);
+
+            PicasaEntry a = (PicasaEntry)service.Get(photoAtomUrl.ToHttpsUri());
+            a.Delete();
+
+            return entry;
+        }
+
+        public PicasaEntry UploadPhoto(string albumUrl, Stream stream, string note)
+        {
+            PicasaEntry createdEntry = null;
+
+            if (!string.IsNullOrEmpty(albumUrl))
+            {
+                PicasaService service = InitPicasaService();
+                SiteDetailRepository siteDetailRepository = new SiteDetailRepository();
+                siteDetailRepository.DB = DB;
+
+                Uri postUri = new Uri(albumUrl.Replace("entry", "feed"));
+
+                stream.Position = 0;
+
+                PicasaEntry entry = new PhotoEntry();
+                entry.MediaSource = new Google.GData.Client.MediaFileSource(stream, "move", "image/jpeg");
+                entry.Title = new AtomTextConstruct(AtomTextConstructElementType.Title, note);
+                entry.Summary = new AtomTextConstruct(AtomTextConstructElementType.Summary, note);
+
+                createdEntry = service.Insert(postUri, entry);
+            }
+            return createdEntry;
+        }
 
 
         public void UploadPhoto(SiteMonitoring e, IEnumerable<HttpPostedFileBase> files, string[] noteList, bool isCheckDate = true, bool? IsReview = null)
         {
-
             if (files == null
                 || files.Count() == 0
                 || files.Where(r => r != null).Count() == 0)
@@ -216,7 +263,7 @@ namespace OAMS.Models
                 if (item != null)
                 {
                     DateTime? takenDate = GetMetadata_TakenDate(item);
-                    
+
                     float? lng = null;
                     float? lat = null;
                     GetMetadata_GPS(item, out lng, out lat);

@@ -13,6 +13,13 @@ namespace OAMS.Models
         public HttpPostedFileBase File { get; set; }
         public string Note { get; set; }
     }
+
+    public class MoveSP
+    {
+        public int? SitePhotoID { get; set; }
+        public int? SiteDetailID { get; set; }
+    }
+
     public partial class SiteDetail : IEquatable<SiteDetail>
     {
         public string ToStringClient { get { return string.Join(",", SiteDetailMores.Select(r1 => r1.Product == null ? "" : (r1.Product.Client == null ? "" : (r1.Product.Client.Name ?? "")))); } }
