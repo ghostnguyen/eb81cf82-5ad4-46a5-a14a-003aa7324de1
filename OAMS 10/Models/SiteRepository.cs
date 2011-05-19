@@ -41,10 +41,10 @@ namespace OAMS.Models
             return e;
         }
 
-        public void Update(int ID, Action<Site> updateMethod, IEnumerable<HttpPostedFileBase> files, List<int> DeletePhotoList, string[] noteList, List<SDP> siteDetailFiles, List<int> DeleteSiteDetailPhotoList)
+        public void Update(int ID, Action<Site> updateMethod, IEnumerable<HttpPostedFileBase> files, List<int> DeletePhotoList, string[] noteList, List<SDP> siteDetailFiles, List<int> DeleteSiteDetailPhotoList, List<MoveSP> moveL)
         {
             Site e = Get(ID);
-
+            
             updateMethod(e);
 
             UpdateGeo(e);
@@ -65,7 +65,9 @@ namespace OAMS.Models
             Save();
 
             DeleteSiteDetailPhoto(DeleteSiteDetailPhotoList);
+            Save();
 
+            MovePhoto(moveL);
             Save();
         }
 
@@ -173,6 +175,52 @@ namespace OAMS.Models
 
                 Save();
             }
+        }
+
+        public void MovePhoto(List<MoveSP> moveL)
+        {
+            if (moveL != null)
+            {
+                foreach (var item in moveL)
+                {
+                    var photo = DB.SitePhotoes.FirstOrDefault(r => r.ID == item.SitePhotoID);
+                    var sd = DB.SiteDetails.FirstOrDefault(r => r.ID == item.SiteDetailID);
+
+                    if (photo != null && sd != null && photo.SiteID == sd.SiteID)
+                    {
+                        MovePhoto(photo, sd);
+                    }
+                }
+            }
+        }
+
+        public void MovePhoto(SitePhoto photo, SiteDetail sd)
+        {
+            PicasaRepository picasaRepository = new PicasaRepository();
+
+            if (string.IsNullOrEmpty(sd.AlbumUrl))
+            {
+                sd.AlbumUrl = picasaRepository.CreateAlbum("SD_" + sd.ID.ToString());
+            }
+
+            var createdEntry = picasaRepository.MovingPhoto(photo.Url, photo.AtomUrl, sd.AlbumUrl, photo.Note);
+
+            if (createdEntry != null)
+            {
+                var p = new SiteDetailPhoto();
+
+                p.Url = createdEntry.Media.Content.Url;
+                p.AtomUrl = createdEntry.EditUri.Content;
+                p.TakenDate = photo.TakenDate;
+                p.Lng = photo.Lng;
+                p.Lat = photo.Lat;
+                p.Note = photo.Note;
+                sd.SiteDetailPhotoes.Add(p);
+
+                DB.DeleteObject(photo);
+            }
+
+            Save();
         }
 
         public void DeleteSiteDetailPhoto(List<int> IDList)
