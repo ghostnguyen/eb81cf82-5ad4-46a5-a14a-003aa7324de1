@@ -276,11 +276,17 @@
                        string AuthID = "";
 
                        var sd = Model.Site.SiteDetails.Where(r => r.Name == Model.ContractDetail.SiteDetailName).FirstOrDefault();
-                       if (sd != null)
+                       if (sd != null && sd.SiteDetailPhotoes.Count > 0)
                        {
                            albumUrl = sd.AlbumUrl;
                            AlbumID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('/')[9].Split('?')[0];
                            AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Split('=')[1];
+                       }
+                       else
+                       {
+                           albumUrl = Model.ContractDetail.Site.AlbumUrl;
+                           AlbumID = string.IsNullOrEmpty(albumUrl) ? "" : Model.ContractDetail.Site.AlbumUrl.Split('/')[9].Split('?')[0];
+                           AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Split('=')[1]; 
                        }
                        
                        //string albumUrl = Model.ContractDetail.Site.AlbumUrl;
