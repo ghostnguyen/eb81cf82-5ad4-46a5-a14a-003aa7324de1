@@ -176,7 +176,7 @@ namespace OAMS.Models
 
             using (BinaryReader br = new BinaryReader(stream))
             {
-                b = br.ReadBytes(500000);
+                b = br.ReadBytes(50000000);
                 br.Close();
             }
             myResp.Close();
@@ -199,7 +199,7 @@ namespace OAMS.Models
 
             using (BinaryReader br = new BinaryReader(stream))
             {
-                b = br.ReadBytes(500000);
+                b = br.ReadBytes(50000000);
                 br.Close();
             }
             myResp.Close();
@@ -326,7 +326,7 @@ namespace OAMS.Models
 
             using (BinaryReader br = new BinaryReader(stream))
             {
-                b = br.ReadBytes(500000);
+                b = br.ReadBytes(50000000);
                 br.Close();
             }
             myResp.Close();
@@ -350,7 +350,7 @@ namespace OAMS.Models
 
             using (BinaryReader br = new BinaryReader(stream))
             {
-                b = br.ReadBytes(500000);
+                b = br.ReadBytes(50000000);
                 br.Close();
             }
             myResp.Close();
