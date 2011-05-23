@@ -137,11 +137,20 @@ namespace OAMS.Models
             mStream.Position = 0;
 
             var data = ExifFile.Read(mStream);
-            GPSLatitudeLongitude gps_lng = data.Properties[ExifTag.GPSLongitude] as GPSLatitudeLongitude;
-            GPSLatitudeLongitude gps_lat = data.Properties[ExifTag.GPSLatitude] as GPSLatitudeLongitude;
 
-            lng = gps_lng.ToFloat();
-            lat = gps_lat.ToFloat();
+            if (data.Properties.ContainsKey(ExifTag.GPSLongitude))
+            {
+                GPSLatitudeLongitude gps_lng = data.Properties[ExifTag.GPSLongitude] as GPSLatitudeLongitude;
+                lng = gps_lng.ToFloat();
+            }
+            else lng = null;
+
+            if (data.Properties.ContainsKey(ExifTag.GPSLatitude))
+            {
+                GPSLatitudeLongitude gps_lat = data.Properties[ExifTag.GPSLatitude] as GPSLatitudeLongitude;
+                lat = gps_lat.ToFloat();
+            }
+            else lat = null;
         }
 
 
