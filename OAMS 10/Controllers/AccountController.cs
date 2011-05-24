@@ -18,7 +18,7 @@ using System.Web.Profile;
 namespace OAMS.Controllers
 {
     [HandleError]
-    
+
     public class AccountController : Controller
     {
         AccountRepository repo = new AccountRepository();
@@ -34,7 +34,7 @@ namespace OAMS.Controllers
             base.Initialize(requestContext);
         }
 
-       
+
 
         public ActionResult LogOff()
         {
@@ -55,12 +55,12 @@ namespace OAMS.Controllers
             return View();
         }
 
-        
+
         public ActionResult NoRight()
         {
             return View();
         }
-        
+
         [CustomAuthorize]
         public ActionResult Edit(string id)
         {
@@ -326,6 +326,36 @@ namespace OAMS.Controllers
             roleRepo.SetUsersToRole(rolename, UserList);
 
             return View((object)rolename);
+        }
+
+        [ValidateInput(false)]
+        public ActionResult Register(string email)
+        {
+            if (Request.RawUrl.Contains(AppSetting.AmbientClientUrl))
+            {
+                string returnUrl = "";
+                if (repo.Exist(email, ""))
+                { }
+                else
+                {
+                    repo.Create(email, "");
+                }
+
+                this.IssueAuthTicket(email, true);
+
+                RoleRepository roleRepo = new RoleRepository();
+                if (roleRepo.GetRolesList(email).Count() == 0)
+                {
+                    returnUrl = "~/Account/Guest";
+                }
+
+                if (string.IsNullOrEmpty(returnUrl))
+                    returnUrl = "~/";
+
+                return Redirect(returnUrl);
+            }
+            else
+                return Redirect("~/");
         }
     }
 }
