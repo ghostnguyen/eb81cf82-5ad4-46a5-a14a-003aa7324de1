@@ -62,6 +62,13 @@
             <%: Html.DisplayFor(model => model.SiteID)%>
             <%: Html.ValidationMessageFor(model => model.SiteID) %>
         </div>
+        <div class="editor-label">
+            <%: Html.LabelFor(model => model.SiteDetailName) %>
+        </div>
+        <div class="editor-field">
+            <%: Html.EditorFor(model => model.SiteDetailName)%>
+            <%: Html.ValidationMessageFor(model => model.SiteDetailName)%>
+        </div>
         <div>
             <% Html.RenderPartial("ManageContractDetailTimeline", Model); %>
         </div>
