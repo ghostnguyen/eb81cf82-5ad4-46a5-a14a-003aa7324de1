@@ -111,7 +111,7 @@
                     <%: item.Score %>
                 </td>
                 <td>
-                    <%: item.SitePhotoes.Count() %>
+                    <%: item.SiteDetails.SelectMany(r => r.SiteDetailPhotoes).Count() %>
                 </td>
                 <td>
                     <%: item.LastUpdatedDate %>
