@@ -159,10 +159,10 @@ else if (category.Code == "Other")
                     <thead>
                         <tr>
                             <th>
-                                ID
+                                SiteDetailID
                             </th>
                             <th>
-                                Site ID
+                                SiteID
                             </th>
                             <th>
                                 Name
