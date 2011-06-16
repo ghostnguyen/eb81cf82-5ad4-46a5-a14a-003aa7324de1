@@ -1,0 +1,189 @@
+﻿@model OAMS.Models.SiteMonitoring
+<table class="MonitoringRpt">
+    <tr>
+        <td colspan="2">
+            <h1>
+                Inspection Report
+                <br />
+                <span>@Model.CurrentProductName </span>
+            </h1>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>SiteID:</b>
+            <br />
+            @Model.ContractDetail.Site.ID
+            <br />
+            <br />
+            <b>Site Location:</b>
+            <br />
+            @(Model.ContractDetail.Site.AddressLine1 + " " + Model.ContractDetail.Site.AddressLine2)
+            <br />
+            @((Model.ContractDetail.Site.Geo3 == null ? "" : Model.ContractDetail.Site.Geo3.Name + ", ")
+            + Model.ContractDetail.Site.Geo2.Name)
+            <br />
+            @Model.ContractDetail.Site.Geo1.Name
+            <br />
+            <br />
+            <b>Product:</b>
+            <br />
+            @Model.CurrentProductName
+            <br />
+            <br />
+            <b>Campaign:</b>
+            <br />
+            <br />
+            <b>Agency:</b>
+            <br />
+            <br />
+            <b>Supplier:</b>
+            <br />
+            @(Model.ContractDetail.Contract != null ? Model.ContractDetail.Contract.ContractorName : Model.Site.ContractorName)
+            <br />
+            <br />
+            <b>In/Outbound to CBC:</b>
+            <br />
+            @Model.ContractDetail.Site.CBDViewed
+            <br />
+            <br />
+            <b>Lighting:</b>
+            <br />
+            @(Model.ContractDetail.Site.FrontlitNumerOfLamps > 0 ? "Frontlit" : "Backlit")
+            <br />
+            <br />
+            <b>Type:</b>
+            @Model.ContractDetail.Type
+        </td>
+        <td>
+            <img src='@(Model.SiteMonitoringPhotoes.ElementAt(0).Url.ToUrlPicasaPhotoResize("s800"))' alt="" width="800" />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="left">
+            <img src='@Url.Content("~/Content/Image/BlueTrak.png")' alt="" width="1100px"/>
+        </td>
+    </tr>
+</table>
+<div class="pageBreak">
+</div>
+<table class="notable MonitoringRpt">
+    <tr>
+        <td>
+            <img src='@(Model.SiteMonitoringPhotoes.ElementAt(1).Url.ToUrlPicasaPhotoResize())' alt="" width="300" height="225" />
+        </td>
+        <td>
+            <img src='@(Model.SiteMonitoringPhotoes.ElementAt(2).Url.ToUrlPicasaPhotoResize())' alt="" width="300" height="225" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img alt="Map" src="http://maps.google.com/maps/api/staticmap?center=@Model.ContractDetail.Site.Lat,@Model.ContractDetail.Site.Lng&zoom=17&size=300x225&maptype=hybrid&markers=color:red|@Model.ContractDetail.Site.Lat,@Model.ContractDetail.Site.Lng&sensor=false" />
+        </td>
+        <td>
+            <table class="notable">
+                <tr>
+                    <td>
+                        <b>Last Inspected:</b>
+                        <br />
+                        @{OAMS.Models.SiteMonitoringRepository repo = new OAMS.Models.SiteMonitoringRepository();
+                          var pre = repo.GetPrevious(Model.ID);
+                            @(pre != null ? pre.LastUpdatedDate.ToString() : "")  
+                        }
+                        <br />
+                        <br />
+                        <b>Last Photo:</b>
+                        <br />
+                        @{DateTime? lastDate = null;
+                          foreach (OAMS.Models.SiteMonitoringPhoto item in Model.SiteMonitoringPhotoes)
+                          {
+                              if (item.TakenDate != null && (lastDate == null || lastDate < item.TakenDate))
+                              { lastDate = item.TakenDate; }
+                          }
+                            @(lastDate != null ? @lastDate.ToShortDateString() : "")
+                        }
+                        <br />
+                        <br />
+                        <b>Lighting Working:</b>
+                        <br />
+                        @Model.Working.ToCustomeString()
+                        <br />
+                        <br />
+                        <b>Issue:</b>
+                        <br />
+                        @Model.Issues
+                        <br />
+                        <br />
+                        <b>Follow up (if any):</b>
+                        <br />
+                        <table class="notable">
+                            <tr>
+                                <td>
+                                    Required:
+                                </td>
+                                <td>
+                                    @Model.RequiredFollowUp.ToCustomeString()
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Action:
+                                </td>
+                                <td>
+                                    @Model.Action
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Date of reported:
+                                </td>
+                                <td>@Model.DateOfProblem.ToShortDateString()
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Now fixed:
+                                </td>
+                                <td>@Model.NowFixed.ToCustomeString()
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Date checked:
+                                </td>
+                                <td>@Model.DateFixed.ToShortDateString()
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td valign="top">
+                        <b>Site Clean:</b>
+                        <br />
+                        @Model.Clean.ToCustomeString()
+                        <br />
+                        <b>Creative Good Condition:</b>
+                        <br />
+                        @Model.CreativeGoodConditon.ToCustomeString()
+                        <br />
+                        <b>External Interference:</b>
+                        <br />
+                        @Model.ExternalInterference.ToCustomeString()
+                        <br />
+                        <b>Vandalism:</b>
+                        <br />
+                        @Model.Vandalism.ToCustomeString()
+                        <br />
+                        <b>Comments:</b>
+                        <br />
+                        @Model.Comments
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <img src='@Url.Content("~/Content/Image/BlueTrak.png")' alt="" width="1024" height="45" />
+        </td>
+    </tr>
+</table>
