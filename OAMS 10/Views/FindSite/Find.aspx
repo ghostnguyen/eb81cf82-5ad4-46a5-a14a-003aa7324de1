@@ -167,7 +167,7 @@
                     <thead>
                         <tr>
                             <th>
-                                ID
+                                SiteID
                             </th>
                             <th>
                                 Category Level 1
