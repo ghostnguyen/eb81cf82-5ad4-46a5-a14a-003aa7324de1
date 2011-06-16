@@ -1,0 +1,11 @@
+﻿@model IEnumerable<OAMS.Models.SiteMonitoring>
+@{
+    ViewBag.Title = "Monitoring Detail Report";
+    Layout = "~/Views/Shared/SiteLayoutRpt.cshtml";
+}
+@foreach (var item in Model)
+{ 
+    <div class="pageBreak">
+        @(Html.Partial("~/Views/SiteMonitoring/DisplayTemplates/ViewDetail.cshtml", item))
+    </div>
+}

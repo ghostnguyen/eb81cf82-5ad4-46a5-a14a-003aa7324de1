@@ -238,6 +238,7 @@
     <Content Include="Content\Image\bg2.png" />
     <Content Include="Content\Image\billboard.png" />
     <Content Include="Content\Image\billboardpole.png" />
+    <Content Include="Content\Image\BlueTrak.png" />
     <Content Include="Content\Image\britelite.png" />
     <Content Include="Content\Image\busshelter.png" />
     <Content Include="Content\Image\covermarket.png" />
@@ -324,7 +325,6 @@
     <Content Include="Views\Contractor\Index.aspx" />
     <Content Include="Views\Contractor\ManageContractorContact.ascx" />
     <Content Include="Views\ContractTimeline\Edit.ascx" />
-    <Content Include="Views\Contract\ViewReportDetail.aspx" />
     <Content Include="Views\Contract\Create.aspx" />
     <Content Include="Views\Category\Create.aspx" />
     <Content Include="Views\Category\Edit.aspx" />
@@ -441,6 +441,9 @@
     <Content Include="Views\Rpt\_103.cshtml" />
     <Content Include="Views\Rpt\Index.cshtml" />
     <Content Include="Views\Rpt\_104.cshtml" />
+    <Content Include="Views\Shared\SiteLayoutRpt.cshtml" />
+    <Content Include="Views\Contract\ViewReportDetail.cshtml" />
+    <Content Include="Views\SiteMonitoring\DisplayTemplates\ViewDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
