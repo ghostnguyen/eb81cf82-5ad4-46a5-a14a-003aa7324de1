@@ -578,10 +578,7 @@ a:focus > .sf-sub-indicator, a:hover > .sf-sub-indicator, a:active > .sf-sub-ind
 
 .MonitoringRpt
 {
-    color: Blue;
-    font-family: Calibri;
-    width: 1123;
-    height: 794;
+    color: Blue;        
 }
 
 .MonitoringRpt h1
