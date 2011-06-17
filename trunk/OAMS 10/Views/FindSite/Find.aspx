@@ -528,7 +528,7 @@
                     
                     var a = $("<a></a>",{ 
                     //'href':"javascript:showInfoWindow('"+i+"');", text: site.ID
-                    'href':"javascript:showInfoWindow('"+site.ID+"');", text: site.ID
+                    'href':"javascript:showInfoWindow('"+site.ID+"','"+ i + "');", text: site.ID
                     }); 
 
                    
@@ -628,18 +628,18 @@
             mc.addMarkers(markers);
         }
 
-        function showInfoWindow(siteID) {            
+        function showInfoWindow(siteID,i) {            
 
                             var html = GetSiteInfo(siteID);
 
 
                 infoWindow.setContent(html);
-                infoWindow.open(map, marker);
+                //infoWindow.open(map, marker);
 
 
 //            infoWindow.setContent(infoContents[i]);            
 
-//            infoWindow.open(map, markers[i]);
+            infoWindow.open(map, markers[i]);
         }
 
         function bindInfoWindow(marker, map, infoWindow, html, siteID) {
@@ -666,25 +666,21 @@
             });
         }
 
-        var infoHtml = "No info";
-
         function GetSiteInfo(siteID)
         {
-            
+            var infoWindowHtml = "No info";
 
             $.ajax({
                 url: '<%= Url.Content("~/FindSite/GetSiteInfo") %>', type: "POST", dataType: "json",
                 data: {"ID":siteID},
+                async: false,
                 success: function (data) {
-                    infoHtml = $("#infoWindowTemplate").tmpl(data).html();
-                    //alert(infoHtml);
-                    //infoWindow.setContent(infoHtml);
-                    //infoWindow.open(map, marker);
-                    //return infoHtml;
+                
+                    infoWindowHtml = $("#infoWindowTemplate").tmpl(data).html();
                     }
                 })
-
-            return infoHtml;
+            
+            return infoWindowHtml;
         }
 
         var distanceWidget;
