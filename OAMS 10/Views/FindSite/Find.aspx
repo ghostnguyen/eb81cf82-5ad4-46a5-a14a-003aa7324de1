@@ -507,13 +507,14 @@
 
                     profileMarkers.push(marker);
                     
-                    var infoHtml = $("#infoWindowTemplate").tmpl(site).html();
+                    //var infoHtml = $("#infoWindowTemplate").tmpl(site).html();
+                    var infoHtml = "hrlo";
                     infoContents.push(infoHtml);
 
                     var html = "";
                     html += infoHtml;
 
-                    bindInfoWindow(marker, map, infoWindow, html);
+                    bindInfoWindow(marker, map, infoWindow, html, site.ID);
 
                     var tbl = $('#tblResult tbody');
                     tbl.innerHTML = '';
@@ -526,7 +527,8 @@
                     rSel.appendChild(cStyle);
                     
                     var a = $("<a></a>",{ 
-                    'href':"javascript:showInfoWindow('"+i+"');", text: site.ID
+                    //'href':"javascript:showInfoWindow('"+i+"');", text: site.ID
+                    'href':"javascript:showInfoWindow('"+site.ID+"');", text: site.ID
                     }); 
 
                    
@@ -626,17 +628,63 @@
             mc.addMarkers(markers);
         }
 
-        function showInfoWindow(i) {
-            infoWindow.setContent(infoContents[i]);            
-            infoWindow.open(map, markers[i]);
+        function showInfoWindow(siteID) {            
+
+                            var html = GetSiteInfo(siteID);
+
+
+                infoWindow.setContent(html);
+                infoWindow.open(map, marker);
+
+
+//            infoWindow.setContent(infoContents[i]);            
+
+//            infoWindow.open(map, markers[i]);
         }
 
-        function bindInfoWindow(marker, map, infoWindow, html) {
+        function bindInfoWindow(marker, map, infoWindow, html, siteID) {
 
             google.maps.event.addListener(marker, 'click', function () {
+                
+                var html = GetSiteInfo(siteID);
+
+
+//                $.ajax({
+//                url: '<%= Url.Content("~/FindSite/GetSiteInfo") %>', type: "POST", dataType: "json",
+//                data: {"ID":siteID},
+//                success: function (data) {
+//                    var infoHtml = $("#infoWindowTemplate").tmpl(data).html();
+//                    infoWindow.setContent(infoHtml);
+//                    infoWindow.open(map, marker);
+//                    }
+//                })
+
+
+
                 infoWindow.setContent(html);
                 infoWindow.open(map, marker);
             });
+        }
+
+        var infoHtml = "No info";
+
+        function GetSiteInfo(siteID)
+        {
+            
+
+            $.ajax({
+                url: '<%= Url.Content("~/FindSite/GetSiteInfo") %>', type: "POST", dataType: "json",
+                data: {"ID":siteID},
+                success: function (data) {
+                    infoHtml = $("#infoWindowTemplate").tmpl(data).html();
+                    //alert(infoHtml);
+                    //infoWindow.setContent(infoHtml);
+                    //infoWindow.open(map, marker);
+                    //return infoHtml;
+                    }
+                })
+
+            return infoHtml;
         }
 
         var distanceWidget;
