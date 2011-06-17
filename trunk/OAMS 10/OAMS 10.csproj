@@ -238,6 +238,7 @@
     <Content Include="Content\Image\bg2.png" />
     <Content Include="Content\Image\billboard.png" />
     <Content Include="Content\Image\billboardpole.png" />
+    <Content Include="Content\Image\BlueTrakLogo.jpg" />
     <Content Include="Content\Image\BlueTrak.png" />
     <Content Include="Content\Image\britelite.png" />
     <Content Include="Content\Image\busshelter.png" />

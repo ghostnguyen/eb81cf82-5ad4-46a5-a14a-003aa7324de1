@@ -29,7 +29,6 @@ namespace OAMS.Controllers
         [HttpPost]
         public JsonResult FindJson(FindSite e)
         {
-
             List<SiteDetail> l = Find(e);
 
             CodeMasterRepository codeMasterRepo = new CodeMasterRepository();
@@ -68,8 +67,8 @@ namespace OAMS.Controllers
                 Rating = r.Site.Score.ToRating(),
                 AlbumID = string.IsNullOrEmpty(r.Site.AlbumUrl) ? "" : r.Site.AlbumUrl.Split('/')[9].Split('?')[0],
                 AuthID = string.IsNullOrEmpty(r.Site.AlbumUrl) ? "" : r.Site.AlbumUrl.Split('?')[1].Split('=')[1],
-                //PhotoUrlList =  r.Site.SiteDetails.SelectMany(r1 => r1.SiteDetailPhotoes).Select(r1 => r1.Url.ToUrlPicasaPhotoResize()).ToList(),
-                PhotoUrlList =  f(r.Site),
+                //PhotoUrlList =  f(r.Site),
+                PhotoUrlList = new List<string>(),
                 CategoryLevel1 = r.ToStringCategoryLevel1,
                 CategoryLevel2 = r.ToStringCategoryLevel2,
                 Geo2 = r.Site.Geo2 != null ? r.Site.Geo2.Name : "",
@@ -81,6 +80,7 @@ namespace OAMS.Controllers
         {
             OAMSEntities DB = new OAMSEntities();
             List<SiteDetail> l = DB.SiteDetails
+                //.Include("SiteDetailPhotoes").Include("Site.SitePhotoes")
                 .Where(r => true
 
                     //Find on its own properties
@@ -224,6 +224,56 @@ namespace OAMS.Controllers
                 AlbumID = string.IsNullOrEmpty(r.Site.AlbumUrl) ? "" : r.Site.AlbumUrl.Split('/')[9].Split('?')[0],
                 AuthID = string.IsNullOrEmpty(r.Site.AlbumUrl) ? "" : r.Site.AlbumUrl.Split('?')[1].Split('=')[1],
                 Added = r.Site.QuoteDetails.Where(r1 => r1.QuoteID == quoteID && r1.SiteDetailName == r.Name).Count() > 0 ? true : false,
+            }));
+        }
+
+        [HttpPost]
+        public JsonResult GetSiteInfo(int ID)
+        {
+            OAMSEntities db = new OAMSEntities();
+            List<SiteDetail> l = new List<SiteDetail>() { db.Sites.Single(r => r.ID == ID).SiteDetails.FirstOrDefault() };
+
+            CodeMasterRepository codeMasterRepo = new CodeMasterRepository();
+
+            Func<Site, List<string>> f = r =>
+            {
+                var v = r.SiteDetails.SelectMany(r1 => r1.SiteDetailPhotoes).Select(r1 => r1.Url.ToUrlPicasaPhotoResize()).ToList();
+                if (v.Count == 0)
+                {
+                    v = r.SitePhotoes.Select(r1 => r1.Url.ToUrlPicasaPhotoResize()).ToList();
+                }
+
+                return v;
+            };
+
+            return Json(l.Distinct().Select(r => new
+            {
+                r.Site.ID,
+                r.Site.Lat,
+                r.Site.Lng,
+                AddressLine1 = r.Site.AddressLine1 ?? "",
+                AddressLine2 = r.Site.AddressLine2 ?? "",
+                Code = r.Site.Code ?? "",
+                r.Format,
+                Type = string.IsNullOrEmpty(r.Type) ? "" : codeMasterRepo.GetNote(CodeMasterType.Type, r.Type),
+                CodeType = r.Type,
+                r.Site.GeoFullName,
+                Address = r.Site.AddressLine1 + " " + r.Site.AddressLine2,
+                Orientation = r.Width >= r.Height ? "Horizontal" : "Vertical",
+                Size = string.Format("{0}m x {1}m", r.Height.ToString(), r.Width.ToString()),
+                Lighting = r.Site.FrontlitNumerOfLamps > 0 ? "Fontlit" : "Backlit",
+                Contractor = r.Site.Contractor != null ? r.Site.Contractor.Name : "",
+                CurrentProduct = r.ToStringProduct,
+                CurrentClient = r.ToStringClient,
+                r.Site.Score,
+                Rating = r.Site.Score.ToRating(),
+                AlbumID = string.IsNullOrEmpty(r.Site.AlbumUrl) ? "" : r.Site.AlbumUrl.Split('/')[9].Split('?')[0],
+                AuthID = string.IsNullOrEmpty(r.Site.AlbumUrl) ? "" : r.Site.AlbumUrl.Split('?')[1].Split('=')[1],
+                PhotoUrlList =  f(r.Site),                
+                CategoryLevel1 = r.ToStringCategoryLevel1,
+                CategoryLevel2 = r.ToStringCategoryLevel2,
+                Geo2 = r.Site.Geo2 != null ? r.Site.Geo2.Name : "",
+                Geo3 = r.Site.Geo3 != null ? r.Site.Geo3.Name : ""
             }));
         }
     }
