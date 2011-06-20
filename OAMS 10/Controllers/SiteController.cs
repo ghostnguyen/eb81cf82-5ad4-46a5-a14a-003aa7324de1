@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using OAMS.Models;
 using Google.GData.Photos;
+using System.Dynamic;
 
 namespace OAMS.Controllers
 {
@@ -18,7 +19,73 @@ namespace OAMS.Controllers
 
         public ActionResult Index()
         {
-            return View(repo.GetAll());
+            OAMSEntities db = new OAMSEntities();
+            //var v = db.Sites
+            //    .Include("SiteDetails")
+            //    .ToList();            
+
+            var v = db.Sites.Select(r => new
+            {
+                r.ID,
+                r.Code,
+                GeoFullName = r.Geo3 != null ? r.Geo3.FullName : r.Geo2 != null ? r.Geo2.FullName : r.Geo1 != null ? r.Geo1.FullName : "",
+                r.AddressLine1,
+                r.AddressLine2,
+                Type = r.SiteDetails.Select(r1 => r1.Type).Distinct(),
+                Format = r.SiteDetails.Select(r1 => r1.Format).Distinct(),
+                Product = r.SiteDetails.SelectMany(r1 => r1.SiteDetailMores).Select(r1 => r1.Product).Select(r1 => r1.Name),
+                Client = r.SiteDetails.SelectMany(r1 => r1.SiteDetailMores).Select(r1 => r1.Product).Select(r1 => r1.Client).Select(r1 => r1.Name),
+                r.Score,
+                Count = r.SiteDetails.SelectMany(r1 => r1.SiteDetailPhotoes).Count(),
+                r.LastUpdatedBy,
+                r.LastUpdatedDate,
+                r.CreatedBy,
+                r.CreatedDate,
+            }).ToList()
+            //.Select(r =>
+            //{
+            //    dynamic a = new ExpandoObject();
+            //    a.ID = r.ID;
+            //    a.Codea = r.Code;
+            //    a.GeoFullName = r.GeoFullName;
+            //    a.AddressLine1 = r.AddressLine1;
+            //    a.AddressLine2 = r.AddressLine2;
+            //    a.Type = string.Join(",", r.Type.ToArray());
+            //    a.Format = string.Join(",", r.Format.ToArray());
+            //    a.Product = string.Join(",", r.Product.ToArray());
+            //    a.Client = string.Join(",", r.Client.ToArray());
+            //    a.Score = r.Score;
+            //    a.Count = r.Count;
+            //    a.LastUpdatedBy = r.LastUpdatedBy;
+            //    a.LastUpdatedDate = r.LastUpdatedDate;
+            //    a.CreatedBy = r.CreatedBy;
+            //    a.CreatedDate = r.CreatedDate;
+            //    return (ExpandoObject)a;
+            //})
+            .Select(r => new
+            {
+                r.ID,
+                r.Code,
+                r.GeoFullName,
+                r.AddressLine1,
+                r.AddressLine2,
+                Type = string.Join(",", r.Type.ToArray()),
+                Format = string.Join(",", r.Format.ToArray()),
+                Product = string.Join(",", r.Product.ToArray()),
+                Client = string.Join(",", r.Client.ToArray()),
+                r.Score,
+                r.Count,
+                r.LastUpdatedBy,
+                r.LastUpdatedDate,
+                r.CreatedBy,
+                r.CreatedDate,
+            }.ToExpando())
+            .ToList();
+            ;
+
+            
+            return View(v);
+            //return View(repo.GetAll());
         }
 
         public ActionResult Create(int? contractID)

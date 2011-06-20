@@ -366,7 +366,6 @@
     <Content Include="Views\Site\Create.aspx" />
     <Content Include="Views\Site\Edit.aspx" />
     <Content Include="Views\Site\GMap.ascx" />
-    <Content Include="Views\Site\Index.aspx" />
     <Content Include="Views\Site\ManageSiteDetail.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -445,6 +444,7 @@
     <Content Include="Views\Shared\SiteLayoutRpt.cshtml" />
     <Content Include="Views\Contract\ViewReportDetail.cshtml" />
     <Content Include="Views\SiteMonitoring\DisplayTemplates\ViewDetail.cshtml" />
+    <Content Include="Views\Site\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

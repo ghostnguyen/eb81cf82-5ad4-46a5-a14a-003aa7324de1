@@ -22,6 +22,7 @@ using System.Security.Principal;
 using OAMS.Controllers;
 using System.Web.Routing;
 using OAMS;
+using System.Dynamic;
 
 
 /// <summary>
@@ -747,6 +748,15 @@ public static class dotNetExt
     public static string ToCustomeString(this bool? value, string strTrue = "Yes", string strFalse = "No")
     {
         return value.HasValue ? (value.Value ? strTrue : strFalse) : "";
+    }
+
+    public static ExpandoObject ToExpando(this object anonymousObject)
+    {
+        IDictionary<string, object> anonymousDictionary = HtmlHelper.AnonymousObjectToHtmlAttributes(anonymousObject);
+        IDictionary<string, object> expando = new ExpandoObject();
+        foreach (var item in anonymousDictionary)
+            expando.Add(item);
+        return (ExpandoObject)expando;
     }
 }
 

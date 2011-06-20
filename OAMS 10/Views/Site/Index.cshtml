@@ -1,176 +1,170 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<OAMS.Models.Site>>" %>
+﻿@model IEnumerable<dynamic>
+@{
+    ViewBag.Title = "Site List";
+    
+}
+<h2>
+    ViewBag.Title</h2>
+<p>
+    @(Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Create New", r => r.Create(null), null, null, false))
+</p>
+<table id="tblResult" class="display">
+    <thead>
+        <tr>
+            <th>
+            </th>
+            <th>
+                ID
+            </th>
+            <th>
+                Code
+            </th>
+            <th>
+                Geo
+            </th>
+            <th>
+                Address Line 1
+            </th>
+            <th>
+                Address Line 2
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Format
+            </th>
+            <th>
+                Current Client
+            </th>
+            <th>
+                Current Product
+            </th>
+            <th>
+                Total
+            </th>
+            <th>
+                Photo Count
+            </th>
+            <th>
+                Last Updated Date
+            </th>
+            <th>
+                Last Updated By
+            </th>
+            <th>
+                Created Date
+            </th>
+            <th>
+                Created By
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+          var editTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Edit", r => r.Edit(0), new RouteValueDictionary(new { id = "siteID" }), null, false);
+          var deleteTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Delete", r => r.Delete(0), new RouteValueDictionary(new { id = "siteID" }), new Dictionary<string, object>() { { "onclick", "return confirm('Delete?');" } }, false);
 
-<asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-    Index
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>
-        Index</h2>
-    <p>
-        <%--<%: Html.ActionLink("Create New", "Create") %>--%>
-        <%: Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Create New", r => r.Create(null), null, null, false)%>
-    </p>
-    <table id="tblResult" class="display">
-        <thead>
-            <tr>
-                <th>
-                </th>
-                <th>
-                    ID
-                </th>
-                <th>
-                    Code
-                </th>
-                <th>
-                    Geo
-                </th>
-                <th>
-                    Address Line 1
-                </th>
-                <th>
-                    Address Line 2
-                </th>
-                <th>
-                    Type
-                </th>
-                <th>
-                    Format
-                </th>
-                <th>
-                    Current Client
-                </th>
-                <th>
-                    Current Product
-                </th>
-                <th>
-                    Total
-                </th>
-                <th>
-                    Photo Count
-                </th>
-                <th>
-                    Last Updated Date
-                </th>
-                <th>
-                    Last Updated By
-                </th>
-                <th>
-                    Created Date
-                </th>
-                <th>
-                    Created By
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <% 
-                var editTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Edit", r => r.Edit(0), new RouteValueDictionary(new { id = "siteID" }), null, false);
-                var deleteTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Delete", r => r.Delete(0), new RouteValueDictionary(new { id = "siteID" }), new Dictionary<string, object>() { { "onclick", "return confirm('Delete?');" } }, false);
-            %>
-            <% foreach (var item in Model)
-               { %>
+          foreach (var item in Model)
+          { 
             <tr>
                 <td>
-                    <%--<%: Html.ActionLink("Edit", "Edit", new { id=item.ID }) %>
+                    @(MvcHtmlString.Create(editTemplate.ToString().Replace("siteID", item.ID.ToString())))
                     <br />
                     <br />
-                    <%: Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { onclick="return confirm('Delete?');" })%>--%>
-                    <%: MvcHtmlString.Create(editTemplate.ToString().Replace("siteID", item.ID.ToString()))%>
-                    <br />
-                    <br />
-                    <%: MvcHtmlString.Create(deleteTemplate.ToString().Replace("siteID", item.ID.ToString()))%>
+                    @(MvcHtmlString.Create(deleteTemplate.ToString().Replace("siteID", item.ID.ToString())))
                 </td>
                 <td>
-                    <%: item.ID %>
+                    @item.ID
                 </td>
                 <td>
-                    <%: item.Code %>
+                    @item.Code
                 </td>
                 <td>
-                    <%: item.GeoFullName %>
+                    @item.GeoFullName
                 </td>
                 <td>
-                    <%: item.AddressLine1 %>
+                    @item.AddressLine1
                 </td>
                 <td>
-                    <%: item.AddressLine2 %>
+                    @item.AddressLine2
                 </td>
                 <td>
-                    <%: string.Join(",",item.SiteDetails.Select(r => r.Type).Distinct().ToArray()) %>
+                    @item.Type
                 </td>
                 <td>
-                    <%: string.Join(", ", item.SiteDetails.Select(r => r.Format)) %>
+                    @item.Format
                 </td>
                 <td>
-                    <%: string.Join(", ", item.SiteDetails.Select(r => r.ToStringClient)) %>
+                    @item.Client
                 </td>
                 <td>
-                    <%: string.Join(", ", item.SiteDetails.Select(r => r.ToStringProduct)) %>
+                    @item.Product
                 </td>
                 <td>
-                    <%: item.Score %>
+                    @item.Score
                 </td>
                 <td>
-                    <%: item.SiteDetails.SelectMany(r => r.SiteDetailPhotoes).Count() %>
+                    @item.Count
                 </td>
                 <td>
-                    <%: item.LastUpdatedDate %>
+                    @item.LastUpdatedDate
                 </td>
                 <td>
-                    <%: item.LastUpdatedBy %>
+                    @item.LastUpdatedBy
                 </td>
                 <td>
-                    <%: item.CreatedDate %>
+                    @item.CreatedDate
                 </td>
                 <td>
-                    <%: item.CreatedBy %>
+                    @item.CreatedBy
                 </td>
             </tr>
-            <% } %>
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-            </tr>
-        </tfoot>
-    </table>
-    <br />
-    <p>
-        <%--<%: Html.ActionLink("Create New", "Create") %>--%>
-        <%: Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Create New", r => r.Create(null), null, null, false)%>
-    </p>
-    <script type="text/javascript">
+          } 
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+        </tr>
+    </tfoot>
+</table>
+<br />
+<p>
+    @(Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Create New", r => r.Create(null), null, null, false))
+</p>
+<script type="text/javascript">
 
 
         (function ($) {
@@ -281,5 +275,4 @@
             });
         });
 
-    </script>
-</asp:Content>
+</script>
