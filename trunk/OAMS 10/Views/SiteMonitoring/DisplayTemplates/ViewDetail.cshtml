@@ -59,7 +59,10 @@
             @Model.ContractDetail.Type
         </td>
         <td>
-            <img src='@(Model.SiteMonitoringPhotoes.ElementAt(0).Url.ToUrlPicasaPhotoResize("s700"))' alt="" />
+            @if (Model.SiteMonitoringPhotoes.Count > 0)
+            {
+                <img src='@(Model.SiteMonitoringPhotoes.ElementAt(0).Url.ToUrlPicasaPhotoResize("s700"))' alt="" />
+            }
         </td>
     </tr>
     @*<tr>
@@ -73,10 +76,16 @@
 <table class="notable MonitoringRpt">
     <tr>
         <td>
+        @if (Model.SiteMonitoringPhotoes.Count > 1)
+        {
             <img src='@(Model.SiteMonitoringPhotoes.ElementAt(1).Url.ToUrlPicasaPhotoResize("s500"))' alt="" />
+        }
         </td>
         <td>
+        @if (Model.SiteMonitoringPhotoes.Count > 2)
+        {
             <img src='@(Model.SiteMonitoringPhotoes.ElementAt(2).Url.ToUrlPicasaPhotoResize("s500"))' alt="" />
+        }
         </td>
     </tr>
     <tr>
