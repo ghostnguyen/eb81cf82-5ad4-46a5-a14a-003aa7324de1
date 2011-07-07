@@ -9,7 +9,7 @@
         $(document).ready(function () {
             oTable = $('#tblResult').dataTable({ "aaSorting": [[0, "desc"]],
                 "iDisplayLength": 50,
-                "sDom": 'C<"clear">lfrtip' ,
+                "sDom": 'C<"clear">lfrtip',
                 "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
             });
             //ShowHideCols();
@@ -42,7 +42,9 @@
                 View detail</button>--%>
             <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("View", r => r.ViewReport(0, null, null), null, new Dictionary<string, object>() { { "href", "javascript:btnView_Click();" } }, false)%>
             |
-            <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("View detail", r => r.ViewReportDetail(0, null, null), null, new Dictionary<string, object>() { { "href", "javascript:btnViewDetail_Click();" } }, false)%>
+            <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("View detail", r => r.ViewReportDetail(0, null, null,null), null, new Dictionary<string, object>() { { "href", "javascript:btnViewDetail_Click('true');" } }, false)%>
+            |
+            <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("View detail - BlueTrak", r => r.ViewReportDetail(0, null, null,null), null, new Dictionary<string, object>() { { "href", "javascript:btnViewDetail_Click('');" } }, false)%>
         </div>
         <% string urlRptSum = Url.Action("ViewReport", "Contract", new { id = Model.ID });
            string urlRptDetail = Url.Action("ViewReportDetail", "Contract", new { id = Model.ID });%>
@@ -51,8 +53,8 @@
                 var url = '<%: urlRptSum %>' + "?" + $('#divSummary input').serialize();
                 window.open(url);
             }
-            function btnViewDetail_Click() {
-                var url = '<%: urlRptDetail %>' + "?" + $('#divSummary input').serialize();
+            function btnViewDetail_Click(old) {
+                var url = '<%: urlRptDetail %>' + "?old=" + old + "&" + $('#divSummary input').serialize();
                 window.open(url);
             }
         </script>
@@ -291,8 +293,8 @@
                             </thead>
                             <tbody>
                                 <% 
-var editTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.ContractDetailController>("Edit", r => r.Edit(0), new RouteValueDictionary(new { id = "contractDetailID" }), null, false);
-var removeTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.ContractDetailController>("Remove", r => r.Delete(0), new RouteValueDictionary(new { id = "contractDetailID" }), new Dictionary<string, object>() { { "onclick", "return confirm('Delete?');" } }, false);
+                               var editTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.ContractDetailController>("Edit", r => r.Edit(0), new RouteValueDictionary(new { id = "contractDetailID" }), null, false);
+                               var removeTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.ContractDetailController>("Remove", r => r.Delete(0), new RouteValueDictionary(new { id = "contractDetailID" }), new Dictionary<string, object>() { { "onclick", "return confirm('Delete?');" } }, false);
                                 %>
                                 <% 
            foreach (var item in Model.ContractDetails)
@@ -316,12 +318,12 @@ var removeTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.ContractDetailCon
                                             <%--<%: Html.ActionLink("New", "Create", "SiteMonitoring",  new { ContractDetailID=item.ID },null) %>--%>
                                             <%: Html.ActionLinkWithRoles<OAMS.Controllers.SiteMonitoringController>("New", r => r.Create(0), new RouteValueDictionary(new { ContractDetailID = item.ID }), null, false)%>
                                             <% 
-var smEditTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteMonitoringController>("order", r => r.Edit(0), new RouteValueDictionary(new { id = "siteMonitoringID" }), null, false);
-var smRedEditTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteMonitoringController>("order", r => r.Edit(0), new RouteValueDictionary(new { id = "siteMonitoringID" }), new Dictionary<string, object>() { { "style", "color:Red;" } }, false);
+               var smEditTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteMonitoringController>("order", r => r.Edit(0), new RouteValueDictionary(new { id = "siteMonitoringID" }), null, false);
+               var smRedEditTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteMonitoringController>("order", r => r.Edit(0), new RouteValueDictionary(new { id = "siteMonitoringID" }), new Dictionary<string, object>() { { "style", "color:Red;" } }, false);
                                             %>
                                             <% 
-                                        foreach (var sm in item.SiteMonitorings)
-                                        {
+               foreach (var sm in item.SiteMonitorings)
+               {
                                             %>
                                             <%: "|" %>
                                             <% if (!string.IsNullOrEmpty(sm.Issues) || sm.IssuesCount.HasValue)

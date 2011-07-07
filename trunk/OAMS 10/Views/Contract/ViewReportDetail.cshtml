@@ -4,8 +4,14 @@
     Layout = "~/Views/Shared/SiteLayoutRpt.cshtml";
 }
 @foreach (var item in Model)
-{ 
-    
-    @(Html.Partial("~/Views/SiteMonitoring/DisplayTemplates/ViewDetail.cshtml", item))
-    
+{
+    if ((bool)ViewBag.Old)
+    {
+    @(Html.Partial("~/Views/SiteMonitoring/DisplayTemplates/ViewDetail.ascx", item))
+    }
+    else
+    {
+    @(Html.Partial("~/Views/SiteMonitoring/DisplayTemplates/ViewDetail.cshtml", item)) 
+    }
+
 }

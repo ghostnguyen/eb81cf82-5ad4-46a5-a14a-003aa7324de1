@@ -1,19 +1,17 @@
 ﻿@model OAMS.Models.SiteMonitoring
-<table class="MonitoringRpt notable">
+<table class="MonitoringRpt notable" style="width: 706px;">
     <tr>
-        <td>
+        <td colspan="2">
             <h1>
                 Inspection Report
-                <br />
-                <span>@Model.CurrentProductName </span>
             </h1>
-        </td>
-        <td align="right">
-            <img src='@(Url.Content("~/Content/Image/BlueTrakLogo.jpg"))' alt="Ambient" width="100" />
         </td>
     </tr>
     <tr>
-        <td style="width: 300px;" valign="top">
+        <td style="width: 200px;" valign="top">
+            <h2>
+                @Model.CurrentProductName
+            </h2>
             <b>SiteID:</b>
             <br />
             @Model.ContractDetail.Site.ID
@@ -61,31 +59,31 @@
         <td>
             @if (Model.SiteMonitoringPhotoes.Count > 0)
             {
-                <img src='@(Model.SiteMonitoringPhotoes.ElementAt(0).Url.ToUrlPicasaPhotoResize("s700"))' alt="" />
+                <img src='@(Model.SiteMonitoringPhotoes.ElementAt(0).Url.ToUrlPicasaPhotoResize("s800"))' alt="" />
             }
         </td>
     </tr>
-    @*<tr>
+    <tr>
         <td colspan="2" align="left">
-            <img src='@Url.Content("~/Content/Image/BlueTrak.png")' alt="" width="100%" height="25px"/>
+            <img src='@Url.Content("~/Content/Image/BlueTrak.png")' alt="" style="width:999px;height:50px;margin-top:-35px;" />
         </td>
-    </tr>*@
+    </tr>
 </table>
 <div class="pageBreak">
 </div>
 <table class="notable MonitoringRpt">
     <tr>
         <td>
-        @if (Model.SiteMonitoringPhotoes.Count > 1)
-        {
-            <img src='@(Model.SiteMonitoringPhotoes.ElementAt(1).Url.ToUrlPicasaPhotoResize("s500"))' alt="" />
-        }
+            @if (Model.SiteMonitoringPhotoes.Count > 1)
+            {
+                <img src='@(Model.SiteMonitoringPhotoes.ElementAt(1).Url.ToUrlPicasaPhotoResize("s500"))' alt="" />
+            }
         </td>
         <td>
-        @if (Model.SiteMonitoringPhotoes.Count > 2)
-        {
-            <img src='@(Model.SiteMonitoringPhotoes.ElementAt(2).Url.ToUrlPicasaPhotoResize("s500"))' alt="" />
-        }
+            @if (Model.SiteMonitoringPhotoes.Count > 2)
+            {
+                <img src='@(Model.SiteMonitoringPhotoes.ElementAt(2).Url.ToUrlPicasaPhotoResize("s500"))' alt="" />
+            }
         </td>
     </tr>
     <tr>
@@ -95,7 +93,7 @@
         <td valign="top">
             <table class="notable">
                 <tr>
-                    <td>
+                    <td style="width: 200px;">
                         <b>Last Inspected:</b>
                         <br />
                         @{OAMS.Models.SiteMonitoringRepository repo = new OAMS.Models.SiteMonitoringRepository();
@@ -193,11 +191,11 @@
             </table>
         </td>
     </tr>
-    @*<tr>
-        <td colspan="2">
-            <img src='@Url.Content("~/Content/Image/BlueTrak.png")' alt="" width="100%" />
+    <tr>
+        <td colspan="2" align="left">
+            <img src='@Url.Content("~/Content/Image/BlueTrak.png")' alt="" style="margin-top:-30px;height:50px;width:999px;" />
         </td>
-    </tr>*@
+    </tr>
 </table>
 <div class="pageBreak">
 </div>

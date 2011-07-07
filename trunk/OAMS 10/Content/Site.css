@@ -581,7 +581,7 @@ a:focus > .sf-sub-indicator, a:hover > .sf-sub-indicator, a:active > .sf-sub-ind
     color: Blue;        
 }
 
-.MonitoringRpt h1
+.MonitoringRpt h1, h2
 {
     color: Blue;
 }

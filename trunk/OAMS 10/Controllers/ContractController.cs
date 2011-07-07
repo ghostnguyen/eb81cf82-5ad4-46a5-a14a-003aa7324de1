@@ -123,9 +123,14 @@ namespace OAMS.Controllers
             return View(repo.Report(id, dFrom, dTo));
         }
 
-        public ActionResult ViewReportDetail(int id, DateTime? dFrom, DateTime? dTo)
+        public ActionResult ViewReportDetail(int id, DateTime? dFrom, DateTime? dTo,bool? old)
         {
             //return View(repo.ReportDetails(id, dFrom, dTo).Take(3).ToList());
+            
+            if (!old.HasValue) old = false;
+
+            ViewBag.Old = old;
+
             return View(repo.ReportDetails(id, dFrom, dTo));
         }
 
