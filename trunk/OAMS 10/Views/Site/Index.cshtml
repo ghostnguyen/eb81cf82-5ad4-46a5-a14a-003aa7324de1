@@ -4,7 +4,7 @@
     
 }
 <h2>
-    ViewBag.Title</h2>
+    @ViewBag.Title</h2>
 <p>
     @(Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Create New", r => r.Create(null), null, null, false))
 </p>
@@ -248,7 +248,7 @@
             var oTable = $('#tblResult').dataTable({ "aaSorting": [[1, "desc"]],
                 "sDom": 'CT<"clear">lfrtip',
 
-                "oTableTools": { "sSwfPath": "content/copy_cvs_xls_pdf.swf", "aButtons": ["copy"] },
+                "oTableTools": { "sSwfPath": '@Url.Content("content/copy_cvs_xls_pdf.swf")', "aButtons": ["copy"] },
 
                 "oLanguage": {
                     "sLengthMenu": 'Display <select>' +
