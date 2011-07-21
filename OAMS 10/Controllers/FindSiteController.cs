@@ -21,7 +21,7 @@ namespace OAMS.Controllers
         public ActionResult Find(int campaignID = 0)
         {
             FindSite e = new FindSite();
-            e.From = DateTime.Now.Date;
+            //e.From = DateTime.Now.Date;
             e.CampaignID = campaignID;
             return View(e);
         }
@@ -67,7 +67,6 @@ namespace OAMS.Controllers
                 Rating = r.Site.Score.ToRating(),
                 AlbumID = string.IsNullOrEmpty(r.Site.AlbumUrl) ? "" : r.Site.AlbumUrl.Split('/')[9].Split('?')[0],
                 AuthID = string.IsNullOrEmpty(r.Site.AlbumUrl) ? "" : r.Site.AlbumUrl.Split('?')[1].Split('=')[1],
-                //PhotoUrlList =  f(r.Site),
                 PhotoUrlList = new List<string>(),
                 CategoryLevel1 = r.ToStringCategoryLevel1,
                 CategoryLevel2 = r.ToStringCategoryLevel2,
@@ -78,9 +77,17 @@ namespace OAMS.Controllers
 
         private static List<SiteDetail> Find(FindSite e)
         {
+            DateTime? outdateFrom = null;
+            DateTime? outdateTo = null;
+
+            if (e.OutdateInDaysFrom.HasValue)
+                outdateFrom = DateTime.Now.Date.AddDays(0 - e.OutdateInDaysFrom.Value);
+
+            if (e.OutdateInDaysTo.HasValue)
+                outdateTo = DateTime.Now.Date.AddDays(0 - e.OutdateInDaysTo.Value);
+
             OAMSEntities DB = new OAMSEntities();
             List<SiteDetail> l = DB.SiteDetails
-                //.Include("SiteDetailPhotoes").Include("Site.SitePhotoes")
                 .Where(r => true
 
                     //Find on its own properties
@@ -94,6 +101,8 @@ namespace OAMS.Controllers
                     && (e.ContractorList.Count == 0 || e.ContractorList.Contains(r.Site.ContractorID))
                     && (!e.ScoreFrom.HasValue || !e.ScoreTo.HasValue || (r.Site.Score >= e.ScoreFrom && r.Site.Score <= e.ScoreTo))
                     && (e.InstallationPosition1MarkList.Count == 0 || e.InstallationPosition1MarkList.Contains(r.Site.InstallationPosition1.HasValue ? r.Site.InstallationPosition1.Value : 0))
+                    && (!outdateFrom.HasValue || !r.Site.LastUpdatedDate.HasValue || outdateFrom >= r.Site.LastUpdatedDate)
+                    && (!outdateTo.HasValue || !r.Site.LastUpdatedDate.HasValue || outdateTo <= r.Site.LastUpdatedDate)
 
                     //Find on 2 level relationship properties
                     && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName))
@@ -118,7 +127,7 @@ namespace OAMS.Controllers
         public ActionResult Find4Contract(int campaignID = 0)
         {
             FindSite e = new FindSite();
-            e.From = DateTime.Now.Date;
+            //e.From = DateTime.Now.Date;
             e.CampaignID = campaignID;
             return View(e);
         }
@@ -126,7 +135,7 @@ namespace OAMS.Controllers
         public ActionResult Find4Quote(int campaignID = 0)
         {
             FindSite e = new FindSite();
-            e.From = DateTime.Now.Date;
+            //e.From = DateTime.Now.Date;
             e.CampaignID = campaignID;
             return View(e);
         }
@@ -134,32 +143,6 @@ namespace OAMS.Controllers
         [HttpPost]
         public JsonResult FindJson4Contract(FindSite e, int contractID)
         {
-            //var siteDetailRepo = new SiteDetailRepository();
-
-            //var l = siteDetailRepo.DB.SiteDetails.Include("Site").ToList()
-            //    .Where(r =>
-            //        e.StyleList.Contains(r.Type)
-            //    && (e.ContractorList == null || e.ContractorList.Contains(r.Site.ContractorID.ToInt()))
-            //    && (e.ClientList == null || e.ClientList.Intersect(r.SiteDetailMores.Select(r1 => r1.Product == null ? 0 : r1.Product.ClientID.ToInt())).Count() > 0)
-            //    && (e.ProductIDList == null || e.ProductIDList.Contains(r.ProductID.HasValue ? r.ProductID.Value : 0))
-            //    && (e.CatList == null
-            //        || (r.Product != null
-            //            && (e.CatList.Contains(r.Product.CategoryID1.ToString()) || e.CatList.Contains(r.Product.CategoryID2.ToString()) || e.CatList.Contains(r.Product.CategoryID3.ToString()))
-            //            )
-            //        )
-            //    && (string.IsNullOrEmpty(e.Format) || r.Format == e.Format)
-            //    && (!e.RoadType2.HasValue || r.Site.RoadType2 == e.RoadType2) //Traffic
-            //    && (!e.ViewingDistance.HasValue || r.Site.ViewingDistance == e.ViewingDistance)
-            //    && (!e.InstallationPosition2.HasValue || r.Site.InstallationPosition2 == e.InstallationPosition2) // Angle to Road
-            //    && (string.IsNullOrEmpty(e.ViewingSpeed) || r.Site.ViewingSpeed == e.ViewingSpeed.ToInt())
-            //    && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName))
-            //    && ((string.IsNullOrEmpty(e.Geo1FullName) && e.Geo2List == null)
-            //        || (e.Geo2List != null && (e.Geo2List.FirstOrDefault() == null || (r.Site.Geo2 != null && e.Geo2List.Contains(r.Site.Geo2.FullName)))))
-
-            //        ).ToList()
-            //    .Where(r => !e.IsWithinCircle || Helper.DistanceBetweenPoints(r.Site.Lat, r.Site.Lng, e.Lat, e.Long) <= e.Distance)
-            //    .ToList();
-
             var l = Find(e);
 
             CodeMasterRepository codeMasterRepo = new CodeMasterRepository();
@@ -269,11 +252,69 @@ namespace OAMS.Controllers
                 Rating = r.Site.Score.ToRating(),
                 AlbumID = string.IsNullOrEmpty(r.Site.AlbumUrl) ? "" : r.Site.AlbumUrl.Split('/')[9].Split('?')[0],
                 AuthID = string.IsNullOrEmpty(r.Site.AlbumUrl) ? "" : r.Site.AlbumUrl.Split('?')[1].Split('=')[1],
-                PhotoUrlList =  f(r.Site),                
+                PhotoUrlList = f(r.Site),
                 CategoryLevel1 = r.ToStringCategoryLevel1,
                 CategoryLevel2 = r.ToStringCategoryLevel2,
                 Geo2 = r.Site.Geo2 != null ? r.Site.Geo2.Name : "",
                 Geo3 = r.Site.Geo3 != null ? r.Site.Geo3.Name : ""
+            }));
+        }
+
+        public ActionResult FindOutdate()
+        {
+            FindSite e = new FindSite();
+            //e.From = DateTime.Now.Date;
+            e.CampaignID = 0;
+            return View(e);
+        }
+
+        [HttpPost]
+        public JsonResult FindJsonOutdate(FindSite e)
+        {
+            List<SiteDetail> l = Find(e);
+
+            CodeMasterRepository codeMasterRepo = new CodeMasterRepository();
+
+            Func<Site, List<string>> f = r =>
+            {
+                var v = r.SiteDetails.SelectMany(r1 => r1.SiteDetailPhotoes).Select(r1 => r1.Url.ToUrlPicasaPhotoResize()).ToList();
+                if (v.Count == 0)
+                {
+                    v = r.SitePhotoes.Select(r1 => r1.Url.ToUrlPicasaPhotoResize()).ToList();
+                }
+
+                return v;
+            };
+
+            return Json(l.Distinct().Select(r => new
+            {
+                r.Site.ID,
+                r.Site.Lat,
+                r.Site.Lng,
+                AddressLine1 = r.Site.AddressLine1 ?? "",
+                AddressLine2 = r.Site.AddressLine2 ?? "",
+                Code = r.Site.Code ?? "",
+                r.Format,
+                Type = string.IsNullOrEmpty(r.Type) ? "" : codeMasterRepo.GetNote(CodeMasterType.Type, r.Type),
+                CodeType = r.Type,
+                r.Site.GeoFullName,
+                Address = r.Site.AddressLine1 + " " + r.Site.AddressLine2,
+                Orientation = r.Width >= r.Height ? "Horizontal" : "Vertical",
+                Size = string.Format("{0}m x {1}m", r.Height.ToString(), r.Width.ToString()),
+                Lighting = r.Site.FrontlitNumerOfLamps > 0 ? "Fontlit" : "Backlit",
+                Contractor = r.Site.Contractor != null ? r.Site.Contractor.Name : "",
+                CurrentProduct = r.ToStringProduct,
+                CurrentClient = r.ToStringClient,
+                r.Site.Score,
+                Rating = r.Site.Score.ToRating(),
+                AlbumID = string.IsNullOrEmpty(r.Site.AlbumUrl) ? "" : r.Site.AlbumUrl.Split('/')[9].Split('?')[0],
+                AuthID = string.IsNullOrEmpty(r.Site.AlbumUrl) ? "" : r.Site.AlbumUrl.Split('?')[1].Split('=')[1],
+                PhotoUrlList = new List<string>(),
+                CategoryLevel1 = r.ToStringCategoryLevel1,
+                CategoryLevel2 = r.ToStringCategoryLevel2,
+                Geo2 = r.Site.Geo2 != null ? r.Site.Geo2.Name : "",
+                Geo3 = r.Site.Geo3 != null ? r.Site.Geo3.Name : "",
+                LastUpdatedDate = r.Site.LastUpdatedDate.ToShortDateString(),
             }));
         }
     }

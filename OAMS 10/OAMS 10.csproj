@@ -336,6 +336,7 @@
     <Content Include="Views\Contract\Index.aspx" />
     <Content Include="Views\Contract\ManageContractTimeline.ascx" />
     <Content Include="Views\Contract\ViewReport.aspx" />
+    <Content Include="Views\FindSite\FindOutdate.aspx" />
     <Content Include="Views\FindSite\Find4Quote.aspx" />
     <Content Include="Views\FindSite\Find4Contract.aspx" />
     <Content Include="Views\FindSite\Find.aspx" />
