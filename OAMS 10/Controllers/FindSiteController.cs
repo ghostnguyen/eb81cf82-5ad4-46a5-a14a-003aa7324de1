@@ -291,18 +291,24 @@ namespace OAMS.Controllers
                 r.Site.ID,
                 r.Site.Lat,
                 r.Site.Lng,
+                Geo2 = r.Site.Geo2 != null ? r.Site.Geo2.Name : "",
+                Geo3 = r.Site.Geo3 != null ? r.Site.Geo3.Name : "",
                 AddressLine1 = r.Site.AddressLine1 ?? "",
                 AddressLine2 = r.Site.AddressLine2 ?? "",
                 Code = r.Site.Code ?? "",
-                r.Format,
                 Type = string.IsNullOrEmpty(r.Type) ? "" : codeMasterRepo.GetNote(CodeMasterType.Type, r.Type),
+                Contractor = r.Site.Contractor != null ? r.Site.Contractor.Name : "",
+                LastUpdatedDate = r.Site.LastUpdatedDate.ToShortDateString(),
+
+
+                r.Format,
                 CodeType = r.Type,
                 r.Site.GeoFullName,
                 Address = r.Site.AddressLine1 + " " + r.Site.AddressLine2,
                 Orientation = r.Width >= r.Height ? "Horizontal" : "Vertical",
                 Size = string.Format("{0}m x {1}m", r.Height.ToString(), r.Width.ToString()),
                 Lighting = r.Site.FrontlitNumerOfLamps > 0 ? "Fontlit" : "Backlit",
-                Contractor = r.Site.Contractor != null ? r.Site.Contractor.Name : "",
+                
                 CurrentProduct = r.ToStringProduct,
                 CurrentClient = r.ToStringClient,
                 r.Site.Score,
@@ -312,9 +318,8 @@ namespace OAMS.Controllers
                 PhotoUrlList = new List<string>(),
                 CategoryLevel1 = r.ToStringCategoryLevel1,
                 CategoryLevel2 = r.ToStringCategoryLevel2,
-                Geo2 = r.Site.Geo2 != null ? r.Site.Geo2.Name : "",
-                Geo3 = r.Site.Geo3 != null ? r.Site.Geo3.Name : "",
-                LastUpdatedDate = r.Site.LastUpdatedDate.ToShortDateString(),
+                
+                
             }));
         }
     }
