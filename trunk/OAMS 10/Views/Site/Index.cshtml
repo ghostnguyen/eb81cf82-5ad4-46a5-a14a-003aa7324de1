@@ -62,11 +62,11 @@
     </thead>
     <tbody>
         @{
-          var editTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Edit", r => r.Edit(0), new RouteValueDictionary(new { id = "siteID" }), null, false);
-          var deleteTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Delete", r => r.Delete(0), new RouteValueDictionary(new { id = "siteID" }), new Dictionary<string, object>() { { "onclick", "return confirm('Delete?');" } }, false);
+            var editTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Edit", r => r.Edit(0), new RouteValueDictionary(new { id = "siteID" }), null, false);
+            var deleteTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Delete", r => r.Delete(0), new RouteValueDictionary(new { id = "siteID" }), new Dictionary<string, object>() { { "onclick", "return confirm('Delete?');" } }, false);
 
-          foreach (var item in Model)
-          { 
+            foreach (var item in Model)
+            { 
             <tr>
                 <td>
                     @(MvcHtmlString.Create(editTemplate.ToString().Replace("siteID", item.ID.ToString())))
@@ -120,7 +120,7 @@
                     @item.CreatedBy
                 </td>
             </tr>
-          } 
+            } 
         }
     </tbody>
     <tfoot>
@@ -227,8 +227,6 @@
 
         function fnCreateSelect(aData) {
 
-            //alert(typeof (aData.length));
-
             var r = '<select style="width:55px;"><option value=""></option>', i, iLen = aData.length;
             for (i = 0; i < iLen; i++) {
                 r += '<option value="' + aData[i] + '">' + aData[i] + '</option>';
@@ -237,15 +235,10 @@
         }
 
         $(document).ready(function () {
-            /* Initialise the DataTable */
-            //            var oTable = $('#example').dataTable({
-            //                "oLanguage": {
-            //                    "sSearch": "Search all columns:"
-            //                }
-            //            });
-
-            //var oTable = $('#tblResult').dataTable({ "aaSorting": [[1, "desc"]], "sScrollX": "100%" });
-            var oTable = $('#tblResult').dataTable({ "aaSorting": [[1, "desc"]],
+            
+            var oTable = $('#tblResult').dataTable({ 
+            
+                "aaSorting": [[1, "desc"]],
                 "sDom": 'CT<"clear">lfrtip',
 
                 "oTableTools": { "sSwfPath": '@Url.Content("content/copy_cvs_xls_pdf.swf")', "aButtons": ["copy"] },
