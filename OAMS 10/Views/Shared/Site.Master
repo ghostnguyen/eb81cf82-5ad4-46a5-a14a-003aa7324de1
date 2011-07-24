@@ -52,6 +52,11 @@
                     </li>
                     <li>
                         <%: Html.ActionLinkWithRoles<SiteController>("Site", r => r.Index())%>
+                        <ul>
+                            <li>
+                                <%: Html.ActionLinkWithRoles<FindSiteController>("Find Outdate", r => r.FindOutdate()) %>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <%: Html.ActionLinkWithRoles<ContractController>("Contract", r => r.Index())%>

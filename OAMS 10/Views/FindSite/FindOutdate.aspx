@@ -326,7 +326,7 @@
             ${LastUpdatedDate}
         </td>
         <td>
-            ${$item.editUrl}
+           {{html $item.editUrl}}
         </td>
     </tr>
     
@@ -340,7 +340,7 @@
             $("#divCategory").manyTxt();
 
         });
-    </script>    
+    </script>
     <script type="text/javascript">
 
         $('#Geo1FullName').val('<%= OAMS.Models.AppSetting.DefaultGeo1Name %>');
@@ -575,7 +575,7 @@
 
                     var t = $("#rowTmpl").tmpl(site,{
                                                 i: i,
-                                                editUrl: editTemplate.replace('siteID', site.ID)  
+                                                editUrl: editTemplate.replace('siteID', site.ID)
                                             }).appendTo(tbl);
                 }
 
