@@ -176,10 +176,10 @@
                                 Category Level 2
                             </th>
                             <th>
-                                Type
+                                District
                             </th>
                             <th>
-                                Format
+                                Ward
                             </th>
                             <th>
                                 Address Line 1
@@ -188,25 +188,25 @@
                                 Address Line 2
                             </th>
                             <th>
+                                Type
+                            </th>
+                            <th>
+                                Format
+                            </th>
+                            <th>
                                 Size
                             </th>
                             <th>
-                                Current Product
+                                Current Client
                             </th>
                             <th>
-                                Current Client
+                                Current Product
                             </th>
                             <th>
                                 Contractor
                             </th>
                             <th>
                                 Total
-                            </th>
-                            <th>
-                                District
-                            </th>
-                            <th>
-                                Ward
                             </th>
                             <th>
                                 Edit
@@ -547,15 +547,15 @@
                     cStyleCat2.innerHTML = site.CategoryLevel2;
                     rSel.appendChild(cStyleCat2);
 
-                    //Type
-                    var cStyle1 = document.createElement('td');
-                    cStyle1.innerHTML = site.Type;
-                    rSel.appendChild(cStyle1);
+                    //District
+                    var cStyle10 = document.createElement('td');
+                    cStyle10.innerHTML = site.Geo2;
+                    rSel.appendChild(cStyle10);
 
-                    //Format
-                    var cStyle2 = document.createElement('td');
-                    cStyle2.innerHTML = site.Format;
-                    rSel.appendChild(cStyle2);
+                    //Ward
+                    var cStyle11 = document.createElement('td');
+                    cStyle11.innerHTML = site.Geo3;
+                    rSel.appendChild(cStyle11);
 
                     //AddressLine1
                     var cStyle3 = document.createElement('td');
@@ -567,20 +567,36 @@
                     cStyle4.innerHTML = site.AddressLine2;
                     rSel.appendChild(cStyle4);
 
+
+
+                    //Type
+                    var cStyle1 = document.createElement('td');
+                    cStyle1.innerHTML = site.Type;
+                    rSel.appendChild(cStyle1);
+
+                    //Format
+                    var cStyle2 = document.createElement('td');
+                    cStyle2.innerHTML = site.Format;
+                    rSel.appendChild(cStyle2);
+
+                     
+
                     //Size
                     var cStyle5 = document.createElement('td');
                     cStyle5.innerHTML = site.Size;
                     rSel.appendChild(cStyle5);
 
-                    //CurrentProduct
-                    var cStyle6 = document.createElement('td');
-                    cStyle6.innerHTML = site.CurrentProduct;
-                    rSel.appendChild(cStyle6);
+                   
 
                     //CurrentClient
                     var cStyle7 = document.createElement('td');
                     cStyle7.innerHTML = site.CurrentClient;
                     rSel.appendChild(cStyle7);
+
+                     //CurrentProduct
+                    var cStyle6 = document.createElement('td');
+                    cStyle6.innerHTML = site.CurrentProduct;
+                    rSel.appendChild(cStyle6);
 
                     //Contractor
                     var cStyle8 = document.createElement('td');
@@ -592,15 +608,7 @@
                     cStyle9.innerHTML = site.Score;
                     rSel.appendChild(cStyle9);
 
-                    //District
-                    var cStyle10 = document.createElement('td');
-                    cStyle10.innerHTML = site.Geo2;
-                    rSel.appendChild(cStyle10);
-
-                    //Ward
-                    var cStyle11 = document.createElement('td');
-                    cStyle11.innerHTML = site.Geo3;
-                    rSel.appendChild(cStyle11);
+                   
 
                     //Edit
                     var cEdit = document.createElement('td');

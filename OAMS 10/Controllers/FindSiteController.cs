@@ -289,6 +289,7 @@ namespace OAMS.Controllers
             return Json(l.Distinct().Select(r => new
             {
                 r.Site.ID,
+                SiteDetailID = r.ID,
                 r.Site.Lat,
                 r.Site.Lng,
                 Geo2 = r.Site.Geo2 != null ? r.Site.Geo2.Name : "",
