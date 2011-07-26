@@ -177,16 +177,13 @@
                                 SiteID
                             </th>
                             <th>
-                                Category Level 1
+                                SiteDetailID
                             </th>
                             <th>
-                                Category Level 2
+                                District
                             </th>
                             <th>
-                                Type
-                            </th>
-                            <th>
-                                Format
+                                Ward
                             </th>
                             <th>
                                 Address Line 1
@@ -195,25 +192,10 @@
                                 Address Line 2
                             </th>
                             <th>
-                                Size
-                            </th>
-                            <th>
-                                Current Product
-                            </th>
-                            <th>
-                                Current Client
+                                Type
                             </th>
                             <th>
                                 Contractor
-                            </th>
-                            <th>
-                                Total
-                            </th>
-                            <th>
-                                District
-                            </th>
-                            <th>
-                                Ward
                             </th>
                             <th>
                                 LastUpdatedDate
@@ -283,44 +265,27 @@
             ${ID}
             </a>
         </td>
+        
         <td>
-            ${CategoryLevel1}
-        </td>
-        <td>
-            ${CategoryLevel2}
-        </td>
-        <td>
-            ${Type}
-        </td>
-        <td>
-            ${Format}
-        </td>
-        <td>
-            ${AddressLine1}
-        </td>
-        <td>
-            ${AddressLine1}
-        </td>
-        <td>
-            ${Size}
-        </td>
-        <td>
-            ${CurrentProduct}
-        </td>
-        <td>
-            ${CurrentClient}
-        </td>
-        <td>
-            ${Contractor}
-        </td>
-        <td>
-            ${Score}
+            ${SiteDetailID}
         </td>
         <td>
             ${Geo2}
         </td>
         <td>
             ${Geo3}
+        </td>
+        <td>
+            ${AddressLine1}
+        </td>
+        <td>
+            ${AddressLine2}
+        </td>
+        <td>
+            ${Type}
+        </td>
+        <td>
+            ${Contractor}
         </td>
         <td>
             ${LastUpdatedDate}
