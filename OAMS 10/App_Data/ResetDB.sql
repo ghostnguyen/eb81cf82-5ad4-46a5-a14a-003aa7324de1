@@ -17,8 +17,12 @@ delete aspnet_Users where UserId <> @userID
 
 delete Campaign
 
+truncate table SiteDetailMore
+truncate table SiteDetailPhoto
 truncate table SitePhoto
-truncate table SiteDetail
+
+delete SiteDetail
+DBCC CHECKIDENT (SiteDetail, RESEED, 0)
 
 truncate table ContractDetailTimeline
 truncate table ContractTimeline
