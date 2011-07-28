@@ -20,6 +20,8 @@ namespace OAMS.Controllers
 
         public ActionResult About()
         {
+            //ImportRepository r = new ImportRepository();
+            //r.Import();
             return View();
         }
     }
