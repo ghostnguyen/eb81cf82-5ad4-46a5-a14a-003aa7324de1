@@ -350,6 +350,7 @@
     <Content Include="Scripts\DataTables-1.8.1\media\js\jquery.dataTables.js" />
     <Content Include="Scripts\DataTables-1.8.1\media\js\jquery.dataTables.min.js" />
     <Content Include="Scripts\DataTables-1.8.1\media\js\jquery.js" />
+    <Content Include="Scripts\DistanceWidget.js" />
     <Content Include="Scripts\grid.base.js" />
     <Content Include="Scripts\jquery-1.5.js" />
     <Content Include="Scripts\jquery-1.5.min.js" />
@@ -531,6 +532,9 @@
     <None Include="Scripts\DataTables-1.8.1\extras\Scroller\media\js\Scroller.min.js.gz" />
     <None Include="Scripts\DataTables-1.8.1\extras\TableTools\media\js\TableTools.min.js.gz" />
     <None Include="Scripts\DataTables-1.8.1\media\js\jquery.dataTables.min.js.gz" />
+    <Content Include="Views\FindSite\FindOutdate2.cshtml">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
