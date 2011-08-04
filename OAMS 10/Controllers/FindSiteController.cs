@@ -263,7 +263,13 @@ namespace OAMS.Controllers
         public ActionResult FindOutdate()
         {
             FindSite e = new FindSite();
-            //e.From = DateTime.Now.Date;
+            e.CampaignID = 0;
+            return View(e);
+        }
+
+        public ActionResult FindOutdate2()
+        {
+            FindSite e = new FindSite();
             e.CampaignID = 0;
             return View(e);
         }
