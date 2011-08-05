@@ -357,10 +357,14 @@
     <Content Include="Scripts\jquery-ui-1.8.1.custom.min.js" />
     <Content Include="Scripts\jquery.dataTables.js" />
     <Content Include="Scripts\jquery.metadata.js" />
+    <Content Include="Scripts\jQuery.tmpl.js" />
+    <Content Include="Scripts\jQuery.tmpl.min.js" />
     <Content Include="Scripts\jquery.ui.core.js" />
     <Content Include="Scripts\jquery.ui.core.min.js" />
     <Content Include="Scripts\jquery.ui.widget.js" />
     <Content Include="Scripts\jquery.ui.widget.min.js" />
+    <Content Include="Scripts\knockout-1.2.1.debug.js" />
+    <Content Include="Scripts\knockout-1.2.1.js" />
     <Content Include="Scripts\markerclusterer_packed.js" />
     <Content Include="Scripts\superfish.js" />
     <Content Include="Scripts\TableTools.js" />
