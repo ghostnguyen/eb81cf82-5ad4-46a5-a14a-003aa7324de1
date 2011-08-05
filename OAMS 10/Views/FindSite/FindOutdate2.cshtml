@@ -104,8 +104,14 @@
                 <br />
                 @Html.CodeMasterDropDownListFor(r => r.ViewingDistance, false)
                 <br />
-                <input class="check-box" id="IsWithinCircle" name="IsWithinCircle" type="checkbox"
-                    value="true" onclick="Click_WithinCircle(this);" />
+                @*<input class="check-box" id="IsWithinCircle" name="IsWithinCircle" type="checkbox"
+                    value="true" onclick="Click_WithinCircle(this);" />*@
+                <input id="IsWithinCircle" name="IsWithinCircle" type="checkbox" data-bind="checked: o_visible" />
+                <input id="IsWithinCircle1" name="IsWithinCircle1" type="checkbox" data-bind="checked: o_visible" />
+                <a onclick="javascript:alert(distanceWidget.get('visible'));">asf </a><a onclick="javascript:distanceWidget.set('visible',false);">
+                    asf1 </a>
+                    <a onclick="javascript:distanceWidget.set('visible',true);">asf12 </a>
+                    <a onclick="javascript:alert('12' + Object.getPrototypeOf(distanceWidget));">4234asf12 </a>
                 Within
                 <input type="text" style="width: 50px;" name="Distance" id="Distance" disabled="disabled"
                     onblur="updateDistanceFromTxt(this);" />
@@ -295,6 +301,7 @@
 </script>
 <script type="text/javascript" language="javascript">
     $(document).ready(function () {
+        init();
         $("#divMoreProduct").manyTxt();
         $("#divMoreInstallationPosition").manyTxt();
         $("#divContractor").manyTxt();
@@ -303,10 +310,10 @@
 
         $('#Geo1FullName').val('@OAMS.Models.AppSetting.DefaultGeo1Name');
         showGeo2('@OAMS.Models.AppSetting.DefaultGeo1Name');
+        ko.applyBindings(distanceWidget);
 
     });
-</script>
-<script type="text/javascript">
+
 
         
 
@@ -643,11 +650,20 @@
                 maxDistance: 2500, // Twitter has a max distance of 2500km.
                 color: '#000',
                 activeColor: '#59b',
-                visible: false,
-                visible1: false,
+                //o_visible: ko.observable(),
+                //visible: true,
                 sizerIcon: new google.maps.MarkerImage('@Url.Content("~/Content/Image/resize-off.png")'),
                 activeSizerIcon: new google.maps.MarkerImage('@Url.Content("~/Content/Image/resize.png")')
             });
+
+            alert("123" + Object.getPrototypeOf(distanceWidget));
+            //distanceWidget.o_visible(
+            //alert(distanceWidget.visible.constructor);
+
+//            distanceWidget.o_visible.subscribe(function (isVisible) {
+//    
+//    distanceWidget.set('visible', isVisible);
+//});
 
             google.maps.event.addListener(distanceWidget, 'distance_changed',
       updateDistance);
@@ -659,7 +675,7 @@
 
             updateDistance();
             updatePosition();
-            
+            //alert(distanceWidget.visible);
             
             //distanceWidget.setVisible(false);
             //distanceWidget.visible = false;
@@ -775,7 +791,7 @@
             marker.click();
         }
 
-        google.maps.event.addDomListener(window, 'load', init);
+        //google.maps.event.addDomListener(window, 'load', init);
 
         function generateTriggerCallback(object, eventType) {
             //alert("as");

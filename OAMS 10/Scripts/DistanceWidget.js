@@ -7,17 +7,33 @@
 //        * constructor
 //        */
 
+DistanceWidget.prototype = new google.maps.MVCObject();
 function DistanceWidget(opt_options) {
     var options = opt_options || {};
 
     this.setValues(options);
 
-    alert("sad123 " + this.visible);
-    alert("sad123 " + this.visible1);
-
     if (!this.get('position')) {
         this.set('position', map.getCenter());
     }
+
+    this.prototype = new google.maps.MVCObject();
+
+    this.o_visible = ko.observable();
+    
+    alert("12" + Object.getPrototypeOf(this));
+
+    this.o_visible.subscribe(function (isVisible) {
+        //alert("The person's new name is " + isVisible + "-");
+        //alert(this.prototype);
+        //alert(typeof (this));
+
+        this.visible = isVisible;
+        this.set('visible', isVisible);
+        alert(this.visible);
+        
+    });
+
 
     // Add a marker to the page at the map center or specified position
     var marker = new google.maps.Marker({
@@ -31,9 +47,9 @@ function DistanceWidget(opt_options) {
     marker.bindTo('icon', this);
     //marker.bindTo('visible', this,"visible1");
     marker.bindTo('visible', this);
-    
-    
-    
+
+
+
 
     this.pCenterMarker = marker;
 
@@ -64,15 +80,45 @@ function DistanceWidget(opt_options) {
         map.fitBounds(me.get('bounds'));
     });
 }
-DistanceWidget.prototype = new google.maps.MVCObject();
 
-DistanceWidget.prototype.setVisible = function (isVisible) {
 
-    //alert(this.visible);
-    //this.pCenterMarker.setVisible(isVisible);
-    //this.pCenterMarker.visible = isVisible;
-    //this.pRadiusWidget.setVisible(isVisible);
-};
+//DistanceWidget.prototype.o_visible = ko.observable();
+
+//DistanceWidget.prototype.o_visible.subscribe(function (isVisible) {
+//    //alert("The person's new name is " + isVisible + "-");
+//    //alert(this.prototype);
+//    //alert(typeof (this));
+//    this.set('visible', isVisible);
+//    //this.visible = isVisible;
+//});
+
+
+//DistanceWidget.prototype.o_visible.subscribe(abc);
+
+function abc(isVisible) {
+    //alert("The person's new name is " + isVisible + "-");
+    //alert(this.prototype);
+    this.set('visible', isVisible);
+    //this.visible = isVisible;
+}
+
+//DistanceWidget.prototype.setVisible = function (isVisible) {
+
+//    //alert("312"+this.visible);
+//    //this.pCenterMarker.setVisible(isVisible);
+//    //this.pCenterMarker.visible = isVisible;
+//    //this.pRadiusWidget.setVisible(isVisible);
+//};
+
+//DistanceWidget.prototype.setVisible = function (isVisible) {
+//    this.visible = isVisible;
+//    alert(this.visible);
+//    //this.o_visible(this.visible);
+//};
+
+//DistanceWidget.prototype.getVisible = function (isVisible) {
+//    return this.o_visible();
+//};
 
 
 //        /**
@@ -139,9 +185,9 @@ RadiusWidget.prototype.addSizer_ = function () {
 
 RadiusWidget.prototype.setVisible = function (isVisible) {
 
-//    if (isVisible) {
-//        this.pCircle.setMap(map);
-//    } else { this.pCircle.setMap(null); }
+    //    if (isVisible) {
+    //        this.pCircle.setMap(map);
+    //    } else { this.pCircle.setMap(null); }
 
     //this.pSizer.setVisible(isVisible);
 
