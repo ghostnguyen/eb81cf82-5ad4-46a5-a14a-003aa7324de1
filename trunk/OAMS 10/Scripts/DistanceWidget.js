@@ -7,7 +7,7 @@
 //        * constructor
 //        */
 
-DistanceWidget.prototype = new google.maps.MVCObject();
+
 function DistanceWidget(opt_options) {
     var options = opt_options || {};
 
@@ -16,24 +16,6 @@ function DistanceWidget(opt_options) {
     if (!this.get('position')) {
         this.set('position', map.getCenter());
     }
-
-    this.prototype = new google.maps.MVCObject();
-
-    this.o_visible = ko.observable();
-    
-    alert("12" + Object.getPrototypeOf(this));
-
-    this.o_visible.subscribe(function (isVisible) {
-        //alert("The person's new name is " + isVisible + "-");
-        //alert(this.prototype);
-        //alert(typeof (this));
-
-        this.visible = isVisible;
-        this.set('visible', isVisible);
-        alert(this.visible);
-        
-    });
-
 
     // Add a marker to the page at the map center or specified position
     var marker = new google.maps.Marker({
@@ -45,13 +27,6 @@ function DistanceWidget(opt_options) {
     marker.bindTo('zIndex', this);
     marker.bindTo('position', this);
     marker.bindTo('icon', this);
-    //marker.bindTo('visible', this,"visible1");
-    marker.bindTo('visible', this);
-
-
-
-
-    this.pCenterMarker = marker;
 
     // Create a new radius widget
     var radiusWidget = new RadiusWidget(options['distance'] || 50);
@@ -67,8 +42,6 @@ function DistanceWidget(opt_options) {
     radiusWidget.bindTo('sizerIcon', this);
     radiusWidget.bindTo('activeSizerIcon', this);
 
-    this.pRadiusWidget = radiusWidget;
-
     // Bind to the radius widget distance property
     this.bindTo('distance', radiusWidget);
     // Bind to the radius widget bounds property
@@ -80,46 +53,8 @@ function DistanceWidget(opt_options) {
         map.fitBounds(me.get('bounds'));
     });
 }
-
-
-//DistanceWidget.prototype.o_visible = ko.observable();
-
-//DistanceWidget.prototype.o_visible.subscribe(function (isVisible) {
-//    //alert("The person's new name is " + isVisible + "-");
-//    //alert(this.prototype);
-//    //alert(typeof (this));
-//    this.set('visible', isVisible);
-//    //this.visible = isVisible;
-//});
-
-
-//DistanceWidget.prototype.o_visible.subscribe(abc);
-
-function abc(isVisible) {
-    //alert("The person's new name is " + isVisible + "-");
-    //alert(this.prototype);
-    this.set('visible', isVisible);
-    //this.visible = isVisible;
-}
-
-//DistanceWidget.prototype.setVisible = function (isVisible) {
-
-//    //alert("312"+this.visible);
-//    //this.pCenterMarker.setVisible(isVisible);
-//    //this.pCenterMarker.visible = isVisible;
-//    //this.pRadiusWidget.setVisible(isVisible);
-//};
-
-//DistanceWidget.prototype.setVisible = function (isVisible) {
-//    this.visible = isVisible;
-//    alert(this.visible);
-//    //this.o_visible(this.visible);
-//};
-
-//DistanceWidget.prototype.getVisible = function (isVisible) {
-//    return this.o_visible();
-//};
-
+DistanceWidget.prototype = new google.maps.MVCObject();
+DistanceWidget.prototype.o_visible = ko.observable();
 
 //        /**
 //        * A radius widget that add a circle to a map and centers on a marker.
@@ -142,13 +77,9 @@ function RadiusWidget(opt_distance) {
     circle.bindTo('strokeColor', this);
     circle.bindTo('radius', this);
 
-    this.pCircle = circle;
-
     this.addSizer_();
 }
 RadiusWidget.prototype = new google.maps.MVCObject();
-
-
 
 //        /**
 //        * Add the sizer marker to the map.
@@ -158,6 +89,7 @@ RadiusWidget.prototype = new google.maps.MVCObject();
 RadiusWidget.prototype.addSizer_ = function () {
     var sizer = new google.maps.Marker({
         draggable: true,
+        raiseOnDrag: false,
         title: 'Drag me!'
     });
 
@@ -183,21 +115,12 @@ RadiusWidget.prototype.addSizer_ = function () {
     this.pSizer = sizer;
 };
 
-RadiusWidget.prototype.setVisible = function (isVisible) {
-
-    //    if (isVisible) {
-    //        this.pCircle.setMap(map);
-    //    } else { this.pCircle.setMap(null); }
-
-    //this.pSizer.setVisible(isVisible);
-
-};
-
 /**
 * Update the radius when the distance has changed.
 */
 RadiusWidget.prototype.distance_changed = function () {
     this.set('radius', this.get('distance') * 1000);
+    this.notify('center');
 };
 
 /**
@@ -261,6 +184,7 @@ RadiusWidget.prototype.activeSizerIcon_changed = function () {
 * the position of the distance widget is changed.
 */
 RadiusWidget.prototype.center_changed = function () {
+
     var sizerPos = this.get('sizer_position');
     var position;
     if (sizerPos) {
@@ -277,26 +201,10 @@ RadiusWidget.prototype.center_changed = function () {
         this.set('sizer_position', position);
     }
 
-    $('#Lat').val(this.get('center').lat());
-    $('#Long').val(this.get('center').lng());
-
-
-};
-
-RadiusWidget.prototype.setSizerChangeFromTxt = function () {
-
-    var position;
-
-    var bounds = this.get('bounds');
-    if (bounds) {
-        var lng = bounds.getNorthEast().lng();
-        position = new google.maps.LatLng(this.get('center').lat(), lng);
+    if (this.get('center')) {
+        $('#Lat').val(this.get('center').lat());
+        $('#Long').val(this.get('center').lng());
     }
-
-    if (position) {
-        this.set('sizer_position', position);
-    }
-
 };
 
 /**
@@ -338,6 +246,7 @@ RadiusWidget.prototype.setDistance_ = function () {
     // As the sizer is being dragged, its position changes.  Because the
     // RadiusWidget's sizer_position is bound to the sizer's position, it will
     // change as well.
+    
     var pos = this.get('sizer_position');
     var center = this.get('center');
     var distance = this.distanceBetweenPoints_(center, pos);
