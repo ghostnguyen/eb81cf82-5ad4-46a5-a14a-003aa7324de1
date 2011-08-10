@@ -104,17 +104,15 @@
                 <br />
                 @Html.CodeMasterDropDownListFor(r => r.ViewingDistance, false)
                 <br />
-                @*<input class="check-box" id="IsWithinCircle" name="IsWithinCircle" type="checkbox"
-                    value="true" onclick="Click_WithinCircle(this);" />*@
                 <input id="IsWithinCircle" name="IsWithinCircle" type="checkbox" data-bind="checked: o_visible" />
                 Within
-                @*<input type="text" style="width: 50px;" name="Distance" id="Distance" disabled="disabled"
-                    onblur="updateDistanceFromTxt(this);" />*@
-                <input type="text" style="width: 50px;" name="Distance" id="Distance" data-bind="enable: o_visible"
-                    onblur="updateDistanceFromTxt(this);" />
+                <input type="text" style="width: 50px;" name="Distance" id="Distance" data-bind="enable: o_visible,value: o_distance" />
                 <br />
-                @Html.HiddenFor(r => r.Lat)
-                @Html.HiddenFor(r => r.Long)
+                
+                @Html.HiddenFor(r => r.Lat, new Dictionary<string, object> { { "data-bind", "value: getLat(o_position())" } })
+                @Html.HiddenFor(r => r.Long, new Dictionary<string, object> { { "data-bind", "value: getLat(o_position())" } })
+                
+                
                 <br />
                 <div id="divMoreProduct" data-url="'@Url.Content("~/Listing/ListProduct")'"
                     data-name="'ProductIDList'">
@@ -311,14 +309,6 @@
 
     });
 
-
-        function updateDistanceFromTxt(txt) {
-            
-            distanceWidget.set('distance', txt.value);
-            //map.fitBounds(distanceWidget.get('bounds'));
-        }
-
-
         var oTable;
 
         function showGeo2(str) {
@@ -327,8 +317,6 @@
 
             var div1 = $("#geo2List");
             div1.empty();
-
-
 
             $.ajax({
                 url: '@Url.Content("~/Listing/ListGeo2")', type: "POST", dataType: "json",
@@ -638,25 +626,11 @@
                 activeSizerIcon: new google.maps.MarkerImage('@Url.Content("~/Content/Image/resize.png")')
             });
 
-            distanceWidget.o_visible.subscribe(function (isVisible) 
-            {
-                if(isVisible)
-                    distanceWidget.set('map', map);
-                else
-                    distanceWidget.set('map', null);
-            });
-
-            
-
-            google.maps.event.addListener(distanceWidget, 'distance_changed',
-      updateDistance);
-
             google.maps.event.addListener(distanceWidget, 'position_changed',
       updatePosition);
 
             map.fitBounds(distanceWidget.get('bounds'));
 
-            updateDistance();
             updatePosition();
             
             distanceWidget.o_visible(false);
@@ -669,8 +643,6 @@
             mc = new MarkerClusterer(map);
             mc.setMaxZoom(15);
         }
-
-
 
         function updatePosition() {
             if (geocodeTimer) {
@@ -696,15 +668,6 @@
 
                 $('#of').html('of somewhere');
             });
-        }
-
-        function updateDistance() {
-            var distance = distanceWidget.get('distance');
-
-            //cast to number to function toFixed() working
-            distance = distance * 1;
-            $('#Distance').val(distance.toFixed(2));
-
         }
 
         function search(e) {

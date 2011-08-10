@@ -23,6 +23,8 @@ function DistanceWidget(opt_options) {
         title: 'Move me!'
     });
 
+    //this.m = marker;
+
     marker.bindTo('map', this);
     marker.bindTo('zIndex', this);
     marker.bindTo('position', this);
@@ -52,9 +54,58 @@ function DistanceWidget(opt_options) {
         // When a user double clicks on the icon fit to the map to the bounds
         map.fitBounds(me.get('bounds'));
     });
+
+    me.o('distance', null, function (v) {
+        var n = v * 1;
+        return n.toFixed(2);
+    },true);
+
+    me.o('visible', function (isVisible) {
+        if (isVisible)
+            distanceWidget.set('map', map);
+        else
+            distanceWidget.set('map', null);
+    }, null, true);
+
+    me.o('position', null, null, false);
 }
 DistanceWidget.prototype = new google.maps.MVCObject();
-DistanceWidget.prototype.o_visible = ko.observable();
+
+DistanceWidget.prototype.o = function (name, bindF, calcF, isSub) {
+
+    this['o_' + name] = ko.observable();
+    var o_name = this['o_' + name];
+    var me = this;
+
+    if (isSub) {
+        o_name.subscribe(function (value) {
+            if (me && me.set) {
+                me.set(name, value);
+            }
+            if (bindF) {
+                bindF(value);
+            }
+
+        });
+    }
+
+    google.maps.event.addListener(this, name + '_changed',
+      function () {
+          var v = this.get(name);
+          if (calcF) {
+              v = calcF(v);
+          }
+          o_name(v);
+      });
+};
+
+  function getLng(gP) {
+      return gP.lng();
+  }
+
+  function getLat(gP) {
+      return gP.lat();
+  }
 
 //        /**
 //        * A radius widget that add a circle to a map and centers on a marker.
@@ -201,10 +252,10 @@ RadiusWidget.prototype.center_changed = function () {
         this.set('sizer_position', position);
     }
 
-    if (this.get('center')) {
-        $('#Lat').val(this.get('center').lat());
-        $('#Long').val(this.get('center').lng());
-    }
+//    if (this.get('center')) {
+//        $('#Lat').val(this.get('center').lat());
+//        $('#Long').val(this.get('center').lng());
+//    }
 };
 
 /**
@@ -246,7 +297,7 @@ RadiusWidget.prototype.setDistance_ = function () {
     // As the sizer is being dragged, its position changes.  Because the
     // RadiusWidget's sizer_position is bound to the sizer's position, it will
     // change as well.
-    
+
     var pos = this.get('sizer_position');
     var center = this.get('center');
     var distance = this.distanceBetweenPoints_(center, pos);
