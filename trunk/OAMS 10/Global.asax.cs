@@ -55,7 +55,7 @@ namespace OAMS
 
         protected void Application_BeginRequest()
         {
-            if (Request.IsLocal) { MiniProfiler.Start(); } //or any number of other checks, up to you 
+            //if (Request.IsLocal) { MiniProfiler.Start(); } //or any number of other checks, up to you 
         }
 
         protected void Application_EndRequest()
