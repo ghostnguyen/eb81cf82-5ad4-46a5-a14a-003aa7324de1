@@ -108,10 +108,8 @@
                 Within
                 <input type="text" style="width: 50px;" name="Distance" id="Distance" data-bind="enable: o_visible,value: o_distance" />
                 <br />
-                
                 @Html.HiddenFor(r => r.Lat, new Dictionary<string, object> { { "data-bind", "value: getLat(o_position())" } })
                 @Html.HiddenFor(r => r.Long, new Dictionary<string, object> { { "data-bind", "value: getLng(o_position())" } })
-                
                 <br />
                 <div id="divMoreProduct" data-url="'@Url.Content("~/Listing/ListProduct")'"
                     data-name="'ProductIDList'">
@@ -291,7 +289,14 @@
            {{html $item.editUrl}}
         </td>
     </tr>
-    
+</script>
+<script id="geo2Template" type="text/x-jquery-tmpl">
+
+<div>
+    <input type="checkbox" name="Geo2List" value="${FullName}">
+    <label>${FullName}</label>
+</div>
+
 </script>
 <script type="text/javascript" language="javascript">
     $(document).ready(function () {
@@ -322,46 +327,36 @@
                 data: { parentFullName: str },
                 success: function (data) {
 
-                    var index = 0;
-                    $.map(data, function (item) {
+                
+                $("#geo2Template").tmpl(data).appendTo(div1);
 
-                        index++;
-                        var divInner = document.createElement('div');
-                        var chk = document.createElement('input');
-                        chk.type = 'checkbox';
-                        chk.name = 'Geo2List';
-                        chk.value = item.FullName;
-                        chk.id = 'Geo2List' + index;
-                        divInner.appendChild(chk);
-                        var lbl = document.createElement('label');
-                        lbl.innerHTML = item.FullName;
-                        lbl.setAttribute('for', 'Geo2List' + index)
-                        divInner.appendChild(lbl);
-                        div1.append(divInner);
-                    });
+//                    var index = 0;
+//                    $.map(data, function (item) {
+//                        index++;
+//                        var divInner = document.createElement('div');
+//                        var chk = document.createElement('input');
+//                        chk.type = 'checkbox';
+//                        chk.name = 'Geo2List';
+//                        chk.value = item.FullName;
+//                        chk.id = 'Geo2List' + index;
+//                        divInner.appendChild(chk);
+//                        var lbl = document.createElement('label');
+//                        lbl.innerHTML = item.FullName;
+//                        lbl.setAttribute('for', 'Geo2List' + index)
+//                        divInner.appendChild(lbl);
+//                        div1.append(divInner);
+//                    });
                 }
 
             })
         }
 
-        function HideUncheck(lst, btnHideID) {
-
-            var count = 0;
-
-            for (i = 0; i < lst.length; i++) {
-
-                if (lst[i].checked) {
-
-                }
-                else {
-                    count++;
-
-                    lst[i].style.visibility = 'collapse';
-                    lst[i].style.display = 'none';
-                    $('label[for=' + lst[i].id + ']').css({ display: "none", visibility: "collapse" });
-                }
-            }
-
+        function HideUncheck(listName, btnHideID) {
+            
+            var count = $('input[name="'+listName+'"]:not(:checked)').each(function () {
+                $(this).hide().next().hide();
+            }).length;
+            
             if (count == 0) {
                 $("#" + btnHideID).hide();
             }
@@ -372,6 +367,7 @@
         }
 
         function ShowAll(lst, btnMoreID) {
+
             for (i = 0; i < lst.length; i++) {
 
                 lst[i].style.visibility = 'visible';
@@ -437,7 +433,8 @@
             infoContents = [];
             profileMarkers = []
 
-            HideUncheck(document.forms[0].Geo2List, 'Geo2ListMore');
+            //HideUncheck(document.forms[0].Geo2List, 'Geo2ListMore');
+            HideUncheck("Geo2List", 'Geo2ListMore');
             HideUncheckStyle(document.forms[0].StyleList, 'StyleListMore');
 
             //  Create a new viewpoint bound
@@ -624,14 +621,8 @@
                 sizerIcon: new google.maps.MarkerImage('@Url.Content("~/Content/Image/resize-off.png")'),
                 activeSizerIcon: new google.maps.MarkerImage('@Url.Content("~/Content/Image/resize.png")')
             });
-
-            google.maps.event.addListener(distanceWidget, 'position_changed',
-      updatePosition);
-
-            map.fitBounds(distanceWidget.get('bounds'));
-
-            updatePosition();
             
+
             distanceWidget.o_visible(false);
             
             google.maps.event.addListener(map, 'dragstart',
@@ -639,34 +630,9 @@
                 infoWindow.close();
             });
 
+            map.fitBounds(distanceWidget.get('bounds'));
             mc = new MarkerClusterer(map);
             mc.setMaxZoom(15);
-        }
-
-        function updatePosition() {
-            if (geocodeTimer) {
-                window.clearTimeout(geocodeTimer);
-            }
-
-            // Throttle the geo query so we don't hit the limit
-            geocodeTimer = window.setTimeout(function () {
-                reverseGeocodePosition();
-            }, 200);
-        }
-
-        function reverseGeocodePosition() {
-            var pos = distanceWidget.get('position');
-            var geocoder = new google.maps.Geocoder();
-            geocoder.geocode({ 'latLng': pos }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[1]) {
-                        $('#of').html('of ' + results[1].formatted_address);
-                        return;
-                    }
-                }
-
-                $('#of').html('of somewhere');
-            });
         }
 
         function search(e) {
