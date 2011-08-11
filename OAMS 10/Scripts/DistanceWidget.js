@@ -55,6 +55,8 @@ function DistanceWidget(opt_options) {
         map.fitBounds(me.get('bounds'));
     });
 
+    me.o('position', null, null, false);
+
     me.o('distance', null, function (v) {
         var n = v * 1;
         return n.toFixed(2);
@@ -67,7 +69,7 @@ function DistanceWidget(opt_options) {
             distanceWidget.set('map', null);
     }, null, true);
 
-    me.o('position', null, null, false);
+    
 }
 DistanceWidget.prototype = new google.maps.MVCObject();
 
@@ -100,11 +102,17 @@ DistanceWidget.prototype.o = function (name, bindF, calcF, isSub) {
 };
 
   function getLng(gP) {
-      return gP.lng();
+      if (gP)
+          return gP.lng();
+      else
+          return "";
   }
 
   function getLat(gP) {
-      return gP.lat();
+      if (gP)
+          return gP.lat();
+      else
+          return "";
   }
 
 //        /**
