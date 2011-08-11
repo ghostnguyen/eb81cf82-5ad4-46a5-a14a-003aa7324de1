@@ -110,8 +110,7 @@
                 <br />
                 
                 @Html.HiddenFor(r => r.Lat, new Dictionary<string, object> { { "data-bind", "value: getLat(o_position())" } })
-                @Html.HiddenFor(r => r.Long, new Dictionary<string, object> { { "data-bind", "value: getLat(o_position())" } })
-                
+                @Html.HiddenFor(r => r.Long, new Dictionary<string, object> { { "data-bind", "value: getLng(o_position())" } })
                 
                 <br />
                 <div id="divMoreProduct" data-url="'@Url.Content("~/Listing/ListProduct")'"
