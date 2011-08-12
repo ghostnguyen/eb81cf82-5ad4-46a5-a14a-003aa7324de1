@@ -8,11 +8,15 @@
         var oTable;
         $(document).ready(function () {
             oTable = $('#tblResult').dataTable({ "aaSorting": [[0, "desc"]],
-                "iDisplayLength": 50,
+                "iDisplayLength": -1,
                 "sDom": 'C<"clear">lfrtip',
                 "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
             });
-            //ShowHideCols();
+
+            var byName = $.getUrlVar('hl');
+            //alert(byName);
+            $("table.display tr:contains('" + byName + "')").addClass("selected");
+
         });
     </script>
     <h2>
@@ -188,52 +192,15 @@
                         </div>
                         <div>
                             <br />
-                            <%--<%: Html.ActionLink("Overwrite timelines to detail", "OverwriteTimelineForDetail", "Contract", new { href = string.Format("javascript:OverwriteTimelineForDetail({0})", Model.ID) })%>--%>
                             <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("Overwrite timelines to detail", r => r.OverwriteTimelineForDetail(0), null, new Dictionary<string, object>() { { "href", string.Format("javascript:OverwriteTimelineForDetail({0})", Model.ID) } }, true)%>
                         </div>
                         <p>
-                            <%--<input type="submit" value="Save" />--%>
                             <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("Save", r => r.Edit(0), null, null, true)%>
                         </p>
                     </fieldset>
                 </td>
                 <td>
-                    <%--<%: Html.ActionLink("Add Sites", "Find4Contract", "FindSite", new { ContractID = Model.ID},null)%>--%>
                     <%: Html.ActionLinkWithRoles<OAMS.Controllers.FindSiteController>("Add Sites", r => r.Find4Contract(0), new RouteValueDictionary(new { ContractID = Model.ID }), null, false)%>
-                    <%--<div id="divCol" style="overflow: auto;">
-                        Display columns:
-                        <input type="checkbox" id="chkColID" checked="checked" />
-                        ID
-                        <input type="checkbox" id="chkColPrice" />
-                        Price
-                        <input type="checkbox" id="chkColProductionPrice" />
-                        Production Price
-                        <input type="checkbox" id="chkColEffectiveDate" />
-                        Effective Date
-                        <input type="checkbox" id="chkColTermDate" />
-                        Term Date
-                        <br />
-                        <input type="checkbox" id="chkColGeoFullName" checked="checked" />
-                        Geo Full Name
-                        <input type="checkbox" id="chkColAddressLine1" checked="checked" />
-                        Address Line 1
-                        <input type="checkbox" id="chkColAddressLine2" checked="checked" />
-                        Address Line 2
-                        <input type="checkbox" id="chkColType" checked="checked" />
-                        Type
-                        <input type="checkbox" id="chkColFormat" checked="checked" />
-                        Format
-                        <br />
-                        <input type="checkbox" id="chkColCurrentClient" checked="checked" />
-                        Current Client
-                        <input type="checkbox" id="chkColCurrentProduct" checked="checked" />
-                        Current Product
-                        <input type="checkbox" id="chkColContractor" checked="checked" />
-                        Contractor
-                        <input type="checkbox" id="chkColPhotoCount" checked="checked" />
-                        PhotoCount
-                        <input type="button" id="hell" value="Ok" onclick='ShowHideCols();' />
-                    </div>--%>
                     <br />
                     <div>
                         <table id="tblResult" class="display">
@@ -304,10 +271,6 @@
                                         <%:item.ID %>
                                     </td>
                                     <td>
-                                        <%--<%: Html.ActionLink("Edit", "Edit", "ContractDetail", new { id=item.ID }, null) %>
-                                        <br />
-                                        <br />
-                                        <%: Html.ActionLink("Remove", "Delete", "ContractDetail", new { id=item.ID }, new { onclick="return confirm('Delete?');" }) %>--%>
                                         <%: MvcHtmlString.Create(editTemplate.ToString().Replace("contractDetailID", item.ID.ToString()))%>
                                         <br />
                                         <br />
@@ -315,7 +278,6 @@
                                     </td>
                                     <td>
                                         <div style='float: left;'>
-                                            <%--<%: Html.ActionLink("New", "Create", "SiteMonitoring",  new { ContractDetailID=item.ID },null) %>--%>
                                             <%: Html.ActionLinkWithRoles<OAMS.Controllers.SiteMonitoringController>("New", r => r.Create(0), new RouteValueDictionary(new { ContractDetailID = item.ID }), null, false)%>
                                             <% 
                var smEditTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.SiteMonitoringController>("order", r => r.Edit(0), new RouteValueDictionary(new { id = "siteMonitoringID" }), null, false);
@@ -414,22 +376,6 @@
         <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("Back to List", r => r.Index(), null, null, false)%>
     </div>
     <script type="text/javascript" language="javascript">
-        //        function ShowHideCols() {
-        //            oTable.fnSetColumnVis(3, $('#chkColID').attr('checked'));
-        //            oTable.fnSetColumnVis(4, $('#chkColPrice').attr('checked'));
-        //            oTable.fnSetColumnVis(5, $('#chkColProductionPrice').attr('checked'));
-        //            oTable.fnSetColumnVis(6, $('#chkColEffectiveDate').attr('checked'));
-        //            oTable.fnSetColumnVis(7, $('#chkColTermDate').attr('checked'));
-        //            oTable.fnSetColumnVis(8, $('#chkColGeoFullName').attr('checked'));
-        //            oTable.fnSetColumnVis(9, $('#chkColAddressLine1').attr('checked'));
-        //            oTable.fnSetColumnVis(10, $('#chkColAddressLine2').attr('checked'));
-        //            oTable.fnSetColumnVis(11, $('#chkColType').attr('checked'));
-        //            oTable.fnSetColumnVis(12, $('#chkColFormat').attr('checked'));
-        //            oTable.fnSetColumnVis(13, $('#chkColCurrentClient').attr('checked'));
-        //            oTable.fnSetColumnVis(14, $('#chkColCurrentProduct').attr('checked'));
-        //            oTable.fnSetColumnVis(15, $('#chkColContractor').attr('checked'));
-        //            oTable.fnSetColumnVis(16, $('#chkColPhotoCount').attr('checked'));
-        //        }
 
         function EditDetail(contractDetailID) {
 
