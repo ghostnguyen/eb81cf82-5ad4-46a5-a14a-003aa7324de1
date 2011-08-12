@@ -578,10 +578,15 @@ a:focus > .sf-sub-indicator, a:hover > .sf-sub-indicator, a:active > .sf-sub-ind
 
 .MonitoringRpt
 {
-    color: Blue;        
+    color: Blue;
 }
 
 .MonitoringRpt h1, h2
 {
     color: Blue;
+}
+
+tr.selected
+{
+    border: 3px solid yellow;
 }
