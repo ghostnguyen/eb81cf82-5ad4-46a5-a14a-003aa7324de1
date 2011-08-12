@@ -167,6 +167,7 @@
     <Compile Include="Helper.cs" />
     <Compile Include="Models\ClientRepository.cs" />
     <Compile Include="Models\ImportRepository.cs" />
+    <Compile Include="Models\Partial\CodeMaster.cs" />
     <Compile Include="Models\Rpt.cs" />
     <Compile Include="Models\SiteDetailPhotoRepository.cs" />
     <Compile Include="Models\Partial\SiteDetailPhoto.cs" />

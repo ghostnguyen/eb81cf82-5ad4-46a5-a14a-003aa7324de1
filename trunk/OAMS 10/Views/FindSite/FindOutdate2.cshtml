@@ -14,72 +14,33 @@
                 @(Html.EditorFor(model => model.Geo1FullName, "AutoCompleteGeo", new { level = 1 }))
                 <br />
                 <br />
-                Geo2: <a id="A1" href="javascript:checkAll('geo2List', true);ShowAll(document.forms[0].Geo2List,'Geo2ListMore');">
-                    All</a>&nbsp;/&nbsp;<a id="A2" href="javascript:checkAll('geo2List', false);">Clear</a>
+                Geo2: <a id="A1" href="javascript:CheckAll('geo2List', true);ShowAll('Geo2List','Geo2ListMore');">
+                    All</a> &nbsp;/&nbsp;<a id="A2" href="javascript:CheckAll('geo2List', false);">Clear</a>
                 <div id="geo2List">
                 </div>
-                <a id="Geo2ListMore" href="javascript:ShowAll(document.forms[0].Geo2List,'Geo2ListMore');"
-                    style="display: none;">More...</a>
+                <a id="Geo2ListMore" href="javascript:ShowAll('Geo2List','Geo2ListMore');" style="display: none;">
+                    More...</a>
                 <br />
                 <br />
-                Style List: <a id="lnkCheckAllStyle" href="javascript:checkAll('StyleList', true);">
-                    All</a>&nbsp;/&nbsp;<a id="lnkUnCheckAllStyle" href="javascript:checkAll('StyleList', false);">Clear</a>
+                Style List: <a id="lnkCheckAllStyle" href="javascript:CheckAll('StyleList', true);">
+                    All</a>&nbsp;/&nbsp;<a id="lnkUnCheckAllStyle" href="javascript:CheckAll('StyleList', false);">Clear</a>
                 <br />
                 <div id="StyleList">
                     @foreach (var category in (new OAMS.Models.CodeMasterRepository()).Get(OAMS.Models.CodeMasterType.Type))
                     {
-                    
-                        <input type="checkbox" name="StyleList" value="@category.Code" checked="checked"
-                        id="StyleItem@category.ID" />
-                        <label for='StyleItem@category.ID'>
-                            @category.Note
-                        </label>
-                    
-                        string profileImageUrl = "";
-                        if (category.Code == "WMB")
-                        {
-                            profileImageUrl = Url.Content("~/Content/Image/wallmountedbannee.png");
-                        }
-                        else if (category.Code == "BRL")
-                        {
-                            profileImageUrl = Url.Content("~/Content/Image/britelite.png");
-                        }
-                        else if (category.Code == "BSH")
-                        {
-                            profileImageUrl = Url.Content("~/Content/Image/busshelter.png");
-                        }
-                        else if (category.Code == "CMR")
-                        {
-                            profileImageUrl = Url.Content("~/Content/Image/covermarket.png");
-                        }
-                        else if (category.Code == "ELV")
-                        {
-                            profileImageUrl = Url.Content("~/Content/Image/elevator.png");
-                        }
-                        else if (category.Code == "ITK")
-                        {
-                            profileImageUrl = Url.Content("~/Content/Image/itkiosk.png");
-                        }
-                        else if (category.Code == "Billboard")
-                        {
-                            profileImageUrl = Url.Content("~/Content/Image/billboard.png");
-                        }
-                        else if (category.Code == "BillboardPole")
-                        {
-                            profileImageUrl = Url.Content("~/Content/Image/billboardpole.png");
-                        }
-                        else if (category.Code == "Other")
-                        {
-                            profileImageUrl = Url.Content("~/Content/Image/other.png");
-                        }
-                    
-                        <img alt="" border="0" src="@profileImageUrl" width="20" id="ImgStyleItem@category.ID" />
-                        <br />
-                    
+                        string profileImageUrl = OAMS.Models.CodeMaster.GetIconUrl(category.Code); 
                         
+                        <div>
+                            <input type="checkbox" name="StyleList" value="@category.Code" checked="checked"
+                        id="StyleItem@category.ID" />
+                            <label for='StyleItem@category.ID'>
+                                @category.Note
+                            </label>
+                            <img alt="" border="0" src="@profileImageUrl" width="20" id="ImgStyleItem@category.ID" />
+                        </div>
                     }
                 </div>
-                <a id="StyleListMore" href="javascript:ShowAllStyle(document.forms[0].StyleList,'StyleListMore');"
+                <a id="StyleListMore" href="javascript:ShowAllStyle('StyleList','StyleListMore');"
                     style="display: none;">More...</a>
                 <br />
                 <div id="divMoreInstallationPosition" data-url="'@Url.Content("~/Listing/ListInstallationPosition1")'"
@@ -219,7 +180,7 @@
                             <dt class="rating">${Rating}</dt>
                         </dl>
                     </div>
-                    ID: <a href='<%= Url.Content("~/Site/Edit/${ID}")%>'>${ID}</a>
+                    ID: <a href='@(Url.Content("~/Site/Edit/${ID}"))'>${ID}</a>
                     <br />
                     Site Code: ${Code}
                     <br />
@@ -326,94 +287,48 @@
                 url: '@Url.Content("~/Listing/ListGeo2")', type: "POST", dataType: "json",
                 data: { parentFullName: str },
                 success: function (data) {
-
-                
-                $("#geo2Template").tmpl(data).appendTo(div1);
-
-//                    var index = 0;
-//                    $.map(data, function (item) {
-//                        index++;
-//                        var divInner = document.createElement('div');
-//                        var chk = document.createElement('input');
-//                        chk.type = 'checkbox';
-//                        chk.name = 'Geo2List';
-//                        chk.value = item.FullName;
-//                        chk.id = 'Geo2List' + index;
-//                        divInner.appendChild(chk);
-//                        var lbl = document.createElement('label');
-//                        lbl.innerHTML = item.FullName;
-//                        lbl.setAttribute('for', 'Geo2List' + index)
-//                        divInner.appendChild(lbl);
-//                        div1.append(divInner);
-//                    });
+                    $("#geo2Template").tmpl(data).appendTo(div1);
                 }
 
             })
         }
 
-        function HideUncheck(listName, btnHideID) {
-            
+        function HideUncheck(listName, btnMoreID) {
+
             var count = $('input[name="'+listName+'"]:not(:checked)').each(function () {
                 $(this).hide().next().hide();
             }).length;
             
-            if (count == 0) {
-                $("#" + btnHideID).hide();
-            }
-            else {
-
-                $("#" + btnHideID).show();
-            }
+            count == 0 ? $("#" + btnMoreID).hide() : $("#" + btnMoreID).show();
         }
 
-        function ShowAll(lst, btnMoreID) {
+        function ShowAll(listName, btnMoreID) {
 
-            for (i = 0; i < lst.length; i++) {
-
-                lst[i].style.visibility = 'visible';
-                lst[i].style.display = '';
-                $('label[for=' + lst[i].id + ']').css({ display: "", visibility: "visible" });
-            }
+            $('input[name="'+listName+'"]').each(function () {
+                $(this).show().next().show();
+            });
 
             $("#" + btnMoreID).hide();
         }
 
-        function HideUncheckStyle(lst, btnHideID) {
-
-            var count = 0;
-
-            for (i = 0; i < lst.length; i++) {
-
-                if (lst[i].checked) {
-
-                }
-                else {
-                    count++;
-
-                    lst[i].style.visibility = 'collapse';
-                    lst[i].style.display = 'none';
-                    $('label[for=' + lst[i].id + ']').css({ display: "none", visibility: "collapse" });
-                    $('#Img' + lst[i].id).css({ display: "none", visibility: "collapse" });
-                }
-            }
-
-            if (count == 0) {
-                $("#" + btnHideID).hide();
-            }
-            else {
-
-                $("#" + btnHideID).show();
-            }
+        function CheckAll(divID, checked) {
+            $('#' + divID + ' :input').each(function (i) { this.checked = checked; });
         }
 
-        function ShowAllStyle(lst, btnMoreID) {
-            for (i = 0; i < lst.length; i++) {
+        function HideUncheckStyle(listName, btnMoreID) {
 
-                lst[i].style.visibility = 'visible';
-                lst[i].style.display = '';
-                $('label[for=' + lst[i].id + ']').css({ display: "", visibility: "visible" });
-                $('#Img' + lst[i].id).css({ display: "", visibility: "visible" });
-            }
+            var count = $('input[name="'+listName+'"]:not(:checked)').each(function () {
+                $(this).hide().next().hide().next().hide();
+            }).length;
+            
+            count == 0 ? $("#" + btnMoreID).hide() : $("#" + btnMoreID).show();
+        }
+
+        function ShowAllStyle(listName, btnMoreID) {
+            
+            $('input[name="'+listName+'"]').each(function () {
+                $(this).show().next().show().next().show();
+            });
 
             $("#" + btnMoreID).hide();
         }
@@ -428,18 +343,15 @@
 
         function addResults(json) {
 
-            
             markers = [];
             infoContents = [];
             profileMarkers = []
 
-            //HideUncheck(document.forms[0].Geo2List, 'Geo2ListMore');
             HideUncheck("Geo2List", 'Geo2ListMore');
-            HideUncheckStyle(document.forms[0].StyleList, 'StyleListMore');
-
+            HideUncheckStyle('StyleList', 'StyleListMore');
+            
             //  Create a new viewpoint bound
             var bounds = new google.maps.LatLngBounds();
-
 
             if (json.length) {
                 var profileImageUrl;
@@ -449,6 +361,7 @@
                 tbl.innerHTML = '';
 
                 for (var i = 0, site; site = json[i]; i++) {
+
                     if (site.CodeType == 'WMB') {
                         profileImageUrl = '@Url.Content("~/Content/Image/wallmountedbannee.png")';
                     }
@@ -493,7 +406,6 @@
                     });
 
                     markers.push(marker);
-                    
 
                     if (VietnamBounds.contains(marker.position)
                     ) {
@@ -581,7 +493,7 @@
             var infoWindowHtml = "No info";
 
             $.ajax({
-                url: '<%= Url.Content("~/FindSite/GetSiteInfo") %>', type: "POST", dataType: "json",
+                url: '@(Url.Content("~/FindSite/GetSiteInfo"))', type: "POST", dataType: "json",
                 data: {"ID":siteID},
                 async: false,
                 success: function (data) {
@@ -676,9 +588,7 @@
         }
 
 
-        function checkAll(divID, checked) {
-            $('#' + divID + ' :input').each(function (i) { this.checked = checked; });
-        }
+        
 
         function toggleSearchPane() {
             
