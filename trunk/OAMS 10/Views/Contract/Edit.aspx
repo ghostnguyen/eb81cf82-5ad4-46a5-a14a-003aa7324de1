@@ -15,7 +15,8 @@
 
             var byName = $.getUrlVar('hl');
             //alert(byName);
-            $("table.display tr:contains('" + byName + "')").addClass("selected");
+            //$("table.display tr:contains('" + byName + "')").addClass("selected");
+            $("tr td:first-child:contains('" + byName + "')").parent().addClass("selected");
 
         });
     </script>

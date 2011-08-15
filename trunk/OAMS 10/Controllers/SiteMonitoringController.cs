@@ -43,13 +43,13 @@ namespace OAMS.Controllers
         [HttpPost]
         public ActionResult Create(int? contractDetailID, IEnumerable<HttpPostedFileBase> files, string[] noteList)
         {
-            repo.Create(UpdateModel, files, contractDetailID, noteList);
+            var sm = repo.Create(UpdateModel, files, contractDetailID, noteList);
 
             ContractDetailRepository contractDetailRepository = new ContractDetailRepository();
 
             ContractDetail e = contractDetailRepository.Get(contractDetailID.Value);
 
-            return RedirectToAction("Edit", "Contract", new { id = e.ContractID });
+            return RedirectToAction("Edit", "Contract", new { id = e.ContractID, hl = e.ID.ToString() });
         }
 
         //
@@ -58,11 +58,11 @@ namespace OAMS.Controllers
         public ActionResult Edit(int id)
         {
             SiteMonitoring e = repo.Get(id);
-            
+
             ContractDetailRepository cdrepo = new ContractDetailRepository();
             ContractDetail cd = cdrepo.Get(e.ContractDetailID.ToInt());
             e.Site = cd.Site;
-            
+
             return View(e);
         }
 
@@ -73,7 +73,7 @@ namespace OAMS.Controllers
         public ActionResult Edit(int id, FormCollection collection, IEnumerable<HttpPostedFileBase> files, List<int> DeletePhotoList, SiteMonitoring siteMonitoring, IEnumerable<HttpPostedFileBase> filesOfFixed, string[] noteList, string[] noteOfFixedList)
         {
             SiteMonitoring e = repo.Update(id, UpdateModel, files, DeletePhotoList, filesOfFixed, noteList, noteOfFixedList);
-            return RedirectToAction("Edit", "Contract", new { id = e.ContractDetail.ContractID });
+            return RedirectToAction("Edit", "Contract", new { id = e.ContractDetail.ContractID, hl = e.ContractDetailID.ToString() });
         }
 
         public ActionResult EditLast(int contractDetailID)
