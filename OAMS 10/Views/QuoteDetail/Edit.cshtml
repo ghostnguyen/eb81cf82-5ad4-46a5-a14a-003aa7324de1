@@ -6,63 +6,192 @@
     Edit</h2>
 @using (Html.BeginForm())
 {
-    @Html.ValidationSummary(true)
-    <fieldset>
-        <legend>Fields</legend>
-        @Html.HiddenFor(model => model.ID)
-        <div class="editor-label">
-            @Html.LabelFor(model => model.QuoteID)
-        </div>
-        <div class="editor-field">
-            @Html.DisplayFor(model => model.QuoteID)
-            @Html.ValidationMessageFor(model => model.QuoteID)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Price)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.Price, String.Format("{0:c}", Model.Price))
-            @Html.ValidationMessageFor(model => model.Price)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ProductionPrice)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.ProductionPrice, String.Format("{0:c}", Model.ProductionPrice))
-            @Html.ValidationMessageFor(model => model.ProductionPrice)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CurrentProductName)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CurrentProductName, "AutoCompleteProduct")
-            @Html.ValidationMessageFor(r => r.CurrentProductName)
-            @Html.TextBoxFor(model => model.ProductID, new { @style = "visibility:collapse;" })
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.EffectiveDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.EffectiveDate)
-            @Html.ValidationMessageFor(model => model.EffectiveDate)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.TermDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.TermDate)
-            @Html.ValidationMessageFor(model => model.TermDate)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.SiteID)
-        </div>
-        <div class="editor-field">
-            @Html.DisplayFor(model => model.SiteID)
-            @Html.ValidationMessageFor(model => model.SiteID)
-        </div>
-        <p>
-            @(Html.ActionLinkWithRoles<OAMS.Controllers.QuoteDetailController>("Save", r => r.Edit(0), null, null, true))
-        </p>
-    </fieldset>
+    <table>
+        <tr>
+            <td>
+                @Html.ValidationSummary(true)
+                <fieldset>
+                    <legend>Fields</legend>
+                    @Html.HiddenFor(model => model.ID)
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.QuoteID)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DisplayFor(model => model.QuoteID)
+                        @Html.ValidationMessageFor(model => model.QuoteID)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Price)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Price, String.Format("{0:c}", Model.Price))
+                        @Html.ValidationMessageFor(model => model.Price)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ProductionPrice)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.ProductionPrice, String.Format("{0:c}", Model.ProductionPrice))
+                        @Html.ValidationMessageFor(model => model.ProductionPrice)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.CurrentProductName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.CurrentProductName, "AutoCompleteProduct")
+                        @Html.ValidationMessageFor(r => r.CurrentProductName)
+                        @Html.TextBoxFor(model => model.ProductID, new { @style = "visibility:collapse;" })
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EffectiveDate)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.EffectiveDate)
+                        @Html.ValidationMessageFor(model => model.EffectiveDate)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.TermDate)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.TermDate)
+                        @Html.ValidationMessageFor(model => model.TermDate)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.SiteID)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DisplayFor(model => model.SiteID)
+                        @Html.ValidationMessageFor(model => model.SiteID)
+                    </div>
+                    <p>
+                        @(Html.ActionLinkWithRoles<OAMS.Controllers.QuoteDetailController>("Save", r => r.Edit(0), null, null, true))
+                    </p>
+                </fieldset>
+            </td>
+            <td>
+                <h3>
+                    Fees</h3>
+                <button type="button" data-bind="click: addFee">
+                    Add</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                Months
+                            </th>
+                            <th>
+                                Media Rate
+                            </th>
+                            <th>
+                                Production Fee
+                            </th>
+                            <th>
+                                Light Fee
+                            </th>
+                            <th>
+                                VAT
+                            </th>
+                            <th>
+                                Discount
+                            </th>
+                            <th>
+                                Other
+                            </th>
+                            <th>
+                                Note
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="template: { name: 'taskTemplate', foreach: fees }">
+                    </tbody>
+                </table>
+                <script type="text/html" id="taskTemplate">
+                
+                <tr>
+                    <td>
+                        <input data-bind="value: Months" />
+                    </td>
+                    <td>
+                        <input data-bind="value: MediaRate" />
+                    </td>
+                    <td>
+                        <input data-bind="value: ProductionFee" />
+                    </td>
+                    <td>
+                        <input data-bind="value: LightFee" />
+                    </td>
+                    <td>
+                        <input data-bind="value: VAT" />
+                    </td>
+                    <td>
+                        <input data-bind="value: Discount" />
+                    </td>
+                    <td>
+                        <input data-bind="value: Other" />
+                    </td>
+                    <td>
+                        <input data-bind="value: Note" />
+                    </td>
+                    <td>
+                        <a href="#" data-bind="click: remove">Delete</a>
+                    </td>
+                </tr>
+                </script>
+                <button data-bind="click: save">
+                    Save</button>
+            </td>
+        </tr>
+    </table>
 }
+<script type="text/javascript">
 
+    var fee = function (ID, QuoteDetailID, Months, MediaRate, ProductionFee, LightFee, VAT, Discount, Other, Note, ownerViewModel) {
+        this.ID = ko.observable(ID);
+        this.QuoteDetailID = ko.observable(QuoteDetailID);
+        this.Months = ko.observable(Months);
+        this.MediaRate = ko.observable(MediaRate);
+        this.ProductionFee = ko.observable(ProductionFee);
+        this.LightFee = ko.observable(LightFee);
+        this.VAT = ko.observable(VAT);
+        this.Discount = ko.observable(Discount);
+        this.Other = ko.observable(Other);
+        this.Note = ko.observable(Note);
+
+        //this.remove = function () { viewModel.seats.remove(this) }
+        this.remove = function () { ownerViewModel.fees.destroy(this) }
+
+    }
+
+
+    function feeListViewModel() {
+        this.fees = ko.observableArray([]);
+        this.addFee = function () {
+            this.fees.push(new fee(0, "@(Model.ID)", 3, "", "", "", 10, "", "", "", this));
+        }
+        // Load initial state from server
+        var self = this;
+        $.get("/QuoteDetailFee/Get?QuoteDetailID=@(Model.ID)", function (data) { self.show(data); });
+
+        this.show = function (data) {
+            
+            var mappedFees = $.map(data, function (item) {
+                return new fee(item.ID, item.QuoteDetailID, item.Months, item.MediaRate, item.ProductionFee, item.LightFee, item.VAT, item.Discount, item.Other, item.Note, self)
+            });
+            self.fees(mappedFees);
+        };
+
+        this.save = function () {
+            $.ajax("/QuoteDetailFee/Save", {
+                data: ko.toJSON({ l: this.fees }),
+                type: "post",
+                contentType: "application/json",
+                success: function (result) { self.show(result); }
+            });
+        }
+    }
+
+    ko.applyBindings(new feeListViewModel());
+
+</script>
