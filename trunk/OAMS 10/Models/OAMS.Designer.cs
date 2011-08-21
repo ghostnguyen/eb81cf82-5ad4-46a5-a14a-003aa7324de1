@@ -59,6 +59,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("OAMSModel", "FK_SiteDetailMore_Product", "Product", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(OAMS.Models.Product), "SiteDetailMore", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(OAMS.Models.SiteDetailMore), true)]
 [assembly: EdmRelationshipAttribute("OAMSModel", "FK_SiteMonitoring_Product", "Product", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(OAMS.Models.Product), "SiteMonitoring", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(OAMS.Models.SiteMonitoring), true)]
 [assembly: EdmRelationshipAttribute("OAMSModel", "FK_SiteDetailPhoto_SiteDetail", "SiteDetail", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(OAMS.Models.SiteDetail), "SiteDetailPhoto", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(OAMS.Models.SiteDetailPhoto), true)]
+[assembly: EdmRelationshipAttribute("OAMSModel", "FK_QuoteDetailFee_QuoteDetail", "QuoteDetail", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(OAMS.Models.QuoteDetail), "QuoteDetailFee", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(OAMS.Models.QuoteDetailFee), true)]
 
 #endregion
 
@@ -605,6 +606,22 @@ namespace OAMS.Models
             }
         }
         private ObjectSet<Temp> _Temps;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<QuoteDetailFee> QuoteDetailFees
+        {
+            get
+            {
+                if ((_QuoteDetailFees == null))
+                {
+                    _QuoteDetailFees = base.CreateObjectSet<QuoteDetailFee>("QuoteDetailFees");
+                }
+                return _QuoteDetailFees;
+            }
+        }
+        private ObjectSet<QuoteDetailFee> _QuoteDetailFees;
 
         #endregion
         #region AddTo Methods
@@ -855,6 +872,14 @@ namespace OAMS.Models
         public void AddToTemps(Temp temp)
         {
             base.AddObject("Temps", temp);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the QuoteDetailFees EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToQuoteDetailFees(QuoteDetailFee quoteDetailFee)
+        {
+            base.AddObject("QuoteDetailFees", quoteDetailFee);
         }
 
         #endregion
@@ -7732,6 +7757,340 @@ namespace OAMS.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Product>("OAMSModel.FK_QuoteDetail_Product", "Product", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("OAMSModel", "FK_QuoteDetailFee_QuoteDetail", "QuoteDetailFee")]
+        public EntityCollection<QuoteDetailFee> QuoteDetailFees
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<QuoteDetailFee>("OAMSModel.FK_QuoteDetailFee_QuoteDetail", "QuoteDetailFee");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<QuoteDetailFee>("OAMSModel.FK_QuoteDetailFee_QuoteDetail", "QuoteDetailFee", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="OAMSModel", Name="QuoteDetailFee")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class QuoteDetailFee : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new QuoteDetailFee object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        public static QuoteDetailFee CreateQuoteDetailFee(global::System.Int32 id)
+        {
+            QuoteDetailFee quoteDetailFee = new QuoteDetailFee();
+            quoteDetailFee.ID = id;
+            return quoteDetailFee;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> QuoteDetailID
+        {
+            get
+            {
+                return _QuoteDetailID;
+            }
+            set
+            {
+                OnQuoteDetailIDChanging(value);
+                ReportPropertyChanging("QuoteDetailID");
+                _QuoteDetailID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("QuoteDetailID");
+                OnQuoteDetailIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _QuoteDetailID;
+        partial void OnQuoteDetailIDChanging(Nullable<global::System.Int32> value);
+        partial void OnQuoteDetailIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Months
+        {
+            get
+            {
+                return _Months;
+            }
+            set
+            {
+                OnMonthsChanging(value);
+                ReportPropertyChanging("Months");
+                _Months = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Months");
+                OnMonthsChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Months;
+        partial void OnMonthsChanging(Nullable<global::System.Int32> value);
+        partial void OnMonthsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> MediaRate
+        {
+            get
+            {
+                return _MediaRate;
+            }
+            set
+            {
+                OnMediaRateChanging(value);
+                ReportPropertyChanging("MediaRate");
+                _MediaRate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MediaRate");
+                OnMediaRateChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _MediaRate;
+        partial void OnMediaRateChanging(Nullable<global::System.Decimal> value);
+        partial void OnMediaRateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ProductionFee
+        {
+            get
+            {
+                return _ProductionFee;
+            }
+            set
+            {
+                OnProductionFeeChanging(value);
+                ReportPropertyChanging("ProductionFee");
+                _ProductionFee = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ProductionFee");
+                OnProductionFeeChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ProductionFee;
+        partial void OnProductionFeeChanging(Nullable<global::System.Decimal> value);
+        partial void OnProductionFeeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> LightFee
+        {
+            get
+            {
+                return _LightFee;
+            }
+            set
+            {
+                OnLightFeeChanging(value);
+                ReportPropertyChanging("LightFee");
+                _LightFee = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LightFee");
+                OnLightFeeChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _LightFee;
+        partial void OnLightFeeChanging(Nullable<global::System.Decimal> value);
+        partial void OnLightFeeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> VAT
+        {
+            get
+            {
+                return _VAT;
+            }
+            set
+            {
+                OnVATChanging(value);
+                ReportPropertyChanging("VAT");
+                _VAT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("VAT");
+                OnVATChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _VAT;
+        partial void OnVATChanging(Nullable<global::System.Decimal> value);
+        partial void OnVATChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> Discount
+        {
+            get
+            {
+                return _Discount;
+            }
+            set
+            {
+                OnDiscountChanging(value);
+                ReportPropertyChanging("Discount");
+                _Discount = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Discount");
+                OnDiscountChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _Discount;
+        partial void OnDiscountChanging(Nullable<global::System.Decimal> value);
+        partial void OnDiscountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> Other
+        {
+            get
+            {
+                return _Other;
+            }
+            set
+            {
+                OnOtherChanging(value);
+                ReportPropertyChanging("Other");
+                _Other = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Other");
+                OnOtherChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _Other;
+        partial void OnOtherChanging(Nullable<global::System.Decimal> value);
+        partial void OnOtherChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Note
+        {
+            get
+            {
+                return _Note;
+            }
+            set
+            {
+                OnNoteChanging(value);
+                ReportPropertyChanging("Note");
+                _Note = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Note");
+                OnNoteChanged();
+            }
+        }
+        private global::System.String _Note;
+        partial void OnNoteChanging(global::System.String value);
+        partial void OnNoteChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("OAMSModel", "FK_QuoteDetailFee_QuoteDetail", "QuoteDetail")]
+        public QuoteDetail QuoteDetail
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<QuoteDetail>("OAMSModel.FK_QuoteDetailFee_QuoteDetail", "QuoteDetail").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<QuoteDetail>("OAMSModel.FK_QuoteDetailFee_QuoteDetail", "QuoteDetail").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<QuoteDetail> QuoteDetailReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<QuoteDetail>("OAMSModel.FK_QuoteDetailFee_QuoteDetail", "QuoteDetail");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<QuoteDetail>("OAMSModel.FK_QuoteDetailFee_QuoteDetail", "QuoteDetail", value);
                 }
             }
         }
