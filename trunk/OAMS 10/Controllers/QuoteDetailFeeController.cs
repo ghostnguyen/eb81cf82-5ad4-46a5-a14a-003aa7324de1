@@ -15,6 +15,7 @@ namespace OAMS.Controllers
             return Json(Repo.Get(quoteDetailID).Select(r => new
             {
                 r.ID,
+                r.Months,
                 r.QuoteDetailID,
                 r.MediaRate,
                 r.ProductionFee,
@@ -27,12 +28,13 @@ namespace OAMS.Controllers
         }
 
         [HttpPost]
-        public JsonResult Save(List<QuoteDetailFee> l)
+        public JsonResult Save(List<QuoteDetailFee> l, List<int?> deleteIDList, List<int?> updateIDList)
         {
-            Repo.Save(l);
+            Repo.Save(l, deleteIDList,updateIDList);
             return Json(Repo.Get(l.First().QuoteDetailID.Value).Select(r => new
             {
                 r.ID,
+                r.Months,
                 r.QuoteDetailID,
                 r.MediaRate,
                 r.ProductionFee,

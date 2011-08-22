@@ -159,13 +159,27 @@
         this.Other = ko.observable(Other);
         this.Note = ko.observable(Note);
 
-        //this.remove = function () { viewModel.seats.remove(this) }
-        this.remove = function () { ownerViewModel.fees.destroy(this) }
+        this.remove = function () {
+            if (this.ID() > 0) {
+                ownerViewModel.deleteFees.push(this.ID());
+            }
+            ownerViewModel.fees.destroy(this)
+        }
 
-    }
-
+        this.PropertyChanged = ko.dependentObservable(function () {
+            if (this.MediaRate() && this.Months() && this.ProductionFee()
+        && this.LightFee() && this.VAT() && this.Discount() && this.Other() && this.Note()
+    ) {
+                if (this.ID() > 0 && ownerViewModel.updateFees.indexOf(this.ID()) == -1) {
+                    ownerViewModel.updateFees.push(this.ID());
+                }
+            }
+        }, this);
+    };
 
     function feeListViewModel() {
+        this.deleteFees = [];
+        this.updateFees = [];
         this.fees = ko.observableArray([]);
         this.addFee = function () {
             this.fees.push(new fee(0, "@(Model.ID)", 3, "", "", "", 10, "", "", "", this));
@@ -175,16 +189,18 @@
         $.get("/QuoteDetailFee/Get?QuoteDetailID=@(Model.ID)", function (data) { self.show(data); });
 
         this.show = function (data) {
-            
+
             var mappedFees = $.map(data, function (item) {
                 return new fee(item.ID, item.QuoteDetailID, item.Months, item.MediaRate, item.ProductionFee, item.LightFee, item.VAT, item.Discount, item.Other, item.Note, self)
             });
             self.fees(mappedFees);
+            this.updateFees = [];
         };
 
         this.save = function () {
             $.ajax("/QuoteDetailFee/Save", {
-                data: ko.toJSON({ l: this.fees }),
+                //data: ko.toJSON({ l: this.fees, deleteIDList: this.deleteFees }),
+                data: ko.toJSON({ deleteIDList: this.deleteFees, l: this.fees, updateIDList: this.updateFees }),
                 type: "post",
                 contentType: "application/json",
                 success: function (result) { self.show(result); }
