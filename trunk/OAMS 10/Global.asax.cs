@@ -48,6 +48,9 @@ namespace OAMS
             }
 
             GlobalFilters.Filters.Add(new ProfilingActionFilter());
+
+            ModelBinders.Binders.Add(typeof(decimal?), new NullableDecimalModelBinder());
+            ModelBinders.Binders.Add(typeof(decimal), new NullableDecimalModelBinder());
         }
 
         protected void Application_BeginRequest()

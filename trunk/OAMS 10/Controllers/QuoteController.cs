@@ -45,7 +45,7 @@ namespace OAMS.Controllers
 
             repo.Save();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Edit", new { ID = v.ID });
         }
 
 

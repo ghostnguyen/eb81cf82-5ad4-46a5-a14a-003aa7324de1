@@ -6,6 +6,8 @@ using System.Web;
 using System.Diagnostics;
 using System.Reflection;
 using System.Configuration;
+using System.Web.Mvc;
+using System.Globalization;
 namespace OAMS
 {
     public class Helper
@@ -203,6 +205,30 @@ namespace OAMS
             throw new Exception(string.Format(
                 "Could not determine member from {0}",
                 expression));
+        }
+    }
+
+    public class NullableDecimalModelBinder : IModelBinder
+    {
+        public object BindModel(ControllerContext controllerContext,
+            ModelBindingContext bindingContext)
+        {
+            ValueProviderResult valueResult = bindingContext.ValueProvider
+                .GetValue(bindingContext.ModelName);
+            ModelState modelState = new ModelState { Value = valueResult };
+            object actualValue = null;
+            try
+            {
+                actualValue = Convert.ToDecimal(valueResult.AttemptedValue,
+                    CultureInfo.CurrentCulture);
+            }
+            catch (FormatException e)
+            {
+                modelState.Errors.Add(e);
+            }
+
+            bindingContext.ModelState.Add(bindingContext.ModelName, modelState);
+            return actualValue;
         }
     }
 }
