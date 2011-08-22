@@ -111,25 +111,25 @@
                 
                 <tr>
                     <td>
-                        <input data-bind="value: Months" />
+                        <input data-bind="value: Months" class="edit"/>
                     </td>
                     <td>
-                        <input data-bind="value: MediaRate" />
+                        <input data-bind="value: MediaRate"  class="edit"/>
                     </td>
                     <td>
-                        <input data-bind="value: ProductionFee" />
+                        <input data-bind="value: ProductionFee"  class="edit"/>
                     </td>
                     <td>
-                        <input data-bind="value: LightFee" />
+                        <input data-bind="value: LightFee"  class="edit"/>
                     </td>
                     <td>
-                        <input data-bind="value: VAT" />
+                        <input data-bind="value: VAT"  class="edit"/>
                     </td>
                     <td>
-                        <input data-bind="value: Discount" />
+                        <input data-bind="value: Discount"  class="edit"/>
                     </td>
                     <td>
-                        <input data-bind="value: Other" />
+                        <input data-bind="value: Other"  class="edit"/>
                     </td>
                     <td>
                         <input data-bind="value: Note" />
@@ -170,6 +170,7 @@
             if (this.MediaRate() && this.Months() && this.ProductionFee()
         && this.LightFee() && this.VAT() && this.Discount() && this.Other() && this.Note()
     ) {
+                
                 if (this.ID() > 0 && ownerViewModel.updateFees.indexOf(this.ID()) == -1) {
                     ownerViewModel.updateFees.push(this.ID());
                 }
@@ -200,10 +201,10 @@
         this.save = function () {
             $.ajax("/QuoteDetailFee/Save", {
                 //data: ko.toJSON({ l: this.fees, deleteIDList: this.deleteFees }),
-                data: ko.toJSON({ deleteIDList: this.deleteFees, l: this.fees, updateIDList: this.updateFees }),
+                data: ko.toJSON({ l: this.fees, deleteIDList: this.deleteFees, updateIDList: this.updateFees }),
                 type: "post",
                 contentType: "application/json",
-                success: function (result) { self.show(result); }
+                success: function (result) { self.show(result); alert("Saved."); }
             });
         }
     }

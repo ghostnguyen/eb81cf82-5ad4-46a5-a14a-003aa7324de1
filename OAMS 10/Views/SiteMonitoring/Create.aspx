@@ -280,10 +280,9 @@ string AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Spl
                     width="600" height="400" flashvars="host=picasaweb.google.com&hl=en_US&feat=flashalbum&RGB=0x000000&feed=http%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F113917932111131696693%2Falbumid%2F<%=AlbumID%>%3Falt%3Drss%26kind%3Dphoto%26authkey%3D<%=AuthID%>%26hl%3Den_US"
                     pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>
                 <br />
-                <%--<label for="file1">
-                    Filename:</label>
-                <input type="file" name="files" id="file3" size="65" />
-                <br />--%>
+                SiteID: <%= Model.ContractDetail.SiteID%> - 
+                Site Detail Name: <%= Model.ContractDetail != null ?  Model.ContractDetail.SiteDetailName : "" %>
+                <br />
                 <div id="divMoreFile">
                 </div>
                 <br />

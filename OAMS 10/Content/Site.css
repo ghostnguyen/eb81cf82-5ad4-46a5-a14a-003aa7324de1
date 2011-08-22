@@ -590,3 +590,8 @@ tr.selected
 {
     border: 3px solid yellow;
 }
+
+.edit
+{
+    width: 50px;
+}
