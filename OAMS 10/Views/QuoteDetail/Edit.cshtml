@@ -144,6 +144,7 @@
             </td>
         </tr>
     </table>
+    
 }
 <script type="text/javascript">
 
@@ -170,7 +171,7 @@
             if (this.MediaRate() && this.Months() && this.ProductionFee()
         && this.LightFee() && this.VAT() && this.Discount() && this.Other() && this.Note()
     ) {
-                
+
                 if (this.ID() > 0 && ownerViewModel.updateFees.indexOf(this.ID()) == -1) {
                     ownerViewModel.updateFees.push(this.ID());
                 }
@@ -187,7 +188,7 @@
         }
         // Load initial state from server
         var self = this;
-        $.get("/QuoteDetailFee/Get?QuoteDetailID=@(Model.ID)", function (data) { self.show(data); });
+        $.get('@(Url.Content("~/QuoteDetailFee/Get?QuoteDetailID=" + Model.ID.ToString()))', function (data) { self.show(data); });
 
         this.show = function (data) {
 
@@ -199,7 +200,7 @@
         };
 
         this.save = function () {
-            $.ajax("/QuoteDetailFee/Save", {
+            $.ajax('@(Url.Content("~/QuoteDetailFee/Save"))', {
                 //data: ko.toJSON({ l: this.fees, deleteIDList: this.deleteFees }),
                 data: ko.toJSON({ l: this.fees, deleteIDList: this.deleteFees, updateIDList: this.updateFees }),
                 type: "post",

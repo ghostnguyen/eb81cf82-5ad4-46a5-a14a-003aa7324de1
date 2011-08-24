@@ -243,7 +243,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\ElmahErrors.txt" />
     <Content Include="App_Data\OAMS.MDF" />
     <Content Include="App_Data\OAMS_log.ldf">
       <DependentUpon>OAMS.MDF</DependentUpon>
