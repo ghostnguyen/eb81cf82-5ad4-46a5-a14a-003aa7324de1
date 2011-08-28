@@ -217,14 +217,21 @@ namespace OAMS
                 .GetValue(bindingContext.ModelName);
             ModelState modelState = new ModelState { Value = valueResult };
             object actualValue = null;
-            try
+            if (string.IsNullOrEmpty(valueResult.AttemptedValue))
             {
-                actualValue = Convert.ToDecimal(valueResult.AttemptedValue,
-                    CultureInfo.CurrentCulture);
+                actualValue = null;
             }
-            catch (FormatException e)
+            else
             {
-                modelState.Errors.Add(e);
+                try
+                {
+                    actualValue = Convert.ToDecimal(valueResult.AttemptedValue,
+                        CultureInfo.CurrentCulture);
+                }
+                catch (FormatException e)
+                {
+                    modelState.Errors.Add(e);
+                }
             }
 
             bindingContext.ModelState.Add(bindingContext.ModelName, modelState);
