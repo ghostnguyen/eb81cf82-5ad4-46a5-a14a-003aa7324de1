@@ -24,14 +24,14 @@
                         @Html.LabelFor(model => model.Price)
                     </div>
                     <div class="editor-field">
-                        @Html.TextBoxFor(model => model.Price, String.Format("{0:c}", Model.Price))
+                        @Html.TextBoxFor(model => model.Price)
                         @Html.ValidationMessageFor(model => model.Price)
                     </div>
                     <div class="editor-label">
                         @Html.LabelFor(model => model.ProductionPrice)
                     </div>
                     <div class="editor-field">
-                        @Html.TextBoxFor(model => model.ProductionPrice, String.Format("{0:c}", Model.ProductionPrice))
+                        @Html.TextBoxFor(model => model.ProductionPrice)
                         @Html.ValidationMessageFor(model => model.ProductionPrice)
                     </div>
                     <div class="editor-label">
@@ -213,3 +213,4 @@
     ko.applyBindings(new feeListViewModel());
 
 </script>
+

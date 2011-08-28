@@ -30,14 +30,13 @@ namespace OAMS.Models
 
             return quoteID;
         }
-
+        
        
 
         public void Update(int ID, Action<QuoteDetail> updateMethod)
         {
             QuoteDetail e = Get(ID);
             updateMethod(e);
-            //UpdateCategory(e);
             Save();
         }
 
