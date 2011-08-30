@@ -350,7 +350,6 @@
     <Content Include="Content\smoothness\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\smoothness\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\smoothness\jquery-ui-1.8.1.custom.css" />
-    <Content Include="EFCodeFirstReadMe.txt" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\ColVis.min.js" />
     <Content Include="Scripts\common.js" />
@@ -443,7 +442,7 @@
     <Content Include="Views\Contract\Index.aspx" />
     <Content Include="Views\Contract\ManageContractTimeline.ascx" />
     <Content Include="Views\Contract\ViewReport.aspx" />
-    <Content Include="Views\FindSite\FindOutdate.aspx" />
+    <Content Include="Views\FindSite\FindOutdate1.aspx" />
     <Content Include="Views\FindSite\Find4Quote.aspx" />
     <Content Include="Views\FindSite\Find4Contract.aspx" />
     <Content Include="Views\FindSite\Find.aspx" />
@@ -565,7 +564,7 @@
     <None Include="Scripts\DataTables-1.8.1\extras\Scroller\media\js\Scroller.min.js.gz" />
     <None Include="Scripts\DataTables-1.8.1\extras\TableTools\media\js\TableTools.min.js.gz" />
     <None Include="Scripts\DataTables-1.8.1\media\js\jquery.dataTables.min.js.gz" />
-    <Content Include="Views\FindSite\FindOutdate2.cshtml">
+    <Content Include="Views\FindSite\FindOutdate.cshtml">
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Shared\_MINIPROFILER UPDATED Layout.cshtml" />
