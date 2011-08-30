@@ -407,3 +407,7 @@ $.extend({
         return $.getUrlVars()[name];
     }
 });
+
+function getURLParameter(name) {
+    return unescape((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, null])[1]);
+}

@@ -1,5 +1,4 @@
 ﻿@model OAMS.Models.FindSite
-<script src="@Url.Content("~/Scripts/DistanceWidget.js")" type="text/javascript"></script>
 @{
     ViewBag.Title = "Find Outdate Site";
 }
@@ -259,6 +258,7 @@
 </div>
 
 </script>
+
 <script type="text/javascript" language="javascript">
     $(document).ready(function () {
         init();
@@ -464,7 +464,7 @@
 
             //  Fit these bounds to the map
             map.fitBounds(bounds);
-            mc.addMarkers(markers);
+            //mc.addMarkers(markers);
         }
 
         function showInfoWindow(siteID,i) {            
@@ -509,7 +509,7 @@
         var map;
         var geocodeTimer;
         var profileMarkers = [];
-        var mc;
+        //var mc;
         var infoWindow = new google.maps.InfoWindow;
 
         
@@ -543,8 +543,9 @@
             });
 
             map.fitBounds(distanceWidget.get('bounds'));
-            mc = new MarkerClusterer(map);
-            mc.setMaxZoom(15);
+            
+            //mc = new MarkerClusterer(map);
+            //mc.setMaxZoom(15);
         }
 
         function search(e) {
@@ -565,7 +566,7 @@
         }
 
         function clearMarkers() {
-            mc.clearMarkers();
+            //mc.clearMarkers();
 
             if (profileMarkers) {
                  for (i in profileMarkers) {
@@ -587,8 +588,6 @@
             marker.click();
         }
 
-
-        
 
         function toggleSearchPane() {
             
