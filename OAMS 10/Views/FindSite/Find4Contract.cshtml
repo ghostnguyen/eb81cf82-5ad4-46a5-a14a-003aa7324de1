@@ -217,7 +217,7 @@
 <script id="rowTmpl" type="text/x-jquery-tmpl">
     <tr>
         <td>
-            <a href='javascript:showInfoWindow("${ID}","${$item.i}");'> 
+            <a href='javascript:showInfoWindow("${SiteID}","${$item.i}");'> 
             ${ID}
             </a>
         </td>
@@ -255,20 +255,37 @@
             ${Score}
         </td>
         <td>
-           {{html $item.addUrl}}
+           {{if Added}}
+                Added
+           {{else $item.canAdd}}
+                <a href="javascript:void(0);" onclick='Add2Contract(this, ${$item.contractID}, ${ID});'>Add to</a>
+           {{else}}
+               No right
+           {{/if}}
         </td>
     </tr>
 </script>
 <script type="text/javascript" language="javascript">
     $(document).ready(function () {
+
         $("#divMoreProduct").manyTxt();
         $("#divContractor").manyTxt();
         $("#divClient").manyTxt();
         $("#divCategory").manyTxt();
 
+        init();
         $('#Geo1FullName').val('@OAMS.Models.AppSetting.DefaultGeo1Name');
         showGeo2('@OAMS.Models.AppSetting.DefaultGeo1Name');
         ko.applyBindings(distanceWidget);
+
+        var addUrl = "@(Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("Add to Contract", r => r.AddSite(0, 0), isPost: true))";
+        //alert(addUrl);
+
+        if(addUrl)        canAdd = true;
+        
+
+        //alert(canAdd);
+        contractID = getURLParameter('ContractID');
     });
 
 
@@ -337,6 +354,8 @@
 
     var markers = [];
     var infoContents = [];
+    var canAdd = false;
+    var contractID = 0;
 
     function addResults(json) {
 
@@ -344,7 +363,7 @@
         infoContents = [];
         profileMarkers = []
 
-        var contractID = getURLParameter('ContractID');
+        
         var quoteID = getURLParameter('QuoteID');
 
         HideUncheck("Geo2List", 'Geo2ListMore');
@@ -357,8 +376,9 @@
 
         if (json.length) {
             var profileImageUrl;
-            //var addTemplate = '<%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("Add to Contract", r => r.AddSite(0,0), null, new Dictionary<string,object> (){{"href","javascript:Add2Contract(linkAdd2Cam, contractID, siteDetailID);"},{"id","aAdd2Cam"}},true) %>';
-            var editTemplate = '@(Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Edit", r => r.Edit(0), new RouteValueDictionary(new { id = "siteID" }), null, false))';
+            //var addTemplate = '@(Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("Add to Contract", r => r.AddSite(0, 0), null, new Dictionary<string, object>() { { "href", "javascript:Add2Contract(linkAdd2Cam, contractID, siteDetailID);" }, { "id", "aAdd2Cam" } }, true))';
+            //var addTemplate = '@(Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("Add to Contract", r => r.AddSite(0, 0), new RouteValueDictionary(new { contractID = "contractID", siteDetailID = "siteDetailID" }), null, false))';
+            //var editTemplate = '@(Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Edit", r => r.Edit(0), new RouteValueDictionary(new { id = "siteID" }), null, false))';
 
             var tbl = $('#tblResult tbody');
             tbl.innerHTML = '';
@@ -429,7 +449,9 @@
 
                 var t = $("#rowTmpl").tmpl(site, {
                     i: i,
-                    editUrl: editTemplate.replace('siteID', site.ID)
+                    canAdd: canAdd,
+                    contractID: contractID
+
                 }).appendTo(tbl);
 
 //                //Add2Campaign
@@ -476,20 +498,17 @@
     }
 
     function Add2Contract(link, contractID, siteDetailID) {
-        //function Add2Contract(link, contractID, siteID) {
-        //alert(link.innerHTML);
-        var url = '<%= Url.Content("~/Contract/AddSite?ContractID=") %>' + contractID + '&SiteDetailID=' + siteDetailID;
-        return function () {
+        var url = '@Url.Content("~/Contract/AddSite?ContractID=")' + contractID + '&SiteDetailID=' + siteDetailID;
             $.ajax({
-                url: url, type: "POST", dataType: "json",
+                url: url, 
+                type: "POST", 
+                dataType: "json",
                 success: function (data) {
-                    //alert(link.innerHTML);
-                    link.innerHTML = 'Added';
-                    link.href = "javascript:void(0);";
-                    link.onclick = null;
+                    $('<p>Added</p>').insertBefore($(link));
+                    $(link).remove();
                 }
             });
-        };
+        
     }
 
     function showInfoWindow(siteID, i) {

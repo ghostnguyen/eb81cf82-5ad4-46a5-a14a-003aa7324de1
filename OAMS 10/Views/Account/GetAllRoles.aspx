@@ -27,7 +27,7 @@
                     <%: item %>
                 </td>
                 <td>
-                    <%: Html.ActionLink("Delete", "DeleteRole", "Account", new { id = item }, new { onclick="javascript:return confirm('Delete?');" })%>
+                    <%: Html.ActionLink("Delete", "DeleteRole", "Account", new { id = item }, new { onclick="javascript:return confirm('Sure?');" })%>
                     |
                     <%: Html.ActionLink("Edit Authentication", "EditRoleAuthentication", "Account", new { roleName = item }, null)%>
                     |

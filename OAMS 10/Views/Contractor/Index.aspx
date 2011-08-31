@@ -45,7 +45,7 @@
             <tbody>
                 <% 
                     var editTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.ContractorController>("Edit", r => r.Edit(0), new RouteValueDictionary(new { id = "contractorID" }), null, false);
-                    var deleteTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.ContractorController>("Delete", r => r.Delete(0), new RouteValueDictionary(new { id = "contractorID" }), new Dictionary<string, object>() { { "onclick", "return confirm('Delete?');" } }, false);
+                    var deleteTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.ContractorController>("Delete", r => r.Delete(0), new RouteValueDictionary(new { id = "contractorID" }), new Dictionary<string, object>() { { "onclick", "return confirm('Sure?');" } }, false);
                 %>
                 <% foreach (var item in Model)
                    { %>
