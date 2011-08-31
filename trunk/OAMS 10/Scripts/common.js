@@ -58,7 +58,7 @@ function AjaxView(timelineID, divID, editUrl) {
 }
 
 function AjaxDelete(ID, divID, editUrl) {
-    if (confirm('Delete?')) {
+    if (confirm('Sure?')) {
         $.ajax({
             url: editUrl, type: "POST",
             data: { id: ID },
@@ -72,7 +72,7 @@ function AjaxDelete(ID, divID, editUrl) {
 }
 
 function AjaxDelete2(ID, divID, editUrl, divID2) {
-    if (confirm('Delete?')) {
+    if (confirm('Sure?')) {
         $.ajax({
             url: editUrl, type: "POST",
             data: { id: ID },

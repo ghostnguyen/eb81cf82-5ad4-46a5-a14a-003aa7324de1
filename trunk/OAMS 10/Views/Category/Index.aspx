@@ -29,7 +29,7 @@
         </tr>
         <% 
             var editTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.CategoryController>("Edit", r => r.Edit(new Guid()), new RouteValueDictionary(new { id = "categoryID" }), null, false);
-            var deleteTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.CategoryController>("Delete", r => r.Delete(new Guid()), new RouteValueDictionary(new { id = "categoryID" }), new Dictionary<string, object>() { { "onclick", "return confirm('Delete?');" } }, false);
+            var deleteTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.CategoryController>("Delete", r => r.Delete(new Guid()), new RouteValueDictionary(new { id = "categoryID" }), new Dictionary<string, object>() { { "onclick", "return confirm('Sure?');" } }, false);
             var subTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.CategoryController>("Subs ({0})", r => r.Index(null), new RouteValueDictionary(new { parentID = "categoryParentID" }), null, false);
         %>
         <% foreach (var item in Model)

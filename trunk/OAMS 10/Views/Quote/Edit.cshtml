@@ -229,7 +229,7 @@
                             </thead>
                             <tbody>
                                 @{ var editTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.QuoteDetailController>("Edit", r => r.Edit(0), new RouteValueDictionary(new { id = "quoteDetailID" }), null, false);
-                                   var removeTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.QuoteDetailController>("Remove", r => r.Delete(0), new RouteValueDictionary(new { id = "quoteDetailID" }), new Dictionary<string, object>() { { "onclick", "return confirm('Delete?');" } }, false);
+                                   var removeTemplate = Html.ActionLinkWithRoles<OAMS.Controllers.QuoteDetailController>("Remove", r => r.Delete(0), new RouteValueDictionary(new { id = "quoteDetailID" }), new Dictionary<string, object>() { { "onclick", "return confirm('Sure?');" } }, false);
                                    foreach (var item in Model.QuoteDetails)
                                    {                                     
                                     <tr>
