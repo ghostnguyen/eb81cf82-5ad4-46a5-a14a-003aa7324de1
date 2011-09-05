@@ -442,9 +442,9 @@
     <Content Include="Views\Contract\Index.aspx" />
     <Content Include="Views\Contract\ManageContractTimeline.ascx" />
     <Content Include="Views\Contract\ViewReport.aspx" />
+    <Content Include="Views\FindSite\Find4Contract2.aspx" />
     <Content Include="Views\FindSite\FindOutdate1.aspx" />
     <Content Include="Views\FindSite\Find4Quote.aspx" />
-    <Content Include="Views\FindSite\Find4Contract.aspx" />
     <Content Include="Views\FindSite\Find.aspx" />
     <Content Include="Views\Geo\Create.aspx" />
     <Content Include="Views\Geo\Edit.aspx" />
@@ -568,6 +568,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Shared\_MINIPROFILER UPDATED Layout.cshtml" />
+    <Content Include="Views\FindSite\Find4Contract.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
