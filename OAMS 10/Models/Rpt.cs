@@ -69,4 +69,20 @@ namespace OAMS.Models
         public string Type { get; set; }
         public int Count { get; set; }
     }
+
+    public class Rpt105
+    {
+        public string Geo1FullName { get; set; }
+        public string Type { get; set; }
+        public int LessThan { get; set; }
+        public List<Row> List { get; set; }
+
+        public class Row
+        {
+            public string Geo2 { get; set; }
+            public int Count { get; set; }
+        }
+    }
+
+    
 }

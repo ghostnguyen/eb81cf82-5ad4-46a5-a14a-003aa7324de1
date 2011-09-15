@@ -569,6 +569,9 @@
     </Content>
     <Content Include="Views\Shared\_MINIPROFILER UPDATED Layout.cshtml" />
     <Content Include="Views\FindSite\Find4Contract.cshtml" />
+    <Content Include="Views\Rpt\_105.cshtml" />
+    <Content Include="Views\Rpt\_Chart.cshtml" />
+    <Content Include="Views\Shared\Chart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
