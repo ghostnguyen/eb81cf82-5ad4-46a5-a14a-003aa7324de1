@@ -80,5 +80,11 @@ namespace OAMS.Controllers
 
             return View();
         }
+
+        public ViewResult Chart(string id)
+        {
+            ViewBag.Id = id;
+            return View();
+        }
     }
 }

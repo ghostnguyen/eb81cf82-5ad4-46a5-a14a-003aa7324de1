@@ -11,6 +11,7 @@ using Microsoft.CSharp.RuntimeBinder;
 
 namespace OAMS.Controllers
 {
+    [CustomAuthorize]
     public class RptController : Controller
     {
         public ActionResult Index()
@@ -117,6 +118,40 @@ namespace OAMS.Controllers
                     Product = r.Key.Product,
                     Count = r.Count(),
                 }).ToList();
+
+            return View(e);
+        }
+
+        public ActionResult _105()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult _105(Rpt105 e)
+        {
+            OAMSEntities db = new OAMSEntities();
+
+            e.List = db.SiteDetails.Where(r => true
+                && (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName)
+                && (r.Type == e.Type)
+                ).GroupBy(r => r.Site.Geo2.Name)
+                .Select(r => new Rpt105.Row
+                {
+                    Geo2 = r.Key,
+                    Count = r.Count(),
+                }).ToList();
+
+            if (e.LessThan > 0)
+            {
+                Func<Rpt105.Row, bool> f = r => r.Count < e.LessThan;
+
+                Rpt105.Row nr = new Rpt105.Row() { Geo2 = "Other" };
+                nr.Count = e.List.Where(f).Sum(r => r.Count);
+
+                e.List.RemoveAll(f.ToPredicate());
+                e.List.Add(nr);
+            }
 
             return View(e);
         }

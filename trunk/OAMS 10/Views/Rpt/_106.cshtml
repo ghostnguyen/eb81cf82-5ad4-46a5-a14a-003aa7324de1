@@ -1,0 +1,71 @@
+﻿@model OAMS.Models.Rpt105
+@using OAMS.Models
+@{
+    ViewBag.Title = "Geo1(?) - Type - Count";
+}
+<h2>
+    @ViewBag.Title</h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <p>
+        Geo1: @(Html.EditorFor(model => model.Geo1FullName, "AutoCompleteGeo", new { level = 1 }))
+        <input type="submit" value="Ok" />
+    </p>
+    
+    <div>
+        @if (Model != null && Model.List != null)
+        { 
+            <table id="tblResult" class="display">
+                <thead>
+                    <tr>
+                        <th>
+                            Type
+                        </th>
+                        <th>
+                            Count
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.List)
+                    {
+                        <tr>
+                            <td>
+                                @item.Geo2
+                            </td>
+                            <td>
+                                @item.Count
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>
+                            Total
+                        </td>
+                        <td>
+                            @Model.List.Sum(r => r.Count)
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        }
+        
+
+    </div>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var oTable = $('#tblResult').dataTable({ "aaSorting": [[0, "asc"]],
+                "sDom": 'CT<"clear">lfrtip',
+                "oTableTools": { "sSwfPath": '@Url.Content("~/content/copy_cvs_xls_pdf.swf")', "aButtons": ["copy"] },
+                "iDisplayLength": -1,
+                "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
+            });
+        });
+    </script>
+    
+}

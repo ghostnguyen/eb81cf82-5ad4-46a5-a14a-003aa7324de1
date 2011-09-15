@@ -758,6 +758,11 @@ public static class dotNetExt
             expando.Add(item);
         return (ExpandoObject)expando;
     }
+
+    public static Predicate<T> ToPredicate<T>(this Func<T, bool> func)
+    {
+        return new Predicate<T>(func);
+    }
 }
 
 public static class IPrincipalExtend

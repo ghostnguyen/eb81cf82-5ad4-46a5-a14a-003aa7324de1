@@ -1,0 +1,90 @@
+﻿@model OAMS.Models.Rpt105
+@using OAMS.Models
+@{
+    ViewBag.Title = "Geo1(?) - Type(?) - Geo2 - Count :group_geo2_less(?)";
+}
+<h2>
+    @ViewBag.Title</h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <p>
+        Geo1: @(Html.EditorFor(model => model.Geo1FullName, "AutoCompleteGeo", new { level = 1 }))
+        Type: @(Html.CodeMasterDropDownListFor(r => r.Type))
+        Geo2 less than @Html.EditorFor(r => r.LessThan) go to Other.
+        <input type="submit" value="Ok" />
+    </p>
+    
+    <div>
+        @if (Model != null && Model.List != null)
+        { 
+            <table id="tblResult" class="display">
+                <thead>
+                    <tr>
+                        <th>
+                            GEO2
+                        </th>
+                        <th>
+                            Count
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.List)
+                    {
+                        <tr>
+                            <td>
+                                @item.Geo2
+                            </td>
+                            <td>
+                                @item.Count
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>
+                            Total
+                        </td>
+                        <td>
+                            @Model.List.Sum(r => r.Count)
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        }
+        @{ 
+        var basicChart = new Chart(width: 600, height: 400)
+            .AddTitle("Chart Title")
+            .AddSeries(
+                name: "Employee",
+                xValue: new[] { "Peter", "Andrew", "Julie", "Mary", "Dave" },
+                yValues: new[] { "2", "6", "4", "5", "3" });
+        ViewBag.Chart = basicChart;
+        //.Write(); 
+
+        string key = basicChart.SaveToCache();
+        }
+        
+        <img src='@Url.Content("~/Home/Chart/" + key)' alt="" />
+
+
+        @*@{Html.RenderPartial("_Chart");*@
+
+
+    </div>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var oTable = $('#tblResult').dataTable({ "aaSorting": [[0, "asc"]],
+                "sDom": 'CT<"clear">lfrtip',
+                "oTableTools": { "sSwfPath": '@Url.Content("~/content/copy_cvs_xls_pdf.swf")', "aButtons": ["copy"] },
+                "iDisplayLength": -1,
+                "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
+            });
+        });
+    </script>
+    
+}
