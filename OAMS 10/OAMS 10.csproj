@@ -572,6 +572,15 @@
     <Content Include="Views\Rpt\_105.cshtml" />
     <Content Include="Views\Rpt\_Chart.cshtml" />
     <Content Include="Views\Shared\Chart.cshtml" />
+    <Content Include="Views\Rpt\_106.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Rpt\_107.cshtml" />
+    <Content Include="Views\Rpt\_108.cshtml" />
+    <Content Include="Views\Rpt\_109.cshtml" />
+    <Content Include="Views\Rpt\_110.cshtml" />
+    <Content Include="Views\Rpt\_111.cshtml" />
+    <Content Include="Views\Rpt\_112.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

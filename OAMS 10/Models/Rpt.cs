@@ -84,5 +84,96 @@ namespace OAMS.Models
         }
     }
 
-    
+    public class Rpt106
+    {
+        public string Geo1FullName { get; set; }
+        public List<Row> List { get; set; }
+
+        public class Row
+        {
+            public string Type { get; set; }
+            public int Count { get; set; }
+        }
+    }
+
+    public class Rpt107
+    {
+        public string Geo1FullName { get; set; }
+        public string Cat1FullName { get; set; }
+        public int LessThan { get; set; }
+        public List<Row> List { get; set; }
+
+        public class Row
+        {
+            public string Geo2 { get; set; }
+            public int Count { get; set; }
+        }
+    }
+
+    public class Rpt108
+    {
+        public string Geo1FullName { get; set; }
+        public string Cat1FullName { get; set; }
+        public List<Row> List { get; set; }
+
+        public class Row
+        {
+            public string Type { get; set; }
+            public int Count { get; set; }
+        }
+    }
+
+    public class Rpt109
+    {
+        public string Geo1FullName { get; set; }
+        public string Cat1FullName { get; set; }
+        public List<Row> List { get; set; }
+
+        public class Row
+        {
+            public string Client { get; set; }
+            public int Count { get; set; }
+        }
+    }
+
+    public class Rpt110
+    {
+        public string Geo1FullName { get; set; }
+        public string Cat1FullName { get; set; }
+        public List<Row> List { get; set; }
+
+        public class Row
+        {
+            public string Product { get; set; }
+            public int Count { get; set; }
+        }
+    }
+
+    public class Rpt111
+    {
+        public string Geo1FullName { get; set; }
+        public string Cat1FullName { get; set; }
+        public string Client { get; set; }
+        public List<Row> List { get; set; }
+
+        public class Row
+        {
+            public string Geo2 { get; set; }
+            public int Count { get; set; }
+        }
+    }
+
+    public class Rpt112
+    {
+        public string Geo1FullName { get; set; }
+        public string Cat1FullName { get; set; }
+        public string Client { get; set; }
+        public List<Row> List { get; set; }
+
+        public class Row
+        {
+            public string Product { get; set; }
+            public int Count { get; set; }
+        }
+    }
 }

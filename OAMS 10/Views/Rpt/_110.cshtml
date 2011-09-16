@@ -1,7 +1,7 @@
-﻿@model OAMS.Models.Rpt105
+﻿@model OAMS.Models.Rpt110
 @using OAMS.Models
 @{
-    ViewBag.Title = "Geo1(?) - Type(?) - Geo2 - Count :group_geo2_less(?)";
+    ViewBag.Title = "Geo1(?) - Cat1(?) - Product - Count";
 }
 <h2>
     @ViewBag.Title</h2>
@@ -10,8 +10,7 @@
     @Html.ValidationSummary(true)
     <p>
         Geo1: @(Html.EditorFor(model => model.Geo1FullName, "AutoCompleteGeo", new { level = 1 }))
-        Type: @(Html.CodeMasterDropDownListFor(r => r.Type))
-        Geo2 less than @Html.EditorFor(r => r.LessThan) go to Other.
+        Cat1: @(Html.EditorFor(model => model.Cat1FullName, "AutoCompleteCategory", new { level = 1 }))
         <input type="submit" value="Ok" />
     </p>
     
@@ -22,7 +21,7 @@
                 <thead>
                     <tr>
                         <th>
-                            GEO2
+                            Product
                         </th>
                         <th>
                             Count
@@ -34,7 +33,7 @@
                     {
                         <tr>
                             <td>
-                                @item.Geo2
+                                @item.Product
                             </td>
                             <td>
                                 @item.Count
@@ -54,24 +53,7 @@
                 </tfoot>
             </table>
         }
-        @*@{ 
-        var basicChart = new Chart(width: 600, height: 400)
-            .AddTitle("Chart Title")
-            .AddSeries(
-                name: "Employee",
-                xValue: new[] { "Peter", "Andrew", "Julie", "Mary", "Dave" },
-                yValues: new[] { "2", "6", "4", "5", "3" });
-        ViewBag.Chart = basicChart;
-        //.Write(); 
-
-        string key = basicChart.SaveToCache();
-        }*@
         
-        @*<img src='@Url.Content("~/Home/Chart/" + key)' alt="" />*@
-
-
-        @*@{Html.RenderPartial("_Chart");*@
-
 
     </div>
     <script type="text/javascript">
