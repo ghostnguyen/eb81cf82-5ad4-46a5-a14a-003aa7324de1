@@ -281,7 +281,7 @@ namespace OAMS.Controllers
 
             return View(e);
         }
-        
+
         public ActionResult _111()
         {
             return View();
@@ -326,6 +326,113 @@ namespace OAMS.Controllers
                     Product = r.Key,
                     Count = r.Count(),
                 }).ToList();
+
+            return View(e);
+        }
+
+        public ActionResult _120()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult _120(Rpt120 e)
+        {
+            bool usingSiteDetailMore = false;
+
+            OAMSEntities db = new OAMSEntities();
+
+            IQueryable<SiteDetailMore> l = db.SiteDetailMores;
+
+            if (!string.IsNullOrEmpty(e.Geo1FullName))
+            {
+                l = l.Where(r => r.SiteDetail.Site.Geo1 != null && r.SiteDetail.Site.Geo1.FullName == e.Geo1FullName);
+            }
+
+            if (!string.IsNullOrEmpty(e.Cat1FullName))
+            {
+                l = l.Where(r => r.Product != null && r.Product.Category1 != null && r.Product.Category1.FullName == e.Cat1FullName);
+                usingSiteDetailMore = true;
+            }
+
+            if (!string.IsNullOrEmpty(e.Client))
+            {
+                l = l.Where(r => r.Product != null && r.Product.Client != null && r.Product.Client.Name == e.Client);
+                usingSiteDetailMore = true;
+            }
+
+            if (!string.IsNullOrEmpty(e.Type))
+            {
+                l = l.Where(r => r.SiteDetail.Type == e.Type);
+            }
+
+            IQueryable<IGrouping<string, SiteDetail>> q1 = null;
+            IQueryable<IGrouping<string, SiteDetailMore>> q2 = null;
+
+            switch (e.GroupBy)
+            {
+                case "Type":
+
+                    if (usingSiteDetailMore)
+                    {
+                        q2 = l.GroupBy(r => r.SiteDetail.Type);
+                    }
+                    else
+                    {
+                        q1 = l.Select(r => r.SiteDetail).GroupBy(r => r.Type);
+                    }
+
+                    break;
+                case "Geo2":
+
+                    if (usingSiteDetailMore)
+                    {
+                        q2 = l.GroupBy(r => r.SiteDetail.Site.Geo2.Name);
+                    }
+                    else
+                    {
+                        q1 = l.Select(r => r.SiteDetail).GroupBy(r => r.Site.Geo2.Name);
+                    }
+                    break;
+                case "Product":
+                    q2 = l.GroupBy(r => r.Product.Name);
+
+                    break;
+                case "Client":
+                    q2 = l.GroupBy(r => r.Product.Client.Name);
+                    break;
+
+                default:
+                    break;
+            }
+
+            if (usingSiteDetailMore)
+            {
+                e.List = q2.Select(r => new Rpt120.Row
+                {
+                    Note = r.Key,
+                    Count = r.Count(),
+                }).ToList();
+            }
+            else
+            {
+                e.List = q1.Select(r => new Rpt120.Row
+                {
+                    Note = r.Key,
+                    Count = r.Count(),
+                }).ToList();
+            }
+
+            if (e.LessThan > 0)
+            {
+                Func<Rpt120.Row, bool> f = r => r.Count < e.LessThan;
+
+                var nr = new Rpt120.Row() { Note = "Other" };
+                nr.Count = e.List.Where(f).Sum(r => r.Count);
+
+                e.List.RemoveAll(f.ToPredicate());
+                e.List.Add(nr);
+            }
 
             return View(e);
         }

@@ -176,4 +176,22 @@ namespace OAMS.Models
             public int Count { get; set; }
         }
     }
+
+    public class Rpt120
+    {
+        public string Geo1FullName { get; set; }
+        public string Cat1FullName { get; set; }
+        public string Client { get; set; }
+        public string Type { get; set; }
+        public int LessThan { get; set; }
+
+        public string GroupBy { get; set; }
+        public List<Row> List { get; set; }
+
+        public class Row
+        {
+            public string Note { get; set; }
+            public int Count { get; set; }
+        }
+    }
 }
