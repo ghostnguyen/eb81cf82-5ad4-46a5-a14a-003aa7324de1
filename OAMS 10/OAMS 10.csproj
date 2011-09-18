@@ -570,7 +570,6 @@
     <Content Include="Views\Shared\_MINIPROFILER UPDATED Layout.cshtml" />
     <Content Include="Views\FindSite\Find4Contract.cshtml" />
     <Content Include="Views\Rpt\_105.cshtml" />
-    <Content Include="Views\Rpt\_Chart.cshtml" />
     <Content Include="Views\Shared\Chart.cshtml" />
     <Content Include="Views\Rpt\_106.cshtml">
       <SubType>Code</SubType>
