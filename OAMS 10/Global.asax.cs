@@ -55,12 +55,12 @@ namespace OAMS
 
         protected void Application_BeginRequest()
         {
-            if (Request.IsLocal) { MiniProfiler.Start(); } //or any number of other checks, up to you 
+            //if (Request.IsLocal) { MiniProfiler.Start(); } //or any number of other checks, up to you 
         }
 
         protected void Application_EndRequest()
         {
-            MiniProfiler.Stop(); //stop as early as you can, even earlier with MvcMiniProfiler.MiniProfiler.Stop(discardResults: true);
+            //MiniProfiler.Stop(); //stop as early as you can, even earlier with MvcMiniProfiler.MiniProfiler.Stop(discardResults: true);
         }
     }
 }

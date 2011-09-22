@@ -55,6 +55,7 @@ namespace OAMS.Controllers
         {
             // TODO: Add insert logic here
             Category e = new Category();
+            e.Name = e.Name.Trim();
             UpdateModel(e);
             repo.Add(e);
             //repo.Save();

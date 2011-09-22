@@ -12,7 +12,7 @@ namespace OAMS.Models
         public Category GetByFullname(string fullname)
         {
             return (from e in DB.Categories
-                    where e.FullName.ToLower() == fullname.Trim().ToLower()
+                    where e.FullName.ToLower() == fullname.ToLower()
                     select e).SingleOrDefault();
         }
 
@@ -46,6 +46,8 @@ namespace OAMS.Models
         public Category Add(Category e)
         {
             e.ID = Guid.NewGuid();
+            e.Name = e.Name.Trim();
+
             DB.Categories.AddObject(e);
             e.Level = e.Parent == null ? 1 : e.Parent.Level + 1;
             //SetFullname(e);
