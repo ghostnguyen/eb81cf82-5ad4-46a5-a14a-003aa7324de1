@@ -311,80 +311,80 @@ namespace OAMS.Models
         }
 
 
-        public void UploadPhoto(SiteMonitoring e, IEnumerable<HttpPostedFileBase> files, string[] noteList, bool isCheckDate = true, bool? IsReview = null)
-        {
-            if (files == null
-                || files.Count() == 0
-                || files.Where(r => r != null).Count() == 0)
-            {
-                return;
-            }
+        //public void UploadPhoto(SiteMonitoring e, IEnumerable<HttpPostedFileBase> files, string[] noteList, bool isCheckDate = true, bool? IsReview = null)
+        //{
+        //    if (files == null
+        //        || files.Count() == 0
+        //        || files.Where(r => r != null).Count() == 0)
+        //    {
+        //        return;
+        //    }
 
-            PicasaService service = InitPicasaService();
+        //    PicasaService service = InitPicasaService();
 
-            if (string.IsNullOrEmpty(e.AlbumUrl))
-            {
-                e.AlbumUrl = CreateAlbum("M" + e.ID.ToString());
-            }
+        //    if (string.IsNullOrEmpty(e.AlbumUrl))
+        //    {
+        //        e.AlbumUrl = CreateAlbum("M" + e.ID.ToString());
+        //    }
 
-            Uri postUri = new Uri(e.AlbumUrl.Replace("entry", "feed"));
+        //    Uri postUri = new Uri(e.AlbumUrl.Replace("entry", "feed"));
 
-            for (int i = 0; i < files.Count(); i++)
-            {
-                var item = files.ElementAt(i);
-                if (item != null)
-                {
-                    DateTime? takenDate = GetMetadata_TakenDate(item);
+        //    for (int i = 0; i < files.Count(); i++)
+        //    {
+        //        var item = files.ElementAt(i);
+        //        if (item != null)
+        //        {
+        //            DateTime? takenDate = GetMetadata_TakenDate(item);
 
-                    float? lng = null;
-                    float? lat = null;
-                    GetMetadata_GPS(item, out lng, out lat);
+        //            float? lng = null;
+        //            float? lat = null;
+        //            GetMetadata_GPS(item, out lng, out lat);
 
-                    ContractDetailTimeline timeline = e.ContractDetail.ContractDetailTimelines.Where(r => r.Order == e.Order).FirstOrDefault();
-                    if (
-                        !isCheckDate ||
-                        (timeline != null
-                        && takenDate.HasValue
-                        && timeline.Contains(takenDate))
-                        )
-                    {
-                        MemoryStream mStream = new MemoryStream();
+        //            ContractDetailTimeline timeline = e.ContractDetail.ContractDetailTimelines.Where(r => r.Order == e.Order).FirstOrDefault();
+        //            if (
+        //                !isCheckDate ||
+        //                (timeline != null
+        //                && takenDate.HasValue
+        //                && timeline.Contains(takenDate))
+        //                )
+        //            {
+        //                MemoryStream mStream = new MemoryStream();
 
-                        item.InputStream.Position = 0;
-                        item.InputStream.CopyTo(mStream);
-                        mStream.Position = 0;
+        //                item.InputStream.Position = 0;
+        //                item.InputStream.CopyTo(mStream);
+        //                mStream.Position = 0;
 
-                        //PicasaEntry entry = (PicasaEntry)service.Insert(postUri, mStream, "image/jpeg", "");
-                        //PicasaEntry entry = (PicasaEntry)service.Insert(postUri, item.InputStream, "image/jpeg", "");
-                        //photoUriList.Add(entry.Media.Content.Url);
+        //                //PicasaEntry entry = (PicasaEntry)service.Insert(postUri, mStream, "image/jpeg", "");
+        //                //PicasaEntry entry = (PicasaEntry)service.Insert(postUri, item.InputStream, "image/jpeg", "");
+        //                //photoUriList.Add(entry.Media.Content.Url);
 
 
-                        PicasaEntry entry = new PhotoEntry();
-                        entry.MediaSource = new Google.GData.Client.MediaFileSource(mStream, Path.GetFileName(item.FileName), "image/jpeg");
-                        entry.Title = new AtomTextConstruct(AtomTextConstructElementType.Title, noteList[i]);
-                        entry.Summary = new AtomTextConstruct(AtomTextConstructElementType.Summary, noteList[i]);
+        //                PicasaEntry entry = new PhotoEntry();
+        //                entry.MediaSource = new Google.GData.Client.MediaFileSource(mStream, Path.GetFileName(item.FileName), "image/jpeg");
+        //                entry.Title = new AtomTextConstruct(AtomTextConstructElementType.Title, noteList[i]);
+        //                entry.Summary = new AtomTextConstruct(AtomTextConstructElementType.Summary, noteList[i]);
 
-                        //service.InsertAsync(postUri, entry, new { SiteID = e.ID, AM = asyncManager });
-                        PicasaEntry createdEntry = service.Insert(postUri, entry);
+        //                //service.InsertAsync(postUri, entry, new { SiteID = e.ID, AM = asyncManager });
+        //                PicasaEntry createdEntry = service.Insert(postUri, entry);
 
-                        if (createdEntry != null)
-                        {
-                            SiteMonitoringPhoto photo = new SiteMonitoringPhoto();
+        //                if (createdEntry != null)
+        //                {
+        //                    SiteMonitoringPhoto photo = new SiteMonitoringPhoto();
 
-                            photo.Url = createdEntry.Media.Content.Url;
-                            photo.AtomUrl = createdEntry.EditUri.Content;
-                            photo.TakenDate = takenDate;
-                            photo.Lng = lng;
-                            photo.Lat = lat;
-                            photo.Note = noteList[i];
-                            photo.IsReview = IsReview;
+        //                    photo.Url = createdEntry.Media.Content.Url;
+        //                    photo.AtomUrl = createdEntry.EditUri.Content;
+        //                    photo.TakenDate = takenDate;
+        //                    photo.Lng = lng;
+        //                    photo.Lat = lat;
+        //                    photo.Note = noteList[i];
+        //                    photo.IsReview = IsReview;
 
-                            e.SiteMonitoringPhotoes.Add(photo);
-                        }
-                    }
-                }
-            }
-        }
+        //                    e.SiteMonitoringPhotoes.Add(photo);
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
 
         public void DeletePhoto(SiteMonitoringPhoto item)
         {
