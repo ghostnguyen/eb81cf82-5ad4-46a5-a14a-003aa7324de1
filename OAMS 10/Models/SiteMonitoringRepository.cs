@@ -42,10 +42,11 @@ namespace OAMS.Models
 
             Save();
 
-            PicasaRepository picasaRepository = new PicasaRepository();
-            picasaRepository.DB = DB;
+            //PicasaRepository picasaRepository = new PicasaRepository();
+            //picasaRepository.DB = DB;
 
-            picasaRepository.UploadPhoto(e, files, noteList, false);
+            //picasaRepository.UploadPhoto(e, files, noteList, false);
+            UploadPhoto(e, files, noteList);
 
             Save();
 
