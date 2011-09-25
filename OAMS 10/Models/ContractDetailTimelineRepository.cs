@@ -5,7 +5,7 @@ using System.Web;
 
 namespace OAMS.Models
 {
-    public class ContractDetailTimelineRepository : BaseRepository
+    public class ContractDetailTimelineRepository : BaseRepository<ContractDetailTimelineRepository>
     {
         public ContractDetailTimeline Add(int contractDetailID, int timeCount, string timeUnit)
         {

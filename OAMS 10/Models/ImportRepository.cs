@@ -5,7 +5,7 @@ using System.Web;
 
 namespace OAMS.Models
 {
-    public class ImportRepository : BaseRepository
+    public class ImportRepository : BaseRepository<ImportRepository>
     {
         public void Import()
         {

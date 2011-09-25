@@ -5,7 +5,7 @@ using System.Web;
 
 namespace OAMS.Models
 {
-    public class QuoteDetailRepository : BaseRepository
+    public class QuoteDetailRepository : BaseRepository<QuoteDetailRepository>
     {
         public QuoteDetail Get(int id)
         {

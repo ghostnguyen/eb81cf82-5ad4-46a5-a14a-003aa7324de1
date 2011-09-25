@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace OAMS.Models
 {
-    public class MVCAuthorizationRepository : BaseRepository
+    public class MVCAuthorizationRepository : BaseRepository<MVCAuthorizationRepository>
     {
         public void SetRoleAuthorization(string roleName, List<int?> ControllerActionIDList)
         {

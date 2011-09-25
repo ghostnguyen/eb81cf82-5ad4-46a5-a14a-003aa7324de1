@@ -6,7 +6,7 @@ using System.Web.Security;
 
 namespace OAMS.Models
 {
-    public class AccountRepository : BaseRepository
+    public class AccountRepository : BaseRepository<AccountRepository>
     {
         public bool Exist(string username, string openId)
         {

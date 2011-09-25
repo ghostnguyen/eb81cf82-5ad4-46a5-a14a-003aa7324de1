@@ -7,7 +7,7 @@ using System.Data.Objects;
 
 namespace OAMS.Models
 {
-    public class ContractorContactDetailRepository : BaseRepository
+    public class ContractorContactDetailRepository : BaseRepository<ContractorContactDetailRepository>
     {
         public IQueryable<ContractorContactDetail> GetAll()
         {

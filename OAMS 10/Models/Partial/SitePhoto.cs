@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace OAMS.Models
 {
-    public partial class SitePhoto
+    public partial class SitePhoto : IPhoto
     {
         public bool IsValidGPS
         {

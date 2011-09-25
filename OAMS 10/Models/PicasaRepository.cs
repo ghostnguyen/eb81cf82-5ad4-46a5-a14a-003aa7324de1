@@ -14,14 +14,20 @@ using ExifLibrary;
 
 namespace OAMS.Models
 {
-    public class PicasaRepository : BaseRepository
+    public class PicasaRepository : BaseRepository<PicasaRepository>
     {
+        private PicasaService service;
+        private int totalPhotos = 0;
         public PicasaService InitPicasaService()
         {
-            PicasaService service = new PicasaService("OAMS");
-            service.setUserCredentials(AppSetting.GoogleUsername, AppSetting.GooglePassword);
+            if (service == null)
+            {
+                service = new PicasaService("OAMS");
+                service.setUserCredentials(AppSetting.GoogleUsername, AppSetting.GooglePassword);
 
-            service.AsyncOperationCompleted += new AsyncOperationCompletedEventHandler(service_AsyncOperationCompleted);
+                service.AsyncOperationCompleted += new AsyncOperationCompletedEventHandler(service_AsyncOperationCompleted);
+            }
+
             return service;
         }
 
@@ -479,6 +485,96 @@ namespace OAMS.Models
                     }
                 }
             }
+        }
+
+        public void CreateGenericAlbum()
+        {
+            AppSettingRepository appBLL = new AppSettingRepository();
+            string url = CreateAlbum(DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss"));
+            appBLL.InsertOrUpdate("AlbumAtomUrl", url);
+        }
+
+        public void Update_AlbumAtomUrl()
+        {
+            if (string.IsNullOrEmpty(AppSetting.AlbumAtomUrl))
+            {
+                CreateGenericAlbum();
+            }
+            else
+            {
+                if (totalPhotos == 0 || totalPhotos >= 990)
+                {
+                    var service = InitPicasaService();
+
+                    AlbumQuery query = new AlbumQuery();
+
+                    query.Uri = new Uri(AppSetting.AlbumAtomUrl);
+
+                    var picasaFeed = service.Query(query);
+
+                    if (picasaFeed != null)
+                    {
+                        totalPhotos = (new AlbumAccessor((PicasaEntry)picasaFeed.Entries[0])).NumPhotos.ToInt();
+                    }
+                }
+
+                if (totalPhotos >= 990)
+                {
+                    CreateGenericAlbum();
+                    totalPhotos = 0;
+                }
+            }
+        }
+
+        public PicasaEntry MovePhoto2GenericAlbum(IPhoto p)
+        {
+            Update_AlbumAtomUrl();
+
+            string albumid = AppSetting.AlbumAtomUrl.Split('/')[9].Split('?')[0];
+
+            string note = "";
+            if (p is SitePhoto)
+            {
+                var sp = p as SitePhoto;
+                note = string.Format("SitePhoto_{0}_Site_{1}", sp.ID.ToString(), sp.SiteID.ToString());
+            }
+
+            var entry = MovingPhoto1(p.Url, p.AtomUrl, albumid, note);
+
+            if (entry != null)
+            {
+                if (p.Url != entry.Media.Content.Url)
+                    p.Url = entry.Media.Content.Url;
+
+                if (p.AtomUrl != entry.EditUri.Content)
+                {
+                    p.AtomUrl = entry.EditUri.Content;
+                }
+
+                totalPhotos++;
+            }
+
+            return null;
+        }
+
+        public PicasaEntry MovingPhoto1(string photoUrl, string photoAtomUrl, string albumid, string note)
+        {
+            PicasaService service = InitPicasaService();
+            var atom = service.Get(photoAtomUrl.ToHttpsUri());
+
+            PicasaEntry a = (PicasaEntry)atom;
+
+            string old = a.GetPhotoExtensionValue("albumid");
+            if (old != albumid)
+            {
+                a.Title = new AtomTextConstruct(AtomTextConstructElementType.Title, note);
+                a.Summary = new AtomTextConstruct(AtomTextConstructElementType.Summary, note);
+
+                a.SetPhotoExtensionValue("albumid", albumid);
+                a.Update();
+            }
+
+            return a;
         }
     }
 }

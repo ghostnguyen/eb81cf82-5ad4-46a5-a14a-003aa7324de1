@@ -11,7 +11,7 @@ namespace OAMS.Models
         public const string Admin = "Admin";
     }
 
-    public class RoleRepository : BaseRepository
+    public class RoleRepository : BaseRepository<RoleRepository>
     {
         public string GetRolesList(string username)
         {

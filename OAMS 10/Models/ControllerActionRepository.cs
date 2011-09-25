@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace OAMS.Models
 {
-    public class ControllerActionRepository : BaseRepository
+    public class ControllerActionRepository : BaseRepository<ControllerActionRepository>
     {
         public void UpdateActionList()
         {

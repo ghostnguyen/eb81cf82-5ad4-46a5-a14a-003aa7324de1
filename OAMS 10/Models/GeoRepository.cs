@@ -5,7 +5,7 @@ using System.Web;
 
 namespace OAMS.Models
 {
-    public class GeoRepository : BaseRepository
+    public class GeoRepository : BaseRepository<GeoRepository>
     {
         //private OAMSEntities DB = new OAMSEntities();
 

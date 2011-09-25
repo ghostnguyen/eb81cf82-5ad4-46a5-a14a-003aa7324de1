@@ -5,7 +5,7 @@ using System.Web;
 
 namespace OAMS.Models
 {
-    public class SiteRepository : BaseRepository
+    public class SiteRepository : BaseRepository<SiteRepository>
     {
         public IQueryable<Site> GetAll()
         {
@@ -44,7 +44,7 @@ namespace OAMS.Models
         public void Update(int ID, Action<Site> updateMethod, IEnumerable<HttpPostedFileBase> files, List<int> DeletePhotoList, string[] noteList, List<SDP> siteDetailFiles, List<int> DeleteSiteDetailPhotoList, List<MoveSP> moveL)
         {
             Site e = Get(ID);
-            
+
             updateMethod(e);
 
             UpdateGeo(e);
@@ -237,6 +237,41 @@ namespace OAMS.Models
 
                 Save();
             }
+        }
+
+        public string getAlbumID(string atom)
+        {
+            return atom.Split('/')[9].Split('?')[0];
+        }
+        public void MovePhoto(int from,int to)
+        {
+            //var s = Get(id).SitePhotoes;
+
+            var s = DB.Sites.Where(r => r.ID >= from && r.ID < to).SelectMany(r => r.SitePhotoes).ToList();
+            //
+            string genAlbum = getAlbumID(AppSetting.AlbumAtomUrl);
+            int count = s.Where(r => getAlbumID(r.AtomUrl) == genAlbum).Count();
+            
+            var s2 = s.Where(r => getAlbumID(r.AtomUrl) != genAlbum).OrderBy(r => r.SiteID).ThenBy(r => r.ID);
+            
+            int count2 = s2.Count();
+
+            //string albumid = AppSetting.AlbumAtomUrl.Split('/')[9].Split('?')[0];
+
+            foreach (var item in s2)
+            {
+                try
+                {
+                    PicasaRepository.I.MovePhoto2GenericAlbum(item);
+                    Save();
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+
+            Save();
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Data.Objects;
 
 namespace OAMS.Models
 {
-    public class SiteDetailMoreRepository : BaseRepository
+    public class SiteDetailMoreRepository : BaseRepository<SiteDetailMoreRepository>
     {
         //public IQueryable<SiteDetailMore> GetAll()
         //{
