@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace OAMS.Models
 {
-    public class SiteMonitoringRepository : BaseRepository
+    public class SiteMonitoringRepository : BaseRepository<SiteMonitoringRepository>
     {
         public SiteMonitoring Get(int id)
         {

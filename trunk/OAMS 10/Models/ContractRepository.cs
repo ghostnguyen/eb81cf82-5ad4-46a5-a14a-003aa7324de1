@@ -5,7 +5,7 @@ using System.Web;
 
 namespace OAMS.Models
 {
-    public class ContractRepository : BaseRepository
+    public class ContractRepository : BaseRepository<ContractRepository>
     {
         public IQueryable<Contract> GetAll()
         {

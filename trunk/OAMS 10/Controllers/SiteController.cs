@@ -42,26 +42,26 @@ namespace OAMS.Controllers
                 r.CreatedBy,
                 r.CreatedDate,
             }).ToList()
-            //.Select(r =>
-            //{
-            //    dynamic a = new ExpandoObject();
-            //    a.ID = r.ID;
-            //    a.Codea = r.Code;
-            //    a.GeoFullName = r.GeoFullName;
-            //    a.AddressLine1 = r.AddressLine1;
-            //    a.AddressLine2 = r.AddressLine2;
-            //    a.Type = string.Join(",", r.Type.ToArray());
-            //    a.Format = string.Join(",", r.Format.ToArray());
-            //    a.Product = string.Join(",", r.Product.ToArray());
-            //    a.Client = string.Join(",", r.Client.ToArray());
-            //    a.Score = r.Score;
-            //    a.Count = r.Count;
-            //    a.LastUpdatedBy = r.LastUpdatedBy;
-            //    a.LastUpdatedDate = r.LastUpdatedDate;
-            //    a.CreatedBy = r.CreatedBy;
-            //    a.CreatedDate = r.CreatedDate;
-            //    return (ExpandoObject)a;
-            //})
+                //.Select(r =>
+                //{
+                //    dynamic a = new ExpandoObject();
+                //    a.ID = r.ID;
+                //    a.Codea = r.Code;
+                //    a.GeoFullName = r.GeoFullName;
+                //    a.AddressLine1 = r.AddressLine1;
+                //    a.AddressLine2 = r.AddressLine2;
+                //    a.Type = string.Join(",", r.Type.ToArray());
+                //    a.Format = string.Join(",", r.Format.ToArray());
+                //    a.Product = string.Join(",", r.Product.ToArray());
+                //    a.Client = string.Join(",", r.Client.ToArray());
+                //    a.Score = r.Score;
+                //    a.Count = r.Count;
+                //    a.LastUpdatedBy = r.LastUpdatedBy;
+                //    a.LastUpdatedDate = r.LastUpdatedDate;
+                //    a.CreatedBy = r.CreatedBy;
+                //    a.CreatedDate = r.CreatedDate;
+                //    return (ExpandoObject)a;
+                //})
             .Select(r => new
             {
                 r.ID,
@@ -83,7 +83,7 @@ namespace OAMS.Controllers
             .ToList();
             ;
 
-            
+
             return View(v);
             //return View(repo.GetAll());
         }
@@ -138,6 +138,12 @@ namespace OAMS.Controllers
                 .ToList();
 
             return Json(result);
+        }
+
+        public ActionResult MovePhoto(int from, int to)
+        {
+            repo.MovePhoto(from, to);
+            return View("Create");
         }
     }
 }

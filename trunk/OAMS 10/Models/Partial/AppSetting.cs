@@ -24,6 +24,8 @@ namespace OAMS.Models
         static public string GooglePassword { get; set; }
         static public string AmbientClientUrl { get; set; }
 
+        static public string AlbumAtomUrl { get; set; }
+
 
         /// <summary>
         /// Valid range in meter

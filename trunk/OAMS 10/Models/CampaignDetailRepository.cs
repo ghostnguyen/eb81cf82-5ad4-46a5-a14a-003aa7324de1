@@ -5,7 +5,7 @@ using System.Web;
 
 namespace OAMS.Models
 {
-    public class CampaignDetailRepository : BaseRepository
+    public class CampaignDetailRepository : BaseRepository<CampaignDetailRepository>
     {
         public CampaignDetail Create(int campaignID,int contractDetailID)
         {

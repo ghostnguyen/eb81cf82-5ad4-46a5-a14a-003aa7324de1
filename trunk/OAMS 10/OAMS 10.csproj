@@ -182,6 +182,7 @@
     </Compile>
     <Compile Include="Helper.cs" />
     <Compile Include="Models\ClientRepository.cs" />
+    <Compile Include="Models\Partial\IPhoto.cs" />
     <Compile Include="Models\QuoteDetailFeeRepository.cs" />
     <Compile Include="Models\ImportRepository.cs" />
     <Compile Include="Models\Partial\CodeMaster.cs" />

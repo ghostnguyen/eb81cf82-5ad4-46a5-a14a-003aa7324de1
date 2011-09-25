@@ -5,7 +5,7 @@ using System.Web;
 
 namespace OAMS.Models
 {
-    public class SiteDetailPhotoRepository : BaseRepository
+    public class SiteDetailPhotoRepository : BaseRepository<SiteDetailPhotoRepository>
     {
         public void EditNote(int id, string note)
         {

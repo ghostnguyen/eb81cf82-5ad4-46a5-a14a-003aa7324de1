@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace OAMS.Models
 {
-    public class AppSettingRepository : BaseRepository
+    public class AppSettingRepository : BaseRepository<AppSettingRepository>
     {
         public void Reload()
         {

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace OAMS.Models
 {
-    public class BaseRepository 
+    public class BaseRepository<T> where T : new()
     {
         private OAMSEntities _db = new OAMSEntities();
         public OAMSEntities DB
@@ -13,6 +13,9 @@ namespace OAMS.Models
             get { return _db; }
             set { _db = value; }
         }
+
+        static public T I = new T();
+
 
         public int Save()
         {

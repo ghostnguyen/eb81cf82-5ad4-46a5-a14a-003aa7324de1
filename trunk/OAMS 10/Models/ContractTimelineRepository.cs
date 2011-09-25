@@ -7,7 +7,7 @@ using System.Data.Objects;
 
 namespace OAMS.Models
 {
-    public class ContractTimelineRepository : BaseRepository
+    public class ContractTimelineRepository : BaseRepository<ContractTimelineRepository>
     {
         public ContractTimeline Add(int contractID, int timeCount, string timeUnit)
         {

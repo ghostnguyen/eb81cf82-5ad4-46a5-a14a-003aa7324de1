@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace OAMS.Models
 {
-    public class CodeMasterRepository : BaseRepository
+    public class CodeMasterRepository : BaseRepository<CodeMasterRepository>
     {
         private OAMSEntities db = new OAMSEntities();
 
