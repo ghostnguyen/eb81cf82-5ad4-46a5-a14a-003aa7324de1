@@ -8,6 +8,8 @@ using System.Reflection;
 using System.Configuration;
 using System.Web.Mvc;
 using System.Globalization;
+using Google.GData.Photos;
+using OAMS.Models;
 namespace OAMS
 {
     public class Helper
@@ -40,6 +42,20 @@ namespace OAMS
             double d = R * c;
 
             return d;
+        }
+
+        public static void UpdateIPhoto(HttpPostedFileBase file, string note, PicasaEntry entry, IPhoto photo)
+        {
+            var extra = (new PhotoAccessor(entry));
+            photo.Url = entry.Media.Content.Url;
+            photo.AtomUrl = entry.EditUri.Content;
+
+            photo.TakenDate = PicasaRepository.GetMetadata_TakenDate(file);
+            if (extra.Longitude > 0)
+                photo.Lng = extra.Longitude;
+            if (extra.Latitude > 0)
+                photo.Lat = extra.Latitude;
+            photo.Note = note;
         }
     }
 

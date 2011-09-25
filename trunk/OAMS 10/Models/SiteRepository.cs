@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Google.GData.Photos;
+using Google.GData.Client;
 
 namespace OAMS.Models
 {
@@ -31,15 +33,46 @@ namespace OAMS.Models
 
             Save();
 
-            PicasaRepository picasaRepository = new PicasaRepository();
-            picasaRepository.DB = DB;
+            //PicasaRepository picasaRepository = new PicasaRepository();
+            //picasaRepository.DB = DB;
 
-            picasaRepository.UploadPhoto(e, files, noteList);
+            //picasaRepository.UploadPhoto(e, files, noteList);
+            UploadPhoto(e, files, noteList);
 
             Save();
 
             return e;
         }
+
+        //public void Update(int ID, Action<Site> updateMethod, IEnumerable<HttpPostedFileBase> files, List<int> DeletePhotoList, string[] noteList, List<SDP> siteDetailFiles, List<int> DeleteSiteDetailPhotoList, List<MoveSP> moveL)
+        //{
+        //    Site e = Get(ID);
+
+        //    updateMethod(e);
+
+        //    UpdateGeo(e);
+
+        //    UpdateFrontBackLit(e);
+
+        //    Save();
+
+        //    PicasaRepository picasaRepository = new PicasaRepository();
+        //    picasaRepository.DB = DB;
+
+        //    picasaRepository.UploadPhoto(e, files, noteList);
+        //    Save();
+
+        //    DeletePhoto(DeletePhotoList);
+
+        //    picasaRepository.UploadPhoto(siteDetailFiles);
+        //    Save();
+
+        //    DeleteSiteDetailPhoto(DeleteSiteDetailPhotoList);
+        //    Save();
+
+        //    MovePhoto(moveL);
+        //    Save();
+        //}
 
         public void Update(int ID, Action<Site> updateMethod, IEnumerable<HttpPostedFileBase> files, List<int> DeletePhotoList, string[] noteList, List<SDP> siteDetailFiles, List<int> DeleteSiteDetailPhotoList, List<MoveSP> moveL)
         {
@@ -50,26 +83,54 @@ namespace OAMS.Models
             UpdateGeo(e);
 
             UpdateFrontBackLit(e);
-
             Save();
 
-            PicasaRepository picasaRepository = new PicasaRepository();
-            picasaRepository.DB = DB;
-
-            picasaRepository.UploadPhoto(e, files, noteList);
+            UploadPhoto(e, files, noteList);
             Save();
 
             DeletePhoto(DeletePhotoList);
 
-            picasaRepository.UploadPhoto(siteDetailFiles);
+            SiteDetailRepository SDRepo = new SiteDetailRepository();
+            SDRepo.DB = DB;
+
+            SDRepo.UploadPhoto(siteDetailFiles);
             Save();
 
-            DeleteSiteDetailPhoto(DeleteSiteDetailPhotoList);
+            SDRepo.DeleteSiteDetailPhoto(DeleteSiteDetailPhotoList);
             Save();
 
-            MovePhoto(moveL);
+            //MovePhoto(moveL);
             Save();
         }
+
+        public void UploadPhoto(Site e, IEnumerable<HttpPostedFileBase> files, string[] noteList)
+        {
+            var l = PicasaRepository.I.UploadPhoto2(files, noteList);
+            if (l == null) return;
+
+            for (int i = 0; i < l.Count; i++)
+            {
+                var entry = l[i];
+                if (entry != null)
+                {
+                    SitePhoto photo = new SitePhoto();
+
+                    Helper.UpdateIPhoto(files.ElementAt(i), noteList[i], entry, photo);
+
+                    e.SitePhotoes.Add(photo);
+
+                    Save();
+
+                    string note = string.Format("SP_{0}_S_{1}", photo.ID.ToString(), e.ID.ToString());
+                    entry.UpdateSummary(note);
+                }
+            }
+
+        }
+
+
+
+
 
         public void UpdateContractor(Site e)
         {
@@ -166,10 +227,10 @@ namespace OAMS.Models
             if (IDList != null)
             {
                 List<SitePhoto> l = DB.SitePhotoes.Where(r => IDList.Contains(r.ID)).ToList();
-                PicasaRepository picasaRepository = new PicasaRepository();
+                //PicasaRepository picasaRepository = new PicasaRepository();
                 foreach (var item in l)
                 {
-                    picasaRepository.DeletePhoto(item);
+                    //picasaRepository.DeletePhoto(item);
                     DB.DeleteObject(item);
                 }
 
@@ -223,27 +284,13 @@ namespace OAMS.Models
             Save();
         }
 
-        public void DeleteSiteDetailPhoto(List<int> IDList)
-        {
-            if (IDList != null)
-            {
-                var l = DB.SiteDetailPhotoes.Where(r => IDList.Contains(r.ID)).ToList();
-                PicasaRepository picasaRepository = new PicasaRepository();
-                foreach (var item in l)
-                {
-                    picasaRepository.DeletePhoto(item);
-                    DB.DeleteObject(item);
-                }
 
-                Save();
-            }
-        }
 
         public string getAlbumID(string atom)
         {
             return atom.Split('/')[9].Split('?')[0];
         }
-        public void MovePhoto(int from,int to)
+        public void MovePhoto(int from, int to)
         {
             //var s = Get(id).SitePhotoes;
 
@@ -251,9 +298,9 @@ namespace OAMS.Models
             //
             string genAlbum = getAlbumID(AppSetting.AlbumAtomUrl);
             int count = s.Where(r => getAlbumID(r.AtomUrl) == genAlbum).Count();
-            
+
             var s2 = s.Where(r => getAlbumID(r.AtomUrl) != genAlbum).OrderBy(r => r.SiteID).ThenBy(r => r.ID);
-            
+
             int count2 = s2.Count();
 
             //string albumid = AppSetting.AlbumAtomUrl.Split('/')[9].Split('?')[0];

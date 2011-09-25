@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Google.GData.Photos;
+using Google.GData.Client;
 
 namespace OAMS.Models
 {
@@ -54,6 +56,69 @@ namespace OAMS.Models
             var v = Get(id);
             DB.DeleteObject(v);
             Save();
+        }
+
+        public void UploadPhoto(List<SDP> siteDetailFiles)
+        {
+            if (siteDetailFiles == null)
+            {
+                return;
+            }
+
+            var v = siteDetailFiles.Where(r => r.File != null).ToList().GroupBy(r => r.SiteDetailID);
+
+            if (v.Count() == 0)
+            {
+                return;
+            }
+
+            foreach (var item in v)
+            {
+                if (item.Count() == 0) continue;
+
+                var siteDetail = Get(item.Key);
+                var files = item.Select(r => r.File);
+                var notes = item.Select(r => r.Note).ToArray();
+                var l = PicasaRepository.I.UploadPhoto2(files, notes);
+                if (l != null)
+                {
+                    for (int i = 0; i < l.Count(); i++)
+                    {
+                        var entry = l[i];
+                        if (entry != null)
+                        {
+                            SiteDetailPhoto photo = new SiteDetailPhoto();
+
+                            Helper.UpdateIPhoto(files.ElementAt(i), notes[i], entry, photo);
+
+                            siteDetail.SiteDetailPhotoes.Add(photo);
+
+                            Save();
+
+                            string note = string.Format("SDP_{0}_SD_{1}_S_{2}", photo.ID.ToString(), siteDetail.ID.ToString(), siteDetail.SiteID.ToString());
+                            entry.UpdateSummary(note);
+                        }
+                    }
+                }
+            }
+        }
+
+        
+
+        public void DeleteSiteDetailPhoto(List<int> IDList)
+        {
+            if (IDList != null)
+            {
+                var l = DB.SiteDetailPhotoes.Where(r => IDList.Contains(r.ID)).ToList();
+                //PicasaRepository picasaRepository = new PicasaRepository();
+                foreach (var item in l)
+                {
+                    //picasaRepository.DeletePhoto(item);
+                    DB.DeleteObject(item);
+                }
+
+                Save();
+            }
         }
     }
 }
