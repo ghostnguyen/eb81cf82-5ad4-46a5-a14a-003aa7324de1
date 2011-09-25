@@ -18,6 +18,7 @@ namespace OAMS.Models
     {
         private PicasaService service;
         private int totalPhotos = 0;
+
         public PicasaService InitPicasaService()
         {
             if (service == null)
@@ -27,6 +28,8 @@ namespace OAMS.Models
 
                 service.AsyncOperationCompleted += new AsyncOperationCompletedEventHandler(service_AsyncOperationCompleted);
             }
+
+            Update_AlbumAtomUrl(service);
 
             return service;
         }
@@ -84,7 +87,64 @@ namespace OAMS.Models
 
                 if (item != null)
                 {
-                    DateTime? takenDate = GetMetadata_TakenDate(item);
+                    //DateTime? takenDate = GetMetadata_TakenDate(item);
+
+                    float? lng = null;
+                    float? lat = null;
+                    GetMetadata_GPS(item, out lng, out lat);
+
+                    MemoryStream mStream = new MemoryStream();
+
+                    item.InputStream.Position = 0;
+                    item.InputStream.CopyTo(mStream);
+                    mStream.Position = 0;
+
+                    PicasaEntry entry = new PhotoEntry();
+
+                    entry.MediaSource = new Google.GData.Client.MediaFileSource(mStream, Path.GetFileName(item.FileName), "image/jpeg");
+                    entry.Title = new AtomTextConstruct(AtomTextConstructElementType.Title, noteList[i]);
+                    entry.Summary = new AtomTextConstruct(AtomTextConstructElementType.Summary, noteList[i]);
+
+                    PicasaEntry createdEntry = service.Insert(postUri, entry);
+
+                    if (createdEntry != null)
+                    {
+                        SitePhoto photo = new SitePhoto();
+
+                        photo.Url = createdEntry.Media.Content.Url;
+                        photo.AtomUrl = createdEntry.EditUri.Content;
+                        //photo.TakenDate = takenDate;
+                        photo.Lng = lng;
+                        photo.Lat = lat;
+                        photo.Note = noteList[i];
+                        e.SitePhotoes.Add(photo);
+                    }
+                }
+            }
+        }
+
+        public List<PicasaEntry> UploadPhoto2(IEnumerable<HttpPostedFileBase> files, string[] noteList = null)
+        {
+            if (files == null
+                || files.Count() == 0
+                || files.Where(r => r != null).Count() == 0)
+            {
+                return null;
+            }
+
+            List<PicasaEntry> l = new List<PicasaEntry>();
+
+            PicasaService service = InitPicasaService();
+
+            Uri postUri = new Uri(AppSetting.AlbumAtomUrl.Replace("entry", "feed").ToHttpsUri());
+
+            for (int i = 0; i < files.Count(); i++)
+            {
+                var item = files.ElementAt(i);
+
+                if (item != null)
+                {
+                    //DateTime? takenDate = GetMetadata_TakenDate(item);
 
                     float? lng = null;
                     float? lat = null;
@@ -98,28 +158,24 @@ namespace OAMS.Models
 
                     PicasaEntry entry = new PhotoEntry();
                     entry.MediaSource = new Google.GData.Client.MediaFileSource(mStream, Path.GetFileName(item.FileName), "image/jpeg");
-                    entry.Title = new AtomTextConstruct(AtomTextConstructElementType.Title, noteList[i]);
-                    entry.Summary = new AtomTextConstruct(AtomTextConstructElementType.Summary, noteList[i]);
+                    if (noteList != null)
+                    {
+                        entry.Title = new AtomTextConstruct(AtomTextConstructElementType.Title, noteList[i]);
+                        entry.Summary = new AtomTextConstruct(AtomTextConstructElementType.Summary, noteList[i]);
+                    }
+
 
                     PicasaEntry createdEntry = service.Insert(postUri, entry);
 
-                    if (createdEntry != null)
-                    {
-                        SitePhoto photo = new SitePhoto();
-
-                        photo.Url = createdEntry.Media.Content.Url;
-                        photo.AtomUrl = createdEntry.EditUri.Content;
-                        photo.TakenDate = takenDate;
-                        photo.Lng = lng;
-                        photo.Lat = lat;
-                        photo.Note = noteList[i];
-                        e.SitePhotoes.Add(photo);
-                    }
+                    l.Add(createdEntry);
                 }
             }
+
+            return l;
         }
 
-        private static DateTime? GetMetadata_TakenDate(HttpPostedFileBase item)
+
+        public static DateTime? GetMetadata_TakenDate(HttpPostedFileBase item)
         {
             DateTime? takenDate = null;
             item.InputStream.Position = 0;
@@ -162,9 +218,10 @@ namespace OAMS.Models
 
 
 
-        public string CreateAlbum(string name, bool isBackup = false)
+        public string CreateAlbum(string name, bool isBackup = false, PicasaService service = null)
         {
-            PicasaService service = InitPicasaService();
+            if (service == null)
+                service = InitPicasaService();
 
             AlbumEntry newEntry = new AlbumEntry();
 
@@ -487,24 +544,32 @@ namespace OAMS.Models
             }
         }
 
-        public void CreateGenericAlbum()
+
+
+        public void CreateGenericAlbum(PicasaService service = null)
         {
+            if (service == null)
+                service = InitPicasaService();
+
             AppSettingRepository appBLL = new AppSettingRepository();
-            string url = CreateAlbum(DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss"));
+            string url = CreateAlbum(DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss"), service: service);
             appBLL.InsertOrUpdate("AlbumAtomUrl", url);
         }
 
-        public void Update_AlbumAtomUrl()
+        public void Update_AlbumAtomUrl(PicasaService service = null)
         {
+            if (service == null)
+                service = InitPicasaService();
+
             if (string.IsNullOrEmpty(AppSetting.AlbumAtomUrl))
             {
-                CreateGenericAlbum();
+                CreateGenericAlbum(service);
             }
             else
             {
                 if (totalPhotos == 0 || totalPhotos >= 990)
                 {
-                    var service = InitPicasaService();
+                    //var service = InitPicasaService();
 
                     AlbumQuery query = new AlbumQuery();
 
@@ -523,12 +588,13 @@ namespace OAMS.Models
                     CreateGenericAlbum();
                     totalPhotos = 0;
                 }
+
             }
         }
 
         public PicasaEntry MovePhoto2GenericAlbum(IPhoto p)
         {
-            Update_AlbumAtomUrl();
+            InitPicasaService();
 
             string albumid = AppSetting.AlbumAtomUrl.Split('/')[9].Split('?')[0];
 
@@ -576,5 +642,7 @@ namespace OAMS.Models
 
             return a;
         }
+
+        
     }
 }

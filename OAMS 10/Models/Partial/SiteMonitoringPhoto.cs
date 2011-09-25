@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 namespace OAMS.Models
 {
 
-    public partial class SiteMonitoringPhoto
+    public partial class SiteMonitoringPhoto : IPhoto
     {
         public bool IsValidTakenDate
         {

@@ -23,6 +23,8 @@ using OAMS.Controllers;
 using System.Web.Routing;
 using OAMS;
 using System.Dynamic;
+using Google.GData.Photos;
+using Google.GData.Client;
 
 
 /// <summary>
@@ -99,7 +101,7 @@ public static class dotNetExt
     public static string ToURLCompatible(this string s)
     {
         //return HttpUtility.UrlPathEncode(s);
-        return HttpUtility.UrlEncode(s);
+        return System.Web.HttpUtility.UrlEncode(s);
 
         //'	%27	Foot Sign
         //"	%22	Quote
@@ -762,6 +764,13 @@ public static class dotNetExt
     public static Predicate<T> ToPredicate<T>(this Func<T, bool> func)
     {
         return new Predicate<T>(func);
+    }
+
+    public static void UpdateSummary(this PicasaEntry entry, string str)
+    {
+        entry.Title = new AtomTextConstruct(AtomTextConstructElementType.Title, str);
+        entry.Summary = new AtomTextConstruct(AtomTextConstructElementType.Summary, str);
+        entry.Update();
     }
 }
 
