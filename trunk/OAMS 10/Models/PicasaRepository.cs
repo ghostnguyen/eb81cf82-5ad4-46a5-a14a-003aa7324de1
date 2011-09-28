@@ -585,7 +585,7 @@ namespace OAMS.Models
 
                 if (totalPhotos >= 990)
                 {
-                    CreateGenericAlbum();
+                    CreateGenericAlbum(service);
                     totalPhotos = 0;
                 }
 
