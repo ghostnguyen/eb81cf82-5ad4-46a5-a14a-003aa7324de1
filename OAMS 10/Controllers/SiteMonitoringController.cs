@@ -9,7 +9,7 @@ using Google.GData.Photos;
 namespace OAMS.Controllers
 {
     [CustomAuthorize]
-    public class SiteMonitoringController : AsyncController
+    public class SiteMonitoringController : BaseController<SiteMonitoringRepository>
     {
         //
         // GET: /Site/

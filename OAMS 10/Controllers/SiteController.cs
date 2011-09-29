@@ -10,7 +10,7 @@ using System.Dynamic;
 namespace OAMS.Controllers
 {
     [CustomAuthorize]
-    public class SiteController : AsyncController
+    public class SiteController : BaseController<SiteRepository>
     {
         //
         // GET: /Site/
