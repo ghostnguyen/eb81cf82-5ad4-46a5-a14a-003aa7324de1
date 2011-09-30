@@ -257,31 +257,31 @@ namespace OAMS.Models
 
         public void MovePhoto(SitePhoto photo, SiteDetail sd)
         {
-            PicasaRepository picasaRepository = new PicasaRepository();
+            //PicasaRepository picasaRepository = new PicasaRepository();
 
-            if (string.IsNullOrEmpty(sd.AlbumUrl))
-            {
-                sd.AlbumUrl = picasaRepository.CreateAlbum("SD_" + sd.ID.ToString());
-            }
+            //if (string.IsNullOrEmpty(sd.AlbumUrl))
+            //{
+            //    sd.AlbumUrl = picasaRepository.CreateAlbum("SD_" + sd.ID.ToString());
+            //}
 
-            var createdEntry = picasaRepository.MovingPhoto(photo.Url, photo.AtomUrl, sd.AlbumUrl, photo.Note);
+            //var createdEntry = picasaRepository.MovingPhoto(photo.Url, photo.AtomUrl, sd.AlbumUrl, photo.Note);
 
-            if (createdEntry != null)
-            {
-                var p = new SiteDetailPhoto();
+            //if (createdEntry != null)
+            //{
+            //    var p = new SiteDetailPhoto();
 
-                p.Url = createdEntry.Media.Content.Url;
-                p.AtomUrl = createdEntry.EditUri.Content;
-                p.TakenDate = photo.TakenDate;
-                p.Lng = photo.Lng;
-                p.Lat = photo.Lat;
-                p.Note = photo.Note;
-                sd.SiteDetailPhotoes.Add(p);
+            //    p.Url = createdEntry.Media.Content.Url;
+            //    p.AtomUrl = createdEntry.EditUri.Content;
+            //    p.TakenDate = photo.TakenDate;
+            //    p.Lng = photo.Lng;
+            //    p.Lat = photo.Lat;
+            //    p.Note = photo.Note;
+            //    sd.SiteDetailPhotoes.Add(p);
 
-                DB.DeleteObject(photo);
-            }
+            //    DB.DeleteObject(photo);
+            //}
 
-            Save();
+            //Save();
         }
 
 
