@@ -27,8 +27,6 @@ namespace OAMS.Models
                 service.setUserCredentials(AppSetting.GoogleUsername, AppSetting.GooglePassword);
             }
 
-            Update_AlbumAtomUrl(service);
-
             return service;
         }
 
@@ -44,6 +42,7 @@ namespace OAMS.Models
             List<PicasaEntry> l = new List<PicasaEntry>();
 
             PicasaService service = InitPicasaService();
+            Update_AlbumAtomUrl();
 
             Uri postUri = new Uri(AppSetting.AlbumAtomUrl.Replace("entry", "feed").ToHttpsUri());
 
@@ -125,10 +124,9 @@ namespace OAMS.Models
         }
 
 
-        public string CreateAlbum(string name, bool isBackup = false, PicasaService service = null)
+        public string CreateAlbum(string name, bool isBackup = false)
         {
-            if (service == null)
-                service = InitPicasaService();
+            var service = InitPicasaService();
 
             AlbumEntry newEntry = new AlbumEntry();
 
@@ -143,31 +141,25 @@ namespace OAMS.Models
             return createdEntry.EditUri.Content;
         }
 
-        public void CreateGenericAlbum(PicasaService service = null)
+        public void CreateGenericAlbum()
         {
-            if (service == null)
-                service = InitPicasaService();
-
             AppSettingRepository appBLL = new AppSettingRepository();
-            string url = CreateAlbum(DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss"), service: service);
+            string url = CreateAlbum(DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss"));
             appBLL.InsertOrUpdate("AlbumAtomUrl", url);
         }
 
-        public void Update_AlbumAtomUrl(PicasaService service = null)
+        public void Update_AlbumAtomUrl()
         {
-            if (service == null)
-                service = InitPicasaService();
+            var service = InitPicasaService();
 
             if (string.IsNullOrEmpty(AppSetting.AlbumAtomUrl))
             {
-                CreateGenericAlbum(service);
+                CreateGenericAlbum();
             }
             else
             {
                 if (totalPhotos == 0 || totalPhotos >= 990)
                 {
-                    //var service = InitPicasaService();
-
                     AlbumQuery query = new AlbumQuery();
 
                     query.Uri = new Uri(AppSetting.AlbumAtomUrl);
@@ -182,7 +174,7 @@ namespace OAMS.Models
 
                 if (totalPhotos >= 990)
                 {
-                    CreateGenericAlbum(service);
+                    CreateGenericAlbum();
                     totalPhotos = 0;
                 }
 
@@ -191,8 +183,6 @@ namespace OAMS.Models
 
         public PicasaEntry MovePhoto2GenericAlbum(IPhoto p)
         {
-            InitPicasaService();
-
             string albumid = AppSetting.AlbumAtomUrl.Split('/')[9].Split('?')[0];
 
             string note = "";
@@ -223,6 +213,8 @@ namespace OAMS.Models
         public PicasaEntry MovingPhoto1(string photoUrl, string photoAtomUrl, string albumid, string note)
         {
             PicasaService service = InitPicasaService();
+            Update_AlbumAtomUrl();
+
             var atom = service.Get(photoAtomUrl.ToHttpsUri());
 
             PicasaEntry a = (PicasaEntry)atom;
