@@ -194,4 +194,12 @@ namespace OAMS.Models
             public int Count { get; set; }
         }
     }
+
+    public class Rpt130
+    {
+        public string Name { get; set; }
+        public List<string> Values { get; set; }
+        public bool IsCount { get; set; }
+        public bool IsShow { get; set; }
+    }
 }
