@@ -122,214 +122,6 @@ namespace OAMS.Controllers
             return View(e);
         }
 
-        //public ActionResult _105()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //public ActionResult _105(Rpt105 e)
-        //{
-        //    OAMSEntities db = new OAMSEntities();
-
-        //    e.List = db.SiteDetails.Where(r => true
-        //        && (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName)
-        //        && (r.Type == e.Type)
-        //        ).GroupBy(r => r.Site.Geo2.Name)
-        //        .Select(r => new Rpt105.Row
-        //        {
-        //            Geo2 = r.Key,
-        //            Count = r.Count(),
-        //        }).ToList();
-
-        //    if (e.LessThan > 0)
-        //    {
-        //        Func<Rpt105.Row, bool> f = r => r.Count < e.LessThan;
-
-        //        Rpt105.Row nr = new Rpt105.Row() { Geo2 = "Other" };
-        //        nr.Count = e.List.Where(f).Sum(r => r.Count);
-
-        //        e.List.RemoveAll(f.ToPredicate());
-        //        e.List.Add(nr);
-        //    }
-
-        //    return View(e);
-        //}
-
-        //public ActionResult _106()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //public ActionResult _106(Rpt106 e)
-        //{
-        //    OAMSEntities db = new OAMSEntities();
-
-        //    e.List = db.SiteDetails.Where(r => true
-        //        && (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName)
-        //        ).GroupBy(r => r.Type)
-        //        .Select(r => new Rpt106.Row
-        //        {
-        //            Type = r.Key,
-        //            Count = r.Count(),
-        //        }).ToList();
-
-        //    return View(e);
-        //}
-
-        //public ActionResult _107()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //public ActionResult _107(Rpt107 e)
-        //{
-        //    OAMSEntities db = new OAMSEntities();
-
-        //    e.List = db.SiteDetailMores.Where(r => true
-        //        && (r.SiteDetail.Site.Geo1 != null && r.SiteDetail.Site.Geo1.FullName == e.Geo1FullName)
-        //        && (r.Product != null && r.Product.Category1 != null && r.Product.Category1.FullName == e.Cat1FullName)
-        //        ).GroupBy(r => r.SiteDetail.Site.Geo2.Name)
-        //        .Select(r => new Rpt107.Row
-        //        {
-        //            Geo2 = r.Key,
-        //            Count = r.Count(),
-        //        }).ToList();
-
-        //    if (e.LessThan > 0)
-        //    {
-        //        Func<Rpt107.Row, bool> f = r => r.Count < e.LessThan;
-
-        //        var nr = new Rpt107.Row() { Geo2 = "Other" };
-        //        nr.Count = e.List.Where(f).Sum(r => r.Count);
-
-        //        e.List.RemoveAll(f.ToPredicate());
-        //        e.List.Add(nr);
-        //    }
-
-        //    return View(e);
-        //}
-
-        //public ActionResult _108()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //public ActionResult _108(Rpt108 e)
-        //{
-        //    OAMSEntities db = new OAMSEntities();
-
-        //    e.List = db.SiteDetailMores.Where(r => true
-        //        && (r.SiteDetail.Site.Geo1 != null && r.SiteDetail.Site.Geo1.FullName == e.Geo1FullName)
-        //        && (r.Product != null && r.Product.Category1 != null && r.Product.Category1.FullName == e.Cat1FullName)
-        //        ).GroupBy(r => r.SiteDetail.Type)
-        //        .Select(r => new Rpt108.Row
-        //        {
-        //            Type = r.Key,
-        //            Count = r.Count(),
-        //        }).ToList();
-
-        //    return View(e);
-        //}
-
-        //public ActionResult _109()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //public ActionResult _109(Rpt109 e)
-        //{
-        //    OAMSEntities db = new OAMSEntities();
-
-        //    e.List = db.SiteDetailMores.Where(r => true
-        //        && (r.SiteDetail.Site.Geo1 != null && r.SiteDetail.Site.Geo1.FullName == e.Geo1FullName)
-        //        && (r.Product != null && r.Product.Category1 != null && r.Product.Category1.FullName == e.Cat1FullName)
-        //        && (r.Product.Client != null)
-        //        ).GroupBy(r => r.Product.Client.Name)
-        //        .Select(r => new Rpt109.Row
-        //        {
-        //            Client = r.Key,
-        //            Count = r.Count(),
-        //        }).ToList();
-
-        //    return View(e);
-        //}
-
-        //public ActionResult _110()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //public ActionResult _110(Rpt110 e)
-        //{
-        //    OAMSEntities db = new OAMSEntities();
-
-        //    e.List = db.SiteDetailMores.Where(r => true
-        //        && (r.SiteDetail.Site.Geo1 != null && r.SiteDetail.Site.Geo1.FullName == e.Geo1FullName)
-        //        && (r.Product != null && r.Product.Category1 != null && r.Product.Category1.FullName == e.Cat1FullName)
-        //        ).GroupBy(r => r.Product.Name)
-        //        .Select(r => new Rpt110.Row
-        //        {
-        //            Product = r.Key,
-        //            Count = r.Count(),
-        //        }).ToList();
-
-        //    return View(e);
-        //}
-
-        //public ActionResult _111()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //public ActionResult _111(Rpt111 e)
-        //{
-        //    OAMSEntities db = new OAMSEntities();
-
-        //    e.List = db.SiteDetailMores.Where(r => true
-        //        && (r.SiteDetail.Site.Geo1 != null && r.SiteDetail.Site.Geo1.FullName == e.Geo1FullName)
-        //        && (r.Product != null && r.Product.Category1 != null && r.Product.Category1.FullName == e.Cat1FullName)
-        //        && (r.Product.Client != null && r.Product.Client.Name == e.Client)
-        //        ).GroupBy(r => r.SiteDetail.Site.Geo2.Name)
-        //        .Select(r => new Rpt111.Row
-        //        {
-        //            Geo2 = r.Key,
-        //            Count = r.Count(),
-        //        }).ToList();
-
-        //    return View(e);
-        //}
-
-        //public ActionResult _112()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //public ActionResult _112(Rpt112 e)
-        //{
-        //    OAMSEntities db = new OAMSEntities();
-
-        //    e.List = db.SiteDetailMores.Where(r => true
-        //        && (r.SiteDetail.Site.Geo1 != null && r.SiteDetail.Site.Geo1.FullName == e.Geo1FullName)
-        //        && (r.Product != null && r.Product.Category1 != null && r.Product.Category1.FullName == e.Cat1FullName)
-        //        && (r.Product.Client != null && r.Product.Client.Name == e.Client)
-        //        ).GroupBy(r => r.Product.Name)
-        //        .Select(r => new Rpt112.Row
-        //        {
-        //            Product = r.Key,
-        //            Count = r.Count(),
-        //        }).ToList();
-
-        //    return View(e);
-        //}
-
         public ActionResult _120()
         {
             return View();
@@ -436,5 +228,66 @@ namespace OAMS.Controllers
 
             return View(e);
         }
+
+        public ActionResult _130()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult _130(string query)
+        {
+            List<Rpt130> paramsL = new List<Rpt130>();
+
+            OAMSEntities db = new OAMSEntities();
+
+            var whereL = paramsL.Where(r => r.Values != null || r.Values.Count > 0);
+
+            var r1 = db.SiteDetailMores.AsQueryable();
+            foreach (var item in whereL)
+            {
+                //Geo 1, Geo 2, type, format, contractor, category 1, category 2, client, product, 
+                switch (item.Name)
+                {
+                    case "Geo1":
+                        r1 = r1.Where(r => r.SiteDetail.Site.Geo1 != null && item.Values.Contains(r.SiteDetail.Site.Geo1.Name));
+                        break;
+                    case "Geo2":
+                        r1 = r1.Where(r => r.SiteDetail.Site.Geo2 != null && item.Values.Contains(r.SiteDetail.Site.Geo2.Name));
+                        break;
+                    case "Type":
+                        r1 = r1.Where(r => item.Values.Contains(r.SiteDetail.Type));
+                        break;
+                    case "Format":
+                        r1 = r1.Where(r => item.Values.Contains(r.SiteDetail.Format));
+                        break;
+                    case "Contractor":
+                        r1 = r1.Where(r => r.SiteDetail.Site.Contractor != null && item.Values.Contains(r.SiteDetail.Site.Contractor.Name));
+                        break;
+                    case "Category1":
+                        r1 = r1.Where(r => r.Product != null && r.Product.Category1 != null && item.Values.Contains(r.Product.Category1.Name));
+                        break;
+                    case "Category2":
+                        r1 = r1.Where(r => r.Product != null && r.Product.Category2 != null && item.Values.Contains(r.Product.Category2.Name));
+                        break;
+                    case "Client":
+                        r1 = r1.Where(r => r.Product != null && r.Product.Client != null && item.Values.Contains(r.Product.Client.Name));
+                        break;
+                    case "Product":
+                        r1 = r1.Where(r => r.Product != null && item.Values.Contains(r.Product.Name));
+                        break;
+                }
+            }
+
+            var r2 = r1.ToList();
+            var selectL = paramsL.Where(r => r.IsShow);
+            foreach (var item in selectL)
+            {
+                
+            }
+
+            return null;
+        }
     }
 }
+
