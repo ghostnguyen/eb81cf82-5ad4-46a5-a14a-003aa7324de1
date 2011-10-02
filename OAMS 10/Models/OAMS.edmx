@@ -630,6 +630,8 @@
           <Property Name="Note" Type="nvarchar(max)" />
           <Property Name="Lng" Type="float" />
           <Property Name="Lat" Type="float" />
+          <Property Name="CreatedBy" Type="nvarchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="SiteMonitoring">
           <Key>
@@ -674,6 +676,8 @@
           <Property Name="Note" Type="nvarchar(max)" />
           <Property Name="Lng" Type="float" />
           <Property Name="Lat" Type="float" />
+          <Property Name="CreatedBy" Type="nvarchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="SitePhoto">
           <Key>
@@ -687,6 +691,8 @@
           <Property Name="Note" Type="nvarchar(max)" />
           <Property Name="Lng" Type="float" />
           <Property Name="Lat" Type="float" />
+          <Property Name="CreatedBy" Type="nvarchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
         <Association Name="FK__aspnet_Us__RoleI__4AB81AF0">
           <End Role="aspnet_Roles" Type="OAMSModel.Store.aspnet_Roles" Multiplicity="1" />
@@ -1490,6 +1496,8 @@
           <Property Type="String" Name="Note" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="Double" Name="Lng" />
           <Property Type="Double" Name="Lat" />
+          <Property Type="String" Name="CreatedBy" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedDate" />
         </EntityType>
         <EntityType Name="SiteMonitoring">
           <Key>
@@ -1538,6 +1546,8 @@
           <Property Type="String" Name="Note" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="Double" Name="Lng" />
           <Property Type="Double" Name="Lat" />
+          <Property Type="String" Name="CreatedBy" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedDate" />
         </EntityType>
         <Association Name="FK_SiteMonitoringPhoto_SiteMonitoring">
           <End Type="OAMSModel.SiteMonitoring" Role="SiteMonitoring" Multiplicity="0..1" />
@@ -2312,6 +2322,8 @@
           <Property Type="Double" Name="Lng" />
           <Property Type="Double" Name="Lat" />
           <NavigationProperty Name="SiteDetail" Relationship="OAMSModel.FK_SiteDetailPhoto_SiteDetail" FromRole="SiteDetailPhoto" ToRole="SiteDetail" />
+          <Property Type="String" Name="CreatedBy" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedDate" />
         </EntityType>
         <Association Name="FK_Product_Category1">
           <End Type="OAMSModel.Category" Role="Category" Multiplicity="0..1" />
@@ -2509,6 +2521,8 @@
           <EntitySetMapping Name="SitePhotoes">
             <EntityTypeMapping TypeName="OAMSModel.SitePhoto">
               <MappingFragment StoreEntitySet="SitePhoto">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Lat" ColumnName="Lat" />
                 <ScalarProperty Name="Lng" ColumnName="Lng" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
@@ -2554,6 +2568,8 @@
           <EntitySetMapping Name="SiteMonitoringPhotoes">
             <EntityTypeMapping TypeName="OAMSModel.SiteMonitoringPhoto">
               <MappingFragment StoreEntitySet="SiteMonitoringPhoto">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Lat" ColumnName="Lat" />
                 <ScalarProperty Name="Lng" ColumnName="Lng" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
@@ -2939,6 +2955,8 @@
           <EntitySetMapping Name="SiteDetailPhotoes">
             <EntityTypeMapping TypeName="OAMSModel.SiteDetailPhoto">
               <MappingFragment StoreEntitySet="SiteDetailPhoto">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Lat" ColumnName="Lat" />
                 <ScalarProperty Name="Lng" ColumnName="Lng" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
