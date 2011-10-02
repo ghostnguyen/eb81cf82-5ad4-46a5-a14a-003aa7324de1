@@ -241,9 +241,10 @@ namespace OAMS.Controllers
 
             OAMSEntities db = new OAMSEntities();
 
-            var whereL = paramsL.Where(r => r.Values != null || r.Values.Count > 0);
-
             var r1 = db.SiteDetailMores.AsQueryable();
+
+            var whereL = paramsL.Where(r => r.Values != null && r.Values.Count > 0 && !r.IsCount);
+
             foreach (var item in whereL)
             {
                 //Geo 1, Geo 2, type, format, contractor, category 1, category 2, client, product, 
@@ -279,14 +280,98 @@ namespace OAMS.Controllers
                 }
             }
 
-            var r2 = r1.ToList();
-            var selectL = paramsL.Where(r => r.IsShow);
-            foreach (var item in selectL)
+            List<ExpandoObject> l = new List<ExpandoObject>();
+
+            var r2 = r1.ToList().Select(r => new
             {
-                
+                Geo1 = r.SiteDetail.Site.Geo1 != null ? r.SiteDetail.Site.Geo1.Name : "",
+                Geo2 = r.SiteDetail.Site.Geo2 != null ? r.SiteDetail.Site.Geo2.Name : "",
+                Type = r.SiteDetail.Type,
+                Format = r.SiteDetail.Format,
+                Contractor = r.SiteDetail.Site.Contractor != null ? r.SiteDetail.Site.Contractor.Name : "",
+                Product = r.Product != null ? r.Product.Name : "",
+                Client = (r.Product != null && r.Product.Client != null) ? r.Product.Client.Name : "",
+                Category1 = (r.Product != null && r.Product.Category1 != null) ? r.Product.Category1.Name : "",
+                Category2 = (r.Product != null && r.Product.Category2 != null) ? r.Product.Category2.Name : "",
+            });
+            var selectL = paramsL.Where(r => r.IsShow);
+
+            foreach (var item in r2)
+            {
+                ExpandoObject row = new ExpandoObject();
+                var IDicRow = (IDictionary<String, Object>)row;
+
+                foreach (var s in selectL.OrderBy(r => r.Order))
+                {
+                    switch (s.Name)
+                    {
+                        case "Geo1":
+                            IDicRow.Add(s.PName, item.Geo1);
+                            break;
+                        case "Geo2":
+                            IDicRow.Add(s.PName, item.Geo2);
+                            break;
+                        case "Type":
+                            IDicRow.Add(s.PName, item.Type);
+                            break;
+                        case "Format":
+                            IDicRow.Add(s.PName, item.Format);
+                            break;
+                        case "Contractor":
+                            IDicRow.Add(s.PName, item.Contractor);
+                            break;
+                        case "Category1":
+                            IDicRow.Add(s.PName, item.Category1);
+                            break;
+                        case "Category2":
+                            IDicRow.Add(s.PName, item.Category2);
+                            break;
+                        case "Client":
+                            IDicRow.Add(s.PName, item.Client);
+                            break;
+                        case "Product":
+                            IDicRow.Add(s.PName, item.Product);
+                            break;
+                    }
+                }
+                l.Add(row);
+            }
+
+            var l1 = l.GroupBy(r => r, new Rpt130Comparer(paramsL));
+
+            var countParams = paramsL.Where(r => r.IsCount);
+
+            foreach (var item in l1)
+            {
+                var dic = (IDictionary<string, object>)item.Key;
+                foreach (var param in countParams)
+                {
+                    dic[param.PName] = item.Where(r => (((IDictionary<string, object>)r)[param.PName]).ToString() == param.Values.FirstOrDefault()).Count();
+                }
             }
 
             return null;
+        }
+
+        public class Rpt130Comparer : IEqualityComparer<ExpandoObject>
+        {
+            private List<Rpt130> l;
+            public Rpt130Comparer(List<Rpt130> list)
+            {
+                l = list;
+            }
+            public bool Equals(ExpandoObject x, ExpandoObject y)
+            {
+                var a = (IDictionary<string, object>)x;
+                var b = (IDictionary<string, object>)y;
+
+                return l.Where(r => r.IsShow && !r.IsCount).FirstOrDefault(r => a[r.PName] != b[r.PName]) == null;
+            }
+
+            public int GetHashCode(ExpandoObject obj)
+            {
+                return 0;
+            }
         }
     }
 }
