@@ -23,7 +23,15 @@ namespace OAMS.Models
         {
             get
             {
-                return SiteMonitoringPhotoes.Where(r => !r.IsValidTakenDate || !r.IsValidGPS).Count() > 0;
+                return SiteMonitoringPhotoes.Where(r => !r.IsValidTakenDate || !r.IsValidGPS).FirstOrDefault() != null;
+            }
+        }
+
+        public bool HasValidPhoto
+        {
+            get
+            {
+                return SiteMonitoringPhotoes.Where(r => r.IsValidTakenDate && r.IsValidGPS).FirstOrDefault() != null;
             }
         }
     }

@@ -11,6 +11,13 @@ namespace OAMS.Models
     [ValidateContractDetailTimeline]
     public partial class ContractDetailTimeline : ITimeRange
     {
+        public SiteMonitoring SiteMonitoring
+        {
+            get
+            {
+                return this.ContractDetail.SiteMonitorings.Where(r => r.Order == this.Order).FirstOrDefault();
+            }
+        }
     }
 
     public class ContractDetailTimelineNotaion
@@ -40,11 +47,11 @@ namespace OAMS.Models
         {
             bool isValid = false;
             var e = value as ContractDetailTimeline;
-            
+
             if (e != null)
             {
                 ContractDetailTimelineRepository repo = new ContractDetailTimelineRepository();
-                isValid = repo.ValidConflictTimeline(e); 
+                isValid = repo.ValidConflictTimeline(e);
             }
 
             return isValid;

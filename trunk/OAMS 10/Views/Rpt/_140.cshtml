@@ -1,0 +1,124 @@
+﻿@model List<Rpt140>
+@using OAMS.Models
+@{
+    ViewBag.Title = "Geo1(?) - Type(?) - Cat1(?) - Client(?) - Type - Geo2 - Product - Client - Count :less2other(?)";
+}
+<h2>
+    @ViewBag.Title</h2>
+@using (Html.BeginForm())
+{
+    <table class="notable" width="100%">
+        <tr>
+            <td>
+                <h1>
+                    Inspection Report
+                </h1>
+                <table class="notable">
+                    @*<tr>
+                    <td>
+                        Client:
+                        @Model.ClientName
+                    </td>
+                    <td>
+                        Date:
+                        @Model.From.ToShortDateString()
+                        -
+                        @Model.To.ToShortDateString()
+                    </td>
+                </tr>*@
+                    <tr>
+                        <td>
+                            Campaign:
+                        </td>
+                        <td>
+                            Reporting Period
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    
+    foreach (var item in Model)
+    {
+    <div>
+        <table class="display">
+            <thead>
+                <tr>
+                    <th>
+                        SiteID
+                    </th>
+                    <th>
+                        SiteDetailID
+                    </th>
+                    <th>
+                        AddressLine1
+                    </th>
+                    <th>
+                        AddressLine2
+                    </th>
+                    <th>
+                        Location
+                    </th>
+                    @foreach (var item1 in item.ContractDetailTimelines)
+                    {
+                        <th>
+                            order @item1.Order
+                            <br />
+                            @item1.FromDate.ToShortDateString2() - @item1.ToDate.ToShortDateString2()
+                        </th>
+                    }
+                    <th>
+                        Total
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item1 in item.List)
+                {
+                    <tr>
+                        <td>
+                            @item1.SiteID
+                        </td>
+                        <td>
+                            @item1.SiteDetailID
+                        </td>
+                        <td>
+                            @item1.AddressLine1
+                        </td>
+                        <td>
+                            @item1.AddressLine2
+                        </td>
+                        <td>
+                            @item1.Location
+                        </td>
+                        @foreach (var item2 in item1.List)
+                        {
+                            <td>
+                                @item2.ToCustomeString()
+                            </td>
+                        }
+                        <td>
+                            @(((List<bool>)item1.List).Where(r5 => r5).Count())
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    }
+    
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var oTable = $('.display').dataTable({ "aaSorting": [[0, "asc"]],
+                "sDom": 'CT<"clear">lfrtip',
+                "oTableTools": { "sSwfPath": '@Url.Content("~/content/copy_cvs_xls_pdf.swf")', "aButtons": ["copy"] },
+                "iDisplayLength": -1,
+                "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
+            });
+        });
+    </script>
+    
+}

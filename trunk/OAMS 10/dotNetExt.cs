@@ -285,6 +285,11 @@ public static class dotNetExt
         return dt.HasValue ? dt.Value.ToShortDateString() : "";
     }
 
+    public static string ToShortDateString2(this DateTime? dt)
+    {
+        return dt.HasValue ? dt.Value.ToString("dd/MM") : "";
+    }
+
     //public static string ToStringVN_Hour(this DateTime? dt)
     //{
     //    if (dt.HasValue)
@@ -749,7 +754,12 @@ public static class dotNetExt
 
     public static string ToCustomeString(this bool? value, string strTrue = "Yes", string strFalse = "No")
     {
-        return value.HasValue ? (value.Value ? strTrue : strFalse) : "";
+        return value.HasValue ? value.Value.ToCustomeString(strTrue, strFalse) : "";
+    }
+
+    public static string ToCustomeString(this bool value, string strTrue = "Yes", string strFalse = "No")
+    {
+        return value ? strTrue : strFalse;
     }
 
     public static ExpandoObject ToExpando(this object anonymousObject)

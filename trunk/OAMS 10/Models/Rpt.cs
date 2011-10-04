@@ -204,4 +204,21 @@ namespace OAMS.Models
         public int Order { get; set; }
         public string PName { get; set; }
     }
+
+    public class Rpt140
+    {
+        public List<ContractDetailTimeline> ContractDetailTimelines { get; set; }
+        public List<Row> List { get; set; }
+
+        public class Row
+        {
+            public int SiteID { get; set; }
+            public int SiteDetailID { get; set; }
+            public string AddressLine1 { get; set; }
+            public string AddressLine2 { get; set; }
+            public string Location { get; set; }
+            public List<bool> List { get; set; }
+        }
+
+    }
 }

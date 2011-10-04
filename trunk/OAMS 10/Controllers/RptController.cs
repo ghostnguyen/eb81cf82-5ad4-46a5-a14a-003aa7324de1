@@ -373,6 +373,82 @@ namespace OAMS.Controllers
                 return 0;
             }
         }
+
+        public ActionResult _140(int contractID, DateTime? dFrom, DateTime? dTo)
+        {
+            var contract = ContractRepository.I.Get(contractID);
+            if (contract != null)
+            {
+                Rpt140Comparer comparer = new Rpt140Comparer();
+                var l = contract.ContractDetails.Select(r => new
+                {
+                    ContractDetail = r,
+                    ContractDetailTimelines = r.ContractDetailTimelines
+                                                .Where(r1 => dFrom <= r1.FromDate && r1.ToDate <= dTo)
+                                                .OrderBy(r1 => r1.Order)
+                                                .ToList(),
+
+                }).ToList().GroupBy(r => r.ContractDetailTimelines, comparer)
+                .Select(r => new Rpt140
+                {
+                    ContractDetailTimelines = r.Key,
+                    List = r.Select(r1 => new Rpt140.Row
+                    {
+                        SiteID = r1.ContractDetail.Site.ID,
+                        SiteDetailID = r1.ContractDetail.ID,
+                        AddressLine1 = r1.ContractDetail.Site.AddressLine1,
+                        AddressLine2 = r1.ContractDetail.Site.AddressLine2,
+                        Location = r1.ContractDetail.SiteDetailName,
+                        List = r.Key.Select(r2 => r2.SiteMonitoring == null ? false : r2.SiteMonitoring.HasValidPhoto).ToList()
+                    }).ToList(),
+                }).ToList()
+                ;
+
+                return View(l);
+            }
+
+            return View();
+        }
+
+        public class Rpt140Comparer : IEqualityComparer<List<ContractDetailTimeline>>
+        {
+            bool IEqualityComparer<List<ContractDetailTimeline>>.Equals(List<ContractDetailTimeline> x, List<ContractDetailTimeline> y)
+            {
+                bool isEqual = false;
+
+                x = x ?? new List<ContractDetailTimeline>();
+                y = y ?? new List<ContractDetailTimeline>();
+
+                if (x.Count != y.Count)
+                {
+                    isEqual = false;
+                }
+                else
+                {
+                    isEqual = true;
+                    x = x.OrderBy(r => r.Order).ToList();
+                    y = y.OrderBy(r => r.Order).ToList();
+
+                    for (int i = 0; i < x.Count; i++)
+                    {
+                        if (x[i].Order != y[i].Order
+                            || x[i].FromDate != y[i].FromDate
+                            || x[i].ToDate != y[i].ToDate)
+                        {
+                            isEqual = false;
+                            break;
+                        }
+                    }
+                }
+
+                return isEqual;
+            }
+
+            int IEqualityComparer<List<ContractDetailTimeline>>.GetHashCode(List<ContractDetailTimeline> obj)
+            {
+                return 0;
+            }
+        }
     }
 }
 
