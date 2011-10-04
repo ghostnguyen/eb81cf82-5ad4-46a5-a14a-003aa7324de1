@@ -40,22 +40,25 @@
                 });
             </script>
             of
-            <%--<button id="btnView" onclick="btnView_Click()">
-                View</button>
-            |
-            <button id="btnViewDetail" onclick="btnViewDetail_Click()">
-                View detail</button>--%>
             <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("View", r => r.ViewReport(0, null, null), null, new Dictionary<string, object>() { { "href", "javascript:btnView_Click();" } }, false)%>
             |
             <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("View detail", r => r.ViewReportDetail(0, null, null,null), null, new Dictionary<string, object>() { { "href", "javascript:btnViewDetail_Click('true');" } }, false)%>
             |
             <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("View detail - BlueTrak", r => r.ViewReportDetail(0, null, null,null), null, new Dictionary<string, object>() { { "href", "javascript:btnViewDetail_Click('');" } }, false)%>
+            |
+            <%: Html.ActionLinkWithRoles<OAMS.Controllers.RptController>("View 2", r => r._140(0, null, null), null, new Dictionary<string, object>() { { "href", "javascript:btnView2_Click('');" } }, false)%>
         </div>
         <% string urlRptSum = Url.Action("ViewReport", "Contract", new { id = Model.ID });
-           string urlRptDetail = Url.Action("ViewReportDetail", "Contract", new { id = Model.ID });%>
+           string urlRptDetail = Url.Action("ViewReportDetail", "Contract", new { id = Model.ID });
+           string urlRptSum2 = Url.Action("_140", "Rpt", new { contractID = Model.ID }); 
+        %>
         <script type="text/javascript">
             function btnView_Click() {
                 var url = '<%: urlRptSum %>' + "?" + $('#divSummary input').serialize();
+                window.open(url);
+            }
+            function btnView2_Click() {
+                var url = '<%: urlRptSum2 %>' + "&" + $('#divSummary input').serialize();
                 window.open(url);
             }
             function btnViewDetail_Click(old) {

@@ -580,6 +580,7 @@
     <Content Include="Views\Rpt\_111.cshtml" />
     <Content Include="Views\Rpt\_112.cshtml" />
     <Content Include="Views\Rpt\_120.cshtml" />
+    <Content Include="Views\Rpt\_140.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
