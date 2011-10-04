@@ -15,7 +15,9 @@ namespace OAMS.Models
         {
             get
             {
-                return this.ContractDetail.SiteMonitorings.Where(r => r.Order == this.Order).FirstOrDefault();
+                
+                var b = this.ContractDetail.SiteMonitorings.Where(r => r.Order == this.Order).FirstOrDefault();
+                return b;
             }
         }
     }

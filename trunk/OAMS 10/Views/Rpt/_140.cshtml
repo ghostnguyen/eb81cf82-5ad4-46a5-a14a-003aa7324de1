@@ -1,7 +1,7 @@
 ﻿@model List<Rpt140>
 @using OAMS.Models
 @{
-    ViewBag.Title = "Geo1(?) - Type(?) - Cat1(?) - Client(?) - Type - Geo2 - Product - Client - Count :less2other(?)";
+    ViewBag.Title = "Monitoring Report for Accounting";
 }
 <h2>
     @ViewBag.Title</h2>
@@ -10,30 +10,27 @@
     <table class="notable" width="100%">
         <tr>
             <td>
-                <h1>
-                    Inspection Report
-                </h1>
                 <table class="notable">
-                    @*<tr>
-                    <td>
-                        Client:
-                        @Model.ClientName
-                    </td>
-                    <td>
-                        Date:
-                        @Model.From.ToShortDateString()
-                        -
-                        @Model.To.ToShortDateString()
-                    </td>
-                </tr>*@
                     <tr>
+                        <td style="width: 300px;">
+                            Client:
+                            @ViewBag.ClientName
+                        </td>
+                        <td>
+                            Date:
+                            @ViewBag.From
+                            -
+                            @ViewBag.To
+                        </td>
+                    </tr>
+                    @*<tr>
                         <td>
                             Campaign:
                         </td>
                         <td>
                             Reporting Period
                         </td>
-                    </tr>
+                    </tr>*@
                 </table>
             </td>
         </tr>
@@ -49,7 +46,7 @@
                         SiteID
                     </th>
                     <th>
-                        SiteDetailID
+                        ContractDetailID
                     </th>
                     <th>
                         AddressLine1
@@ -81,7 +78,7 @@
                             @item1.SiteID
                         </td>
                         <td>
-                            @item1.SiteDetailID
+                            @item1.ContractDetailID
                         </td>
                         <td>
                             @item1.AddressLine1
