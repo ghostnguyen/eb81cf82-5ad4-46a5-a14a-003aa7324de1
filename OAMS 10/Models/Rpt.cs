@@ -213,7 +213,7 @@ namespace OAMS.Models
         public class Row
         {
             public int SiteID { get; set; }
-            public int SiteDetailID { get; set; }
+            public int ContractDetailID { get; set; }
             public string AddressLine1 { get; set; }
             public string AddressLine2 { get; set; }
             public string Location { get; set; }

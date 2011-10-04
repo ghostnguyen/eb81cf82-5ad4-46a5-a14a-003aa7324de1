@@ -379,6 +379,9 @@ namespace OAMS.Controllers
             var contract = ContractRepository.I.Get(contractID);
             if (contract != null)
             {
+                ViewBag.ClientName = contract.ClientName;
+                ViewBag.From = dFrom.ToShortDateString();
+                ViewBag.To = dTo.ToShortDateString();
                 Rpt140Comparer comparer = new Rpt140Comparer();
                 var l = contract.ContractDetails.Select(r => new
                 {
@@ -388,18 +391,20 @@ namespace OAMS.Controllers
                                                 .OrderBy(r1 => r1.Order)
                                                 .ToList(),
 
-                }).ToList().GroupBy(r => r.ContractDetailTimelines, comparer)
+                }).ToList()
+                .GroupBy(r => r.ContractDetailTimelines, comparer)
                 .Select(r => new Rpt140
                 {
                     ContractDetailTimelines = r.Key,
                     List = r.Select(r1 => new Rpt140.Row
                     {
                         SiteID = r1.ContractDetail.Site.ID,
-                        SiteDetailID = r1.ContractDetail.ID,
+                        ContractDetailID = r1.ContractDetail.ID,
                         AddressLine1 = r1.ContractDetail.Site.AddressLine1,
                         AddressLine2 = r1.ContractDetail.Site.AddressLine2,
                         Location = r1.ContractDetail.SiteDetailName,
-                        List = r.Key.Select(r2 => r2.SiteMonitoring == null ? false : r2.SiteMonitoring.HasValidPhoto).ToList()
+                        List = r.Key.Select(r2 => r1.ContractDetail.GetByOrder(r2.Order.Value) == null ? false : r1.ContractDetail.GetByOrder(r2.Order.Value).HasValidPhoto
+                        ).ToList()
                     }).ToList(),
                 }).ToList()
                 ;

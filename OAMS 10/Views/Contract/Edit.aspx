@@ -46,7 +46,7 @@
             |
             <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("View detail - BlueTrak", r => r.ViewReportDetail(0, null, null,null), null, new Dictionary<string, object>() { { "href", "javascript:btnViewDetail_Click('');" } }, false)%>
             |
-            <%: Html.ActionLinkWithRoles<OAMS.Controllers.RptController>("View 2", r => r._140(0, null, null), null, new Dictionary<string, object>() { { "href", "javascript:btnView2_Click('');" } }, false)%>
+            <%: Html.ActionLinkWithRoles<OAMS.Controllers.RptController>("Report for Accounting", r => r._140(0, null, null), null, new Dictionary<string, object>() { { "href", "javascript:btnView2_Click('');" } }, false)%>
         </div>
         <% string urlRptSum = Url.Action("ViewReport", "Contract", new { id = Model.ID });
            string urlRptDetail = Url.Action("ViewReportDetail", "Contract", new { id = Model.ID });

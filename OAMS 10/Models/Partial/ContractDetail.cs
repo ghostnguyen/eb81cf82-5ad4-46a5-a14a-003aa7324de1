@@ -10,36 +10,17 @@ namespace OAMS.Models
 
     public partial class ContractDetail
     {
-        //public string CategoryFullName
-        //{
-        //    get
-        //    {
-        //        CategoryRepository catRepository = new CategoryRepository();
-        //        return catRepository.GetFullname(Category1, Category2, Category3);
-        //    }
-        //}
-
-        //public string NewCategoryFullName
-        //{
-        //    get;
-        //    set;
-        //}
-
-        //public int UpdateCategory(Guid? catID1, Guid? catID2, Guid? catID3)
-        //{
-        //    CategoryID1 = catID1;
-        //    CategoryID2 = catID2;
-        //    CategoryID3 = catID3;
-
-        //    return 0;
-        //}
-
         public string CurrentProductName
         {
             get
             {
                 return Product != null ? Product.Name : "";
             }
+        }
+
+        public SiteMonitoring GetByOrder(int order)
+        {
+            return this.SiteMonitorings.Where(r => r.Order == order).FirstOrDefault();
         }
     }
 }
