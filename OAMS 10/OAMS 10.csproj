@@ -29,6 +29,7 @@
     <DesktopBuildPackageLocation>..\..\oams-deploy\OAMS 10.zip</DesktopBuildPackageLocation>
     <DeployIisAppPath>Default Web Site/OAMS</DeployIisAppPath>
     <PublishDatabases>true</PublishDatabases>
+    <ExcludeApp_Data>true</ExcludeApp_Data>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
