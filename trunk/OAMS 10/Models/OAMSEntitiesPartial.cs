@@ -33,6 +33,14 @@ namespace OAMS.Models
                 {
                     e.LastUpdatedDate = DateTime.Now;
                     e.LastUpdatedBy = OAMSSetting.Username;
+
+                    if (e is Site)
+                    {
+                        if (entry.GetModifiedProperties().Count() > 3)
+                        {
+                            throw new Exception("Site is modified with many properties.");
+                        }
+                    }
                 }
                 catch (Exception)
                 {

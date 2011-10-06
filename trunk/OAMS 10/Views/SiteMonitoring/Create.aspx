@@ -272,16 +272,49 @@
             </td>
             <td>
                 <% 
-string albumUrl = Model.ContractDetail.Site.AlbumUrl;
-string AlbumID = string.IsNullOrEmpty(albumUrl) ? "" : Model.ContractDetail.Site.AlbumUrl.Split('/')[9].Split('?')[0];
-string AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Split('=')[1];
+                       //string albumUrl = Model.ContractDetail.Site.AlbumUrl;
+                       //string AlbumID = string.IsNullOrEmpty(albumUrl) ? "" : Model.ContractDetail.Site.AlbumUrl.Split('/')[9].Split('?')[0];
+                       //string AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Split('=')[1];
+
+                       string albumUrl = "";
+                       string AlbumID = "";
+                       string AuthID = "";
+
+                       var sd = Model.Site.SiteDetails.Where(r => r.Name == Model.ContractDetail.SiteDetailName).FirstOrDefault();
+                       if (sd != null && sd.SiteDetailPhotoes.Count > 0)
+                       {
+                           albumUrl = sd.AlbumUrl;
+                           AlbumID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('/')[9].Split('?')[0];
+                           AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Split('=')[1];
+                       }
+                       else
+                       {
+                           albumUrl = Model.ContractDetail.Site.AlbumUrl;
+                           AlbumID = string.IsNullOrEmpty(albumUrl) ? "" : Model.ContractDetail.Site.AlbumUrl.Split('/')[9].Split('?')[0];
+                           AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Split('=')[1];
+                       }
                 %>
-                <embed type="application/x-shockwave-flash" src="http://picasaweb.google.com/s/c/bin/slideshow.swf"
+                <%-- <embed type="application/x-shockwave-flash" src="http://picasaweb.google.com/s/c/bin/slideshow.swf"
                     width="600" height="400" flashvars="host=picasaweb.google.com&hl=en_US&feat=flashalbum&RGB=0x000000&feed=http%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F113917932111131696693%2Falbumid%2F<%=AlbumID%>%3Falt%3Drss%26kind%3Dphoto%26authkey%3D<%=AuthID%>%26hl%3Den_US"
-                    pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>
+                    pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>--%>
                 <br />
-                SiteID: <%= Model.ContractDetail.SiteID%> - 
-                Site Detail Name: <%= Model.ContractDetail != null ?  Model.ContractDetail.SiteDetailName : "" %>
+                <div id="gallery">
+                    <%
+           if (sd != null && sd.SiteDetailPhotoes.Count > 0)
+           {
+               foreach (var item in sd.SiteDetailPhotoes)
+               {
+                    %>
+                    <img src="<%= item.Url.ToUrlPicasaPhotoResize("s500") %>" alt="" />
+                    <% 
+               }
+           }
+                    %>
+                </div>
+                SiteID:
+                <%= Model.ContractDetail.SiteID%>
+                - Site Detail Name:
+                <%= Model.ContractDetail != null ?  Model.ContractDetail.SiteDetailName : "" %>
                 <br />
                 <div id="divMoreFile">
                 </div>
