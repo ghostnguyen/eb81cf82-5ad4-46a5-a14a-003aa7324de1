@@ -82,8 +82,10 @@ namespace OAMS.Controllers
 
         public ActionResult Update(string key, string value)
         {
-            Repo.InsertOrUpdate(key, value);
-
+            if (!string.IsNullOrEmpty(key))
+            {
+                Repo.InsertOrUpdate(key, value);
+            }
             return RedirectToAction("Index", "Home");
         }
     }

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
-  <publishProfile publishUrl="D:\ghostnguyen\oams-deploy" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+  <publishProfile publishUrl="D:\ghostnguyen\oams-deploy" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
     <file relUrl="Views/SiteDetail/ManageSiteDetailPhoto.ascx" publishTime="05/15/2011 13:11:52" />
     <file relUrl="Content/DataTables-1.8.1/extras/TableTools/media/images/print.png" publishTime="07/24/2011 13:46:22" />
     <file relUrl="Scripts/jquery-ui.js" publishTime="02/04/2011 12:56:26" />
@@ -144,7 +144,7 @@
     <file relUrl="Content/smoothness/images/ui-icons_222222_256x240.png" publishTime="02/04/2011 12:56:45" />
     <file relUrl="Views/Account/NoRight.aspx" publishTime="02/04/2011 12:56:27" />
     <file relUrl="Content/DataTables-1.8.1/extras/TableTools/media/images/copy.png" publishTime="07/24/2011 13:46:22" />
-    <file relUrl="bin/OAMS 10.pdb" publishTime="10/06/2011 23:08:04" />
+    <file relUrl="bin/OAMS 10.pdb" publishTime="10/07/2011 00:44:36" />
     <file relUrl="Views/Account/GetAllRoles.aspx" publishTime="09/04/2011 13:54:54" />
     <file relUrl="Scripts/galleria-1.2.5.min.js" publishTime="10/05/2011 22:04:57" />
     <file relUrl="Content/Image/logo.png" publishTime="02/04/2011 12:56:44" />
@@ -154,7 +154,7 @@
     <file relUrl="Views/Contractor/Index.aspx" publishTime="09/04/2011 13:55:00" />
     <file relUrl="Views/Client/Create.aspx" publishTime="02/04/2011 12:56:29" />
     <file relUrl="Content/DataTables-1.8.1/extras/FixedColumns/docs/media/images/extended.png" publishTime="07/24/2011 13:46:01" />
-    <file relUrl="bin/OAMS 10.dll" publishTime="10/06/2011 23:08:04" />
+    <file relUrl="bin/OAMS 10.dll" publishTime="10/07/2011 00:44:36" />
     <file relUrl="Views/Account/Edit.aspx" publishTime="02/04/2011 12:56:27" />
     <file relUrl="Views/SiteDetailMore/Edit.ascx" publishTime="03/28/2011 21:19:25" />
     <file relUrl="Scripts/jquery.ui.core.min.js" publishTime="02/19/2011 09:11:43" />
@@ -298,7 +298,7 @@
     <file relUrl="Scripts/ZeroClipboard.js" publishTime="04/01/2011 21:47:18" />
     <file relUrl="Content/themes/base/images/ui-icons_454545_256x240.png" publishTime="02/04/2011 12:56:45" />
     <file relUrl="Scripts/jquery.ui.widget.min.js" publishTime="02/19/2011 09:11:43" />
-    <file relUrl="Web.config" publishTime="10/06/2011 23:08:28" />
+    <file relUrl="Web.config" publishTime="10/07/2011 00:44:58" />
     <file relUrl="Scripts/MicrosoftMvcValidation.debug.js" publishTime="02/04/2011 12:56:26" />
     <file relUrl="Content/galleria/themes/classic/classic-map.png" publishTime="10/05/2011 23:17:25" />
     <file relUrl="Scripts/knockout-1.2.1.js" publishTime="08/21/2011 12:40:55" />
