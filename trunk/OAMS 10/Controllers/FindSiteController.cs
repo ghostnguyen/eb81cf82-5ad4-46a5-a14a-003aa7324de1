@@ -101,8 +101,12 @@ namespace OAMS.Controllers
                     && (e.ContractorList.Count == 0 || e.ContractorList.Contains(r.Site.ContractorID))
                     && (!e.ScoreFrom.HasValue || !e.ScoreTo.HasValue || (r.Site.Score >= e.ScoreFrom && r.Site.Score <= e.ScoreTo))
                     && (e.InstallationPosition1MarkList.Count == 0 || e.InstallationPosition1MarkList.Contains(r.Site.InstallationPosition1.HasValue ? r.Site.InstallationPosition1.Value : 0))
-                    && (!outdateFrom.HasValue || !r.Site.LastUpdatedDate.HasValue || outdateFrom >= r.Site.LastUpdatedDate)
-                    && (!outdateTo.HasValue || !r.Site.LastUpdatedDate.HasValue || outdateTo <= r.Site.LastUpdatedDate)
+
+                    //&& (!outdateFrom.HasValue || !r.Site.LastUpdatedDate.HasValue || outdateFrom >= r.Site.LastUpdatedDate)
+                    //&& (!outdateTo.HasValue || !r.Site.LastUpdatedDate.HasValue || outdateTo <= r.Site.LastUpdatedDate)
+
+                    && (!outdateFrom.HasValue || !r.SiteDetailPhotoes.Max(r1 => r1.CreatedDate).HasValue || outdateFrom >= r.SiteDetailPhotoes.Max(r1 => r1.CreatedDate))
+                    && (!outdateTo.HasValue || !r.SiteDetailPhotoes.Max(r1 => r1.CreatedDate).HasValue || outdateTo <= r.SiteDetailPhotoes.Max(r1 => r1.CreatedDate))
 
                     //Find on 2 level relationship properties
                     && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName))
