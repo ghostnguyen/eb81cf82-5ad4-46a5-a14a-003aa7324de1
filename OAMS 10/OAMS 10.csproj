@@ -160,7 +160,6 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ContractTimelineController.cs" />
     <Compile Include="Controllers\ImportController.cs" />
-    <Compile Include="Controllers\MvcExampleProfiledController.cs" />
     <Compile Include="Controllers\QuoteDetailFeeController.cs" />
     <Compile Include="Controllers\RptController.cs" />
     <Compile Include="Controllers\SiteDetailPhotoController.cs" />
@@ -587,7 +586,6 @@
     <Content Include="Views\FindSite\FindOutdate.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\Shared\_MINIPROFILER UPDATED Layout.cshtml" />
     <Content Include="Views\FindSite\Find4Contract.cshtml" />
     <Content Include="Views\Rpt\_105.cshtml" />
     <Content Include="Views\Shared\Chart.cshtml" />
