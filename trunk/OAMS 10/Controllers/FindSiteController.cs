@@ -105,8 +105,8 @@ namespace OAMS.Controllers
                     //&& (!outdateFrom.HasValue || !r.Site.LastUpdatedDate.HasValue || outdateFrom >= r.Site.LastUpdatedDate)
                     //&& (!outdateTo.HasValue || !r.Site.LastUpdatedDate.HasValue || outdateTo <= r.Site.LastUpdatedDate)
 
-                    && (!outdateFrom.HasValue || !r.SiteDetailPhotoes.Max(r1 => r1.CreatedDate).HasValue || outdateFrom >= r.SiteDetailPhotoes.Max(r1 => r1.CreatedDate))
-                    && (!outdateTo.HasValue || !r.SiteDetailPhotoes.Max(r1 => r1.CreatedDate).HasValue || outdateTo <= r.SiteDetailPhotoes.Max(r1 => r1.CreatedDate))
+                    && (!outdateFrom.HasValue || !r.SiteDetailPhotoes.Max(r1 => r1.TakenDate).HasValue || outdateFrom >= r.SiteDetailPhotoes.Max(r1 => r1.TakenDate))
+                    && (!outdateTo.HasValue || !r.SiteDetailPhotoes.Max(r1 => r1.TakenDate).HasValue || outdateTo <= r.SiteDetailPhotoes.Max(r1 => r1.TakenDate))
 
                     //Find on 2 level relationship properties
                     && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName))

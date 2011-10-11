@@ -103,7 +103,7 @@ namespace OAMS.Models
             }
         }
 
-        
+
 
         public void DeleteSiteDetailPhoto(List<int> IDList)
         {
