@@ -1,0 +1,143 @@
+﻿@model OAMS.Models.Rpt150
+@using OAMS.Models
+@{
+    ViewBag.Title = "User update site";
+}
+<h2>
+    @ViewBag.Title</h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <div>
+        From
+        <input type="text" class="date" name="from" />
+        to
+        <input type="text" class="date" name="to" />
+        <br />
+        User List: <a href="#" onclick='javascript:$(":checkbox").prop("checked", true);return false;'>
+            All</a> <a href="#" onclick='javascript:$(":checkbox").prop("checked", false);return false;'>
+                Clear</a>
+        @foreach (MembershipUser item in Membership.GetAllUsers())
+        {
+            <div>
+                <input type="checkbox" name="userL" value="@item.UserName" />
+                <label>@item.UserName</label>
+            </div>
+        }
+        <br />
+        <input type="submit" value="Ok" />
+    </div>
+    
+    <div>
+        @if (Model != null && Model.userL != null && Model.userL.Count > 0)
+        { 
+            <table id="tblResult" class="display">
+                <thead>
+                    <tr>
+                        <th rowspan="2">
+                            User
+                        </th>
+                        @foreach (var item in Model.Geo1L)
+                        {
+                            <th colspan="5">
+                                @item
+                            </th>
+                        }
+                    </tr>
+                    <tr>
+                        @foreach (var item in Model.Geo1L)
+                        {
+                            <th>
+                                Create
+                            </th>
+                            <th>
+                                Site
+                            </th>
+                            <th>
+                                Site Photo
+                            </th>
+                            <th>
+                                SiteDetail
+                            </th>
+                            <th>
+                                SiteDetail Photo
+                            </th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.userL)
+                    {
+                        <tr>
+                            <td>
+                                @item
+                            </td>
+                            @foreach (var item1 in Model.Geo1L)
+                            {
+                                <td>
+                                    @{
+                                var c1 = Model.L1.Where(r => r.Name == item && r.Geo1 == item1).FirstOrDefault();
+                                    }
+                                    @if (c1 != null)
+                                    {
+                                        <a href='@Url.Content(string.Format("~/Rpt/_151?user={0}&geo1={1}&from={2}&to={3}", item, item1, Model.from.ToShortDateString(), Model.to.ToShortDateString()))'>@c1.CreateCount
+                                        </a> 
+                                    }
+                                </td>
+                                <td>
+                                    @{
+                                    var c2 = Model.L2.Where(r => r.Name == item && r.Geo1 == item1).FirstOrDefault();
+                                    }
+                                    @if (c2 != null)
+                                    {
+                                        <a href='@Url.Content(string.Format("~/Rpt/_152?user={0}&geo1={1}&from={2}&to={3}", item, item1, Model.from.ToShortDateString(), Model.to.ToShortDateString()))'>@c2.SiteCount
+                                        </a> 
+                                    }
+                                </td>
+                                <td>
+                                    @(c2 == null ? "" : c2.SitePhotoCount.ToString())
+                                </td>
+                                <td>
+                                    @{
+                                    var c3 = Model.L3.Where(r => r.Name == item && r.Geo1 == item1).FirstOrDefault();
+                                    }
+                                    @if (c3 != null)
+                                     {
+                                        <a href='@Url.Content(string.Format("~/Rpt/_153?user={0}&geo1={1}&from={2}&to={3}", item, item1, Model.from.ToShortDateString(), Model.to.ToShortDateString()))'>@c3.SiteDetailCount
+                                        </a> 
+                                     }
+                                </td>
+                                <td>
+                                    @(c3 == null ? "" : c3.SiteDetailPhotoCount.ToString())
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+                @*<tfoot>
+                    <tr>
+                        <td>
+                            Total
+                        </td>
+                        <td>
+                            @Model.List.Sum(r => r.Count)
+                        </td>
+                    </tr>
+                </tfoot>*@
+            </table>
+        }
+    </div>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var oTable = $('#tblResult').dataTable({ "aaSorting": [[0, "asc"]],
+                "sDom": 'CT<"clear">lfrtip',
+                "oTableTools": { "sSwfPath": '@Url.Content("~/content/copy_cvs_xls_pdf.swf")', "aButtons": ["copy"] },
+                "iDisplayLength": -1,
+                "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
+            });
+        });
+    </script>
+    
+}

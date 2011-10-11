@@ -5,10 +5,8 @@
 <head>
     <title>@ViewBag.Title</title>
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
-    <script src="@Url.Content("~/Scripts/jquery-1.5.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/jquery-ui-1.8.1.custom.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/jquery.ui.core.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/jquery.ui.widget.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-1.6.4.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.8.16.custom.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/MicrosoftAjax.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/MicrosoftMvcAjax.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/MicrosoftMvcValidation.js")" type="text/javascript"></script>
@@ -56,6 +54,9 @@
                         <ul>
                             <li>
                                 @(Html.ActionLinkWithRoles<FindSiteController>("Find Outdate", r => r.FindOutdate()))
+                            </li>
+                            <li>
+                                @(Html.ActionLinkWithRoles<RptController>("User Rpt", r => r._150()))
                             </li>
                         </ul>
                     </li>
@@ -122,6 +123,9 @@
             })
 
             //$(".c").mask("999,999.99");
+
+            $(".date").datepicker();
+
         }); 
  
     </script>

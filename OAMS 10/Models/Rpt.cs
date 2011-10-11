@@ -223,7 +223,10 @@ namespace OAMS.Models
 
     public class Rpt150
     {
-        
+        public DateTime? from { get; set; }
+        public DateTime? to { get; set; }
+        public List<string> userL { get; set; }
+
         public List<Row1> L1 { get; set; }
         public List<Row2> L2 { get; set; }
         public List<Row3> L3 { get; set; }
