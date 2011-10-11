@@ -460,11 +460,13 @@ namespace OAMS.Controllers
         {
             OAMSEntities db = new OAMSEntities();
 
+
+
             var v1 = db.Sites.Where(r => true
                 && (r.CreatedDate != null && accountL.Contains(r.CreatedBy) && from <= r.CreatedDate && r.CreatedDate <= to)
                 )
                 .GroupBy(r => new { r.CreatedBy, r.Geo1.Name })
-                .Select(r => new
+                .Select(r => new Rpt150.Row1
                 {
                     Name = r.Key.CreatedBy,
                     Geo1 = r.Key.Name,
@@ -478,7 +480,7 @@ namespace OAMS.Controllers
                 && (r.CreatedDate != null && accountL.Contains(r.CreatedBy) && from <= r.CreatedDate && r.CreatedDate <= to)
                 )
                 .GroupBy(r => new { r.CreatedBy, r.Site.Geo1.Name })
-                .Select(r => new
+                .Select(r => new Rpt150.Row2
                 {
                     Name = r.Key.CreatedBy,
                     Geo1 = r.Key.Name,
@@ -493,7 +495,7 @@ namespace OAMS.Controllers
                 && (r.CreatedDate != null && accountL.Contains(r.CreatedBy) && from <= r.CreatedDate && r.CreatedDate <= to)
                 )
                 .GroupBy(r => new { r.CreatedBy, r.SiteDetail.Site.Geo1.Name })
-                .Select(r => new
+                .Select(r => new Rpt150.Row3
                 {
                     Name = r.Key.CreatedBy,
                     Geo1 = r.Key.Name,
@@ -517,19 +519,7 @@ namespace OAMS.Controllers
 
 
 
-            var v = db.Sites.Where(r => true
-                && (r.CreatedDate != null && accountL.Contains(r.CreatedBy) && from <= r.CreatedDate && r.CreatedDate <= to)
-                || r.SitePhotoes.Where(r1 => r1.CreatedDate != null && accountL.Contains(r1.CreatedBy) && from <= r1.CreatedDate && r1.CreatedDate <= to).FirstOrDefault() != null
-                || r.SiteDetails.SelectMany(r1 => r1.SiteDetailPhotoes).Where(r1 => r1.CreatedDate != null && accountL.Contains(r1.CreatedBy) && from <= r1.CreatedDate && r1.CreatedDate <= to).FirstOrDefault() != null)
-
-                .Select(r => new
-                {
-
-                }
-
-                )
-
-                ;
+          
 
 
 

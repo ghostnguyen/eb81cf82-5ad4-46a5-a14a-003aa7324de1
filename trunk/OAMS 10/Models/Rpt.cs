@@ -219,6 +219,38 @@ namespace OAMS.Models
             public string Location { get; set; }
             public List<bool> List { get; set; }
         }
+    }
 
+    public class Rpt150
+    {
+        
+        public List<Row1> L1 { get; set; }
+        public List<Row2> L2 { get; set; }
+        public List<Row3> L3 { get; set; }
+        public List<string> Geo1L { get; set; }
+
+
+        public class Row1
+        {
+            public string Name { get; set; }
+            public string Geo1 { get; set; }
+            public int CreateCount { get; set; }
+        }
+
+        public class Row2
+        {
+            public string Name { get; set; }
+            public string Geo1 { get; set; }
+            public int SiteCount { get; set; }
+            public int SitePhotoCount { get; set; }
+        }
+
+        public class Row3
+        {
+            public string Name { get; set; }
+            public string Geo1 { get; set; }
+            public int SiteDetailCount { get; set; }
+            public int SiteDetailPhotoCount { get; set; }
+        }
     }
 }
