@@ -402,7 +402,7 @@ namespace OAMS.Controllers
                         ContractDetailID = r1.ContractDetail.ID,
                         AddressLine1 = r1.ContractDetail.Site.AddressLine1,
                         AddressLine2 = r1.ContractDetail.Site.AddressLine2,
-                        Location = r1.ContractDetail.SiteDetailName,
+                        Location = r1.ContractDetail.Site.Code,
                         List = r.Key.Select(r2 => r1.ContractDetail.GetByOrder(r2.Order.Value) == null ? false : r1.ContractDetail.GetByOrder(r2.Order.Value).HasValidPhoto
                         ).ToList()
                     }).ToList(),
