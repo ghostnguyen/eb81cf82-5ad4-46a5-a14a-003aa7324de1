@@ -1,0 +1,72 @@
+﻿@model List<OAMS.Models.Site>
+@using OAMS.Models
+@{
+    ViewBag.Title = "User Update Site Detail List";
+}
+<h2>
+    @ViewBag.Title</h2>
+@using (Html.BeginForm())
+{
+    <div>
+        @if (Model != null)
+        { 
+            <table id="tblResult" class="display">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Code
+                        </th>
+                        <th>
+                            Geo
+                        </th>
+                        <th>
+                            Address Line 1
+                        </th>
+                        <th>
+                            Address Line 2
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a href='@Url.Content(string.Format("~/Site/Edit/{0}", item.ID))'>@item.ID
+                                </a>
+                            </td>
+                            <td>
+                                @item.Code
+                            </td>
+                            <td>
+                                @item.GeoFullName
+                            </td>
+                            <td>
+                                @item.AddressLine1
+                            </td>
+                            <td>
+                                @item.AddressLine2
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var oTable = $('#tblResult').dataTable({ "aaSorting": [[0, "asc"]],
+                "sDom": 'CT<"clear">lfrtip',
+                "oTableTools": { "sSwfPath": '@Url.Content("~/content/copy_cvs_xls_pdf.swf")', "aButtons": ["copy"] },
+                "iDisplayLength": -1,
+                "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
+            });
+        });
+    </script>
+    
+}

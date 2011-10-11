@@ -56,6 +56,9 @@
                             <li>
                                 <%: Html.ActionLinkWithRoles<FindSiteController>("Find Outdate", r => r.FindOutdate()) %>
                             </li>
+                            <li>
+                                <%: Html.ActionLinkWithRoles<RptController>("User Rpt", r => r._150())%>
+                            </li>
                         </ul>
                     </li>
                     <li>

@@ -455,76 +455,130 @@ namespace OAMS.Controllers
             }
         }
 
+        public ActionResult _150()
+        {
+            return View();
+        }
 
-        public ActionResult _150(List<string> accountL, DateTime? from, DateTime? to)
+        [HttpPost]
+        public ActionResult _150(Rpt150 rpt)
         {
             OAMSEntities db = new OAMSEntities();
 
-
-
-            var v1 = db.Sites.Where(r => true
-                && (r.CreatedDate != null && accountL.Contains(r.CreatedBy) && from <= r.CreatedDate && r.CreatedDate <= to)
-                )
-                .GroupBy(r => new { r.CreatedBy, r.Geo1.Name })
-                .Select(r => new Rpt150.Row1
-                {
-                    Name = r.Key.CreatedBy,
-                    Geo1 = r.Key.Name,
-                    CreateCount = r.Count()
-                }
-                )
-                .ToList()
-                ;
-
-            var v2 = db.SitePhotoes.Where(r => true
-                && (r.CreatedDate != null && accountL.Contains(r.CreatedBy) && from <= r.CreatedDate && r.CreatedDate <= to)
-                )
-                .GroupBy(r => new { r.CreatedBy, r.Site.Geo1.Name })
-                .Select(r => new Rpt150.Row2
-                {
-                    Name = r.Key.CreatedBy,
-                    Geo1 = r.Key.Name,
-                    SiteCount = r.Select(r1 => r1.SiteID).Distinct().Count(),
-                    SitePhotoCount = r.Count()
-                }
-                )
-                .ToList()
-                ;
-
-            var v3 = db.SiteDetailPhotoes.Where(r => true
-                && (r.CreatedDate != null && accountL.Contains(r.CreatedBy) && from <= r.CreatedDate && r.CreatedDate <= to)
-                )
-                .GroupBy(r => new { r.CreatedBy, r.SiteDetail.Site.Geo1.Name })
-                .Select(r => new Rpt150.Row3
-                {
-                    Name = r.Key.CreatedBy,
-                    Geo1 = r.Key.Name,
-                    SiteDetailCount = r.Select(r1 => r1.SiteDetailID).Distinct().Count(),
-                    SiteDetailPhotoCount = r.Count()
-                }
-                )
-                .ToList()
-                ;
-
-            var geo1List = v1.Select(r => r.Geo1).Union(v2.Select(r => r.Geo1)).Union(v3.Select(r => r.Geo1)).Distinct().ToList();
-
-            var r4 = accountL.Select(r => geo1List.Select(r1 => new
+            if (rpt.userL != null)
             {
-                Name = r,
-                Geo1 = r1,
-                CreateCount = v1.Where(r2 => r2.Name == r && r2.Geo1 == r1).FirstOrDefault() != null ? v1.Where(r2 => r2.Name == r && r2.Geo1 == r1).FirstOrDefault().CreateCount : 0,
+                var v1 = db.Sites.Where(r => true
+                    && (r.CreatedDate != null && rpt.userL.Contains(r.CreatedBy) && rpt.from <= r.CreatedDate && r.CreatedDate <= rpt.to)
+                    )
+                    .GroupBy(r => new { r.CreatedBy, r.Geo1.Name })
+                    .Select(r => new Rpt150.Row1
+                    {
+                        Name = r.Key.CreatedBy,
+                        Geo1 = r.Key.Name,
+                        CreateCount = r.Count()
+                    }
+                    )
+                    .ToList()
+                    ;
 
+                var v2 = db.SitePhotoes.Where(r => true
+                    && (r.TakenDate != null && rpt.userL.Contains(r.CreatedBy) && rpt.from <= r.TakenDate && r.TakenDate <= rpt.to)
+                    )
+                    .GroupBy(r => new { r.CreatedBy, r.Site.Geo1.Name })
+                    .Select(r => new Rpt150.Row2
+                    {
+                        Name = r.Key.CreatedBy,
+                        Geo1 = r.Key.Name,
+                        SiteCount = r.Select(r1 => r1.SiteID).Distinct().Count(),
+                        SitePhotoCount = r.Count()
+                    }
+                    )
+                    .ToList()
+                    ;
 
-            })).ToList();
+                var v3 = db.SiteDetailPhotoes.Where(r => true
+                    && (r.TakenDate != null && rpt.userL.Contains(r.CreatedBy) && rpt.from <= r.TakenDate && r.TakenDate <= rpt.to)
+                    )
+                    .GroupBy(r => new { r.CreatedBy, r.SiteDetail.Site.Geo1.Name })
+                    .Select(r => new Rpt150.Row3
+                    {
+                        Name = r.Key.CreatedBy,
+                        Geo1 = r.Key.Name,
+                        SiteDetailCount = r.Select(r1 => r1.SiteDetailID).Distinct().Count(),
+                        SiteDetailPhotoCount = r.Count()
+                    }
+                    )
+                    .ToList()
+                    ;
 
+                var geo1List = v1.Select(r => r.Geo1).Union(v2.Select(r => r.Geo1)).Union(v3.Select(r => r.Geo1)).Distinct().ToList();
 
+                //Rpt150 rpt = new Rpt150();
+                rpt.L1 = v1;
+                rpt.L2 = v2;
+                rpt.L3 = v3;
+                rpt.Geo1L = geo1List;
+            }
 
-          
+            return View(rpt);
+        }
 
+        public ActionResult _151(string user, DateTime? from, DateTime? to, string geo1)
+        {
+            OAMSEntities db = new OAMSEntities();
 
+            List<Site> l = new List<Site>();
+            if (!string.IsNullOrEmpty(user))
+            {
+                l = db.Sites.Where(r => true
+                    && (r.CreatedDate != null && user == r.CreatedBy && from <= r.CreatedDate && r.CreatedDate <= to)
+                    && (r.Geo1 != null && r.Geo1.Name == geo1)
+                    )
+                    .ToList()
+                    ;
+            }
 
+            return View(l);
+        }
 
-            return View();
+        public ActionResult _152(string user, DateTime? from, DateTime? to, string geo1)
+        {
+            OAMSEntities db = new OAMSEntities();
+
+            List<Site> l = new List<Site>();
+            if (!string.IsNullOrEmpty(user))
+            {
+                l = db.SitePhotoes.Where(r => true
+                    && (r.TakenDate != null && user == r.CreatedBy && from <= r.TakenDate && r.TakenDate <= to)
+                    && (r.Site.Geo1 != null && r.Site.Geo1.Name == geo1)
+                    )
+                    .Select(r => r.Site)
+                    .Distinct()
+                    .ToList()
+                    ;
+            }
+
+            return View(l);
+        }
+
+        public ActionResult _153(string user, DateTime? from, DateTime? to, string geo1)
+        {
+            OAMSEntities db = new OAMSEntities();
+
+            List<Site> l = new List<Site>();
+            if (!string.IsNullOrEmpty(user))
+            {
+                l = db.SiteDetailPhotoes.Where(r => true
+                    && (r.TakenDate != null && user == r.CreatedBy && from <= r.TakenDate && r.TakenDate <= to)
+                    && (r.SiteDetail.Site.Geo1 != null && r.SiteDetail.Site.Geo1.Name == geo1)
+                    )
+                    .Select(r => r.SiteDetail.Site)
+                    .Distinct()
+                    .ToList()
+                    ;
+            }
+
+            return View(l);
         }
 
     }
