@@ -19,7 +19,7 @@
                     {
                         var p = paramsL.Where(r => r.PName == item).FirstOrDefault();
                         <th>
-                            @(p == null ? item : p.Name)
+                            @(p == null ? item : (p.IsCount ? p.Values.FirstOrDefault() : p.Name))
                         </th>
                     }
                 </tr>
@@ -58,6 +58,26 @@
                 </tr>
             </tfoot>*@
         </table>
+    </div>
+    
+    }
+    else
+    { 
+    <div>
+        There are some example below:
+        <br />
+        <a href='@Url.Content("~/Rpt/_130?query=[{%22Name%22:%22Geo1%22,%22Values%22:[%22HCMC%22]},{%22Name%22:%22Type%22,%22Values%22:[%22WMB%22]}]")'>
+            Example 1</a>
+        <br />
+        <a href='@Url.Content("~/Rpt/_130?query=[{%22Name%22:%22Type%22,%22Values%22:[%22WMB%22]}]")'>
+            Example 2</a>
+        <br />
+        <a href='@Url.Content("~/Rpt/_130?query=[{%22Name%22:%22Geo1%22,%22Values%22:[%22HCMC%22]}]")'>
+            Example 3</a>
+        <br />
+        <a href='@Url.Content("~/Rpt/_130?query=[{%22Name%22:%22Geo1%22,%22Values%22:[%22HCMC%22],%22IsShow%22:%22false%22},{%22Name%22:%22Geo2%22},{%22Name%22:%22Type%22,%22IsCount%22:%22true%22}]")'>
+            Example 4</a>
+        <br />
     </div>
     }
     <script type="text/javascript">

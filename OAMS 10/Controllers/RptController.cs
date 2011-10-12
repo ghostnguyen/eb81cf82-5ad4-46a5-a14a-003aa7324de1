@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Reflection;
 using Microsoft.CSharp.RuntimeBinder;
 using System.Web.Script.Serialization;
+using System.Linq.Expressions;
 
 namespace OAMS.Controllers
 {
@@ -237,16 +238,42 @@ namespace OAMS.Controllers
 
         public ActionResult _130(string query)
         {
-            //query = @"[{""Name"":""Geo1"",""Values"":[""HCMC""]}]";
+            if (string.IsNullOrEmpty(query))
+            {
+                return View();
+            }
+            //query=[{%22Name%22:%22Geo1%22,%22Values%22:[%22HCMC%22]},{%22Name%22:%22Type%22,%22Values%22:[%22WMB%22]}]
+            //query=[{%22Name%22:%22Type%22,%22Values%22:[%22WMB%22]}]
+            //query=[{%22Name%22:%22Geo1%22,%22Values%22:[%22HCMC%22]}]
+            //query=[{%22Name%22:%22Geo1%22,%22Values%22:[%22HCMC%22],%22IsShow%22:%22false%22},{%22Name%22:%22Geo2%22},{%22Name%22:%22Type%22,%22IsCount%22:%22true%22}]
+
+            OAMSEntities db = new OAMSEntities();
 
             List<Rpt130> paramsL = new List<Rpt130>();
 
             JavaScriptSerializer ser = new JavaScriptSerializer();
             paramsL = ser.Deserialize<List<Rpt130>>(query);
 
+            foreach (var item in paramsL.Where(r => (r.Values == null || r.Values.Count == 0) && r.IsCount).ToList())
+            {
+                switch (item.Name)
+                {
+                    case "Type":
+                        item.Values = db.CodeMasters.Where(r => r.Type == CodeMasterType.Type).OrderBy(r => r.Order).Select(r => r.Code).ToList();
+                        item.Values.Add("");
+                        break;
+                    case "Format":
+                        var format = PropertyName.For<CodeMasterType>(r => r.Format);
+                        item.Values = db.CodeMasters.Where(r => r.Type == format).OrderBy(r => r.Order).Select(r => r.Code).ToList();
+                        item.Values.Add("");
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             foreach (var item in paramsL.Where(r => r.Values != null && r.Values.Count > 0 && r.IsCount).ToList())
             {
-
                 var np = item.Values.Select(r => new Rpt130()
                 {
                     Name = item.Name,
@@ -269,52 +296,52 @@ namespace OAMS.Controllers
                 item.IsShow = item.IsShow ?? true;
             }
 
+
+
             ViewBag.ParamsL = paramsL;
 
-            OAMSEntities db = new OAMSEntities();
 
-            //var r1 = db.SiteDetailMores.Where(r => true);
 
-            List<SiteDetailMore> r1 = db.SiteDetailMores.ToList();
-
-            //Func<List<SiteDetailMore>, List<SiteDetailMore>> func = a => { 
-            //if(a == null)
-            //    a = db.SiteDetailMores.
-            //};
+            var r1 = db.SiteDetailMores.Select(r => r);
+            //List<SiteDetailMore> r1 = db.SiteDetailMores.ToList();
 
             var whereL = paramsL.Where(r => r.Values != null && r.Values.Count > 0 && !r.IsCount);
 
             foreach (var item in whereL)
             {
-                //Geo 1, Geo 2, type, format, contractor, category 1, category 2, client, product, 
+
+                //Use local variable, why? see the link
+                //http://stackoverflow.com/questions/6096692/filter-iqueryable-in-a-loop-with-multiple-where-statements
+                var values = item.Values;
+
                 switch (item.Name)
                 {
                     case "Geo1":
-                        r1 = r1.Where(r => r.SiteDetail.Site.Geo1 != null && item.Values.Contains(r.SiteDetail.Site.Geo1.Name)).ToList();
+                        r1 = r1.Where(r => r.SiteDetail.Site.Geo1 != null && values.Contains(r.SiteDetail.Site.Geo1.Name));
                         break;
                     case "Geo2":
-                        r1 = r1.Where(r => r.SiteDetail.Site.Geo2 != null && item.Values.Contains(r.SiteDetail.Site.Geo2.Name)).ToList();
+                        r1 = r1.Where(r => r.SiteDetail.Site.Geo2 != null && values.Contains(r.SiteDetail.Site.Geo2.Name));
                         break;
                     case "Type":
-                        r1 = r1.Where(r => item.Values.Contains(r.SiteDetail.Type)).ToList();
+                        r1 = r1.Where(r => values.Contains(r.SiteDetail.Type));
                         break;
                     case "Format":
-                        r1 = r1.Where(r => item.Values.Contains(r.SiteDetail.Format)).ToList();
+                        r1 = r1.Where(r => values.Contains(r.SiteDetail.Format));
                         break;
                     case "Contractor":
-                        r1 = r1.Where(r => r.SiteDetail.Site.Contractor != null && item.Values.Contains(r.SiteDetail.Site.Contractor.Name)).ToList();
+                        r1 = r1.Where(r => r.SiteDetail.Site.Contractor != null && values.Contains(r.SiteDetail.Site.Contractor.Name));
                         break;
                     case "Category1":
-                        r1 = r1.Where(r => r.Product != null && r.Product.Category1 != null && item.Values.Contains(r.Product.Category1.Name)).ToList();
+                        r1 = r1.Where(r => r.Product != null && r.Product.Category1 != null && values.Contains(r.Product.Category1.Name));
                         break;
                     case "Category2":
-                        r1 = r1.Where(r => r.Product != null && r.Product.Category2 != null && item.Values.Contains(r.Product.Category2.Name)).ToList();
+                        r1 = r1.Where(r => r.Product != null && r.Product.Category2 != null && values.Contains(r.Product.Category2.Name));
                         break;
                     case "Client":
-                        r1 = r1.Where(r => r.Product != null && r.Product.Client != null && item.Values.Contains(r.Product.Client.Name)).ToList();
+                        r1 = r1.Where(r => r.Product != null && r.Product.Client != null && values.Contains(r.Product.Client.Name));
                         break;
                     case "Product":
-                        r1 = r1.Where(r => r.Product != null && item.Values.Contains(r.Product.Name)).ToList();
+                        r1 = r1.Where(r => r.Product != null && values.Contains(r.Product.Name));
                         break;
                 }
             }
@@ -323,8 +350,8 @@ namespace OAMS.Controllers
             {
                 Geo1 = r.SiteDetail.Site.Geo1 != null ? r.SiteDetail.Site.Geo1.Name : "",
                 Geo2 = r.SiteDetail.Site.Geo2 != null ? r.SiteDetail.Site.Geo2.Name : "",
-                Type = r.SiteDetail.Type,
-                Format = r.SiteDetail.Format,
+                Type = r.SiteDetail.Type ?? "",
+                Format = r.SiteDetail.Format ?? "",
                 Contractor = r.SiteDetail.Site.Contractor != null ? r.SiteDetail.Site.Contractor.Name : "",
                 Product = r.Product != null ? r.Product.Name : "",
                 Client = (r.Product != null && r.Product.Client != null) ? r.Product.Client.Name : "",
@@ -386,7 +413,7 @@ namespace OAMS.Controllers
                 var dic = (IDictionary<string, object>)item.Key;
                 foreach (var param in countParams)
                 {
-                    dic[param.PName] = item.Where(r => (((IDictionary<string, object>)r)[param.PName]).ToString() == param.Values.FirstOrDefault()).Count();
+                    dic[param.PName] = item.Where(r => ((r as IDictionary<string, object>)[param.PName]).ToString() == param.Values.FirstOrDefault()).Count();
                 }
 
                 dic["TotalCount"] = item.Count();
