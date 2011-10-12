@@ -8,6 +8,7 @@ using System.Dynamic;
 using System.Runtime.CompilerServices;
 using System.Reflection;
 using Microsoft.CSharp.RuntimeBinder;
+using System.Web.Script.Serialization;
 
 namespace OAMS.Controllers
 {
@@ -229,19 +230,57 @@ namespace OAMS.Controllers
             return View(e);
         }
 
-        public ActionResult _130()
-        {
-            return View();
-        }
+        //public ActionResult _130()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
         public ActionResult _130(string query)
         {
+            //query = @"[{""Name"":""Geo1"",""Values"":[""HCMC""]}]";
+
             List<Rpt130> paramsL = new List<Rpt130>();
+
+            JavaScriptSerializer ser = new JavaScriptSerializer();
+            paramsL = ser.Deserialize<List<Rpt130>>(query);
+
+            foreach (var item in paramsL.Where(r => r.Values != null && r.Values.Count > 0 && r.IsCount).ToList())
+            {
+
+                var np = item.Values.Select(r => new Rpt130()
+                {
+                    Name = item.Name,
+                    Values = new List<string>() { r },
+                    IsCount = item.IsCount,
+                    IsShow = item.IsShow
+                })
+                .ToList();
+
+                paramsL.InsertRange(paramsL.IndexOf(item), np);
+                paramsL.Remove(item);
+            }
+
+            for (int i = 0; i < paramsL.Count; i++)
+            {
+                var item = paramsL[i];
+                item.Order = i;
+                item.PName = "P_" + i.ToString();
+
+                item.IsShow = item.IsShow ?? true;
+            }
+
+            ViewBag.ParamsL = paramsL;
 
             OAMSEntities db = new OAMSEntities();
 
-            var r1 = db.SiteDetailMores.AsQueryable();
+            //var r1 = db.SiteDetailMores.Where(r => true);
+
+            List<SiteDetailMore> r1 = db.SiteDetailMores.ToList();
+
+            //Func<List<SiteDetailMore>, List<SiteDetailMore>> func = a => { 
+            //if(a == null)
+            //    a = db.SiteDetailMores.
+            //};
 
             var whereL = paramsL.Where(r => r.Values != null && r.Values.Count > 0 && !r.IsCount);
 
@@ -251,36 +290,34 @@ namespace OAMS.Controllers
                 switch (item.Name)
                 {
                     case "Geo1":
-                        r1 = r1.Where(r => r.SiteDetail.Site.Geo1 != null && item.Values.Contains(r.SiteDetail.Site.Geo1.Name));
+                        r1 = r1.Where(r => r.SiteDetail.Site.Geo1 != null && item.Values.Contains(r.SiteDetail.Site.Geo1.Name)).ToList();
                         break;
                     case "Geo2":
-                        r1 = r1.Where(r => r.SiteDetail.Site.Geo2 != null && item.Values.Contains(r.SiteDetail.Site.Geo2.Name));
+                        r1 = r1.Where(r => r.SiteDetail.Site.Geo2 != null && item.Values.Contains(r.SiteDetail.Site.Geo2.Name)).ToList();
                         break;
                     case "Type":
-                        r1 = r1.Where(r => item.Values.Contains(r.SiteDetail.Type));
+                        r1 = r1.Where(r => item.Values.Contains(r.SiteDetail.Type)).ToList();
                         break;
                     case "Format":
-                        r1 = r1.Where(r => item.Values.Contains(r.SiteDetail.Format));
+                        r1 = r1.Where(r => item.Values.Contains(r.SiteDetail.Format)).ToList();
                         break;
                     case "Contractor":
-                        r1 = r1.Where(r => r.SiteDetail.Site.Contractor != null && item.Values.Contains(r.SiteDetail.Site.Contractor.Name));
+                        r1 = r1.Where(r => r.SiteDetail.Site.Contractor != null && item.Values.Contains(r.SiteDetail.Site.Contractor.Name)).ToList();
                         break;
                     case "Category1":
-                        r1 = r1.Where(r => r.Product != null && r.Product.Category1 != null && item.Values.Contains(r.Product.Category1.Name));
+                        r1 = r1.Where(r => r.Product != null && r.Product.Category1 != null && item.Values.Contains(r.Product.Category1.Name)).ToList();
                         break;
                     case "Category2":
-                        r1 = r1.Where(r => r.Product != null && r.Product.Category2 != null && item.Values.Contains(r.Product.Category2.Name));
+                        r1 = r1.Where(r => r.Product != null && r.Product.Category2 != null && item.Values.Contains(r.Product.Category2.Name)).ToList();
                         break;
                     case "Client":
-                        r1 = r1.Where(r => r.Product != null && r.Product.Client != null && item.Values.Contains(r.Product.Client.Name));
+                        r1 = r1.Where(r => r.Product != null && r.Product.Client != null && item.Values.Contains(r.Product.Client.Name)).ToList();
                         break;
                     case "Product":
-                        r1 = r1.Where(r => r.Product != null && item.Values.Contains(r.Product.Name));
+                        r1 = r1.Where(r => r.Product != null && item.Values.Contains(r.Product.Name)).ToList();
                         break;
                 }
             }
-
-            List<ExpandoObject> l = new List<ExpandoObject>();
 
             var r2 = r1.ToList().Select(r => new
             {
@@ -293,8 +330,11 @@ namespace OAMS.Controllers
                 Client = (r.Product != null && r.Product.Client != null) ? r.Product.Client.Name : "",
                 Category1 = (r.Product != null && r.Product.Category1 != null) ? r.Product.Category1.Name : "",
                 Category2 = (r.Product != null && r.Product.Category2 != null) ? r.Product.Category2.Name : "",
-            });
-            var selectL = paramsL.Where(r => r.IsShow);
+            }).ToList();
+
+            List<ExpandoObject> l = new List<ExpandoObject>();
+
+            var selectL = paramsL.Where(r => r.IsShow.HasValue && r.IsShow.Value);
 
             foreach (var item in r2)
             {
@@ -348,9 +388,13 @@ namespace OAMS.Controllers
                 {
                     dic[param.PName] = item.Where(r => (((IDictionary<string, object>)r)[param.PName]).ToString() == param.Values.FirstOrDefault()).Count();
                 }
+
+                dic["TotalCount"] = item.Count();
             }
 
-            return null;
+            var result = l1.Select(r => r.Key).ToList();
+
+            return View(result);
         }
 
         public class Rpt130Comparer : IEqualityComparer<ExpandoObject>
@@ -365,7 +409,7 @@ namespace OAMS.Controllers
                 var a = (IDictionary<string, object>)x;
                 var b = (IDictionary<string, object>)y;
 
-                return l.Where(r => r.IsShow && !r.IsCount).FirstOrDefault(r => a[r.PName] != b[r.PName]) == null;
+                return l.Where(r => r.IsShow.HasValue && r.IsShow.Value && !r.IsCount).FirstOrDefault(r => (string)a[r.PName] != (string)b[r.PName]) == null;
             }
 
             public int GetHashCode(ExpandoObject obj)

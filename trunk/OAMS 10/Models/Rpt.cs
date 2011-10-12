@@ -200,7 +200,7 @@ namespace OAMS.Models
         public string Name { get; set; }
         public List<string> Values { get; set; }
         public bool IsCount { get; set; }
-        public bool IsShow { get; set; }
+        public bool? IsShow { get; set; }
         public int Order { get; set; }
         public string PName { get; set; }
     }

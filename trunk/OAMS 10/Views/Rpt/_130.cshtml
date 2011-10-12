@@ -1,0 +1,76 @@
+﻿@model List<System.Dynamic.ExpandoObject>
+@using OAMS.Models
+@{
+    ViewBag.Title = "Dynamic Rpt";
+}
+<h2>
+    @ViewBag.Title</h2>
+@using (Html.BeginForm())
+{
+    if (Model != null && Model.Count > 0)
+    {
+        var paramsL = ViewBag.ParamsL as List<Rpt130>;
+        var v = Model[0] as IDictionary<string, object>;
+    <div>
+        <table class="display">
+            <thead>
+                <tr>
+                    @foreach (var item in v.Keys)
+                    {
+                        var p = paramsL.Where(r => r.PName == item).FirstOrDefault();
+                        <th>
+                            @(p == null ? item : p.Name)
+                        </th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    
+                }
+                @foreach (var item in Model)
+                {
+                    var r = item as IDictionary<string, object>;
+                    <tr>
+                        @foreach (var c in r.Values)
+                        {
+                            <td>
+                                @c
+                            </td>
+                        
+                        }
+                    </tr>
+                }
+            </tbody>
+            @*<tfoot>
+                <tr>
+                    <th colspan="5">
+                    </th>
+                    @foreach (var item1 in totalL)
+                    {
+                        <th>
+                            @item1
+                        </th>
+                    }
+                    <th>
+                        @(totalL.Sum())
+                    </th>
+                </tr>
+            </tfoot>*@
+        </table>
+    </div>
+    }
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var oTable = $('.display').dataTable({ "aaSorting": [[0, "asc"]],
+                "sDom": 'CT<"clear">lfrtip',
+                "oTableTools": { "sSwfPath": '@Url.Content("~/content/copy_cvs_xls_pdf.swf")', "aButtons": ["copy"] },
+                "iDisplayLength": -1,
+                "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
+            });
+        });
+    </script>
+    
+}
