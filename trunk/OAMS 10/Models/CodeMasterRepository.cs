@@ -33,7 +33,9 @@ namespace OAMS.Models
     public class CodeMasterType
     {
         public static string Type = "Type";
+        
         public static string InstallationPosition1 = "InstallationPosition1";
+        public string Format { get; set; }
         public string Material { get; set; }
         public string CBDViewed { get; set; }
         public string Grade { get; set; }

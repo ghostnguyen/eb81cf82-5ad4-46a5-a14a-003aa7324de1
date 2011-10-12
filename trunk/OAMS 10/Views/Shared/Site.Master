@@ -94,6 +94,11 @@
                     </li>
                     <li>
                         <%: Html.ActionLinkWithRoles<RptController>("Summary", r => r.Index())%>
+                        <ul>
+                            <li>
+                                <%: Html.ActionLinkWithRoles<RptController>("Dynamic Rpt", r => r._130(""))%>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <%: Html.ActionLink("About", "About", "Home")%></li>
