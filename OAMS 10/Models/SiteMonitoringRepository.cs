@@ -115,11 +115,11 @@ namespace OAMS.Models
 
                     Save();
 
-                    string note = string.Format("SMP_{0}_SM_{1}", photo.ID.ToString(), e.ID.ToString());
-                    entry.UpdateSummary(note);
+                    string title = string.Format("SMP_{0}_SM_{1}", photo.ID.ToString(), e.ID.ToString());
+
+                    PicasaRepository.I.UpdateTitle(photo.AtomUrl, title);
                 }
             }
-
         }
 
         public void DeletePhoto(List<int> IDList)
