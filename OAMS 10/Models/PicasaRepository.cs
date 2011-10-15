@@ -238,5 +238,16 @@ namespace OAMS.Models
 
             a.Update();
         }
+
+        public void DeletePhoto(string photoAtomUrl)
+        {
+            var atom = PicasaService.Get(photoAtomUrl.ToHttpsUri());
+            PicasaEntry a = (PicasaEntry)atom;
+
+            a.Title = new AtomTextConstruct(AtomTextConstructElementType.Title, "X_" + a.Title.Text);
+            a.Summary = new AtomTextConstruct(AtomTextConstructElementType.Summary, "X_" + a.Summary.Text);
+
+            a.Update();
+        }
     }
 }
