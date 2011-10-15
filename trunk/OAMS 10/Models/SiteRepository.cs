@@ -289,20 +289,22 @@ namespace OAMS.Models
         {
             return atom.Split('/')[9].Split('?')[0];
         }
+
         public void MovePhoto(int from, int to)
         {
-            //var s = Get(id).SitePhotoes;
-
-            var s = DB.Sites.Where(r => r.ID >= from && r.ID < to).SelectMany(r => r.SitePhotoes).ToList();
-            //
+            //var s = DB.Sites.Where(r => r.ID >= from && r.ID < to).SelectMany(r => r.SitePhotoes).ToList();
+            var s = DB.SiteDetails.Where(r => r.ID >= from && r.ID < to).SelectMany(r => r.SiteDetailPhotoes).ToList();
+            
             string genAlbum = getAlbumID(AppSetting.AlbumAtomUrl);
-            int count = s.Where(r => getAlbumID(r.AtomUrl) == genAlbum).Count();
+            //int count = s.Where(r => getAlbumID(r.AtomUrl) == genAlbum).Count();
 
-            var s2 = s.Where(r => getAlbumID(r.AtomUrl) != genAlbum).OrderBy(r => r.SiteID).ThenBy(r => r.ID);
+            var s2 = s.Where(r => getAlbumID(r.AtomUrl) != genAlbum).OrderBy(r => r.SiteDetailID).ThenBy(r => r.ID);
 
             int count2 = s2.Count();
 
             //string albumid = AppSetting.AlbumAtomUrl.Split('/')[9].Split('?')[0];
+
+            PicasaRepository.I.AlbumIDList = new List<string>();
 
             foreach (var item in s2)
             {
