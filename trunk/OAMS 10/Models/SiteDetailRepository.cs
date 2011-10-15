@@ -111,10 +111,10 @@ namespace OAMS.Models
             if (IDList != null)
             {
                 var l = DB.SiteDetailPhotoes.Where(r => IDList.Contains(r.ID)).ToList();
-                //PicasaRepository picasaRepository = new PicasaRepository();
+                
                 foreach (var item in l)
                 {
-                    //picasaRepository.DeletePhoto(item);
+                    PicasaRepository.I.DeletePhoto(item.AtomUrl);
                     DB.DeleteObject(item);
                 }
 

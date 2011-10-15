@@ -229,8 +229,7 @@ namespace OAMS.Models
                 //PicasaRepository picasaRepository = new PicasaRepository();
                 foreach (var item in l)
                 {
-                    //TODO: Mark delete in picasa: There are two more place for SiteDetailPhoto and SiteMonitoringPhoto
-                    //picasaRepository.DeletePhoto(item);
+                    PicasaRepository.I.DeletePhoto(item.AtomUrl);
                     DB.DeleteObject(item);
                 }
 

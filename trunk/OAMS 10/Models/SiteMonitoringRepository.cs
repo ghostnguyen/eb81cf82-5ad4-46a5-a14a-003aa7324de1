@@ -130,7 +130,7 @@ namespace OAMS.Models
                 //PicasaRepository picasaRepository = new PicasaRepository();
                 foreach (var item in l)
                 {
-                    //picasaRepository.DeletePhoto(item);
+                    PicasaRepository.I.DeletePhoto(item.AtomUrl);
                     DB.DeleteObject(item);
                 }
 
