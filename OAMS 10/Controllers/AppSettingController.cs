@@ -88,5 +88,12 @@ namespace OAMS.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult DeleteEmptyAlbum()
+        {
+            PicasaRepository.I.DeleteEmptyAlbum();
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

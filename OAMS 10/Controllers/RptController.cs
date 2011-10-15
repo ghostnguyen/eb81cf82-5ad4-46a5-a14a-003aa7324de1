@@ -267,6 +267,44 @@ namespace OAMS.Controllers
                         item.Values = db.CodeMasters.Where(r => r.Type == format).OrderBy(r => r.Order).Select(r => r.Code).ToList();
                         item.Values.Add("");
                         break;
+                    case "Geo1":
+                        item.Values = db.Geos.Where(r => r.Level == 1).Select(r => r.Name).ToList();
+                        item.Values.Add("");
+                        break;
+                    case "Geo2":
+                        var geo1 = paramsL.Where(r => r.Name == "Geo1" && r.Values != null && r.Values.Count > 0 && !r.IsCount).FirstOrDefault();
+                        if (geo1 != null)
+                        {
+                            var name1 = geo1.Values.FirstOrDefault();
+                            item.Values = db.Geos.Where(r => r.Level == 2 && r.Parent.Name == name1).Select(r => r.Name).ToList();
+                            item.Values.Add("");
+                        }
+                        break;
+                    case "Category1":
+                        item.Values = db.Categories.Where(r => r.Level == 1).Select(r => r.Name).ToList();
+                        item.Values.Add("");
+                        break;
+                    case "Category2":
+                        var cat1 = paramsL.Where(r => r.Name == "Category1" && r.Values != null && r.Values.Count > 0 && !r.IsCount).FirstOrDefault();
+                        if (cat1 != null)
+                        {
+                            var name1 = cat1.Values.FirstOrDefault();
+                            item.Values = db.Categories.Where(r => r.Level == 2 && r.Parent.Name == name1).Select(r => r.Name).ToList();
+                            item.Values.Add("");
+                        }
+                        break;
+                    case "Contractor":
+                        item.Values = db.Contractors.Select(r => r.Name).ToList();
+                        item.Values.Add("");
+                        break;
+                    case "Product":
+                        item.Values = db.Products.Select(r => r.Name).ToList();
+                        item.Values.Add("");
+                        break;
+                    case "Client":
+                        item.Values = db.Clients.Select(r => r.Name).ToList();
+                        item.Values.Add("");
+                        break;
                     default:
                         break;
                 }
@@ -410,13 +448,16 @@ namespace OAMS.Controllers
 
             foreach (var item in l1)
             {
+                int total = 0;
                 var dic = (IDictionary<string, object>)item.Key;
                 foreach (var param in countParams)
                 {
-                    dic[param.PName] = item.Where(r => ((r as IDictionary<string, object>)[param.PName]).ToString() == param.Values.FirstOrDefault()).Count();
+                    total = item.Where(r => ((r as IDictionary<string, object>)[param.PName]).ToString() == param.Values.FirstOrDefault()).Count();
+                    dic[param.PName] = total;
                 }
 
-                dic["TotalCount"] = item.Count();
+                //dic["TotalCount"] = item.Count();
+                dic["TotalCount"] = total;
             }
 
             var result = l1.Select(r => r.Key).ToList();

@@ -16,6 +16,8 @@ namespace OAMS.Models
 {
     public class PicasaRepository : BaseRepository<PicasaRepository>
     {
+        public List<string> AlbumIDList { get; set; }
+
         private PicasaService service1;
         private int totalPhotos = 0;
 
@@ -180,28 +182,50 @@ namespace OAMS.Models
 
         public PicasaEntry MovePhoto2GenericAlbum(IPhoto p)
         {
-            string albumid = AppSetting.AlbumAtomUrl.Split('/')[9].Split('?')[0];
+            //var atomPhoto = PicasaService.Get(p.AtomUrl.ToHttpsUri());
+            if (AlbumIDList == null) AlbumIDList = new List<string>();
 
-            string note = "";
-            if (p is SitePhoto)
+            var currentAlbumID = p.AtomUrl.Split('/')[9];
+
+            if (!AlbumIDList.Contains(currentAlbumID))
             {
-                var sp = p as SitePhoto;
-                note = string.Format("SitePhoto_{0}_Site_{1}", sp.ID.ToString(), sp.SiteID.ToString());
-            }
-
-            var entry = MovingPhoto1(p.Url, p.AtomUrl, albumid, note);
-
-            if (entry != null)
-            {
-                if (p.Url != entry.Media.Content.Url)
-                    p.Url = entry.Media.Content.Url;
-
-                if (p.AtomUrl != entry.EditUri.Content)
+                var albumAtom = PicasaService.Get(p.AtomUrl.Remove(p.AtomUrl.IndexOf("photoid") - 1, p.AtomUrl.IndexOf("?") - p.AtomUrl.IndexOf("photoid") + 1).ToHttpsUri());
+                if (albumAtom.Title.Text.Count() < 19 && albumAtom.Title.Text != "2011_09_25" && albumAtom.Title.Text != "2011_09_24")
                 {
-                    p.AtomUrl = entry.EditUri.Content;
-                }
+                    string albumid = AppSetting.AlbumAtomUrl.Split('/')[9].Split('?')[0];
 
-                totalPhotos++;
+                    string note = "";
+                    if (p is SitePhoto)
+                    {
+                        var sp = p as SitePhoto;
+                        note = string.Format("SitePhoto_{0}_Site_{1}", sp.ID.ToString(), sp.SiteID.ToString());
+                    }
+
+                    if (p is SiteDetailPhoto)
+                    {
+                        var sp = p as SiteDetailPhoto;
+                        note = string.Format("SDP_{0}_SD_{1}_S_{2}", sp.ID.ToString(), sp.SiteDetail.ID.ToString(), sp.SiteDetail.SiteID.ToString());
+                    }
+
+                    var entry = MovingPhoto1(p.Url, p.AtomUrl, albumid, note);
+
+                    if (entry != null)
+                    {
+                        if (p.Url != entry.Media.Content.Url)
+                            p.Url = entry.Media.Content.Url;
+
+                        if (p.AtomUrl != entry.EditUri.Content)
+                        {
+                            p.AtomUrl = entry.EditUri.Content;
+                        }
+
+                        totalPhotos++;
+                    }
+                }
+                else
+                {
+                    AlbumIDList.Add(currentAlbumID);
+                }
             }
 
             return null;
@@ -248,6 +272,29 @@ namespace OAMS.Models
             a.Summary = new AtomTextConstruct(AtomTextConstructElementType.Summary, "X_" + a.Summary.Text);
 
             a.Update();
+        }
+
+        public void DeleteEmptyAlbum()
+        {
+            var atom = PicasaService.Get("https://picasaweb.google.com/data/entry/api/user/113917932111131696693");
+
+            AlbumQuery query = new AlbumQuery();
+
+            query.Uri = new Uri(PicasaQuery.CreatePicasaUri("113917932111131696693"));
+
+            var picasaFeed = PicasaService.Query(query);
+
+            if (picasaFeed != null && picasaFeed.Entries.Count > 0)
+            {
+                foreach (PicasaEntry entry in picasaFeed.Entries)
+                {
+                    var num = entry.GetPhotoExtensionValue(GPhotoNameTable.NumPhotos).ToInt();
+                    if (num == 0)
+                    {
+                        entry.Delete();
+                    }
+                }
+            }
         }
     }
 }
