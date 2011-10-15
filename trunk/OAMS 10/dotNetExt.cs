@@ -776,22 +776,20 @@ public static class dotNetExt
         return new Predicate<T>(func);
     }
 
-    public static void UpdateSummary(this PicasaEntry entry, string str)
-    {
-        try
-        {
-            entry.Title = new AtomTextConstruct(AtomTextConstructElementType.Title, str);
-            entry.Summary = new AtomTextConstruct(AtomTextConstructElementType.Summary, str);
-            entry.Update();
-        }
-        catch (Exception e)
-        {
-            //Elmah.ErrorLog.GetDefault(HttpContext.Current).Log(new Elmah.Error(ex));
-            Elmah.ErrorSignal.FromCurrentContext().Raise(e);
-        }
-
-        
-    }
+    //public static void UpdateSummary(this PicasaEntry entry, string str)
+    //{
+    //    try
+    //    {
+    //        entry.Title = new AtomTextConstruct(AtomTextConstructElementType.Title, str);
+    //        entry.Summary = new AtomTextConstruct(AtomTextConstructElementType.Summary, str);
+    //        entry.Update();
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        //Elmah.ErrorLog.GetDefault(HttpContext.Current).Log(new Elmah.Error(ex));
+    //        Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+    //    }
+    //}
 }
 
 public static class IPrincipalExtend

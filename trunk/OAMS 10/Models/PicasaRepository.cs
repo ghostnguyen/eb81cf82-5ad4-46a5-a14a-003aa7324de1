@@ -16,18 +16,21 @@ namespace OAMS.Models
 {
     public class PicasaRepository : BaseRepository<PicasaRepository>
     {
-        private PicasaService service;
+        private PicasaService service1;
         private int totalPhotos = 0;
 
-        public PicasaService InitPicasaService()
+        public PicasaService PicasaService
         {
-            if (service == null)
+            get
             {
-                service = new PicasaService("OAMS");
-                service.setUserCredentials(AppSetting.GoogleUsername, AppSetting.GooglePassword);
-            }
+                if (service1 == null)
+                {
+                    service1 = new PicasaService("OAMS");
+                    service1.setUserCredentials(AppSetting.GoogleUsername, AppSetting.GooglePassword);
+                }
 
-            return service;
+                return service1;
+            }
         }
 
         public List<PicasaEntry> UploadPhoto2(IEnumerable<HttpPostedFileBase> files, string[] noteList = null)
@@ -41,7 +44,6 @@ namespace OAMS.Models
 
             List<PicasaEntry> l = new List<PicasaEntry>();
 
-            PicasaService service = InitPicasaService();
             Update_AlbumAtomUrl();
 
             Uri postUri = new Uri(AppSetting.AlbumAtomUrl.Replace("entry", "feed").ToHttpsUri());
@@ -72,8 +74,7 @@ namespace OAMS.Models
                         entry.Summary = new AtomTextConstruct(AtomTextConstructElementType.Summary, noteList[i]);
                     }
 
-
-                    PicasaEntry createdEntry = service.Insert(postUri, entry);
+                    PicasaEntry createdEntry = PicasaService.Insert(postUri, entry);
 
                     l.Add(createdEntry);
                 }
@@ -126,8 +127,6 @@ namespace OAMS.Models
 
         public string CreateAlbum(string name, bool isBackup = false)
         {
-            var service = InitPicasaService();
-
             AlbumEntry newEntry = new AlbumEntry();
 
             newEntry.Title.Text = name + (isBackup ? "B" : "");
@@ -135,7 +134,7 @@ namespace OAMS.Models
 
             Uri feedUri = new Uri(PicasaQuery.CreatePicasaUri(AppSetting.GoogleUsername).ToHttpsUri());
 
-            PicasaEntry createdEntry = (PicasaEntry)service.Insert(feedUri, newEntry);
+            PicasaEntry createdEntry = (PicasaEntry)PicasaService.Insert(feedUri, newEntry);
 
             //5507469898148065681
             return createdEntry.EditUri.Content;
@@ -150,8 +149,6 @@ namespace OAMS.Models
 
         public void Update_AlbumAtomUrl()
         {
-            var service = InitPicasaService();
-
             if (string.IsNullOrEmpty(AppSetting.AlbumAtomUrl))
             {
                 CreateGenericAlbum();
@@ -164,7 +161,7 @@ namespace OAMS.Models
 
                     query.Uri = new Uri(AppSetting.AlbumAtomUrl);
 
-                    var picasaFeed = service.Query(query);
+                    var picasaFeed = PicasaService.Query(query);
 
                     if (picasaFeed != null)
                     {
@@ -212,10 +209,9 @@ namespace OAMS.Models
 
         public PicasaEntry MovingPhoto1(string photoUrl, string photoAtomUrl, string albumid, string note)
         {
-            PicasaService service = InitPicasaService();
             Update_AlbumAtomUrl();
 
-            var atom = service.Get(photoAtomUrl.ToHttpsUri());
+            var atom = PicasaService.Get(photoAtomUrl.ToHttpsUri());
 
             PicasaEntry a = (PicasaEntry)atom;
 
@@ -230,6 +226,17 @@ namespace OAMS.Models
             }
 
             return a;
+        }
+
+        public void UpdateTitle(string photoAtomUrl, string title)
+        {
+            var atom = PicasaService.Get(photoAtomUrl.ToHttpsUri());
+            PicasaEntry a = (PicasaEntry)atom;
+
+            a.Title = new AtomTextConstruct(AtomTextConstructElementType.Title, title);
+            a.Summary = new AtomTextConstruct(AtomTextConstructElementType.Summary, title);
+
+            a.Update();
         }
     }
 }

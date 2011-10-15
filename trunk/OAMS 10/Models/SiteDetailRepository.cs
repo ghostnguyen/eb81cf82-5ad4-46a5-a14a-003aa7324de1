@@ -95,8 +95,9 @@ namespace OAMS.Models
 
                             Save();
 
-                            string note = string.Format("SDP_{0}_SD_{1}_S_{2}", photo.ID.ToString(), siteDetail.ID.ToString(), siteDetail.SiteID.ToString());
-                            entry.UpdateSummary(note);
+                            string title = string.Format("SDP_{0}_SD_{1}_S_{2}", photo.ID.ToString(), siteDetail.ID.ToString(), siteDetail.SiteID.ToString());
+
+                            PicasaRepository.I.UpdateTitle(photo.AtomUrl, title);
                         }
                     }
                 }

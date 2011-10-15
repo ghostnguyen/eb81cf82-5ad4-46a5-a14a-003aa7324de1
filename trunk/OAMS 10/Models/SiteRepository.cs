@@ -121,8 +121,8 @@ namespace OAMS.Models
 
                     Save();
 
-                    string note = string.Format("SP_{0}_S_{1}", photo.ID.ToString(), e.ID.ToString());
-                    entry.UpdateSummary(note);
+                    string title = string.Format("SP_{0}_S_{1}", photo.ID.ToString(), e.ID.ToString());
+                    PicasaRepository.I.UpdateTitle(photo.AtomUrl, title);
                 }
             }
         }
