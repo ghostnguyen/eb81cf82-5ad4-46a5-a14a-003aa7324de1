@@ -95,5 +95,16 @@ namespace OAMS.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult Deploy()
+        {
+            System.Diagnostics.EventLog.CreateEventSource("OAMS", "OAMS123");
+
+            System.Diagnostics.EventLog.WriteEntry("OAMS", "deploy", System.Diagnostics.EventLogEntryType.Information);
+
+            return RedirectToAction("About", "Home");
+        }
+
+
     }
 }
