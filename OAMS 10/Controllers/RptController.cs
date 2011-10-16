@@ -452,8 +452,10 @@ namespace OAMS.Controllers
                 var dic = (IDictionary<string, object>)item.Key;
                 foreach (var param in countParams)
                 {
-                    total = item.Where(r => ((r as IDictionary<string, object>)[param.PName]).ToString() == param.Values.FirstOrDefault()).Count();
-                    dic[param.PName] = total;
+                    var count = item.Where(r => ((r as IDictionary<string, object>)[param.PName]).ToString() == param.Values.FirstOrDefault()).Count();
+                    dic[param.PName] = count;
+                    total += count;
+
                 }
 
                 //dic["TotalCount"] = item.Count();
