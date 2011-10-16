@@ -207,6 +207,12 @@ namespace OAMS.Models
                         note = string.Format("SDP_{0}_SD_{1}_S_{2}", sp.ID.ToString(), sp.SiteDetail.ID.ToString(), sp.SiteDetail.SiteID.ToString());
                     }
 
+                    if (p is SiteMonitoringPhoto)
+                    {
+                        var sp = p as SiteMonitoringPhoto;
+                        note = string.Format("SMP_{0}_SM_{1}", sp.ID.ToString(), sp.SiteMonitoring.ID.ToString());
+                    }
+
                     var entry = MovingPhoto1(p.Url, p.AtomUrl, albumid, note);
 
                     if (entry != null)
@@ -276,11 +282,11 @@ namespace OAMS.Models
 
         public void DeleteEmptyAlbum()
         {
-            var atom = PicasaService.Get("https://picasaweb.google.com/data/entry/api/user/113917932111131696693");
+            //var atom = PicasaService.Get("https://picasaweb.google.com/data/entry/api/user/113917932111131696693");
 
             AlbumQuery query = new AlbumQuery();
 
-            query.Uri = new Uri(PicasaQuery.CreatePicasaUri("113917932111131696693"));
+            query.Uri = new Uri(PicasaQuery.CreatePicasaUri("113917932111131696693") + "?max-results=10000");
 
             var picasaFeed = PicasaService.Query(query);
 
