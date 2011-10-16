@@ -293,12 +293,13 @@ namespace OAMS.Models
         public void MovePhoto(int from, int to)
         {
             //var s = DB.Sites.Where(r => r.ID >= from && r.ID < to).SelectMany(r => r.SitePhotoes).ToList();
-            var s = DB.SiteDetails.Where(r => r.ID >= from && r.ID < to).SelectMany(r => r.SiteDetailPhotoes).ToList();
+            //var s = DB.SiteDetails.Where(r => r.ID >= from && r.ID < to).SelectMany(r => r.SiteDetailPhotoes).ToList();
+            var s = DB.SiteMonitorings.Where(r => r.ID >= from && r.ID < to).SelectMany(r => r.SiteMonitoringPhotoes).ToList();
             
             string genAlbum = getAlbumID(AppSetting.AlbumAtomUrl);
             //int count = s.Where(r => getAlbumID(r.AtomUrl) == genAlbum).Count();
 
-            var s2 = s.Where(r => getAlbumID(r.AtomUrl) != genAlbum).OrderBy(r => r.SiteDetailID).ThenBy(r => r.ID);
+            var s2 = s.Where(r => getAlbumID(r.AtomUrl) != genAlbum).OrderBy(r => r.SiteMonitoringID).ThenBy(r => r.ID);
 
             int count2 = s2.Count();
 
