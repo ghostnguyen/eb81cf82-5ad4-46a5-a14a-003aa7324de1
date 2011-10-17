@@ -79,6 +79,7 @@ namespace OAMS.Controllers
             var v = repo.Get(id);
 
             UpdateModel(v);
+            v.Name = v.Name.Trim();
 
             repo.UpdateFullname(v);
 
