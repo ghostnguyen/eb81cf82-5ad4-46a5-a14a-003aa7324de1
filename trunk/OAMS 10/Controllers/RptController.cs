@@ -455,11 +455,16 @@ namespace OAMS.Controllers
                     var count = item.Where(r => ((r as IDictionary<string, object>)[param.PName]).ToString() == param.Values.FirstOrDefault()).Count();
                     dic[param.PName] = count;
                     total += count;
-
                 }
 
-                //dic["TotalCount"] = item.Count();
-                dic["TotalCount"] = total;
+                if (countParams.Count() == 0)
+                {
+                    dic["TotalCount"] = item.Count();
+                }
+                else
+                {
+                    dic["TotalCount"] = total;    
+                }
             }
 
             var result = l1.Select(r => r.Key).ToList();

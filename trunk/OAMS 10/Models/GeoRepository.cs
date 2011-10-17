@@ -95,6 +95,8 @@ namespace OAMS.Models
             e.ID = Guid.NewGuid();
             updateMethod(e);
 
+            e.Name = e.Name.Trim();
+
             DB.Geos.AddObject(e);
 
             e.Level = e.Parent == null ? 1 : e.Parent.Level + 1;
@@ -111,6 +113,7 @@ namespace OAMS.Models
             var v = Get(ID);
 
             updateMethod(v);
+            v.Name = v.Name.Trim();
 
             UpdateFullnameRecursive(v);
 

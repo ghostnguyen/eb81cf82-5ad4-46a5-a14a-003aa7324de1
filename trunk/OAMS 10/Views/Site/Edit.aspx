@@ -596,7 +596,7 @@
                 <div id="divMoreFile">
                 </div>
                 <br />
-                <input type="button" value="Add more" onclick="addMoreFileInput('divMoreFile','files','noteList')" />
+                <%--<input type="button" value="Add more" onclick="addMoreFileInput('divMoreFile','files','noteList')" />--%>
             </td>
         </tr>
     </table>
