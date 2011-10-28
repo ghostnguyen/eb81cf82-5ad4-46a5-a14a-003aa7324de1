@@ -266,7 +266,16 @@ namespace OAMS.Models
             a.Title = new AtomTextConstruct(AtomTextConstructElementType.Title, title);
             a.Summary = new AtomTextConstruct(AtomTextConstructElementType.Summary, title);
 
-            a.Update();
+            try
+            {
+                a.Update();
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+            }
+
+            
         }
 
         public void DeletePhoto(string photoAtomUrl)
