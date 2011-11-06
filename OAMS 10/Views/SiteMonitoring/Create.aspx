@@ -66,6 +66,10 @@
                                 first = false;
                             }
                         }
+
+//                        $(window).load(function () {
+//                            $('#gallery').orbit();
+//                        });
                     </script>
                     <div class="editor-label">
                         <%: Html.LabelFor(model => model.Site.AddressLine1)%>
@@ -294,9 +298,6 @@
                            AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Split('=')[1];
                        }
                 %>
-                <%-- <embed type="application/x-shockwave-flash" src="http://picasaweb.google.com/s/c/bin/slideshow.swf"
-                    width="600" height="400" flashvars="host=picasaweb.google.com&hl=en_US&feat=flashalbum&RGB=0x000000&feed=http%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F113917932111131696693%2Falbumid%2F<%=AlbumID%>%3Falt%3Drss%26kind%3Dphoto%26authkey%3D<%=AuthID%>%26hl%3Den_US"
-                    pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>--%>
                 <br />
                 <div id="gallery">
                     <%
@@ -324,80 +325,4 @@
         </tr>
     </table>
     <% } %>
-    <div>
-        <%--<%: Html.ActionLink("Back to List", "Index") %>--%>
-        <%--<%: Html.ActionLinkWithRoles<OAMS.Controllers.SiteMonitoringController>("Back to List", r => r.), null, null, false)%>--%>
-    </div>
-    <%--<script type="text/javascript">
-
-        //        function addMoreFileInput() {
-
-        //            var divAddMore = $('#divMoreFile');
-
-        //            var lbl = document.createElement('label');
-        //            lbl.innerHTML = 'Filename:';
-
-        //            divAddMore.append(lbl);
-
-
-        //            var input = document.createElement('input');
-        //            input.setAttribute('type', 'file');
-        //            input.setAttribute('name', 'files');
-        //            input.setAttribute('size', '65');
-
-        //            divAddMore.append(input);
-        //            divAddMore.append('<br />');
-        //        }
-
-        index = 4;
-        function addMoreFileInput() {
-
-            var divAddMore = $('#divMoreFile');
-
-            var lbl = document.createElement('label');
-            lbl.setAttribute('id', 'lblfile' + index);
-            lbl.innerHTML = 'Filename:';
-
-            divAddMore.append(lbl);
-
-            var input = document.createElement('input');
-            input.setAttribute('type', 'file');
-            input.setAttribute('name', 'files');
-            input.setAttribute('size', '65');
-            input.setAttribute('id', 'file' + index);
-            input.setAttribute('onchange', 'preview(this, ' + index + ')');
-
-            divAddMore.append(input);
-
-            divAddMore.append('<br />');
-
-            var inputNote = document.createElement('input');
-            inputNote.setAttribute('type', 'text');
-            inputNote.setAttribute('name', 'noteList');
-            inputNote.setAttribute('size', '65');
-            inputNote.setAttribute('id', 'note' + index);
-
-            divAddMore.append(inputNote);
-           
-
-
-            var lnkDelete = document.createElement('a');
-            lnkDelete.setAttribute('id', 'LnkDeleteFile' + index);
-            lnkDelete.setAttribute('onclick', "$('#lblfile" + index + "').remove();$('#file" + index + "').remove();$('#note" + index + "').remove();$('#previewField" + index + "').remove();$('#LnkDeleteFile" + index + "').remove();");
-            lnkDelete.innerHTML = 'X';
-            lnkDelete.setAttribute('style', 'text-decoration:underline;cursor:pointer;');
-            lnkDelete.setAttribute('title', 'Remove this Image');
-            divAddMore.append(" ").append(lnkDelete);
-
-            divAddMore.append('<br />');
-
-            var previewImg = document.createElement('img');
-            previewImg.setAttribute('id', 'previewField' + index + '');
-            previewImg.setAttribute('alt', 'Graphic will preview here');
-
-            divAddMore.append(previewImg);
-            divAddMore.append('<br />');
-            index = index + 1;
-        }
-    </script>--%>
 </asp:Content>

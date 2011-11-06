@@ -34,14 +34,8 @@
                     <div id="map" style="width: 300px; height: 300px;">
                     </div>
                     <script type="text/javascript" language="javascript">
-                        $(document).ready(function () {
-                            Galleria.loadTheme('<%= Url.Content("~/Content/galleria/themes/classic/galleria.classic.min.js")%>');
-                            
-//                            $("#gallery").galleria({
-//                                width: 600,
-//                                height: 400
-//                            });
-                        });
+                        
+                       
 
                         var map;
                         var marker;
@@ -297,14 +291,11 @@
                            AlbumID = string.IsNullOrEmpty(albumUrl) ? "" : Model.ContractDetail.Site.AlbumUrl.Split('/')[9].Split('?')[0];
                            AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Split('=')[1];
                        }
-                       
+
                        //string albumUrl = Model.ContractDetail.Site.AlbumUrl;
                        //string AlbumID = string.IsNullOrEmpty(albumUrl) ? "" : Model.ContractDetail.Site.AlbumUrl.Split('/')[9].Split('?')[0];
                        //string AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Split('=')[1];
                 %>
-               <%-- <embed type="application/x-shockwave-flash" src="https://picasaweb.google.com/s/c/bin/slideshow.swf"
-                    width="600" height="400" flashvars="host=picasaweb.google.com&hl=en_US&feat=flashalbum&RGB=0x000000&feed=https%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F113917932111131696693%2Falbumid%2F<%=AlbumID%>%3Falt%3Drss%26kind%3Dphoto%26authkey%3D<%=AuthID%>%26hl%3Den_US"
-                    pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>--%>
                 <div id="gallery">
                     <%
            if (sd != null && sd.SiteDetailPhotoes.Count > 0)
@@ -370,8 +361,4 @@
         </tr>
     </table>
     <% } %>
-    <div>
-        <%--<%: Html.ActionLink("Back to List", "Index") %>--%>
-        <%--<%: Html.ActionLinkWithRoles<OAMS.Controllers.SiteMonitoringController>("Back to List", r => r.Index(), null, null, false)%>--%>
-    </div>
 </asp:Content>
