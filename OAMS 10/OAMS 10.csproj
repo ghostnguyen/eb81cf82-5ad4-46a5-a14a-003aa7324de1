@@ -261,6 +261,14 @@
     <Content Include="Content\css\ColVis.css" />
     <Content Include="Content\css\demo_table.css" />
     <Content Include="Content\css\orbit-1.2.3.css" />
+    <Content Include="Content\css\orbit\bullets.jpg" />
+    <Content Include="Content\css\orbit\left-arrow.png" />
+    <Content Include="Content\css\orbit\loading.gif" />
+    <Content Include="Content\css\orbit\mask-black.png" />
+    <Content Include="Content\css\orbit\pause-black.png" />
+    <Content Include="Content\css\orbit\right-arrow.png" />
+    <Content Include="Content\css\orbit\rotator-black.png" />
+    <Content Include="Content\css\orbit\timer-black.png" />
     <Content Include="Content\DataTables-1.8.1\extras\AutoFill\media\css\AutoFill.css" />
     <Content Include="Content\DataTables-1.8.1\extras\AutoFill\media\images\filler.png" />
     <Content Include="Content\DataTables-1.8.1\extras\ColReorder\media\css\ColReorder.css" />
