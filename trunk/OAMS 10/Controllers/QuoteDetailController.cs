@@ -14,6 +14,7 @@ namespace OAMS.Controllers
         public ActionResult Edit(int id)
         {
             QuoteDetail e = Repo.Get(id);
+            
             return View(e);
         }
 

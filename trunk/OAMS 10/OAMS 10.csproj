@@ -361,6 +361,7 @@
     <Content Include="Content\smoothness\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\smoothness\jquery-ui-1.8.1.custom.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\autoNumeric-1.7.1.min.js" />
     <Content Include="Scripts\ColVis.min.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\DataTables-1.8.1\extras\AutoFill\media\js\AutoFill.js" />
