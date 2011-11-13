@@ -41,6 +41,7 @@ namespace OAMS.Controllers
                 r.LastUpdatedDate,
                 r.CreatedBy,
                 r.CreatedDate,
+                QuoteDetailFees = r.QuoteDetails.SelectMany(r1 => r1.QuoteDetailFees).Where(r1 => r1.Months == 12).Select(r1 => r1.MediaRate),
             }).ToList()
                 //.Select(r =>
                 //{
@@ -79,6 +80,7 @@ namespace OAMS.Controllers
                 r.LastUpdatedDate,
                 r.CreatedBy,
                 r.CreatedDate,
+                Rate = string.Join(" | ", r.QuoteDetailFees.Where(r1 => r1.HasValue).Select(r1 => r1.Value.ToString("C")))
             }.ToExpando())
             .ToList();
             ;
