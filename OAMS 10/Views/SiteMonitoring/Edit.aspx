@@ -34,9 +34,6 @@
                     <div id="map" style="width: 300px; height: 300px;">
                     </div>
                     <script type="text/javascript" language="javascript">
-                        
-                       
-
                         var map;
                         var marker;
                         var first = true;

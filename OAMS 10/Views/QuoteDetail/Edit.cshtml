@@ -12,6 +12,60 @@
                 @Html.ValidationSummary(true)
                 <fieldset>
                     <legend>Fields</legend>
+                    <div id="map" style="width: 300px; height: 300px;">
+                    </div>
+                    <script type="text/javascript" language="javascript">
+                        var map;
+                        var marker;
+                        var first = true;
+                        function init() {
+                            var mapDiv = document.getElementById('map');
+                            map = new google.maps.Map(mapDiv, {
+                                center: new google.maps.LatLng(10.77250, 106.69808),
+                                zoom: 17,
+                                mapTypeId: google.maps.MapTypeId.ROADMAP
+                            });
+                            google.maps.event.addListener(map, 'idle', MapIdle);
+                        }
+
+                        google.maps.event.addDomListener(window, 'load', init);
+
+                        function MapIdle() {
+                            if (first) {
+                                var lng = @Model.Site.Lng;
+                                var lat = @Model.Site.Lat;
+
+                                if (marker != null) {
+                                    marker.setMap(null);
+                                }
+
+                                marker = new google.maps.Marker({
+
+                                    position: new google.maps.LatLng(lat, lng),
+                                    map: map,
+                                    draggable: true,
+                                    title: 'Move me!'
+                                });
+
+                                if (!map.getBounds().contains(marker.position)) {
+                                    var bounds = new google.maps.LatLngBounds();
+                                    bounds.extend(marker.position);
+                                    map.fitBounds(bounds);
+                                    map.setZoom(17);
+                                }
+                                first = false;
+                            }
+                        }
+                    </script>
+                    <div class="editor-label">
+                        Address
+                    </div>
+                    <div class="editor-field">
+                        @Html.DisplayFor(model => model.Site.AddressLine1) @Html.DisplayFor(model => model.Site.AddressLine2)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DisplayFor(model => model.Site.GeoFullName)
+                    </div>
                     @Html.HiddenFor(model => model.ID)
                     <div class="editor-label">
                         @Html.LabelFor(model => model.QuoteID)
@@ -20,7 +74,7 @@
                         @Html.DisplayFor(model => model.QuoteID)
                         @Html.ValidationMessageFor(model => model.QuoteID)
                     </div>
-                    <div class="editor-label">
+                    @*<div class="editor-label">
                         @Html.LabelFor(model => model.Price)
                     </div>
                     <div class="editor-field">
@@ -41,7 +95,7 @@
                         @Html.EditorFor(model => model.CurrentProductName, "AutoCompleteProduct")
                         @Html.ValidationMessageFor(r => r.CurrentProductName)
                         @Html.TextBoxFor(model => model.ProductID, new { @style = "visibility:collapse;" })
-                    </div>
+                    </div>*@
                     <div class="editor-label">
                         @Html.LabelFor(model => model.EffectiveDate)
                     </div>
@@ -69,6 +123,42 @@
                 </fieldset>
             </td>
             <td>
+                @{
+    string albumUrl = "";
+    string AlbumID = "";
+    string AuthID = "";
+
+    var sd = Model.Site.SiteDetails.Where(r => r.Name == Model.SiteDetailName).FirstOrDefault();
+    if (sd != null && sd.SiteDetailPhotoes.Count > 0)
+    {
+        albumUrl = sd.AlbumUrl;
+        AlbumID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('/')[9].Split('?')[0];
+        AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Split('=')[1];
+    }
+    else
+    {
+        albumUrl = Model.Site.AlbumUrl;
+        AlbumID = string.IsNullOrEmpty(albumUrl) ? "" : Model.Site.AlbumUrl.Split('/')[9].Split('?')[0];
+        AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Split('=')[1];
+    }
+
+    //string albumUrl = Model.ContractDetail.Site.AlbumUrl;
+    //string AlbumID = string.IsNullOrEmpty(albumUrl) ? "" : Model.ContractDetail.Site.AlbumUrl.Split('/')[9].Split('?')[0];
+    //string AuthID = string.IsNullOrEmpty(albumUrl) ? "" : albumUrl.Split('?')[1].Split('=')[1];
+                }
+                <div id="gallery">
+                    @{
+    if (sd != null && sd.SiteDetailPhotoes.Count > 0)
+    {
+        foreach (var item in sd.SiteDetailPhotoes)
+        {
+                    
+                        <img src='@item.Url.ToUrlPicasaPhotoResize("s500")' alt="" />
+                    
+        }
+    }
+                    }
+                </div>
                 <h3>
                     Fees</h3>
                 <button type="button" data-bind="click: addFee">
@@ -114,13 +204,14 @@
                         <input data-bind="value: Months" class="edit"/>
                     </td>
                     <td>
-                        <input data-bind="value: MediaRate"  class="edit"/>
+                        <input data-bind="value: MediaRate" class="edit autoNumeric"/>
+                        
                     </td>
                     <td>
-                        <input data-bind="value: ProductionFee"  class="edit"/>
+                        <input data-bind="value: ProductionFee" class="edit autoNumeric"/>
                     </td>
                     <td>
-                        <input data-bind="value: LightFee"  class="edit"/>
+                        <input data-bind="value: LightFee"  class="edit autoNumeric"/>
                     </td>
                     <td>
                         <input data-bind="value: VAT"  class="edit"/>
@@ -167,15 +258,18 @@
             ownerViewModel.fees.destroy(this)
         }
 
-        this.PropertyChanged = ko.dependentObservable(function () {
-            if (this.MediaRate() && this.Months() && this.ProductionFee()
-        && this.LightFee() && this.VAT() && this.Discount() && this.Other() && this.Note()
-    ) {
 
-                if (this.ID() > 0 && ownerViewModel.updateFees.indexOf(this.ID()) == -1) {
-                    ownerViewModel.updateFees.push(this.ID());
-                }
+        this.PropertyChanged = ko.dependentObservable(function () {
+
+            //blank code - a trigger for these properties
+            if (this.MediaRate() && this.Months() && this.ProductionFee()
+        && this.LightFee() && this.VAT() && this.Discount() && this.Other() && this.Note()) { }
+
+            if (this.ID() > 0 && ownerViewModel.updateFees.indexOf(this.ID()) == -1) {
+                ownerViewModel.updateFees.push(this.ID());
             }
+
+
         }, this);
     };
 
@@ -185,6 +279,7 @@
         this.fees = ko.observableArray([]);
         this.addFee = function () {
             this.fees.push(new fee(0, "@(Model.ID)", 3, "", "", "", 10, "", "", "", this));
+            $('input.autoNumeric:last').autoNumeric({ aPad: false });
         }
         // Load initial state from server
         var self = this;
@@ -196,7 +291,13 @@
                 return new fee(item.ID, item.QuoteDetailID, item.Months, item.MediaRate, item.ProductionFee, item.LightFee, item.VAT, item.Discount, item.Other, item.Note, self)
             });
             self.fees(mappedFees);
+
+            $('input.autoNumeric').autoNumeric({ aPad: false });
+            $('input.autoNumeric').focusout();
+
+            //autoNumeric trigger update item
             this.updateFees = [];
+
         };
 
         this.save = function () {
@@ -213,4 +314,3 @@
     ko.applyBindings(new feeListViewModel());
 
 </script>
-
