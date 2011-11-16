@@ -86,7 +86,9 @@ namespace OAMS.Controllers
             if (e.OutdateInDaysTo.HasValue)
                 outdateTo = DateTime.Now.Date.AddDays(0 - e.OutdateInDaysTo.Value);
 
+            
             OAMSEntities DB = new OAMSEntities();
+            DB.CommandTimeout = 300;
             List<SiteDetail> l = DB.SiteDetails
                 .Where(r => true
 
