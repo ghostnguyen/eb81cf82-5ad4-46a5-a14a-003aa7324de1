@@ -86,6 +86,40 @@ function AjaxDelete2(ID, divID, editUrl, divID2) {
     }
 }
 
+
+function preview2(evt) {
+    var files = evt.target.files; // FileList object
+    var $parentDiv = $(evt.target).parent();
+    // Loop through the FileList and render image files as thumbnails.
+    for (var i = 0, f; f = files[i]; i++) {
+
+        // Only process image files.
+        if (!f.type.match('image.*')) {
+            continue;
+        }
+
+        var reader = new FileReader();
+
+        // Closure to capture the file information.
+        reader.onload = (function (theFile, parentDiv) {
+            return function (e) {
+                // Render thumbnail.
+                var span = document.createElement('span');
+                span.innerHTML = ['<img class="thumb" style="width: 450px;" src="', e.target.result,
+                            '" title="', theFile.name, '"/>'].join('');
+
+                //document.getElementById('list').insertBefore(span, null);
+                $parentDiv.append(span);
+
+            };
+        })(f, $parentDiv);
+
+        // Read in the image file as a data URL.
+        reader.readAsDataURL(f);
+    }
+}
+
+
 //Begin Preview image on client drive
 /***** CUSTOMIZE THESE VARIABLES *****/
 // width to resize large images to
@@ -158,7 +192,8 @@ function addMoreFileInput(divId, nameOfFileInput, nameOfNoteList) {
     input.setAttribute('name', nameOfFileInput);
     input.setAttribute('size', '65');
     input.setAttribute('id', 'file' + index);
-    input.setAttribute('onchange', 'preview(this, ' + index + ',"previewField")');
+    //input.setAttribute('onchange', 'preview(this, ' + index + ',"previewField")');
+    input.addEventListener('change', preview2, false);
 
     divAddMore.append(input);
 
@@ -219,7 +254,8 @@ function addMoreFileInput2(divId, nameOfParam, siteDetailID) {
     input.setAttribute('type', 'file');
     input.setAttribute('name', nameOfParam + '[' + index + '].File');
     input.setAttribute('size', '65');
-    input.setAttribute('onchange', 'preview(this, ' + index + ',"previewSiteDetailField")');
+    //input.setAttribute('onchange', 'preview(this, ' + index + ',"previewSiteDetailField")');
+    input.addEventListener('change', preview2, false);
     divAddMore.append(input);
 
     var lnkDelete = document.createElement('a');
