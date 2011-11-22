@@ -9,7 +9,7 @@ namespace OAMS.Controllers
 {
     [HandleError]
     [CustomAuthorize]
-    public class QuoteDetailController : BaseController<QuoteDetailRepository>
+    public class QuoteDetailController : BaseController<QuoteDetailRepository, QuoteDetailController>
     {
         public ActionResult Edit(int id)
         {

@@ -9,7 +9,7 @@ namespace OAMS.Controllers
 {
     [HandleError]
     [CustomAuthorize]
-    public class ContractController : BaseController<ContractRepository>
+    public class ContractController : BaseController<ContractRepository, ContractController>
     {
         //
         // GET: /Contractor/

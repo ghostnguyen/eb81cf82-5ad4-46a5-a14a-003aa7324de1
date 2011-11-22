@@ -8,7 +8,7 @@ using OAMS.Models;
 namespace OAMS.Controllers
 {
     [CustomAuthorize]
-    public class ContractTimelineController : BaseController<ContractTimelineRepository>
+    public class ContractTimelineController : BaseController<ContractTimelineRepository, ContractTimelineController>
     {
         
         public PartialViewResult Add(int contractID, int timeCount, string timeUnit)

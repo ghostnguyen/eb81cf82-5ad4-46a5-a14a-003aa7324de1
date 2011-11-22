@@ -8,7 +8,7 @@ using OAMS.Models;
 namespace OAMS.Controllers
 {
     [CustomAuthorize]
-    public class SiteMonitoringPhotoController : BaseController<SiteMonitoringPhotoRepository>
+    public class SiteMonitoringPhotoController : BaseController<SiteMonitoringPhotoRepository, SiteMonitoringPhotoController>
     {
         //
         // GET: /SitePhoto/

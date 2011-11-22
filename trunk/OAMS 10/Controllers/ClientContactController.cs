@@ -8,7 +8,7 @@ using OAMS.Models;
 namespace OAMS.Controllers
 {
     [CustomAuthorize]
-    public class ClientContactController : BaseController<ClientContactRepository>
+    public class ClientContactController : BaseController<ClientContactRepository, ClientContactController>
     {
         public PartialViewResult Add(int clientID)
         {
@@ -22,7 +22,7 @@ namespace OAMS.Controllers
             ClientContact r = Repo.Get(id);
             return PartialView("Edit", r);
         }
-        
+
         [HttpPost]
         public PartialViewResult Edit(ClientContact r)
         {
@@ -34,7 +34,7 @@ namespace OAMS.Controllers
             return PartialView("Edit", r);
         }
 
-        
+
         public PartialViewResult View(int id)
         {
             ClientContact r = Repo.Get(id);

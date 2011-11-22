@@ -8,7 +8,7 @@ using OAMS.Models;
 namespace OAMS.Controllers
 {
     [CustomAuthorize]
-    public class ContractorContactDetailController : BaseController<ContractorContactDetailRepository>
+    public class ContractorContactDetailController : BaseController<ContractorContactDetailRepository, ContractorContactDetailController>
     {
         public PartialViewResult Add(int contractorContactID)
         {
