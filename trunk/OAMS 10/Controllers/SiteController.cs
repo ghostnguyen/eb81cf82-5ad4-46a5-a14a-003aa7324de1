@@ -24,6 +24,8 @@ namespace OAMS.Controllers
             //    .Include("SiteDetails")
             //    .ToList();            
 
+            var viewFee = QuoteDetailController.IsAuthorize(r => r.ViewFee());
+
             var v = db.Sites.Select(r => new
             {
                 r.ID,
@@ -80,7 +82,7 @@ namespace OAMS.Controllers
                 r.LastUpdatedDate,
                 r.CreatedBy,
                 r.CreatedDate,
-                Rate = string.Join(" | ", r.QuoteDetailFees.Where(r1 => r1.HasValue).Select(r1 => r1.Value.ToString("C")))
+                Rate = viewFee ? string.Join(" | ", r.QuoteDetailFees.Where(r1 => r1.HasValue).Select(r1 => r1.Value.ToString("C"))) : ""
             }.ToExpando())
             .ToList();
             ;

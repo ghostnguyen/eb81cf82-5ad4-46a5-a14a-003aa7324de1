@@ -14,7 +14,7 @@ namespace OAMS.Controllers
         public ActionResult Edit(int id)
         {
             QuoteDetail e = Repo.Get(id);
-            
+
             return View(e);
         }
 
@@ -37,6 +37,11 @@ namespace OAMS.Controllers
             int quoteID = Repo.Delete(id).Value;
 
             return RedirectToAction("Edit", "Quote", new { id = quoteID });
+        }
+
+        public ActionResult ViewFee()
+        {
+            return null;
         }
     }
 }
