@@ -8,7 +8,7 @@ using OAMS.Models;
 namespace OAMS.Controllers
 {
     [CustomAuthorize]
-    public class CampaignController : Controller
+    public class CampaignController : BaseController<CampaignRepository, CampaignController>
     {
         CampaignRepository repo = new CampaignRepository();
 

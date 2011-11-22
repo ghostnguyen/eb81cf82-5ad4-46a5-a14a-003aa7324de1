@@ -334,19 +334,22 @@ namespace OAMS.Models
             filterContext.Result = new RedirectResult("~/Account/NoRight");
         }
 
+
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
+            var user = httpContext.User;
+
             if (httpContext == null)
                 throw new ArgumentNullException("httpContext");
 
             bool r = false;
 
-            if (httpContext.User.Identity.IsAuthenticated)
+            if (user.Identity.IsAuthenticated)
             {
                 if (
                     //httpContext.User.IsInRole(ProjectRoles.Admin) || 
-                    AuthorizedUsers.Contains(httpContext.User.Identity.Name)
-                    || AuthorizedRoles.Any(httpContext.User.IsInRole))
+                    AuthorizedUsers.Contains(user.Identity.Name)
+                    || AuthorizedRoles.Any(user.IsInRole))
                 {
                     r = true;
                 }
@@ -355,9 +358,11 @@ namespace OAMS.Models
             return r;
         }
 
-        public bool Authorize(HttpContextBase httpContext)
+        public bool Authorize()
         {
-            return AuthorizeCore(httpContext);
+            HttpContextWrapper context = new HttpContextWrapper(System.Web.HttpContext.Current);
+
+            return AuthorizeCore((HttpContextBase)context);
         }
     }
 

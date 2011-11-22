@@ -19,7 +19,7 @@ namespace OAMS.Controllers
 {
     [HandleError]
 
-    public class AccountController : Controller
+    public class AccountController : BaseController<AccountRepository, AccountController>
     {
         AccountRepository repo = new AccountRepository();
 
