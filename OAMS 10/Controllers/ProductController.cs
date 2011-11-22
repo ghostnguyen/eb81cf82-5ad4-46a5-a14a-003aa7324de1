@@ -9,7 +9,7 @@ namespace OAMS.Controllers
 {
     [HandleError]
     [CustomAuthorize]
-    public class ProductController : BaseController<ProductRepository>
+    public class ProductController : BaseController<ProductRepository, ProductController>
     {
         //
         // GET: /Product/

@@ -9,7 +9,7 @@ namespace OAMS.Controllers
 {
     [HandleError]
     [CustomAuthorize]
-    public class QuoteController : BaseController<QuoteRepository>
+    public class QuoteController : BaseController<QuoteRepository, QuoteController>
     {
         QuoteRepository repo = new QuoteRepository();
 

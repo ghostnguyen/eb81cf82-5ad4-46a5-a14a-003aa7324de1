@@ -7,7 +7,7 @@ using OAMS.Models;
 
 namespace OAMS.Controllers
 {
-    public class QuoteDetailFeeController : BaseController<QuoteDetailFeeRepository>
+    public class QuoteDetailFeeController : BaseController<QuoteDetailFeeRepository, QuoteDetailFeeController>
     {
         [HttpGet]
         public JsonResult Get(int quoteDetailID)
@@ -30,7 +30,7 @@ namespace OAMS.Controllers
         [HttpPost]
         public JsonResult Save(List<QuoteDetailFee> l, List<int?> deleteIDList, List<int?> updateIDList)
         {
-            Repo.Save(l, deleteIDList,updateIDList);
+            Repo.Save(l, deleteIDList, updateIDList);
             return Json(Repo.Get(l.First().QuoteDetailID.Value).Select(r => new
             {
                 r.ID,

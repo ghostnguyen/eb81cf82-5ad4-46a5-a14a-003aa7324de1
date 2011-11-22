@@ -8,7 +8,7 @@ using OAMS.Models;
 namespace OAMS.Controllers
 {
     [CustomAuthorize]
-    public class SiteDetailController : BaseController<SiteDetailRepository>
+    public class SiteDetailController : BaseController<SiteDetailRepository, SiteDetailController>
     {
         public PartialViewResult Add(int siteID)
         {

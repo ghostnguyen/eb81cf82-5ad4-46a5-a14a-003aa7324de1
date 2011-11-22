@@ -8,7 +8,7 @@ using OAMS.Models;
 namespace OAMS.Controllers
 {
     [CustomAuthorize]
-    public class ContractorController : BaseController<ContractorRepository>
+    public class ContractorController : BaseController<ContractorRepository, ContractorController>
     {
         public ActionResult Index()
         {

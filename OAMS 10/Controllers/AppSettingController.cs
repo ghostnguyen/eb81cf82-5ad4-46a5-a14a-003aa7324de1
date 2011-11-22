@@ -8,7 +8,7 @@ using OAMS.Models;
 namespace OAMS.Controllers
 {
     [CustomAuthorize]
-    public class AppSettingController : BaseController<AppSettingRepository>
+    public class AppSettingController : BaseController<AppSettingRepository, AppSettingController>
     {
         //
         // GET: /AppSetting/

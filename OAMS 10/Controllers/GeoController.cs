@@ -8,7 +8,7 @@ using OAMS.Models;
 namespace OAMS.Controllers
 {
     [CustomAuthorize]
-    public class GeoController : BaseController<GeoRepository>
+    public class GeoController : BaseController<GeoRepository, GeoController>
     {
         public ActionResult Index(Guid? parentID = null)
         {
@@ -100,6 +100,6 @@ namespace OAMS.Controllers
         public ActionResult Delete(int id, FormCollection collection)
         {
             return RedirectToAction("Index");
-        }        
+        }
     }
 }
