@@ -13,7 +13,7 @@
     <RootNamespace>OAMS</RootNamespace>
     <AssemblyName>OAMS 10</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <MvcBuildViews>false</MvcBuildViews>
+    <MvcBuildViews>true</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -159,6 +159,9 @@
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ContractTimelineController.cs" />
+    <Compile Include="Models\RptRepository.cs" />
+    <Compile Include="Models\FindSiteRepository.cs" />
+    <Compile Include="Models\HomeRepository.cs" />
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\QuoteDetailFeeController.cs" />
     <Compile Include="Controllers\RptController.cs" />

@@ -14,7 +14,7 @@ using System.Linq.Expressions;
 namespace OAMS.Controllers
 {
     [CustomAuthorize]
-    public class RptController : Controller
+    public class RptController : BaseController<RptRepository, RptController>
     {
         public ActionResult Index()
         {
@@ -463,7 +463,7 @@ namespace OAMS.Controllers
                 }
                 else
                 {
-                    dic["TotalCount"] = total;    
+                    dic["TotalCount"] = total;
                 }
             }
 

@@ -9,7 +9,7 @@ namespace OAMS.Controllers
 {
     [HandleError]
     [CustomAuthorize]
-    public class ContractDetailController : Controller
+    public class ContractDetailController : BaseController<ContractDetailRepository, ContractDetailController>
     {
         ContractDetailRepository repo = new ContractDetailRepository();
 
@@ -41,7 +41,7 @@ namespace OAMS.Controllers
             return RedirectToAction("Edit", "Contract", new { id = contractID });
         }
 
-        
+
         //public ActionResult Edit(int id)
         //{
         //    return View(repo.Get(id));

@@ -577,106 +577,60 @@ public static class dotNetExt
         return htmlHelper.DropDownListFor(expression, geoRepository.GetByParentID().ToSelectListItem(), OAMSSetting.messageL.SelectNone);
     }
 
+    //public static MvcHtmlString ActionLinkWithRoles<T>(this HtmlHelper html, string linkText, Expression<Func<T, ActionResult>> action, RouteValueDictionary routeValues = null, IDictionary<string, object> htmlAttributes = null, bool isPost = false) where T : Controller
+    //{
+    //    MvcHtmlString htmlStr = MvcHtmlString.Create("");
 
+    //    ReflectedControllerDescriptor controllerDes = new ReflectedControllerDescriptor(typeof(T));
+    //    string controllerName = controllerDes.ControllerName;
 
-    public static MvcHtmlString ActionLinkWithRoles<T>(this HtmlHelper html, string linkText, Expression<Func<T, ActionResult>> action, RouteValueDictionary routeValues = null, IDictionary<string, object> htmlAttributes = null, bool isPost = false) where T : Controller
+    //    MethodCallExpression methodExp = action.Body as MethodCallExpression;
+    //    if (methodExp != null)
+    //    {
+    //        string actionName = methodExp.Method.Name;
+    //        ControllerActionRepository controllerActionRepository = new ControllerActionRepository();
+    //        ControllerAction controllerAction = controllerActionRepository.GetAction(controllerName, actionName, isPost);
+    //        if (controllerAction != null)
+    //        {
+    //            MVCAuthorizationRepository mvcAuthorizationRepository = new MVCAuthorizationRepository();
+    //            List<string> roles = mvcAuthorizationRepository.GetRolesByControllerAction(controllerAction);
+
+    //            CustomAuthorize customAuthorize = new CustomAuthorize() { AuthorizedRoles = roles.ToArray() };
+    //            if (customAuthorize.Authorize(html.ViewContext.HttpContext))
+    //            {
+    //                if (isPost && htmlAttributes == null)
+    //                {
+    //                    htmlStr = MvcHtmlString.Create("<input type='submit' value='" + linkText + "' />");
+    //                }
+    //                else
+    //                {
+    //                    htmlStr = html.ActionLink(linkText, actionName, controllerName, routeValues, htmlAttributes);
+    //                }
+    //            }
+    //        }
+    //    }
+    //    return htmlStr;
+    //}
+
+    public static MvcHtmlString ActionLinkWithRoles<U>(this HtmlHelper html, string linkText, Expression<Func<U, ActionResult>> action, RouteValueDictionary routeValues = null, IDictionary<string, object> htmlAttributes = null, bool isPost = false)
+        where U : BaseController<U>, new()
     {
         MvcHtmlString htmlStr = MvcHtmlString.Create("");
 
-        ReflectedControllerDescriptor controllerDes = new ReflectedControllerDescriptor(typeof(T));
-        string controllerName = controllerDes.ControllerName;
+        string[] arr = BaseController<U>.GetControllerNameAndActionName(action);
+        string controllerName = arr[0];
+        string actionName = arr[1];
 
-        MethodCallExpression methodExp = action.Body as MethodCallExpression;
-        if (methodExp != null)
+        if (BaseController<U>.IsAuthorize(controllerName, actionName, isPost))
         {
-            string actionName = methodExp.Method.Name;
-            ControllerActionRepository controllerActionRepository = new ControllerActionRepository();
-            ControllerAction controllerAction = controllerActionRepository.GetAction(controllerName, actionName, isPost);
-            if (controllerAction != null)
+            if (isPost && htmlAttributes == null)
             {
-                MVCAuthorizationRepository mvcAuthorizationRepository = new MVCAuthorizationRepository();
-                List<string> roles = mvcAuthorizationRepository.GetRolesByControllerAction(controllerAction);
-
-                CustomAuthorize customAuthorize = new CustomAuthorize() { AuthorizedRoles = roles.ToArray() };
-                if (customAuthorize.Authorize(html.ViewContext.HttpContext))
-                {
-                    if (isPost && htmlAttributes == null)
-                    {
-                        htmlStr = MvcHtmlString.Create("<input type='submit' value='" + linkText + "' />");
-                    }
-                    else
-                    {
-                        htmlStr = html.ActionLink(linkText, actionName, controllerName, routeValues, htmlAttributes);
-                    }
-                }
+                htmlStr = MvcHtmlString.Create("<input type='submit' value='" + linkText + "' />");
             }
-        }
-        return htmlStr;
-    }
-
-    public static MvcHtmlString ActionLinkWithRoles_Old<T>(this HtmlHelper html, string linkText, Expression<Func<T, ActionResult>> action) where T : Controller
-    {
-        ControllerActionRepository actionAuthorizationRepo = new ControllerActionRepository();
-        actionAuthorizationRepo.UpdateActionList();
-
-        MvcHtmlString htmlStr = null;
-
-        ReflectedControllerDescriptor controllerDes = new ReflectedControllerDescriptor(typeof(T));
-        string controllerName = controllerDes.ControllerName;
-
-        MethodCallExpression methodExp = action.Body as MethodCallExpression;
-        if (methodExp != null)
-        {
-            string actionName = methodExp.Method.Name;
-            //List<ActionDescriptor> actionDescriptorList = controllerDes.GetCanonicalActions().Where(r => r.ActionName == actionName).ToList();
-            //ActionDescriptor actionDes = actionDescriptorList.FirstOrDefault();
-
-            ControllerActionRepository controllerActionRepository = new ControllerActionRepository();
-            ControllerAction controllerAction = controllerActionRepository.GetActionWithVerbHttpGet(controllerName, actionName);
-            if (controllerAction != null)
+            else
             {
-                MVCAuthorizationRepository mvcAuthorizationRepository = new MVCAuthorizationRepository();
-                List<string> roles = mvcAuthorizationRepository.GetRolesByControllerAction(controllerAction);
-
-                CustomAuthorize customAuthorize = new CustomAuthorize() { AuthorizedRoles = roles.ToArray() };
-                if (customAuthorize.Authorize(html.ViewContext.HttpContext))
-                {
-                    htmlStr = html.ActionLink(linkText, actionName, controllerName);
-                }
+                htmlStr = html.ActionLink(linkText, actionName, controllerName, routeValues, htmlAttributes);
             }
-
-            //    if (actionDes != null)
-            //    {
-            //        List<CustomAuthorize> customAuthorizeList = actionDes.GetFilters().AuthorizationFilters.Where(r => r is CustomAuthorize).Select(r => r as CustomAuthorize).ToList();
-
-            //        if (customAuthorizeList.Count > 0)
-            //        {
-            //            if (customAuthorizeList.Select(r => r.Authorize(html.ViewContext.HttpContext)).Any(r => r))
-            //            {
-            //                htmlStr = html.ActionLink(linkText, actionName, controllerName);
-            //            }
-            //        }
-            //        else
-            //        {
-            //            htmlStr = html.ActionLink(linkText, actionName, controllerName);
-            //        }
-
-            //        //List<CustomAuthorize> ofController = controllerDes.GetCustomAttributes(typeof(CustomAuthorize), true).Select(r => r as CustomAuthorize).ToList();
-            //        //List<CustomAuthorize> ofAction = actionDes.GetCustomAttributes(typeof(CustomAuthorize), true).Select(r => r as CustomAuthorize).ToList();
-
-            //        //List<CustomAuthorize> ofAll = new List<CustomAuthorize>();
-            //        //ofAll.AddRange(ofController);
-            //        //ofAll.AddRange(ofAction);
-
-            //        //string[] roles = ofAll.SelectMany(r => r.AuthorizedRoles).Distinct().ToArray();
-            //        //string[] users = ofAll.SelectMany(r => r.AuthorizedUsers).Distinct().ToArray();
-
-            //        //if (HttpContext.Current.User.HasAnyRole(roles)
-            //        //    || users.Contains(OAMSSetting.Username))
-            //        //{
-            //        //    htmlStr = html.ActionLink(linkText, actionName, controllerName);
-            //        //}
-            //    }
         }
 
         return htmlStr;
@@ -776,20 +730,9 @@ public static class dotNetExt
         return new Predicate<T>(func);
     }
 
-    //public static void UpdateSummary(this PicasaEntry entry, string str)
-    //{
-    //    try
-    //    {
-    //        entry.Title = new AtomTextConstruct(AtomTextConstructElementType.Title, str);
-    //        entry.Summary = new AtomTextConstruct(AtomTextConstructElementType.Summary, str);
-    //        entry.Update();
-    //    }
-    //    catch (Exception e)
-    //    {
-    //        //Elmah.ErrorLog.GetDefault(HttpContext.Current).Log(new Elmah.Error(ex));
-    //        Elmah.ErrorSignal.FromCurrentContext().Raise(e);
-    //    }
-    //}
+
+
+
 }
 
 public static class IPrincipalExtend

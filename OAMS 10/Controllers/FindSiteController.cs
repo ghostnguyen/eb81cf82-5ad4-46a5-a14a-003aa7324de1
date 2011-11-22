@@ -8,7 +8,7 @@ using OAMS.Models;
 namespace OAMS.Controllers
 {
     [CustomAuthorize]
-    public class FindSiteController : Controller
+    public class FindSiteController : BaseController<FindSiteRepository,FindSiteController>
     {
         //
         // GET: /FindSite/

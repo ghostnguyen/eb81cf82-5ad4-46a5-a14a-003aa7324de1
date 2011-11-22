@@ -8,7 +8,7 @@ using OAMS.Models;
 namespace OAMS.Controllers
 {
     [CustomAuthorize]
-    public class CategoryController : Controller
+    public class CategoryController : BaseController<CategoryRepository, CategoryController>
     {
         CategoryRepository repo = new CategoryRepository();
 
@@ -98,12 +98,12 @@ namespace OAMS.Controllers
             Category e = repo.Get(id);
 
             Guid? parentID = e.ParentID;
-            
+
             repo.Delete(e);
 
             repo.Save();
 
-            
+
             return RedirectToAction("Index", new { parentID = parentID });
         }
 

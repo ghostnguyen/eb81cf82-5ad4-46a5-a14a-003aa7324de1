@@ -9,7 +9,7 @@ namespace OAMS.Controllers
 {
     [HandleError]
     [CustomAuthorize]
-    public class HomeController : Controller
+    public class HomeController : BaseController<HomeRepository, HomeController>
     {
         public ActionResult Index()
         {
@@ -50,12 +50,12 @@ namespace OAMS.Controllers
 
             OAMSEntities db = new OAMSEntities();
 
-            
+
             var v = db.SiteDetailMores.Select(r => new Row()
             {
                 Client = r.Product.Client.Name,
                 Type = r.SiteDetail.Type,
-            }); 
+            });
 
             foreach (var item in itemL.Where(r => r.Values != null && r.Count == false))
             {

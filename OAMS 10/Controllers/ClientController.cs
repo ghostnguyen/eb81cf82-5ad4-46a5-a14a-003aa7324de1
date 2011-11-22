@@ -8,14 +8,14 @@ using OAMS.Models;
 namespace OAMS.Controllers
 {
     [CustomAuthorize]
-    public class ClientController : Controller
+    public class ClientController : BaseController<ClientRepository, ClientController>
     {
         //
         // GET: /Client/
 
         ClientRepository repo = new ClientRepository();
 
-        
+
         public ActionResult Index()
         {
             var v = repo.GetAll();
