@@ -136,40 +136,6 @@
                 </td>
                 <td>
                     @(Html.ActionLinkWithRoles<OAMS.Controllers.FindSiteController>("Add Sites", r => r.Find4Quote(0), new RouteValueDictionary(new { QuoteID = Model.ID }), null, false))
-                    @*<div id="divCol" style="overflow: auto;">
-                        Display columns:
-                        <input type="checkbox" id="chkColID" checked="checked" />
-                        Site ID
-                        <input type="checkbox" id="chkColPrice" />
-                        Price
-                        <input type="checkbox" id="chkColProductionPrice" />
-                        Production Price
-                        <input type="checkbox" id="chkColEffectiveDate" />
-                        Effective Date
-                        <input type="checkbox" id="chkColTermDate" />
-                        Term Date
-                        <br />
-                        <input type="checkbox" id="chkColGeoFullName" checked="checked" />
-                        Geo Full Name
-                        <input type="checkbox" id="chkColAddressLine1" checked="checked" />
-                        Address Line 1
-                        <input type="checkbox" id="chkColAddressLine2" checked="checked" />
-                        Address Line 2
-                        <input type="checkbox" id="chkColType" checked="checked" />
-                        Type
-                        <input type="checkbox" id="chkColFormat" checked="checked" />
-                        Format
-                        <br />
-                        <input type="checkbox" id="chkColCurrentClient" checked="checked" />
-                        Current Client
-                        <input type="checkbox" id="chkColCurrentProduct" checked="checked" />
-                        Current Product
-                        <input type="checkbox" id="chkColContractor" checked="checked" />
-                        Contractor
-                        <input type="checkbox" id="chkColPhotoCount" checked="checked" />
-                        PhotoCount
-                        <input type="button" id="hell" value="Ok" onclick='ShowHideCols();' />
-                    </div>*@
                     <br />
                     <div>
                         <table id="tblResult" class="display">
@@ -179,18 +145,12 @@
                                         ID
                                     </th>
                                     <th>
-                                    </th>
-                                    <th>
-                                        Monitoring
-                                    </th>
+                                    </th>                                    
                                     <th>
                                         Site ID
-                                    </th>
+                                    </th>                                    
                                     <th>
-                                        Price
-                                    </th>
-                                    <th>
-                                        Production Price
+                                         Months - MediaRate - ProductionFee
                                     </th>
                                     <th>
                                         Effective Date
@@ -241,17 +201,17 @@
                                             <br />
                                             <br />
                                             @MvcHtmlString.Create(removeTemplate.ToString().Replace("quoteDetailID", item.ID.ToString()))
-                                        </td>
-                                        <td>
-                                        </td>
+                                        </td>                                        
                                         <td>
                                             @item.SiteID
-                                        </td>
+                                        </td>                                        
                                         <td>
-                                            @String.Format("{0:c}", item.Price)
-                                        </td>
-                                        <td>
-                                            @String.Format("{0:c}", item.ProductionPrice)
+                                            @foreach (var item1 in item.QuoteDetailFees)
+                                            {
+                                                <div>
+                                                    @item1.Months - @String.Format("{0:c}", item1.MediaRate) - @String.Format("{0:c}", item1.ProductionFee)
+                                                </div>                                                
+                                            }
                                         </td>
                                         <td>
                                             @String.Format("{0:d}", item.EffectiveDate)

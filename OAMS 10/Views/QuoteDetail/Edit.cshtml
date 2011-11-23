@@ -163,7 +163,7 @@
                     Fees</h3>
                 <button type="button" data-bind="click: addFee">
                     Add</button>
-                <table>
+                <table id="tblDetail">
                     <thead>
                         <tr>
                             <th>
@@ -279,7 +279,8 @@
         this.fees = ko.observableArray([]);
         this.addFee = function () {
             this.fees.push(new fee(0, "@(Model.ID)", 3, "", "", "", 10, "", "", "", this));
-            $('input.autoNumeric:last').autoNumeric({ aPad: false });
+
+            $('#tblDetail tr:last :input.autoNumeric').autoNumeric({ aPad: false });
         }
         // Load initial state from server
         var self = this;
