@@ -15,12 +15,12 @@ namespace OAMS.Models
         public List<string> StyleList { get; set; }
         public string Format { get; set; }
 
-        
+
         public int? RoadType2 { get; set; }
-        public List<int> InstallationPosition1MarkList { get; set; }        
+        public List<int> InstallationPosition1MarkList { get; set; }
         public int? InstallationPosition2 { get; set; }
         public int? ViewingDistance { get; set; }
-       
+
         public string ViewingSpeed { get; set; }
 
         public bool IsWithinCircle { get; set; }
@@ -37,8 +37,12 @@ namespace OAMS.Models
         public int? ScoreFrom { get; set; }
         public int? ScoreTo { get; set; }
 
-        public int? OutdateInDaysFrom { get; set; }
-        public int? OutdateInDaysTo { get; set; }
+        //public int? OutdateInDaysFrom { get; set; }
+        //public int? OutdateInDaysTo { get; set; }
+
+        public bool NoPhoto { get; set; }        
+        public DateTime? LastPhotoFrom { get; set; }
+        public DateTime? LastPhotoTo { get; set; }
 
         public FindSite()
         {
