@@ -278,6 +278,14 @@ namespace OAMS.Models
             
         }
 
+        public DateTime? ReadTakenDateTime(string photoAtomUrl)
+        {
+            var atom = PicasaService.Get(photoAtomUrl.ToHttpsUri());
+            PicasaEntry a = (PicasaEntry)atom;
+
+            return null;
+        }
+
         public void DeletePhoto(string photoAtomUrl)
         {
             var atom = PicasaService.Get(photoAtomUrl.ToHttpsUri());
