@@ -19,7 +19,7 @@ namespace OAMS.Models
 
                 if (!v.Lat.HasValue || !v.Lng.HasValue
                     || !Lat.HasValue || !Lng.HasValue)
-                {                    
+                {
                     result = true;
                 }
                 else
@@ -28,6 +28,17 @@ namespace OAMS.Models
                 }
 
                 return result;
+            }
+        }
+
+        public DateTime? DateTimeFromPicasa
+        {
+            get
+            {
+                var v = PicasaRepository.I.ReadTakenDateTime(AtomUrl);
+
+
+                return DateTime.Now;
             }
         }
     }
