@@ -64,7 +64,8 @@
                 <br />
                 @Html.CodeMasterDropDownListFor(r => r.ViewingDistance, false)
                 <br />
-                <input id="IsWithinCircle" name="IsWithinCircle" type="checkbox" data-bind="checked: o_visible" />
+                <input id="IsWithinCircle" name="IsWithinCircle" type="checkbox" data-bind="checked: o_visible"
+                    value="true" />
                 Within
                 <input type="text" style="width: 50px;" name="Distance" id="Distance" data-bind="enable: o_visible,value: o_distance" />
                 <br />
@@ -102,11 +103,18 @@
                 <input type="text" id="ScoreTo" name="ScoreTo" value="100" style="width: 30px;" />
                 <br />
                 <br />
-                Outdate from
+                No Photo:
+                <input name="NoPhoto" type="checkbox" value="true" />
+                <br />
+                Has last photo from
+                <input name="LastPhotoFrom" type="date" />
+                to
+                <input name="LastPhotoTo" type="date" />
+                @*Outdate from
                 <input type="text" id="OutdateInDaysFrom" name="OutdateInDaysFrom" value="" style="width: 30px;" />
                 days to
                 <input type="text" id="OutdateInDaysTo" name="OutdateInDaysTo" value="" style="width: 30px;" />
-                days
+                days*@
             </td>
             <td valign="top">
                 <input id="btnFind" type="button" onclick="search(this);" value="Find" />
@@ -264,7 +272,6 @@
 </div>
 
 </script>
-
 <script type="text/javascript" language="javascript">
     $(document).ready(function () {
         init();
@@ -542,6 +549,7 @@
             
 
             distanceWidget.o_visible(false);
+            distanceWidget.o_distance(1);
             
             google.maps.event.addListener(map, 'dragstart',
             function () {

@@ -8,7 +8,7 @@ using OAMS.Models;
 namespace OAMS.Controllers
 {
     [CustomAuthorize]
-    public class FindSiteController : BaseController<FindSiteRepository,FindSiteController>
+    public class FindSiteController : BaseController<FindSiteRepository, FindSiteController>
     {
         //
         // GET: /FindSite/
@@ -77,16 +77,15 @@ namespace OAMS.Controllers
 
         private static List<SiteDetail> Find(FindSite e)
         {
-            DateTime? outdateFrom = null;
-            DateTime? outdateTo = null;
+            //DateTime? outdateFrom = null;
+            //DateTime? outdateTo = null;
 
-            if (e.OutdateInDaysFrom.HasValue)
-                outdateFrom = DateTime.Now.Date.AddDays(0 - e.OutdateInDaysFrom.Value);
+            //if (e.OutdateInDaysFrom.HasValue)
+            //    outdateFrom = DateTime.Now.Date.AddDays(0 - e.OutdateInDaysFrom.Value);
 
-            if (e.OutdateInDaysTo.HasValue)
-                outdateTo = DateTime.Now.Date.AddDays(0 - e.OutdateInDaysTo.Value);
+            //if (e.OutdateInDaysTo.HasValue)
+            //    outdateTo = DateTime.Now.Date.AddDays(0 - e.OutdateInDaysTo.Value);
 
-            
             OAMSEntities DB = new OAMSEntities();
             DB.CommandTimeout = 300;
             List<SiteDetail> l = DB.SiteDetails
@@ -104,11 +103,9 @@ namespace OAMS.Controllers
                     && (!e.ScoreFrom.HasValue || !e.ScoreTo.HasValue || (r.Site.Score >= e.ScoreFrom && r.Site.Score <= e.ScoreTo))
                     && (e.InstallationPosition1MarkList.Count == 0 || e.InstallationPosition1MarkList.Contains(r.Site.InstallationPosition1.HasValue ? r.Site.InstallationPosition1.Value : 0))
 
-                    //&& (!outdateFrom.HasValue || !r.Site.LastUpdatedDate.HasValue || outdateFrom >= r.Site.LastUpdatedDate)
-                    //&& (!outdateTo.HasValue || !r.Site.LastUpdatedDate.HasValue || outdateTo <= r.Site.LastUpdatedDate)
-
-                    && (!outdateFrom.HasValue || !r.SiteDetailPhotoes.Max(r1 => r1.TakenDate).HasValue || outdateFrom >= r.SiteDetailPhotoes.Max(r1 => r1.TakenDate))
-                    && (!outdateTo.HasValue || !r.SiteDetailPhotoes.Max(r1 => r1.TakenDate).HasValue || outdateTo <= r.SiteDetailPhotoes.Max(r1 => r1.TakenDate))
+                    && (!e.NoPhoto || (e.NoPhoto && r.SiteDetailPhotoes.Count == 0))
+                    && (!e.LastPhotoFrom.HasValue || (!e.NoPhoto && !r.SiteDetailPhotoes.Max(r1 => r1.TakenDate).HasValue && e.LastPhotoFrom <= r.SiteDetailPhotoes.Max(r1 => r1.TakenDate)))
+                    && (!e.LastPhotoTo.HasValue || (!e.NoPhoto && !r.SiteDetailPhotoes.Max(r1 => r1.TakenDate).HasValue && e.LastPhotoTo >= r.SiteDetailPhotoes.Max(r1 => r1.TakenDate)))
 
                     //Find on 2 level relationship properties
                     && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName))
@@ -321,7 +318,7 @@ namespace OAMS.Controllers
                 Orientation = r.Width >= r.Height ? "Horizontal" : "Vertical",
                 Size = string.Format("{0}m x {1}m", r.Height.ToString(), r.Width.ToString()),
                 Lighting = r.Site.FrontlitNumerOfLamps > 0 ? "Fontlit" : "Backlit",
-                
+
                 CurrentProduct = r.ToStringProduct,
                 CurrentClient = r.ToStringClient,
                 r.Site.Score,
@@ -331,8 +328,8 @@ namespace OAMS.Controllers
                 PhotoUrlList = new List<string>(),
                 CategoryLevel1 = r.ToStringCategoryLevel1,
                 CategoryLevel2 = r.ToStringCategoryLevel2,
-                
-                
+
+
             }));
         }
     }
