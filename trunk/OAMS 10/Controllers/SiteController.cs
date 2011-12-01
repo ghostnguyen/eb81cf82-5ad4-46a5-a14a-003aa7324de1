@@ -149,5 +149,11 @@ namespace OAMS.Controllers
             repo.MovePhoto(from, to);
             return View("Create");
         }
+
+        public ActionResult UpdateTakenDatePhoto()
+        {
+            repo.UpdateTakenDatePhoto();
+            return View("Create");
+        }
     }
 }
