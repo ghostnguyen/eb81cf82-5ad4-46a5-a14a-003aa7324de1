@@ -280,10 +280,20 @@ namespace OAMS.Models
 
         public DateTime? ReadTakenDateTime(string photoAtomUrl)
         {
-            var atom = PicasaService.Get(photoAtomUrl.ToHttpsUri());
-            PicasaEntry a = (PicasaEntry)atom;
+            DateTime? date = null;
+            try
+            {
+                var atom = PicasaService.Get(photoAtomUrl.ToHttpsUri());
+                PicasaEntry a = (PicasaEntry)atom;
 
-            return null;
+                date = (new DateTime(1970, 1, 1)).AddMilliseconds(a.Exif.Time.FloatValue);
+            }
+            catch (Exception ex)
+            {                
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+            }
+
+            return date;
         }
 
         public void DeletePhoto(string photoAtomUrl)

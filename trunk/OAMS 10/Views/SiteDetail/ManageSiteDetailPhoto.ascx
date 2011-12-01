@@ -9,10 +9,8 @@
         <input type="button" value="Save Note" onclick="UpdateSitePhotoNote('<%= Url.Content("~/SiteDetailPhoto/EditNote") %>','<%= item.ID %>',$('#siteDetailPhotoNote<%: item.ID %>').val())" />
         <input type="button" value="Delete this image" onclick="deleteSitePhoto2($('#divSiteDetailPhoto<%: item.ID %>'),'<%= item.ID %>','DeleteSiteDetailPhotoList',$('#divDeleteSiteDetailPhotoList'))" />
         <br />
-        <%: item.DateTimeFromPicasa.ToString() %>
         <% if (!item.IsValidGPS)
-           {
-              
+           {              
         %>
         <span style="color: Red;">Possible wrong GPS. </span>
         <%} %>
