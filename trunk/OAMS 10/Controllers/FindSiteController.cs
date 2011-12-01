@@ -104,8 +104,8 @@ namespace OAMS.Controllers
                     && (e.InstallationPosition1MarkList.Count == 0 || e.InstallationPosition1MarkList.Contains(r.Site.InstallationPosition1.HasValue ? r.Site.InstallationPosition1.Value : 0))
 
                     && (!e.NoPhoto || (e.NoPhoto && r.SiteDetailPhotoes.Count == 0))
-                    && (!e.LastPhotoFrom.HasValue || (!e.NoPhoto && !r.SiteDetailPhotoes.Max(r1 => r1.TakenDate).HasValue && e.LastPhotoFrom <= r.SiteDetailPhotoes.Max(r1 => r1.TakenDate)))
-                    && (!e.LastPhotoTo.HasValue || (!e.NoPhoto && !r.SiteDetailPhotoes.Max(r1 => r1.TakenDate).HasValue && e.LastPhotoTo >= r.SiteDetailPhotoes.Max(r1 => r1.TakenDate)))
+                    && (!e.LastPhotoFrom.HasValue || (!e.NoPhoto && r.SiteDetailPhotoes.Max(r1 => r1.TakenDate).HasValue && e.LastPhotoFrom <= r.SiteDetailPhotoes.Max(r1 => r1.TakenDate)))
+                    && (!e.LastPhotoTo.HasValue || (!e.NoPhoto && r.SiteDetailPhotoes.Max(r1 => r1.TakenDate).HasValue && e.LastPhotoTo >= r.SiteDetailPhotoes.Max(r1 => r1.TakenDate)))
 
                     //Find on 2 level relationship properties
                     && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName))
