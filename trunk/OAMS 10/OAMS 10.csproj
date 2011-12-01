@@ -393,9 +393,6 @@
     <Content Include="Scripts\DataTables-1.8.1\media\js\jquery.js" />
     <Content Include="Scripts\DistanceWidget.js" />
     <Content Include="Scripts\grid.base.js" />
-    <Content Include="Scripts\jquery-1.6.4-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.6.4.js" />
-    <Content Include="Scripts\jquery-1.6.4.min.js" />
     <Content Include="Scripts\jquery-1.7-vsdoc.js" />
     <Content Include="Scripts\jquery-1.7.js" />
     <Content Include="Scripts\jquery-1.7.min.js" />
