@@ -322,5 +322,31 @@ namespace OAMS.Models
 
             Save();
         }
+
+        public void UpdateTakenDatePhoto()
+        {
+            //var s = DB.Sites.Where(r => r.ID >= from && r.ID < to).SelectMany(r => r.SitePhotoes).ToList();
+            //var s = DB.SiteDetails.Where(r => r.ID >= from && r.ID < to).SelectMany(r => r.SiteDetailPhotoes).ToList();
+            //var s = DB.SiteMonitorings.Where(r => r.ID >= from && r.ID < to).SelectMany(r => r.SiteMonitoringPhotoes).ToList();
+
+            var s = DB.SiteDetailPhotoes.Where(r => !r.TakenDate.HasValue)
+                .ToList();
+
+            foreach (var item in s)
+            {
+                try
+                {
+                    var date = PicasaRepository.I.ReadTakenDateTime(item.AtomUrl);
+                    item.TakenDate = date;
+                    Save();
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+
+            Save();
+        }
     }
 }
