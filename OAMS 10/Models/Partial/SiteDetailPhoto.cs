@@ -35,10 +35,7 @@ namespace OAMS.Models
         {
             get
             {
-                var v = PicasaRepository.I.ReadTakenDateTime(AtomUrl);
-
-
-                return DateTime.Now;
+                return PicasaRepository.I.ReadTakenDateTime(AtomUrl);                
             }
         }
     }
