@@ -270,6 +270,10 @@ namespace OAMS.Controllers
             return View(e);
         }
 
+        /// <summary>
+        /// This is for developing new features
+        /// </summary>
+        /// <returns></returns>
         public ActionResult FindOutdate2()
         {
             FindSite e = new FindSite();
