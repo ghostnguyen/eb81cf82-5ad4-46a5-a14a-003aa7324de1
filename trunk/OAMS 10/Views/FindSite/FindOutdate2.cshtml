@@ -1,0 +1,622 @@
+﻿@model OAMS.Models.FindSite
+@{
+    ViewBag.Title = "Find Outdate Site";
+}
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm())
+{
+    <table id="tblAll" style="width: 100%;">
+        <tr>
+            <td style="width: 230px; vertical-align: top;" id="SearchPane">
+                Geo1:
+                <br />
+                @(Html.EditorFor(model => model.Geo1FullName, "AutoCompleteGeo", new { level = 1 }))
+                <br />
+                <br />
+                Geo2: <a id="A1" href="javascript:CheckAll('geo2List', true);ShowAll('Geo2List','Geo2ListMore');">
+                    All</a> &nbsp;/&nbsp;<a id="A2" href="javascript:CheckAll('geo2List', false);">Clear</a>
+                <div id="geo2List">
+                </div>
+                <a id="Geo2ListMore" href="javascript:ShowAll('Geo2List','Geo2ListMore');" style="display: none;">
+                    More...</a>
+                <br />
+                <br />
+                Style List: <a id="lnkCheckAllStyle" href="javascript:CheckAll('StyleList', true);">
+                    All</a>&nbsp;/&nbsp;<a id="lnkUnCheckAllStyle" href="javascript:CheckAll('StyleList', false);">Clear</a>
+                <br />
+                <div id="StyleList">
+                    @foreach (var category in (new OAMS.Models.CodeMasterRepository()).Get(OAMS.Models.CodeMasterType.Type))
+                    {
+                        string profileImageUrl = OAMS.Models.CodeMaster.GetIconUrl(category.Code); 
+                        
+                        <div>
+                            <input type="checkbox" name="StyleList" value="@category.Code" checked="checked"
+                        id="StyleItem@category.ID" />
+                            <label for='StyleItem@category.ID'>
+                                @category.Note
+                            </label>
+                            <img alt="" border="0" src="@profileImageUrl" width="20" id="ImgStyleItem@category.ID" />
+                        </div>
+                    }
+                </div>
+                <a id="StyleListMore" href="javascript:ShowAllStyle('StyleList','StyleListMore');"
+                    style="display: none;">More...</a>
+                <br />
+                <div id="divMoreInstallationPosition" data-url="'@Url.Content("~/Listing/ListInstallationPosition1")'"
+                    data-name="'InstallationPosition1MarkList'">
+                    <br />
+                    Installation Position<br />
+                </div>
+                <br />
+                @Html.LabelFor(r => r.Format)
+                <br />
+                @Html.CodeMasterDropDownListFor(r => r.Format, false)
+                <br />
+                Traffic
+                <br />
+                @Html.CodeMasterDropDownListFor(r => r.RoadType2, false)
+                <br />
+                Angle to Road
+                <br />
+                @Html.CodeMasterDropDownListFor(r => r.InstallationPosition2, false)
+                <br />
+                Viewing Distance
+                <br />
+                @Html.CodeMasterDropDownListFor(r => r.ViewingDistance, false)
+                <br />
+                <input id="IsWithinCircle" name="IsWithinCircle" type="checkbox" data-bind="checked: o_visible"
+                    value="true" />
+                Within
+                <input type="text" style="width: 50px;" name="Distance" id="Distance" data-bind="enable: o_visible,value: o_distance" />
+                <br />
+                @Html.HiddenFor(r => r.Lat, new Dictionary<string, object> { { "data-bind", "value: getLat(o_position())" } })
+                @Html.HiddenFor(r => r.Long, new Dictionary<string, object> { { "data-bind", "value: getLng(o_position())" } })
+                <br />
+                <div id="divMoreProduct" data-url="'@Url.Content("~/Listing/ListProduct")'"
+                    data-name="'ProductIDList'">
+                    <br />
+                    Current Product<br />
+                </div>
+                <br />
+                <br />
+                <div id="divContractor" data-url="'@Url.Content("~/Listing/ListContractor")'"
+                    data-name="'ContractorList'">
+                    <br />
+                    Contractor<br />
+                </div>
+                <br />
+                <br />
+                <div id="divClient" data-url="'@Url.Content("~/Listing/ListClient")'" data-name="'ClientList'">
+                    <br />
+                    Client<br />
+                </div>
+                <br />
+                <br />
+                <div id="divCategory" data-url="'@Url.Content("~/Listing/ListCats")'" data-name="'CatList'">
+                    <br />
+                    Category<br />
+                </div>
+                <br />
+                Score from
+                <input type="text" id="ScoreFrom" name="ScoreFrom" value="0" style="width: 30px;" />
+                to
+                <input type="text" id="ScoreTo" name="ScoreTo" value="100" style="width: 30px;" />
+                <br />
+                <br />
+                No Photo:
+                <input name="NoPhoto" type="checkbox" value="true" />
+                <br />
+                Has last photo from
+                <input name="LastPhotoFrom" type="date" />
+                to
+                <input name="LastPhotoTo" type="date" />
+                @*Outdate from
+                <input type="text" id="OutdateInDaysFrom" name="OutdateInDaysFrom" value="" style="width: 30px;" />
+                days to
+                <input type="text" id="OutdateInDaysTo" name="OutdateInDaysTo" value="" style="width: 30px;" />
+                days*@
+            </td>
+            <td style="vertical-align: top;">
+                <input id="btnFind" type="button" onclick="search(this);" value="Find" />
+                <a href="javascript:toggleSearchPane();">Show/Hide Search Criteria</a>
+                <table width="100%">
+                    <tr>
+                        <td>
+                            <div id="map" style="width: 100%; height: 800px;">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td style="width: 100%; vertical-align: top;">
+                <table id="tblResult" class="display">
+                    <thead>
+                        <tr>
+                            <th>
+                                SiteID
+                            </th>
+                            <th>
+                                SiteDetailID
+                            </th>
+                            <th>
+                                District
+                            </th>
+                            <th>
+                                Ward
+                            </th>
+                            <th>
+                                Address Line 1
+                            </th>
+                            <th>
+                                Address Line 2
+                            </th>
+                            <th>
+                                Type
+                            </th>
+                            <th>
+                                Contractor
+                            </th>
+                            <th>
+                                Current Product
+                            </th>
+                            <th>
+                                LastUpdatedDate
+                            </th>
+                            <th>
+                                Edit
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </table>
+}
+<script id="infoWindowTemplate" type="text/x-jquery-tmpl">
+    <div>
+        <table style="width:350px;">
+            <tr>
+                <td>
+                    <div class="score_summary">
+                        <dl class="main_score">
+                            <dt>Ambient Score</dt>
+                            <dt class="pc">${Score}</dt>
+                            <dt class="rating">${Rating}</dt>
+                        </dl>
+                    </div>
+                    ID: <a href='@(Url.Content("~/Site/Edit/${ID}"))'>${ID}</a>
+                    <br />
+                    Site Code: ${Code}
+                    <br />
+                    Address: ${Address}
+                    <br />
+                    Location: ${GeoFullName}
+                    <br />
+                    Type: ${Type}
+                    <br />
+                    Orientation: ${Orientation}
+                    <br />
+                    Size: ${Size}
+                    <br />
+                    Lighting: ${Lighting}
+                    <br />
+                    Contractor: ${Contractor}
+                    <br />
+                    CurrentProduct: ${CurrentProduct}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style='height:300px;'>
+                        {{each(i, url) PhotoUrlList}}
+                            <img src='${url}' alt="" />
+                            <br />
+                        {{/each}}
+                    </div>                
+                </td>
+            </tr>
+        </table>
+    </div>
+</script>
+<script id="rowTmpl" type="text/x-jquery-tmpl">
+    <tr>
+        <td>
+            <a href='javascript:showInfoWindow("${ID}","${$item.i}");'> 
+            ${ID}
+            </a>
+        </td>
+        
+        <td>
+            ${SiteDetailID}
+        </td>
+        <td>
+            ${Geo2}
+        </td>
+        <td>
+            ${Geo3}
+        </td>
+        <td>
+            ${AddressLine1}
+        </td>
+        <td>
+            ${AddressLine2}
+        </td>
+        <td>
+            ${Type}
+        </td>
+        <td>
+            ${Contractor}
+        </td>
+        <td>
+            ${CurrentProduct}
+        </td>
+        <td>
+            ${LastUpdatedDate}
+        </td>
+        <td>
+           {{html $item.editUrl}}
+        </td>
+    </tr>
+</script>
+<script id="geo2Template" type="text/x-jquery-tmpl">
+
+<div>
+    <input type="checkbox" name="Geo2List" value="${FullName}" />
+    <label>${FullName}</label>
+</div>
+
+</script>
+<script type="text/javascript" lang="javascript" >
+    $(document).ready(function () {
+        init();
+        $("#divMoreProduct").manyTxt();
+        $("#divMoreInstallationPosition").manyTxt();
+        $("#divContractor").manyTxt();
+        $("#divClient").manyTxt();
+        $("#divCategory").manyTxt();
+
+        $('#Geo1FullName').val('@OAMS.Models.AppSetting.DefaultGeo1Name');
+        showGeo2('@OAMS.Models.AppSetting.DefaultGeo1Name');
+        ko.applyBindings(distanceWidget);
+
+    });
+
+        var oTable;
+
+        function showGeo2(str) {
+
+            $("#Geo2ListMore").hide();
+
+            var div1 = $("#geo2List");
+            div1.empty();
+
+            $.ajax({
+                url: '@Url.Content("~/Listing/ListGeo2")', type: "POST", dataType: "json",
+                data: { parentFullName: str },
+                success: function (data) {
+                    $("#geo2Template").tmpl(data).appendTo(div1);
+                }
+
+            })
+        }
+
+        function HideUncheck(listName, btnMoreID) {
+
+            var count = $('input[name="'+listName+'"]:not(:checked)').each(function () {
+                $(this).hide().next().hide();
+            }).length;
+            
+            count == 0 ? $("#" + btnMoreID).hide() : $("#" + btnMoreID).show();
+        }
+
+        function ShowAll(listName, btnMoreID) {
+
+            $('input[name="'+listName+'"]').each(function () {
+                $(this).show().next().show();
+            });
+
+            $("#" + btnMoreID).hide();
+        }
+
+        function CheckAll(divID, checked) {
+            $('#' + divID + ' :input').each(function (i) { this.checked = checked; });
+        }
+
+        function HideUncheckStyle(listName, btnMoreID) {
+
+            var count = $('input[name="'+listName+'"]:not(:checked)').each(function () {
+                $(this).hide().next().hide().next().hide();
+            }).length;
+            
+            count == 0 ? $("#" + btnMoreID).hide() : $("#" + btnMoreID).show();
+        }
+
+        function ShowAllStyle(listName, btnMoreID) {
+            
+            $('input[name="'+listName+'"]').each(function () {
+                $(this).show().next().show().next().show();
+            });
+
+            $("#" + btnMoreID).hide();
+        }
+
+        function showMarker(mk)
+        {
+            mk.show();
+        };
+
+        var markers = [];
+        var infoContents = [];
+
+        function addResults(json) {
+
+            markers = [];
+            infoContents = [];
+            profileMarkers = []
+
+            HideUncheck("Geo2List", 'Geo2ListMore');
+            HideUncheckStyle('StyleList', 'StyleListMore');
+            
+            //  Create a new viewpoint bound
+            var bounds = new google.maps.LatLngBounds();
+
+            if (json.length) {
+                var profileImageUrl;
+                var editTemplate = '@(Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Edit", r => r.Edit(0), new RouteValueDictionary(new { id = "siteID" }), null, false))';
+
+                var tbl = $('#tblResult tbody');
+                tbl.innerHTML = '';
+
+                for (var i = 0, site; site = json[i]; i++) {
+
+                    if (site.CodeType == 'WMB') {
+                        profileImageUrl = '@Url.Content("~/Content/Image/wallmountedbannee.png")';
+                    }
+                    else if (site.CodeType == 'BRL') {
+                        profileImageUrl = '@Url.Content("~/Content/Image/britelite.png")';
+                    }
+                    else if (site.CodeType == 'BSH') {
+                        profileImageUrl = '@Url.Content("~/Content/Image/busshelter.png")';
+                    }
+                    else if (site.CodeType == 'CMR') {
+                        profileImageUrl = '@Url.Content("~/Content/Image/covermarket.png")';
+                    }
+                    else if (site.CodeType == 'ELV') {
+                        profileImageUrl = '@Url.Content("~/Content/Image/elevator.png")';
+                    }
+                    else if (site.CodeType == 'ITK') {
+                        profileImageUrl = '@Url.Content("~/Content/Image/itkiosk.png")';
+                    }
+                    else if (site.CodeType == 'Billboard') {
+                        profileImageUrl = '@Url.Content("~/Content/Image/billboard.png")';
+                    }
+                    else if (site.CodeType == 'BillboardPole') {
+                        profileImageUrl = '@Url.Content("~/Content/Image/billboardpole.png")';
+                    }
+                    else if (site.CodeType == 'Other') {
+                        profileImageUrl = '@Url.Content("~/Content/Image/other.png")';
+                    }
+
+                    var image = new google.maps.MarkerImage(profileImageUrl,
+                              new google.maps.Size(48, 48),
+                              new google.maps.Point(0, 0),
+                              new google.maps.Point(24, 24),
+                              new google.maps.Size(24, 24));
+
+                    var pos = new google.maps.LatLng(site.Lat, site.Lng);
+
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: pos,
+                        icon: image,
+                        zIndex: 10
+                    });
+
+                    markers.push(marker);
+
+                    if (VietnamBounds.contains(marker.position)
+                    ) {
+                        bounds.extend(marker.position);
+                    }
+
+                    bounds.extend(marker.position);
+
+                    profileMarkers.push(marker);
+                    
+                    var infoHtml = "";
+                    infoContents.push(infoHtml);
+
+                    var html = "";
+                    html += infoHtml;
+
+                    bindInfoWindow(marker, map, infoWindow, html, site.ID);
+
+                    var t = $("#rowTmpl").tmpl(site,{
+                                                i: i,
+                                                editUrl: editTemplate.replace('siteID', site.ID)
+                                            }).appendTo(tbl);
+                }
+
+                oTable = $('#tblResult').dataTable({
+                
+                "sDom": 'CT<"clear">lfrtip',
+
+                "oTableTools": { "sSwfPath": '@Url.Content("~/content/copy_cvs_xls_pdf.swf")', "aButtons": ["copy"] },
+
+                "oLanguage": {
+                    "sLengthMenu": 'Display <select>' +
+				'<option value="10">10</option>' +
+				'<option value="25">25</option>' +
+				'<option value="50">50</option>' +
+				'<option value="100">100</option>' +
+				'<option value="-1">All</option>' +
+				'</select> records'
+                }
+
+                
+                });
+            }
+            else {
+
+                var tbl = $('#tblResult tbody');
+                tbl.innerHTML = '';
+
+                var rSel = document.createElement('tr');
+                tbl.append(rSel);
+
+                var cStyle = document.createElement('td');
+                cStyle.innerHTML = "No Site Found";
+                rSel.appendChild(cStyle);
+            }
+
+            //  Fit these bounds to the map
+            map.fitBounds(bounds);
+            //mc.addMarkers(markers);
+        }
+
+        function showInfoWindow(siteID,i) {            
+
+                            var html = GetSiteInfo(siteID);
+
+
+                infoWindow.setContent(html);
+
+            infoWindow.open(map, markers[i]);
+        }
+
+        function bindInfoWindow(marker, map, infoWindow, html, siteID) {
+
+            google.maps.event.addListener(marker, 'click', function () {
+                
+                var html = GetSiteInfo(siteID);
+
+                infoWindow.setContent(html);
+                infoWindow.open(map, marker);
+            });
+        }
+
+        function GetSiteInfo(siteID)
+        {
+            var infoWindowHtml = "No info";
+
+            $.ajax({
+                url: '@(Url.Content("~/FindSite/GetSiteInfo"))', type: "POST", dataType: "json",
+                data: {"ID":siteID},
+                async: false,
+                success: function (data) {
+                
+                    infoWindowHtml = $("#infoWindowTemplate").tmpl(data).html();
+                    }
+                })
+            
+            return infoWindowHtml;
+        }
+
+        var distanceWidget;
+        var map;
+        var geocodeTimer;
+        var profileMarkers = [];
+        //var mc;
+        var infoWindow = new google.maps.InfoWindow;
+
+        
+        var VietnamBounds = new google.maps.LatLngBounds(new google.maps.LatLng('@OAMS.Models.AppSetting.MapBoundSWLat', '@OAMS.Models.AppSetting.MapBoundSWLng'), 
+                                                         new google.maps.LatLng('@OAMS.Models.AppSetting.MapBoundNELat', '@OAMS.Models.AppSetting.MapBoundNELng'));
+
+        function init() {
+            var mapDiv = document.getElementById('map');
+            map = new google.maps.Map(mapDiv, {
+                center: new google.maps.LatLng(@(OAMS.Models.AppSetting.FindMapCenterLat), @(OAMS.Models.AppSetting.FindMapCenterLng)),
+                zoom: 8,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            distanceWidget = new DistanceWidget({
+                map: map,
+                distance: 1, // Starting distance in km.
+                maxDistance: 2500, // Twitter has a max distance of 2500km.
+                color: '#000',
+                activeColor: '#59b',
+                sizerIcon: new google.maps.MarkerImage('@Url.Content("~/Content/Image/resize-off.png")'),
+                activeSizerIcon: new google.maps.MarkerImage('@Url.Content("~/Content/Image/resize.png")')
+            });
+            
+
+            distanceWidget.o_visible(false);
+            distanceWidget.o_distance(1);
+            
+            google.maps.event.addListener(map, 'dragstart',
+            function () {
+                infoWindow.close();
+            });
+
+            map.fitBounds(distanceWidget.get('bounds'));
+            
+            //mc = new MarkerClusterer(map);
+            //mc.setMaxZoom(15);
+        }
+
+        function search(e) {
+            if (oTable != null) {
+                oTable.fnDestroy();
+                oTable = null;
+            }
+            var tdata = $("form").serialize();
+
+            $.ajax({
+                url: '@Url.Content("~/FindSite/FindJsonOutdate")', type: "POST", dataType: "json",
+                data: tdata,
+                success: function (data) {
+                    clearMarkers();
+                    addResults(data);
+                }
+            })
+        }
+
+        function clearMarkers() {
+            //mc.clearMarkers();
+
+            if (profileMarkers) {
+                 for (i in profileMarkers) {
+                profileMarkers[i].setMap(null);
+                }
+            }
+
+            if (markers) {
+                 for (i in markers) {
+                markers[i].setMap(null);
+                }
+            }
+
+            infoWindow.close();
+            $("#tblResult tbody tr").remove();
+        }
+
+        function clickMarker(marker) {
+            marker.click();
+        }
+
+
+        function toggleSearchPane() {
+            
+            if ($('#SearchPane').is(":visible")) {
+                $('#SearchPane').toggle();
+                $('#btnToggleSearchPane').val("Show Search Criteria");
+            }
+            else {
+                $('#SearchPane').toggle();
+                $('#btnToggleSearchPane').val("Hide Search Criteria");
+            }
+            google.maps.event.trigger(map, 'resize');
+        }
+
+
+
+
+</script>
