@@ -22,19 +22,20 @@ namespace OAMS.Controllers
             SiteDetailMore r = Repo.Get(id);
             return PartialView("Edit", r);
         }
-        
+
         [HttpPost]
         public PartialViewResult Edit(SiteDetailMore r)
         {
+            var id = r.ID;
             if (ModelState.IsValid)
             {
-                r = Repo.Update(r);
+                r = Repo.Update(id, UpdateModel);
                 return PartialView("View", r);
             }
             return PartialView("Edit", r);
         }
 
-        
+
         public PartialViewResult View(int id)
         {
             SiteDetailMore r = Repo.Get(id);

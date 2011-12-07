@@ -25,6 +25,8 @@ using OAMS;
 using System.Dynamic;
 using Google.GData.Photos;
 using Google.GData.Client;
+using System.Data.Objects.DataClasses;
+using System.Data.Objects;
 
 
 /// <summary>
@@ -449,6 +451,51 @@ public static class dotNetExt
         else return o.ToString().ToIntNullable();
     }
 
+    public static bool Equals2(this object o, object c)
+    {
+        bool isEqual = false;
+
+        if (o is DBNull && c is DBNull)
+        {
+            isEqual = true;
+        }
+        else if (o is DBNull || c is DBNull)
+        {
+            isEqual = false;
+        }
+        else
+        {
+            //if (c is int)
+            //{
+            //    isEqual = (int)c == (int)o;
+            //}
+
+            //if (c is Guid)
+            //{
+            //    isEqual = (Guid)c == (Guid)o;
+            //}
+
+            //if (c is double)
+            //{
+            //    isEqual = (double)c == (double)o;
+            //}
+
+            //if (c is string)
+            //{
+            //    isEqual = (string)c == (string)o;
+            //}
+
+            //if (c is bool)
+            //{
+            //    isEqual = (bool)c == (bool)o;
+            //}
+
+            isEqual = c.Equals(o);
+        }
+
+        return isEqual;
+    }
+
     public static double? TrimDouble(this double? d)
     {
         string s = d.ToString();
@@ -730,7 +777,23 @@ public static class dotNetExt
         return new Predicate<T>(func);
     }
 
+    public static int CountPropertiesChanged(this ObjectStateEntry entry)
+    {
+        int count = 0;
 
+        for (int i = 0; i < entry.CurrentValues.FieldCount; i++)
+        {
+            var o = entry.OriginalValues.GetValue(i);
+            var c = entry.CurrentValues.GetValue(i);
+
+            if (!o.Equals2(c))
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
 
 
 }

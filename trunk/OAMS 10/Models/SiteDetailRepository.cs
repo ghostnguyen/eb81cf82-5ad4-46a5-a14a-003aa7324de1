@@ -41,14 +41,22 @@ namespace OAMS.Models
             return v;
         }
 
-        public SiteDetail Update(SiteDetail e)
+        //public SiteDetail Update(SiteDetail e)
+        //{
+        //    DB.SiteDetails.Attach(e);            
+        //    DB.ObjectStateManager.ChangeObjectState(e, System.Data.EntityState.Modified);
+        //    Save();
+
+        //    return e;
+        //}
+
+        public SiteDetail Update(int id, Action<SiteDetail> updateMethod)
         {
-            DB.SiteDetails.Attach(e);
-            //UpdateCategory(e);
-            DB.ObjectStateManager.ChangeObjectState(e, System.Data.EntityState.Modified);
+            var r = Get(id);
+            updateMethod(r);
             Save();
 
-            return e;
+            return r;
         }
 
         public void Delete(int id)
@@ -111,7 +119,7 @@ namespace OAMS.Models
             if (IDList != null)
             {
                 var l = DB.SiteDetailPhotoes.Where(r => IDList.Contains(r.ID)).ToList();
-                
+
                 foreach (var item in l)
                 {
                     PicasaRepository.I.DeletePhoto(item.AtomUrl);
