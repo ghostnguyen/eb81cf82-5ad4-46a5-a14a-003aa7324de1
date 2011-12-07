@@ -250,7 +250,10 @@ namespace OAMS
                 }
             }
 
-            bindingContext.ModelState.Add(bindingContext.ModelName, modelState);
+            if (!bindingContext.ModelState.ContainsKey(bindingContext.ModelName))
+            {
+                bindingContext.ModelState.Add(bindingContext.ModelName, modelState);
+            }
             return actualValue;
         }
     }

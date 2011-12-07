@@ -547,6 +547,13 @@
                         <%: Html.EditorFor(model => model.CloseToUniversity)%>
                         <%: Html.ValidationMessageFor(model => model.CloseToUniversity) %>
                     </div>
+                    <div class="editor-label">
+                        <%: Html.LabelFor(model => model.TrafficCount) %>
+                    </div>
+                    <div class="editor-field">
+                        <%: Html.EditorFor(model => model.TrafficCount)%>
+                        <%: Html.ValidationMessageFor(model => model.TrafficCount) %>
+                    </div>
                 </fieldset>
             </td>
             <td>

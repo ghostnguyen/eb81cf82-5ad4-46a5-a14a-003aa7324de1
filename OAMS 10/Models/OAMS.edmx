@@ -593,6 +593,7 @@
           <Property Name="LastUpdatedDate" Type="datetime" />
           <Property Name="LastUpdatedBy" Type="nvarchar(max)" />
           <Property Name="GMapSetting" Type="nvarchar(max)" />
+          <Property Name="TrafficCount" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="SiteDetail">
           <Key>
@@ -608,6 +609,10 @@
           <Property Name="Size" Type="decimal" Precision="37" Scale="4" StoreGeneratedPattern="Computed" />
           <Property Name="AlbumUrl" Type="nvarchar(max)" />
           <Property Name="BackupAlbumUrl" Type="nvarchar(max)" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="nvarchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="SiteDetailMore">
           <Key>
@@ -617,6 +622,10 @@
           <Property Name="SiteDetailID" Type="int" />
           <Property Name="ProductID" Type="int" />
           <Property Name="Note" Type="nvarchar(max)" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="nvarchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="SiteDetailPhoto">
           <Key>
@@ -1817,6 +1826,7 @@
           <NavigationProperty Name="ContractDetails" Relationship="OAMSModel.FK_ContractDetail_Site" FromRole="Site" ToRole="ContractDetail" />
           <NavigationProperty Name="Contractor" Relationship="OAMSModel.FK_Site_Contractor" FromRole="Site" ToRole="Contractor" />
           <NavigationProperty Name="QuoteDetails" Relationship="OAMSModel.FK_QuoteDetail_Site" FromRole="Site" ToRole="QuoteDetail" />
+          <Property Type="String" Name="TrafficCount" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Site_Geo1">
           <End Type="OAMSModel.Geo" Role="Geo" Multiplicity="0..1" />
@@ -1883,6 +1893,10 @@
           <NavigationProperty Name="SiteDetailPhotoes" Relationship="OAMSModel.FK_SiteDetailPhoto_SiteDetail" FromRole="SiteDetail" ToRole="SiteDetailPhoto" />
           <Property Type="String" Name="AlbumUrl" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="BackupAlbumUrl" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="LastUpdatedDate" />
+          <Property Type="String" Name="LastUpdatedBy" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedDate" />
+          <Property Type="String" Name="CreatedBy" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_SiteDetail_Site">
           <End Type="OAMSModel.Site" Role="Site" Multiplicity="0..1" />
@@ -2276,6 +2290,10 @@
           <Property Type="String" Name="Note" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SiteDetail" Relationship="OAMSModel.FK_SiteDetailMore_SiteDetail" FromRole="SiteDetailMore" ToRole="SiteDetail" />
           <NavigationProperty Name="Product" Relationship="OAMSModel.FK_SiteDetailMore_Product" FromRole="SiteDetailMore" ToRole="Product" />
+          <Property Type="DateTime" Name="LastUpdatedDate" />
+          <Property Type="String" Name="LastUpdatedBy" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedDate" />
+          <Property Type="String" Name="CreatedBy" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_SiteDetailMore_SiteDetail">
           <End Type="OAMSModel.SiteDetail" Role="SiteDetail" Multiplicity="0..1" />
@@ -2696,6 +2714,7 @@
           <EntitySetMapping Name="Sites">
             <EntityTypeMapping TypeName="OAMSModel.Site">
               <MappingFragment StoreEntitySet="Site">
+                <ScalarProperty Name="TrafficCount" ColumnName="TrafficCount" />
                 <ScalarProperty Name="GMapSetting" ColumnName="GMapSetting" />
                 <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
                 <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
@@ -2768,6 +2787,10 @@
           <EntitySetMapping Name="SiteDetails">
             <EntityTypeMapping TypeName="OAMSModel.SiteDetail">
               <MappingFragment StoreEntitySet="SiteDetail">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
                 <ScalarProperty Name="BackupAlbumUrl" ColumnName="BackupAlbumUrl" />
                 <ScalarProperty Name="AlbumUrl" ColumnName="AlbumUrl" />
                 <ScalarProperty Name="Size" ColumnName="Size" />
@@ -2932,6 +2955,10 @@
           <EntitySetMapping Name="SiteDetailMores">
             <EntityTypeMapping TypeName="OAMSModel.SiteDetailMore">
               <MappingFragment StoreEntitySet="SiteDetailMore">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="SiteDetailID" ColumnName="SiteDetailID" />

@@ -31,12 +31,20 @@ namespace OAMS.Models
             return DB.SiteDetailMores.SingleOrDefault(r => r.ID == id);
         }
 
-        public SiteDetailMore Update(SiteDetailMore e)
+        //public SiteDetailMore Update(SiteDetailMore e)
+        //{
+        //    DB.SiteDetailMores.Attach(e);
+        //    DB.ObjectStateManager.ChangeObjectState(e, System.Data.EntityState.Modified);
+        //    Save();
+        //    return e;
+        //}
+
+        public SiteDetailMore Update(int id,Action<SiteDetailMore> updateF)
         {
-            DB.SiteDetailMores.Attach(e);
-            DB.ObjectStateManager.ChangeObjectState(e, System.Data.EntityState.Modified);
+            var r = Get(id);
+            updateF(r);
             Save();
-            return e;
+            return r;
         }
 
         public void Delete(int id)
