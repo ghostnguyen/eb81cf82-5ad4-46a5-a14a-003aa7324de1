@@ -502,6 +502,8 @@ namespace OAMS.Controllers
                 }
 
                 IDicRow["TotalCount"] = totalOfLessThan;
+
+                l2.Add(row);
             }
 
             var result = l2;
