@@ -236,6 +236,11 @@ namespace OAMS.Controllers
         //    return View();
         //}
 
+        /// <summary>
+        /// Dynamic Rpt
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         public ActionResult _130(string query)
         {
             if (string.IsNullOrEmpty(query))
@@ -334,11 +339,10 @@ namespace OAMS.Controllers
                 item.IsShow = item.IsShow ?? true;
             }
 
-
+            var lessThanParam = paramsL.FirstOrDefault(r => r.LessThan.HasValue);
+            int? lessThan = lessThanParam != null ? lessThanParam.LessThan : null;
 
             ViewBag.ParamsL = paramsL;
-
-
 
             var r1 = db.SiteDetailMores.Select(r => r);
             //List<SiteDetailMore> r1 = db.SiteDetailMores.ToList();
@@ -347,8 +351,7 @@ namespace OAMS.Controllers
 
             foreach (var item in whereL)
             {
-
-                //Use local variable, why? see the link
+                //Should assign to local variable first, why? see the link
                 //http://stackoverflow.com/questions/6096692/filter-iqueryable-in-a-loop-with-multiple-where-statements
                 var values = item.Values;
 
@@ -446,6 +449,7 @@ namespace OAMS.Controllers
 
             var countParams = paramsL.Where(r => r.IsCount);
 
+            int totalOfLessThan = 0;
             foreach (var item in l1)
             {
                 int total = 0;
@@ -465,9 +469,42 @@ namespace OAMS.Controllers
                 {
                     dic["TotalCount"] = total;
                 }
+
+                if (lessThan.HasValue)
+                {
+                    if ((int)dic["TotalCount"] < lessThan.Value)
+                    {
+                        totalOfLessThan += (int)dic["TotalCount"];
+                    }
+                }
+            }
+            var l2 = l1.Select(r => r.Key).ToList();
+
+            if (lessThan.HasValue)
+            {
+                //var l3 = l2.Where(r => (int)((r as IDictionary<string, object>)[""]) < lessThan.Value);
+                l2.RemoveAll(r => (int)((r as IDictionary<string, object>)["TotalCount"]) < lessThan.Value);
+
+                ExpandoObject row = new ExpandoObject();
+                var IDicRow = (IDictionary<String, Object>)row;
+
+                var last = l2.Last() as IDictionary<string, object>;                
+                foreach (var item in last.Keys)
+                {
+                    if (lessThanParam.PName == item)
+                    {
+                        IDicRow.Add(item, "Other");
+                    }
+                    else
+                    {
+                        IDicRow.Add(item, last[item]);
+                    }
+                }
+
+                IDicRow["TotalCount"] = totalOfLessThan;
             }
 
-            var result = l1.Select(r => r.Key).ToList();
+            var result = l2;
 
             return View(result);
         }

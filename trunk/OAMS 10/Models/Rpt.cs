@@ -203,6 +203,8 @@ namespace OAMS.Models
         public bool? IsShow { get; set; }
         public int Order { get; set; }
         public string PName { get; set; }
+
+        public int? LessThan { get; set; }
     }
 
     public class Rpt140
