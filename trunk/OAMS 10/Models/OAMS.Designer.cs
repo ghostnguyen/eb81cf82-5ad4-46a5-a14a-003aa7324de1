@@ -9708,6 +9708,30 @@ namespace OAMS.Models
         private global::System.String _TrafficCount;
         partial void OnTrafficCountChanging(global::System.String value);
         partial void OnTrafficCountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Note
+        {
+            get
+            {
+                return _Note;
+            }
+            set
+            {
+                OnNoteChanging(value);
+                ReportPropertyChanging("Note");
+                _Note = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Note");
+                OnNoteChanged();
+            }
+        }
+        private global::System.String _Note;
+        partial void OnNoteChanging(global::System.String value);
+        partial void OnNoteChanged();
 
         #endregion
     

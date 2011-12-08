@@ -662,7 +662,7 @@ public static class dotNetExt
     public static MvcHtmlString ActionLinkWithRoles<U>(this HtmlHelper html, string linkText, Expression<Func<U, ActionResult>> action, RouteValueDictionary routeValues = null, IDictionary<string, object> htmlAttributes = null, bool isPost = false)
         where U : BaseController<U>, new()
     {
-        MvcHtmlString htmlStr = MvcHtmlString.Create("");
+        MvcHtmlString htmlStr = MvcHtmlString.Create(linkText);
 
         string[] arr = BaseController<U>.GetControllerNameAndActionName(action);
         string controllerName = arr[0];
@@ -678,6 +678,10 @@ public static class dotNetExt
             {
                 htmlStr = html.ActionLink(linkText, actionName, controllerName, routeValues, htmlAttributes);
             }
+        }
+        else
+        {
+            
         }
 
         return htmlStr;

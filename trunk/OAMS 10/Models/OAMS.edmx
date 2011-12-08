@@ -594,6 +594,7 @@
           <Property Name="LastUpdatedBy" Type="nvarchar(max)" />
           <Property Name="GMapSetting" Type="nvarchar(max)" />
           <Property Name="TrafficCount" Type="nvarchar(max)" />
+          <Property Name="Note" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="SiteDetail">
           <Key>
@@ -1827,6 +1828,7 @@
           <NavigationProperty Name="Contractor" Relationship="OAMSModel.FK_Site_Contractor" FromRole="Site" ToRole="Contractor" />
           <NavigationProperty Name="QuoteDetails" Relationship="OAMSModel.FK_QuoteDetail_Site" FromRole="Site" ToRole="QuoteDetail" />
           <Property Type="String" Name="TrafficCount" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Note" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Site_Geo1">
           <End Type="OAMSModel.Geo" Role="Geo" Multiplicity="0..1" />
@@ -2714,6 +2716,7 @@
           <EntitySetMapping Name="Sites">
             <EntityTypeMapping TypeName="OAMSModel.Site">
               <MappingFragment StoreEntitySet="Site">
+                <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="TrafficCount" ColumnName="TrafficCount" />
                 <ScalarProperty Name="GMapSetting" ColumnName="GMapSetting" />
                 <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
