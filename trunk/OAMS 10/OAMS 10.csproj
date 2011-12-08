@@ -597,6 +597,7 @@
     <Content Include="Views\Rpt\_153.cshtml" />
     <Content Include="Views\Rpt\_130.cshtml" />
     <Content Include="Views\FindSite\FindOutdate2.cshtml" />
+    <Content Include="Views\Site\ShowMap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

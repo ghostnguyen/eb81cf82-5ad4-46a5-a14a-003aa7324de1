@@ -155,5 +155,11 @@ namespace OAMS.Controllers
             repo.UpdateTakenDatePhoto();
             return View("Create");
         }
+
+        public ActionResult ShowMap(int id)
+        {
+            var v = Repo.Get(id);
+            return View(v);
+        }
     }
 }
