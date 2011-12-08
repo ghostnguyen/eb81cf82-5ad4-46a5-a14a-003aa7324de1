@@ -259,7 +259,8 @@ namespace OAMS.Controllers
                 CategoryLevel1 = r.ToStringCategoryLevel1,
                 CategoryLevel2 = r.ToStringCategoryLevel2,
                 Geo2 = r.Site.Geo2 != null ? r.Site.Geo2.Name : "",
-                Geo3 = r.Site.Geo3 != null ? r.Site.Geo3.Name : ""
+                Geo3 = r.Site.Geo3 != null ? r.Site.Geo3.Name : "",
+                r.Site.TrafficCount,
             }));
         }
 

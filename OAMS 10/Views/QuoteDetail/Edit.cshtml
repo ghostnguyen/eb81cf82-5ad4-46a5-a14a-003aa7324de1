@@ -113,9 +113,14 @@
                     <div class="editor-label">
                         @Html.LabelFor(model => model.SiteID)
                     </div>
+                    <div class="editor-field">                        
+                        @(Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>(Model.SiteID.ToString(), r => r.Edit(0), new RouteValueDictionary(new { id = Model.SiteID })))
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Site.TrafficCount)
+                    </div>
                     <div class="editor-field">
-                        @Html.DisplayFor(model => model.SiteID)
-                        @Html.ValidationMessageFor(model => model.SiteID)
+                        @Html.DisplayFor(model => model.Site.TrafficCount)
                     </div>
                     <p>
                         @(Html.ActionLinkWithRoles<OAMS.Controllers.QuoteDetailController>("Save", r => r.Edit(0), null, null, true))
