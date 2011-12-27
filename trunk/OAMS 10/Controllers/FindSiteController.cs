@@ -77,15 +77,6 @@ namespace OAMS.Controllers
 
         private static List<SiteDetail> Find(FindSite e)
         {
-            //DateTime? outdateFrom = null;
-            //DateTime? outdateTo = null;
-
-            //if (e.OutdateInDaysFrom.HasValue)
-            //    outdateFrom = DateTime.Now.Date.AddDays(0 - e.OutdateInDaysFrom.Value);
-
-            //if (e.OutdateInDaysTo.HasValue)
-            //    outdateTo = DateTime.Now.Date.AddDays(0 - e.OutdateInDaysTo.Value);
-
             OAMSEntities DB = new OAMSEntities();
             DB.CommandTimeout = 300;
             List<SiteDetail> l = DB.SiteDetails
@@ -103,9 +94,14 @@ namespace OAMS.Controllers
                     && (!e.ScoreFrom.HasValue || !e.ScoreTo.HasValue || (r.Site.Score >= e.ScoreFrom && r.Site.Score <= e.ScoreTo))
                     && (e.InstallationPosition1MarkList.Count == 0 || e.InstallationPosition1MarkList.Contains(r.Site.InstallationPosition1.HasValue ? r.Site.InstallationPosition1.Value : 0))
 
-                    && (!e.NoPhoto || (e.NoPhoto && r.SiteDetailPhotoes.Count == 0))
-                    && (!e.LastPhotoFrom.HasValue || (!e.NoPhoto && r.SiteDetailPhotoes.Max(r1 => r1.TakenDate).HasValue && e.LastPhotoFrom <= r.SiteDetailPhotoes.Max(r1 => r1.TakenDate)))
-                    && (!e.LastPhotoTo.HasValue || (!e.NoPhoto && r.SiteDetailPhotoes.Max(r1 => r1.TakenDate).HasValue && e.LastPhotoTo >= r.SiteDetailPhotoes.Max(r1 => r1.TakenDate)))
+                    //&& (!e.NoPhoto || (e.NoPhoto && r.SiteDetailPhotoes.Count == 0))
+                    && (!e.NoPhotoFrom.HasValue || r.SiteDetailPhotoes.FirstOrDefault(r1 => r1.TakenDate.HasValue && r1.TakenDate >= e.NoPhotoFrom) == null)
+                    && (!e.NoPhotoTo.HasValue || r.SiteDetailPhotoes.FirstOrDefault(r1 => r1.TakenDate.HasValue && r1.TakenDate <= e.NoPhotoTo) == null)
+
+                    //&& (!e.LastPhotoFrom.HasValue || (!e.NoPhoto && r.SiteDetailPhotoes.Max(r1 => r1.TakenDate).HasValue && e.LastPhotoFrom <= r.SiteDetailPhotoes.Max(r1 => r1.TakenDate)))
+                    //&& (!e.LastPhotoTo.HasValue || (!e.NoPhoto && r.SiteDetailPhotoes.Max(r1 => r1.TakenDate).HasValue && e.LastPhotoTo >= r.SiteDetailPhotoes.Max(r1 => r1.TakenDate)))
+                    && (!e.HasPhotoFrom.HasValue || r.SiteDetailPhotoes.FirstOrDefault(r1 => r1.TakenDate.HasValue && r1.TakenDate >= e.HasPhotoFrom) != null)
+                    && (!e.HasPhotoTo.HasValue || r.SiteDetailPhotoes.FirstOrDefault(r1 => r1.TakenDate.HasValue && r1.TakenDate <= e.HasPhotoTo) != null)
 
                     //Find on 2 level relationship properties
                     && (string.IsNullOrEmpty(e.Geo1FullName) || (r.Site.Geo1 != null && r.Site.Geo1.FullName == e.Geo1FullName))

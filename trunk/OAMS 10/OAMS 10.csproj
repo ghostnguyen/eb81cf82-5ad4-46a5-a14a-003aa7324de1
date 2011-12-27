@@ -480,8 +480,9 @@
     <Content Include="Views\SiteMonitoring\DisplayTemplates\ViewDetail.ascx" />
     <Content Include="Views\SiteMonitoring\Edit.aspx" />
     <Content Include="Views\SiteMonitoring\View.aspx" />
+    <None Include="Views\Site\Edit.cshtml" />
     <Content Include="Views\Site\Create.aspx" />
-    <Content Include="Views\Site\Edit.aspx" />
+    <Content Include="Views\Site\Edit1.aspx" />
     <Content Include="Views\Site\GMap.ascx" />
     <Content Include="Views\Site\ManageSiteDetail.ascx" />
     <Content Include="Web.config">

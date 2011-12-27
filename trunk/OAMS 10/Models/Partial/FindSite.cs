@@ -40,9 +40,14 @@ namespace OAMS.Models
         //public int? OutdateInDaysFrom { get; set; }
         //public int? OutdateInDaysTo { get; set; }
 
-        public bool NoPhoto { get; set; }        
-        public DateTime? LastPhotoFrom { get; set; }
-        public DateTime? LastPhotoTo { get; set; }
+        //public bool NoPhoto { get; set; }
+        public DateTime? NoPhotoFrom { get; set; }
+        public DateTime? NoPhotoTo { get; set; }
+
+        //public DateTime? LastPhotoFrom { get; set; }
+        //public DateTime? LastPhotoTo { get; set; }
+        public DateTime? HasPhotoFrom { get; set; }
+        public DateTime? HasPhotoTo { get; set; }
 
         public FindSite()
         {
