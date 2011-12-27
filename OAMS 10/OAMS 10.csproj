@@ -480,9 +480,7 @@
     <Content Include="Views\SiteMonitoring\DisplayTemplates\ViewDetail.ascx" />
     <Content Include="Views\SiteMonitoring\Edit.aspx" />
     <Content Include="Views\SiteMonitoring\View.aspx" />
-    <None Include="Views\Site\Edit.cshtml" />
     <Content Include="Views\Site\Create.aspx" />
-    <Content Include="Views\Site\Edit1.aspx" />
     <Content Include="Views\Site\GMap.ascx" />
     <Content Include="Views\Site\ManageSiteDetail.ascx" />
     <Content Include="Web.config">
@@ -599,6 +597,9 @@
     <Content Include="Views\Rpt\_130.cshtml" />
     <Content Include="Views\FindSite\FindOutdate2.cshtml" />
     <Content Include="Views\Site\ShowMap.cshtml" />
+    <Content Include="Views\Site\Edit.cshtml">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
