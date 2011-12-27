@@ -547,6 +547,10 @@
                         <%: Html.EditorFor(model => model.CloseToUniversity)%>
                         <%: Html.ValidationMessageFor(model => model.CloseToUniversity) %>
                     </div>
+                </fieldset>
+            </td>
+            <td>
+                <div>
                     <div class="editor-label">
                         <%: Html.LabelFor(model => model.TrafficCount) %>
                     </div>
@@ -561,9 +565,7 @@
                         <%: Html.EditorFor(model => model.Note)%>
                         <%: Html.ValidationMessageFor(model => model.Note)%>
                     </div>
-                </fieldset>
-            </td>
-            <td>
+                </div>
                 <div>
                     <% Html.RenderPartial("ManageSiteDetail", Model); %>
                 </div>

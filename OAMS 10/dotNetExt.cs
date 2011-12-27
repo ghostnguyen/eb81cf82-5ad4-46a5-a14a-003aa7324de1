@@ -767,6 +767,11 @@ public static class dotNetExt
         return value ? strTrue : strFalse;
     }
 
+    public static string ToStringMoney(this decimal? value)
+    {
+        return value.HasValue ? value.Value.ToString("C") : "";
+    }
+
     public static ExpandoObject ToExpando(this object anonymousObject)
     {
         IDictionary<string, object> anonymousDictionary = HtmlHelper.AnonymousObjectToHtmlAttributes(anonymousObject);

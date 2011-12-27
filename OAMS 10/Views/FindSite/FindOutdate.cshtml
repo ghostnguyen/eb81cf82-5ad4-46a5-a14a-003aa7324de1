@@ -103,18 +103,27 @@
                 <input type="text" id="ScoreTo" name="ScoreTo" value="100" style="width: 30px;" />
                 <br />
                 <br />
-                No Photo:
+                @*No Photo:
                 <input name="NoPhoto" type="checkbox" value="true" />
                 <br />
                 Has last photo from
                 <input name="LastPhotoFrom" type="date" />
                 to
-                <input name="LastPhotoTo" type="date" />
-                @*Outdate from
-                <input type="text" id="OutdateInDaysFrom" name="OutdateInDaysFrom" value="" style="width: 30px;" />
-                days to
-                <input type="text" id="OutdateInDaysTo" name="OutdateInDaysTo" value="" style="width: 30px;" />
-                days*@
+                <input name="LastPhotoTo" type="date" />*@
+                <fieldset>
+                    <legend>No Photo </legend>from
+                    <input name="NoPhotoFrom" type="date" />
+                    <br />
+                    to
+                    <input name="NoPhotoTo" type="date" />
+                </fieldset>
+                <fieldset>
+                    <legend>Has Photo </legend>from
+                    <input name="HasPhotoFrom" type="date" />
+                    <br />
+                    to
+                    <input name="HasPhotoTo" type="date" />
+                </fieldset>
             </td>
             <td valign="top">
                 <input id="btnFind" type="button" onclick="search(this);" value="Find" />

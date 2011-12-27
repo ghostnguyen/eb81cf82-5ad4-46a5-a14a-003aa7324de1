@@ -76,9 +76,18 @@ namespace OAMS.Models
                         entry.Summary = new AtomTextConstruct(AtomTextConstructElementType.Summary, noteList[i]);
                     }
 
-                    PicasaEntry createdEntry = PicasaService.Insert(postUri, entry);
+                    try
+                    {
+                        PicasaEntry createdEntry = PicasaService.Insert(postUri, entry);
+                        l.Add(createdEntry);
+                    }
+                    catch (Exception)
+                    {
+                        totalPhotos = 0;
+                        throw;
+                    }
 
-                    l.Add(createdEntry);
+
                 }
             }
 
@@ -275,7 +284,7 @@ namespace OAMS.Models
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
             }
 
-            
+
         }
 
         public DateTime? ReadTakenDateTime(string photoAtomUrl)
@@ -289,7 +298,7 @@ namespace OAMS.Models
                 date = (new DateTime(1970, 1, 1)).AddMilliseconds(a.Exif.Time.FloatValue);
             }
             catch (Exception ex)
-            {                
+            {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
             }
 
