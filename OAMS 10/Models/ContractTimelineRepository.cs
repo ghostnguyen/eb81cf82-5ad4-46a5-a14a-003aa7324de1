@@ -73,28 +73,28 @@ namespace OAMS.Models
 
         public ContractTimeline Update(ContractTimeline e)
         {
-            //var r = Get(e.ID);
-            //if (r != null)
-            //{
-            //    r.FromDate = e.FromDate;
-            //    r.ToDate = e.ToDate;
-                
-            //    if (ValidConflictTimeline(r))
-            //    {
-            //        Save();
-            //        e = r;
-            //    }
-            //}
-            //return e;
-
-            DB.ContractTimelines.Attach(e);
-            if (ValidConflictTimeline(e))
+            var r = Get(e.ID);
+            if (r != null)
             {
-                DB.ObjectStateManager.ChangeObjectState(e, System.Data.EntityState.Modified);
-                Save();
-            }
+                r.FromDate = e.FromDate;
+                r.ToDate = e.ToDate;
 
+                if (ValidConflictTimeline(r))
+                {
+                    Save();
+                    e = r;
+                }
+            }
             return e;
+
+            //DB.ContractTimelines.Attach(e);
+            //if (ValidConflictTimeline(e))
+            //{
+            //    DB.ObjectStateManager.ChangeObjectState(e, System.Data.EntityState.Modified);
+            //    Save();
+            //}
+
+            //return e;
         }
 
         public bool ValidConflictTimeline(ContractTimeline e)
