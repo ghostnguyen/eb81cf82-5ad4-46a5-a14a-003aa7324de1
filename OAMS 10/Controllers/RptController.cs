@@ -493,11 +493,20 @@ namespace OAMS.Controllers
                 {
                     if (lessThanParam.PName == item)
                     {
-                        IDicRow.Add(item, "Other");
+                        IDicRow.Add(item, "­­­­­­·Other");
                     }
-                    else
+                    else                        
                     {
-                        IDicRow.Add(item, last[item]);
+                        var p = paramsL.FirstOrDefault(r => r.PName == item);
+                        
+                        if (p != null && p.IsCount)
+                        {
+                            IDicRow.Add(item, "");
+                        }
+                        else
+                        {
+                            IDicRow.Add(item, last[item]);
+                        }
                     }
                 }
 
