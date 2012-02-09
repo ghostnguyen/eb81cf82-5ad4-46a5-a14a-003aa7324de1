@@ -414,11 +414,12 @@
                         profileImageUrl = '@Url.Content("~/Content/Image/other.png")';
                     }
 
-                    var image = new google.maps.MarkerImage(profileImageUrl,
-                              new google.maps.Size(48, 48),
-                              new google.maps.Point(0, 0),
-                              new google.maps.Point(24, 24),
-                              new google.maps.Size(24, 24));
+                    var image = new google.maps.MarkerImage(profileImageUrl
+//                        ,new google.maps.Size(48, 48)
+//                        ,new google.maps.Point(0, 0)
+//                        ,new google.maps.Point(24, 24)
+//                        ,new google.maps.Size(24, 24)
+                              );
 
                     var pos = new google.maps.LatLng(site.Lat, site.Lng);
 
