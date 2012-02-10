@@ -7,53 +7,12 @@ namespace OAMS.Models
 {
     public class GeoRepository : BaseRepository<GeoRepository>
     {
-        //private OAMSEntities DB = new OAMSEntities();
-
-        // Query Methods 
-        //public IQueryable<Geo> GetAll() { return DB.Geos; }
-        //public IQueryable<Geo> GetAll(int level) { return DB.Geos.Where(r => r.Level == level); }
-
-        //public Geo Get(string name, int level, Guid? parentID)
-        //{
-        //    return DB.Geos.Where(r => r.Level == level
-        //        && r.Name.Trim().ToLower() == name.Trim().ToLower()
-        //        && object.Equals(r.ParentID, parentID)
-        //        ).SingleOrDefault();
-        //}
-
-        //public static string HCMC_Name
-        //{
-        //    get
-        //    {
-        //        OAMS.Models.GeoRepository geoRepository = new OAMS.Models.GeoRepository();
-        //        var hcmc = geoRepository.Get(OAMSSetting.HCMC_ID);
-        //        string name = hcmc == null ? "" : hcmc.Name;
-
-        //        return name;
-        //    }
-        //}
-
         public Geo GetByFullname(string fullname)
         {
             return (from e in DB.Geos
                     where e.FullName.ToLower() == fullname.Trim().ToLower()
                     select e).SingleOrDefault();
         }
-
-        //public IQueryable<Geo> Get(List<Guid> IDList, int level)
-        //{
-        //    return DB.Geos.Where(r => IDList.Contains(r.ID) && r.Level == level);
-        //}
-
-        //public Geo Get(Guid ID, int level)
-        //{
-        //    Geo e = DB.Geos.Where(r => r.ID == ID && r.Level == level).SingleOrDefault();
-
-        //    if (e == null)
-        //        throw new Exception("Không tìm thấy đơn vị hành chính.");
-
-        //    return e;
-        //}
 
         public Geo Get(Guid? ID = null)
         {
@@ -74,19 +33,6 @@ namespace OAMS.Models
                 DB.Geos.Where(r => r.ParentID == parentID)
                 : DB.Geos.Where(r => r.ParentID == null);
         }
-
-        // Add/Delete 
-        //public Geo Add(string name, int level, Guid? parentID)
-        //{
-        //    Geo geo = new Geo();
-        //    geo.Name = name.Trim();
-        //    geo.Level = level;
-        //    geo.ParentID = parentID;
-
-        //    DB.Geos.AddObject(geo);
-
-        //    return geo;
-        //}
 
         public Geo Add(Action<Geo> updateMethod)
         {
@@ -139,35 +85,6 @@ namespace OAMS.Models
             DB.Geos.DeleteObject(e);
         }
 
-        //public void Add(string geo1Name, string geo2Name, string geo3Name)
-        //{
-        //    //Geo1
-        //    if (string.IsNullOrEmpty(geo1Name)
-        //        || string.IsNullOrEmpty(geo1Name.Trim())) return;
-
-        //    Geo geo1 = Get(geo1Name, 1, null);
-
-        //    if (geo1 == null)
-        //        geo1 = Add(geo1Name, 1, null);
-
-        //    //Geo2
-        //    if (string.IsNullOrEmpty(geo2Name)
-        //        || string.IsNullOrEmpty(geo2Name.Trim())) return;
-
-        //    Geo geo2 = Get(geo2Name, 2, geo1ID);
-        //    Guid? geo2ID = geo2 != null ? geo2.ID : Insert(geo2Name, 2, geo1ID);
-
-        //    //Geo3
-        //    if (string.IsNullOrEmpty(geo3Name)
-        //        || string.IsNullOrEmpty(geo3Name.Trim())) return;
-
-        //    Geo geo3 = Get(geo3Name, 3, geo2ID);
-        //    Guid? geo3ID = geo3 != null ? geo3.ID : Insert(geo3Name, 3, geo2ID);
-        //}
-
-        // Persistence 
-      
-
         public static void SetFullname(Geo e)
         {
             if (e.Level == 1)
@@ -190,11 +107,6 @@ namespace OAMS.Models
         {
             return geo3 != null ? geo3.FullName : geo2 != null ? geo2.FullName : geo1 != null ? geo1.FullName : "";
         }
-
-        //public static string GetFullAddress(string address, string fullGeo)
-        //{
-        //    return (address + ", " + fullGeo).Trim(',', ' ');
-        //}
 
         public void Set3LevelByFullname(string fullname, Func<Guid?, Guid?, Guid?, int> setGeoFunc)
         {
