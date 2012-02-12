@@ -27,6 +27,12 @@ namespace OAMS.Models
                     catch (Exception)
                     {
                     }
+
+                    if (e is Site)
+                    {
+                        var site = e as Site;
+                        site.UpdateScore();
+                    }
                 }
 
                 if (entry.State == EntityState.Modified)
@@ -39,6 +45,9 @@ namespace OAMS.Models
                         {
                             throw new Exception("Site is modified with many properties.");
                         }
+
+                        var site = e as Site;
+                        site.UpdateScore();
                     }
 
                     if (count == 0)

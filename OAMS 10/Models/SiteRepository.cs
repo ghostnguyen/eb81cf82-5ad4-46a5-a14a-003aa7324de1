@@ -27,52 +27,17 @@ namespace OAMS.Models
 
             UpdateFrontBackLit(e);
             UpdateGeo(e);
-            //UpdateCategory(e);
 
             DB.Sites.AddObject(e);
 
             Save();
 
-            //PicasaRepository picasaRepository = new PicasaRepository();
-            //picasaRepository.DB = DB;
-
-            //picasaRepository.UploadPhoto(e, files, noteList);
             UploadPhoto(e, files, noteList);
 
             Save();
 
             return e;
         }
-
-        //public void Update(int ID, Action<Site> updateMethod, IEnumerable<HttpPostedFileBase> files, List<int> DeletePhotoList, string[] noteList, List<SDP> siteDetailFiles, List<int> DeleteSiteDetailPhotoList, List<MoveSP> moveL)
-        //{
-        //    Site e = Get(ID);
-
-        //    updateMethod(e);
-
-        //    UpdateGeo(e);
-
-        //    UpdateFrontBackLit(e);
-
-        //    Save();
-
-        //    PicasaRepository picasaRepository = new PicasaRepository();
-        //    picasaRepository.DB = DB;
-
-        //    picasaRepository.UploadPhoto(e, files, noteList);
-        //    Save();
-
-        //    DeletePhoto(DeletePhotoList);
-
-        //    picasaRepository.UploadPhoto(siteDetailFiles);
-        //    Save();
-
-        //    DeleteSiteDetailPhoto(DeleteSiteDetailPhotoList);
-        //    Save();
-
-        //    MovePhoto(moveL);
-        //    Save();
-        //}
 
         public void Update(int ID, Action<Site> updateMethod, IEnumerable<HttpPostedFileBase> files, List<int> DeletePhotoList, string[] noteList, List<SDP> siteDetailFiles, List<int> DeleteSiteDetailPhotoList, List<MoveSP> moveL)
         {
@@ -192,7 +157,9 @@ namespace OAMS.Models
             e.DirectionalTrafficPublicTransport = 5;
             e.ShopSignsBillboards = 5;
             e.FlagsTemporaryBannersPromotionalItems = 5;
-            e.CompetitiveProductSigns = 5;
+            
+            //TODO:
+            e.CompetitiveProductSigns = "5";
 
             Site lastSite = DB.Sites.OrderByDescending(r => r.ID).FirstOrDefault();
             if (lastSite != null)
@@ -226,7 +193,7 @@ namespace OAMS.Models
             if (IDList != null)
             {
                 List<SitePhoto> l = DB.SitePhotoes.Where(r => IDList.Contains(r.ID)).ToList();
-                //PicasaRepository picasaRepository = new PicasaRepository();
+                
                 foreach (var item in l)
                 {
                     PicasaRepository.I.DeletePhoto(item.AtomUrl);

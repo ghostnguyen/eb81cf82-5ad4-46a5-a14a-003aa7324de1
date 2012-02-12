@@ -442,7 +442,18 @@ public static class dotNetExt
     public static int ToInt(this object o)
     {
         if (o == null) return 0;
-        else return o.ToString().ToInt();
+        else if (o is decimal)
+        {
+            var d = (decimal)o;
+            return Convert.ToInt32(d);
+        }
+        else if (o is decimal?)
+        {
+            var d = o as decimal?;
+            return d.HasValue ? Convert.ToInt32(d.Value) : 0;
+        }
+        else
+            return o.ToString().ToInt();
     }
 
     public static int? ToIntNullable(this object o)
@@ -681,7 +692,7 @@ public static class dotNetExt
         }
         else
         {
-            
+
         }
 
         return htmlStr;

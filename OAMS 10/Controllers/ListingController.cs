@@ -144,7 +144,9 @@ namespace OAMS.Controllers
         public JsonResult ListInstallationPosition1(string searchText)
         {
             OAMSEntities db = new OAMSEntities();
-            var result = db.CodeMasters.Where(r => r.Type == CodeMasterType.InstallationPosition1
+            
+            var result = db.CodeMasters
+                .Where(r => r.Type == CodeMasterType.InstallationPosition1
                 && r.Note.Contains(searchText)
                 )
                 .Distinct()

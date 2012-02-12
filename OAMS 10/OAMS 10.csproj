@@ -480,6 +480,8 @@
     <Content Include="Views\SiteMonitoring\DisplayTemplates\ViewDetail.ascx" />
     <Content Include="Views\SiteMonitoring\Edit.aspx" />
     <Content Include="Views\SiteMonitoring\View.aspx" />
+    <Content Include="Views\Site\ManageSiteDetailPOSTAR.ascx" />
+    <None Include="Views\Site\CreatePOSTAR.cshtml" />
     <Content Include="Views\Site\Create.aspx" />
     <Content Include="Views\Site\GMap.ascx" />
     <Content Include="Views\Site\ManageSiteDetail.ascx" />
@@ -600,6 +602,8 @@
     <Content Include="Views\Site\Edit.cshtml">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Views\Site\EditPOSTAR.cshtml" />
+    <Content Include="Views\Site\IndexPOSTAR.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

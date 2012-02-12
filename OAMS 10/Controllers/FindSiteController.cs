@@ -92,7 +92,8 @@ namespace OAMS.Controllers
                     && (string.IsNullOrEmpty(e.Format) || r.Format == e.Format)
 
                     //Find on 1 level relationship properties
-                    && (!e.ViewingDistance.HasValue || r.Site.ViewingDistance == e.ViewingDistance)
+                    //&& (!e.ViewingDistance.HasValue || r.Site.ViewingDistance == e.ViewingDistance)
+                    && (string.IsNullOrEmpty(e.ViewingDistance) || r.Site.ViewingDistance == e.ViewingDistance)
                     && (!e.InstallationPosition2.HasValue || r.Site.InstallationPosition2 == e.InstallationPosition2) // Angle to Road
                     && (!e.RoadType2.HasValue || r.Site.RoadType2 == e.RoadType2) //Traffic
                     && (e.ContractorList.Count == 0 || e.ContractorList.Contains(r.Site.ContractorID))
