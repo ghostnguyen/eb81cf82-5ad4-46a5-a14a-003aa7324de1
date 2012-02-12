@@ -1,3 +1,9 @@
+
+
+
+
+
+
 -- select * from [Site]
 select ID, 
 (select top 1 Name from Geo where ID = s.Geo1ID) as Geo1
