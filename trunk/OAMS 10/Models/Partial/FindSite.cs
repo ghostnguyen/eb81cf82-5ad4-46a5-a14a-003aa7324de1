@@ -19,7 +19,7 @@ namespace OAMS.Models
         public int? RoadType2 { get; set; }
         public List<int> InstallationPosition1MarkList { get; set; }
         public int? InstallationPosition2 { get; set; }
-        public int? ViewingDistance { get; set; }
+        public string ViewingDistance { get; set; }
 
         public string ViewingSpeed { get; set; }
 

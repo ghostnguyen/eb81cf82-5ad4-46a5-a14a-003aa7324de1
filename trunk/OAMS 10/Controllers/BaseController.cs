@@ -60,6 +60,43 @@ namespace OAMS.Controllers
             string[] arr = GetControllerNameAndActionName(action);
             return IsAuthorize(arr[0], arr[1], isPost);
         }
+
+        public bool ViewExists(string name)
+        {
+            ViewEngineResult result = ViewEngines.Engines.FindView(ControllerContext, name, null);
+            return (result.View != null);
+        }
+
+        public ViewResult View()
+        {
+            return View(string.Empty);
+        }
+
+        public ViewResult View(string viewName)
+        {
+            return View(viewName, null);
+        }
+
+        public ViewResult View(string viewName, object model)
+        {
+            if (string.IsNullOrEmpty(viewName))
+            {
+                viewName = ControllerContext.RouteData.GetRequiredString("action");
+            }
+
+            var viewName2 = viewName + AppSetting.Realm;
+
+            if (ViewExists(viewName2))
+                return base.View(viewName2, model);
+            else
+                return base.View(viewName, model);
+        }
+
+        public ViewResult View(object model)
+        {
+            return View(string.Empty, model);
+
+        }
     }
 
     public class BaseController<T, U> : BaseController<U>
@@ -71,6 +108,8 @@ namespace OAMS.Controllers
         {
             get { return _repo; }
         }
+
+
     }
 
 

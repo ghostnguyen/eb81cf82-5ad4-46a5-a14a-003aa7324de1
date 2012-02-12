@@ -45,26 +45,6 @@ namespace OAMS.Controllers
                 r.CreatedDate,
                 QuoteDetailFees = r.QuoteDetails.SelectMany(r1 => r1.QuoteDetailFees).Where(r1 => r1.Months == 12).Select(r1 => r1.MediaRate),
             }).ToList()
-                //.Select(r =>
-                //{
-                //    dynamic a = new ExpandoObject();
-                //    a.ID = r.ID;
-                //    a.Codea = r.Code;
-                //    a.GeoFullName = r.GeoFullName;
-                //    a.AddressLine1 = r.AddressLine1;
-                //    a.AddressLine2 = r.AddressLine2;
-                //    a.Type = string.Join(",", r.Type.ToArray());
-                //    a.Format = string.Join(",", r.Format.ToArray());
-                //    a.Product = string.Join(",", r.Product.ToArray());
-                //    a.Client = string.Join(",", r.Client.ToArray());
-                //    a.Score = r.Score;
-                //    a.Count = r.Count;
-                //    a.LastUpdatedBy = r.LastUpdatedBy;
-                //    a.LastUpdatedDate = r.LastUpdatedDate;
-                //    a.CreatedBy = r.CreatedBy;
-                //    a.CreatedDate = r.CreatedDate;
-                //    return (ExpandoObject)a;
-                //})
             .Select(r => new
             {
                 r.ID,
@@ -86,10 +66,9 @@ namespace OAMS.Controllers
             }.ToExpando())
             .ToList();
             ;
-
-
-            return View(v);
-            //return View(repo.GetAll());
+           
+            //return View("Index" + AppSetting.Realm, v);
+            return View("Index", v);
         }
 
         public ActionResult Create(int? contractID)

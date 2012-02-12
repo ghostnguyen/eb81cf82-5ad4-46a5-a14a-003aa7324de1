@@ -1,0 +1,332 @@
+﻿@model OAMS.Models.Site
+@using OAMS.Controllers;
+@using OAMS.Models;
+@{
+    ViewBag.Title = "Edit Site";
+    Html.EnableClientValidation();
+    Html.ValidationSummary(true);
+}
+<h2>
+    Edit Site</h2>
+@using (Html.BeginForm("Edit", "Site", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+        
+    
+    <table>
+        <tr valign="top">
+            <td>
+                <p>
+                    @(Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Save", r => r.Edit(0), null, null, true))
+                </p>
+                <fieldset>
+                    <legend>Fields</legend>
+                    <div id="map" style="width: 300px; height: 300px;">
+                    </div>
+                    <div class="editor-label">
+                        Latitude
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Lat, new { onblur = "txtGeoChanged();" })
+                        @Html.ValidationMessageFor(model => model.Lat)
+                    </div>
+                    <div class="editor-label">
+                        Longitude
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Lng, new { onblur = "txtGeoChanged();" })
+                        @Html.ValidationMessageFor(model => model.Lng)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Code)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Code)
+                        @Html.ValidationMessageFor(model => model.Code)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.NewGeoFullName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.NewGeoFullName, "AutoCompleteGeo")
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.AddressLine1)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(r => r.AddressLine1)
+                        @Html.ValidationMessageFor(model => model.AddressLine1)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.AddressLine2)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(r => r.AddressLine2)
+                        @Html.ValidationMessageFor(model => model.AddressLine2)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Contractor)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.ContractorName, "AutoCompleteContractor")
+                        @Html.ValidationMessageFor(r => r.ContractorName)
+                        @Html.TextBoxFor(model => model.ContractorID, new { @style = "visibility:collapse;" })
+                    </div>
+                    <div class="editor-label">
+                        Height
+                    </div>
+                    <div class="editor-field">
+                        @Html.CodeMasterDropDownListFor(model => model.Deflection)
+                    </div>
+                    <div class="editor-label">
+                        Viewing Angle
+                    </div>
+                    <div class="editor-field">
+                        @Html.CodeMasterDropDownListFor(model => model.ViewingAngle)
+                    </div>
+                    <div class="editor-label">
+                        Monthly Traffic
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.TrafficCount)
+                    </div>
+                    <div class="editor-label">
+                        Visibility Distance
+                    </div>
+                    <div class="editor-field">
+                        @Html.CodeMasterDropDownListFor(model => model.ViewingDistance)
+                    </div>
+                    <div class="editor-label">
+                        Major Junction
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.MajorJunction)
+                    </div>
+                    <div class="editor-label">
+                        Obstruction
+                    </div>
+                    <div class="editor-field">
+                        @Html.CodeMasterDropDownListFor(model => model.Obstruction)
+                    </div>
+                    <div class="editor-label">
+                        Monthly Media
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.MonthlyMedia)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.CompetitiveProductSigns)
+                    </div>
+                    <div class="editor-field">
+                        @Html.CodeMasterDropDownListFor(model => model.CompetitiveProductSigns)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Note)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Note)
+                    </div>
+                </fieldset>
+            </td>
+            <td>
+                <div>
+                    @if (QuoteDetailController.IsAuthorize(r => r.ViewFee()))
+                    {
+                        var v = Model.QuoteDetails.OrderBy(r => r.TermDate).ThenBy(r => r.EffectiveDate).SelectMany(r => r.QuoteDetailFees);
+                        if (v != null && v.FirstOrDefault() != null)
+                        {
+                        <table id="tblDetail">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Supplier
+                                    </th>
+                                    <th>
+                                        Effective Date
+                                    </th>
+                                    <th>
+                                        Term Date
+                                    </th>
+                                    <th>
+                                        SiteDetailName
+                                    </th>
+                                    <th>
+                                        Months
+                                    </th>
+                                    <th>
+                                        Media Rate
+                                    </th>
+                                    <th>
+                                        Production Fee
+                                    </th>
+                                    <th>
+                                        Light Fee
+                                    </th>
+                                    <th>
+                                        VAT
+                                    </th>
+                                    <th>
+                                        Discount
+                                    </th>
+                                    <th>
+                                        Other
+                                    </th>
+                                    <th>
+                                        Note
+                                    </th>
+                                    <th>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in v)
+                                {
+                                    <tr>
+                                        <td>
+                                            @(Html.ActionLinkWithRoles<OAMS.Controllers.QuoteDetailController>(item.QuoteDetail.Quote.ContractorName, r => r.Edit(0), new RouteValueDictionary(new { id = item.QuoteDetailID }), null, false))
+                                        </td>
+                                        <td>
+                                            @item.QuoteDetail.EffectiveDate.ToShortDateString()
+                                        </td>
+                                        <td>
+                                            @item.QuoteDetail.TermDate.ToShortDateString()
+                                        </td>
+                                        <td>
+                                            @item.QuoteDetail.SiteDetailName
+                                        </td>
+                                        <td>
+                                            @item.Months
+                                        </td>
+                                        <td>
+                                            @item.MediaRate.ToStringMoney()
+                                        </td>
+                                        <td>
+                                            @item.ProductionFee.ToStringMoney()
+                                        </td>
+                                        <td>
+                                            @item.LightFee.ToStringMoney()
+                                        </td>
+                                        <td>
+                                            @item.VAT
+                                        </td>
+                                        <td>
+                                            @item.Discount
+                                        </td>
+                                        <td>
+                                            @item.Other
+                                        </td>
+                                        <td>
+                                            @item.Note
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        }
+
+                    }
+                </div>
+                <br />
+                <div>
+                    @Html.Partial("ManageSiteDetail" + AppSetting.Realm, Model)
+                </div>
+            </td>
+        </tr>
+    </table>
+    <p>
+        @(Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Save", r => r.Edit(0), null, null, true))
+    </p>
+    
+    
+    
+}
+<div>
+    @(Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Back to List", r => r.Index(), null, null, false))
+</div>
+<script type="text/javascript" language="javascript">
+
+    var map;
+    var marker;
+    var first = true;
+    function init() {
+        var mapDiv = document.getElementById('map');
+        map = new google.maps.Map(mapDiv, {
+            center: new google.maps.LatLng(10.77250, 106.69808),
+            zoom: 17,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+        google.maps.event.addListener(map, 'idle', MapIdle);
+    }
+
+    google.maps.event.addDomListener(window, 'load', init);
+
+    function MapIdle() {
+        if (first) {
+            var lng = $('#Lng').val();
+            var lat = $('#Lat').val();
+
+            if (marker != null) {
+                marker.setMap(null);
+            }
+
+            marker = new google.maps.Marker({
+
+                position: new google.maps.LatLng(lat, lng),
+                map: map,
+                draggable: true,
+                title: 'Move me!'
+            });
+
+            if (!map.getBounds().contains(marker.position)) {
+                var bounds = new google.maps.LatLngBounds();
+                bounds.extend(marker.position);
+                map.fitBounds(bounds);
+                map.setZoom(17);
+            }
+
+            google.maps.event.addListener(marker, 'drag', function () {
+                $('#Lng').val(marker.getPosition().lng().toFixed(6));
+                $('#Lat').val(marker.getPosition().lat().toFixed(6));
+            });
+            first = false;
+        }
+    }
+
+    function txtGeoChanged() {
+        var lng = $('#Lng').val();
+        var lat = $('#Lat').val();
+
+        if (marker != null) {
+            marker.setMap(null);
+        }
+
+        marker = new google.maps.Marker({
+
+            position: new google.maps.LatLng(lat, lng),
+            map: map,
+            draggable: true,
+            title: 'Move me!'
+        });
+
+        if (!map.getBounds().contains(marker.position)) {
+            var bounds = new google.maps.LatLngBounds();
+            bounds.extend(marker.position);
+            map.fitBounds(bounds);
+            map.setZoom(17);
+        }
+
+        google.maps.event.addListener(marker, 'drag', function () {
+            $('#Lng').val(marker.getPosition().lng().toFixed(6));
+            $('#Lat').val(marker.getPosition().lat().toFixed(6));
+        });
+    }
+
+    $(document).ready(function () {
+        $('#CurrentClientName').blur(function () {
+            if ($('#CurrentClientName').val() == '') {
+                $('#CurrentClientID').val('');
+            }
+        });
+    });
+</script>

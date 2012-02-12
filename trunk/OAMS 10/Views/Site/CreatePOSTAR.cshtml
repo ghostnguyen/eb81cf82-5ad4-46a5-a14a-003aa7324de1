@@ -1,0 +1,178 @@
+﻿@model OAMS.Models.Site
+@{
+    ViewBag.Title = "Create Site";
+    Html.EnableClientValidation();
+    Html.ValidationSummary(true);
+}
+<h2>
+    Create Site</h2>
+<script type="text/javascript" language="javascript">
+
+    var map;
+    var marker;
+    function init() {
+        var mapDiv = document.getElementById('map');
+        map = new google.maps.Map(mapDiv, {
+            center: new google.maps.LatLng(10.77250, 106.69808),
+            zoom: 12,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+    }
+
+    google.maps.event.addDomListener(window, 'load', init);
+
+    function txtGeoChanged() {
+
+        var lng = $('#Lng').val();
+        var lat = $('#Lat').val();
+
+        if (marker != null) {
+            marker.setMap(null);
+        }
+
+        marker = new google.maps.Marker({
+
+            position: new google.maps.LatLng(lat, lng),
+            map: map,
+            draggable: true,
+            title: 'Move me!'
+        });
+
+
+
+        if (!map.getBounds().contains(marker.position)) {
+            var bounds = new google.maps.LatLngBounds();
+            bounds.extend(marker.position);
+            map.fitBounds(bounds);
+            map.setZoom(17);
+        }
+
+        google.maps.event.addListener(marker, 'drag', function () {
+            $('#Lng').val(marker.getPosition().lng().toFixed(6));
+            $('#Lat').val(marker.getPosition().lat().toFixed(6));
+        });
+    }
+</script>
+@using (Html.BeginForm("Create", "Site", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <table>
+        <tr valign="top">
+            <td>
+                <fieldset>
+                    <legend>Fields</legend>
+                    <div id="map" style="width: 300px; height: 300px;">
+                    </div>
+                    <div class="editor-label">
+                        Latitude
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Lat, new { onblur = "txtGeoChanged();" })
+                    </div>
+                    <div class="editor-label">
+                        Longitude
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Lng, new { onblur = "txtGeoChanged();" })
+                        <input type="hidden" name="IsFirstSave" id="IsFirstSave" value="false" />
+                        <input type="submit" value="Create" onclick='$("#IsFirstSave").val(true); ' />
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Code)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Code)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.NewGeoFullName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.NewGeoFullName, "AutoCompleteGeo")
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.AddressLine1)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(r => r.AddressLine1)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.AddressLine2)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(r => r.AddressLine2)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ContractorName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.ContractorName, "AutoCompleteContractor")
+                        @Html.TextBoxFor(model => model.ContractorID, new { @style = "visibility:collapse;" })
+                    </div>
+                    <div class="editor-label">
+                        Height
+                    </div>
+                    <div class="editor-field">
+                        @Html.CodeMasterDropDownListFor(model => model.Deflection)
+                    </div>
+                    <div class="editor-label">
+                        Viewing Angle
+                    </div>
+                    <div class="editor-field">
+                        @Html.CodeMasterDropDownListFor(model => model.ViewingAngle)
+                    </div>
+                    <div class="editor-label">
+                        Monthly Traffic
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.TrafficCount)
+                    </div>
+                    <div class="editor-label">
+                        Visibility Distance
+                    </div>
+                    <div class="editor-field">
+                        @Html.CodeMasterDropDownListFor(model => model.ViewingDistance)
+                    </div>
+                    <div class="editor-label">
+                        Major Junction
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.MajorJunction)
+                    </div>
+                    <div class="editor-label">
+                        Obstruction
+                    </div>
+                    <div class="editor-field">
+                        @Html.CodeMasterDropDownListFor(model => model.Obstruction)
+                    </div>
+                    <div class="editor-label">
+                        Monthly Media
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.MonthlyMedia)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.CompetitiveProductSigns)
+                    </div>
+                    <div class="editor-field">
+                        @Html.CodeMasterDropDownListFor(model => model.CompetitiveProductSigns)
+                    </div>
+                     <div class="editor-label">
+                        @Html.LabelFor(model => model.Note)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Note)                        
+                    </div>
+                </fieldset>
+            </td>
+            <td>
+                <div id="divMoreFile">
+                </div>
+                <br />
+                <input type="button" value="Add more" onclick="addMoreFileInput('divMoreFile','files','noteList')" />
+            </td>
+        </tr>
+    </table>
+    <p>
+        @(Html.ActionLinkWithRoles<OAMS.Controllers.SiteController>("Create", r => r.Create(null), null, null, true))
+    </p>
+}

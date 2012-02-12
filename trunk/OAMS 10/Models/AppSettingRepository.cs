@@ -30,6 +30,12 @@ namespace OAMS.Models
                 {
                     oVal = value.ToInt();
                 }
+                else if (item.PropertyType == typeof(bool))
+                {
+                    bool oV;
+                    Boolean.TryParse(value, out oV);
+                    oVal = oV;
+                }
                 item.SetValue(type, oVal, null);
             }
 

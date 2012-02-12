@@ -62,21 +62,6 @@ namespace OAMS
     public class OAMSSetting
     {
         static public Message messageL = new Message();
-        //static public string GoogleUsername
-        //{
-        //    get
-        //    {
-        //        return ConfigurationManager.AppSettings["GoogleUsername"];
-        //    }
-        //}
-
-        //static public string GooglePassword
-        //{
-        //    get
-        //    {
-        //        return ConfigurationManager.AppSettings["GooglePassword"];
-        //    }
-        //}
 
         static public bool ByPassLogin
         {
@@ -93,18 +78,6 @@ namespace OAMS
                 return HttpContext.Current.User.Identity.Name;
             }
         }
-
-
-
-        //public static Guid HCMC_ID
-        //{
-        //    get
-        //    {
-        //        return Guid.Parse(ConfigurationManager.AppSettings["HCMC_ID"]);
-        //    }
-        //}
-
-
     }
 
     public class Message

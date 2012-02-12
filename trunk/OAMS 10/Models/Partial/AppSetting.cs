@@ -25,10 +25,12 @@ namespace OAMS.Models
         static public string AmbientClientUrl { get; set; }
 
         static public string AlbumAtomUrl { get; set; }
-        
+
         //Number of Site's properties are allow to edit at once.
         static public int PropertiesCount { get; set; }
 
+        static public bool IsPOSTAR { get; set; }
+        static public string Realm { get; set; }
 
         /// <summary>
         /// Valid range in meter
