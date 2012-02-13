@@ -481,6 +481,7 @@
     <Content Include="Views\SiteMonitoring\Edit.aspx" />
     <Content Include="Views\SiteMonitoring\View.aspx" />
     <Content Include="Views\Site\ManageSiteDetailPOSTAR.ascx" />
+    <Content Include="Views\FindSite\Copy of FindOutdate.cshtml" />
     <None Include="Views\Site\CreatePOSTAR.cshtml" />
     <Content Include="Views\Site\Create.aspx" />
     <Content Include="Views\Site\GMap.ascx" />
@@ -575,7 +576,7 @@
     <None Include="Scripts\DataTables-1.8.1\extras\Scroller\media\js\Scroller.min.js.gz" />
     <None Include="Scripts\DataTables-1.8.1\extras\TableTools\media\js\TableTools.min.js.gz" />
     <None Include="Scripts\DataTables-1.8.1\media\js\jquery.dataTables.min.js.gz" />
-    <Content Include="Views\FindSite\FindOutdate.cshtml">
+    <Content Include="Views\FindSite\FindPOSTAR.cshtml">
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\FindSite\Find4Contract.cshtml" />

@@ -41,7 +41,7 @@
                 Session["SiteDetailEditTemplate"] = Html.ActionLinkWithRoles<OAMS.Controllers.SiteDetailController>("Edit", r => r.Edit(0), null, new Dictionary<string, object>() { { "href", string.Format("javascript:AjaxEdit(siteDetailID,'divSiteDetail_siteDetailID','{0}');", Url.Content("~/SiteDetail/Edit")) } }, false);
                 Session["SiteDetailDeleteTemplate"] = Html.ActionLinkWithRoles<OAMS.Controllers.SiteDetailController>("Delete", r => r.Delete(0), null, new Dictionary<string, object>() { { "href", string.Format("javascript:AjaxDelete2(siteDetailID,'divSiteDetail_siteDetailID','{0}','divSubSiteDetail_siteDetailID');", Url.Content("~/SiteDetail/Delete")) } }, true);
                 Session["SiteDetailSaveTemplate"] = Html.ActionLinkWithRoles<OAMS.Controllers.SiteDetailController>("Save", r => r.Edit(0), null, new Dictionary<string, object>() { { "href", string.Format("javascript:AjaxSave('divSiteDetail_siteDetailID','{0}');", Url.Content("~/SiteDetail/Edit")) } }, true);
-                Session["SiteDetailCancelTemplate"] = Html.ActionLinkWithRoles<OAMS.Controllers.SiteDetailController>("Cancel", r => r.View(0), null, new Dictionary<string, object>() { { "href", string.Format("javascript:AjaxView(siteDetailID,'divSiteDetail_siteDetailID','{0}');", Url.Content("~/SiteDetail/View")) } }, false);
+                Session["SiteDetailCancelTemplate"] = Html.ActionLinkWithRoles<OAMS.Controllers.SiteDetailController>("Cancel", r => r.View2(0), null, new Dictionary<string, object>() { { "href", string.Format("javascript:AjaxView(siteDetailID,'divSiteDetail_siteDetailID','{0}');", Url.Content("~/SiteDetail/View2")) } }, false);
             %>
             <% foreach (var item in Model.SiteDetails)
                { %>

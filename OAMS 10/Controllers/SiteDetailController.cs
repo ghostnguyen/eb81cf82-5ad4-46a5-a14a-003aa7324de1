@@ -47,7 +47,7 @@ namespace OAMS.Controllers
             return PartialView("Edit", Repo.Get(id));
         }
 
-        public PartialViewResult View(int id)
+        public PartialViewResult View2(int id)
         {
             var r = Repo.Get(id);
 
