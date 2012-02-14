@@ -482,7 +482,6 @@
     <Content Include="Views\SiteMonitoring\View.aspx" />
     <Content Include="Views\Site\ManageSiteDetailPOSTAR.ascx" />
     <Content Include="Views\FindSite\Copy of FindOutdate.cshtml" />
-    <None Include="Views\Site\CreatePOSTAR.cshtml" />
     <Content Include="Views\Site\Create.aspx" />
     <Content Include="Views\Site\GMap.ascx" />
     <Content Include="Views\Site\ManageSiteDetail.ascx" />
@@ -605,6 +604,9 @@
     </Content>
     <Content Include="Views\Site\EditPOSTAR.cshtml" />
     <Content Include="Views\Site\IndexPOSTAR.cshtml" />
+    <Content Include="Views\Site\CreatePOSTAR.cshtml">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
