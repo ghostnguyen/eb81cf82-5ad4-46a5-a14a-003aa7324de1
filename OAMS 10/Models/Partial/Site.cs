@@ -80,20 +80,20 @@ namespace OAMS.Models
             {
                 //((((((((((((((4)*isnull([InstallationPosition2],(0))+(4)*isnull([RoadType2],(0)))+isnull([ViewingDistance],(0)))+isnull([ViewingSpeed],(0)))+isnull([High],(0)))+isnull([VisibilityBuilding],(0)))+isnull([VisibilityHight],(0)))+isnull([VisibilityTrees],(0)))+isnull([VisibilityBridgeWalkway],(0)))+isnull([VisibilityElectricityPolesOther],(0)))+isnull([DirectionalTrafficPublicTransport],(0)))+isnull([ShopSignsBillboards],(0)))+isnull([FlagsTemporaryBannersPromotionalItems],(0)))+isnull([CompetitiveProductSigns],(0)))
                 score = 0
-                    + 4 * InstallationPosition2
-                    + 4 * RoadType2
-                    + int.Parse(ViewingDistance)
-                    + ViewingSpeed
-                    + High
-                    + VisibilityBuilding
-                    + VisibilityHight
-                    + VisibilityTrees
-                    + VisibilityBridgeWalkway
-                    + VisibilityElectricityPolesOther
-                    + DirectionalTrafficPublicTransport
-                    + ShopSignsBillboards
-                    + FlagsTemporaryBannersPromotionalItems
-                    + int.Parse(CompetitiveProductSigns);
+                    + 4 * (InstallationPosition2 ?? 0)
+                    + 4 * (RoadType2 ?? 0)
+                    + int.Parse(ViewingDistance ?? "0")
+                    + ViewingSpeed ?? 0
+                    + High ?? 0
+                    + VisibilityBuilding ?? 0
+                    + VisibilityHight ?? 0
+                    + VisibilityTrees ?? 0
+                    + VisibilityBridgeWalkway ?? 0
+                    + VisibilityElectricityPolesOther ?? 0
+                    + DirectionalTrafficPublicTransport ?? 0
+                    + ShopSignsBillboards ?? 0
+                    + FlagsTemporaryBannersPromotionalItems ?? 0
+                    + int.Parse(CompetitiveProductSigns ?? "0");
             }
 
             Score = score;
