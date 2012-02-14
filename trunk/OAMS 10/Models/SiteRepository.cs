@@ -167,6 +167,12 @@ namespace OAMS.Models
                 e.Lat = lastSite.Lat.TrimDouble();
                 e.Lng = lastSite.Lng.TrimDouble();
             }
+            else
+            {
+                //TODO:
+                //e.Lat = AppSetting.FindMapCenterLat;
+                //e.Lng = lastSite.Lng.TrimDouble();
+            }
 
             return e;
         }
