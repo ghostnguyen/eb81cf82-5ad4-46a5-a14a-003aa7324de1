@@ -55,11 +55,18 @@ namespace OAMS.Models
 
         public int GetScore(Expression<Func<Site, object>> expression)
         {
-            var propertyName = PropertyName.For(expression);
-
-            var value = this.GetType().GetProperty(propertyName).GetValue(this, null).ToString();
-
-            return (int)CodeMasterRepository.I.Get(propertyName, value).Score.ToInt();            
+            try
+            {
+                var propertyName = PropertyName.For(expression);
+                var value = this.GetType().GetProperty(propertyName).GetValue(this, null).ToString();
+                
+                return (int)CodeMasterRepository.I.Get(propertyName, value).Score.ToInt();            
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return 0;
+            }
         }
 
         public void UpdateScore()

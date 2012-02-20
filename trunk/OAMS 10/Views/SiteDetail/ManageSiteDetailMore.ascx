@@ -23,7 +23,7 @@
                 var editHtml = Html.ActionLinkWithRoles<SiteDetailMoreController>("Edit", r => r.Edit(0), null, new Dictionary<string, object>() { { "href", string.Format("javascript:AjaxEdit(siteDetailMoreID,'divSiteDetailMore_siteDetailMoreID','{0}');", Url.Content("~/SiteDetailMore/Edit")) } }, false);
                 var deleteHtml = Html.ActionLinkWithRoles<SiteDetailMoreController>("Delete", r => r.Delete(0), null, new Dictionary<string, object>() { { "href", string.Format("javascript:AjaxDelete(siteDetailMoreID,'divSiteDetailMore_siteDetailMoreID','{0}');", Url.Content("~/SiteDetailMore/Delete")) } }, true);
                 var saveHtml = Html.ActionLinkWithRoles<SiteDetailMoreController>("Save", r => r.Edit(0), null, new Dictionary<string, object>() { { "href", string.Format("javascript:AjaxSave('divSiteDetailMore_siteDetailMoreID','{0}');", Url.Content("~/SiteDetailMore/Edit")) } }, true);
-                var cancelHtml = Html.ActionLinkWithRoles<SiteDetailMoreController>("Cancel", r => r.View(0), null, new Dictionary<string, object>() { { "href", string.Format("javascript:AjaxView(siteDetailMoreID,'divSiteDetailMore_siteDetailMoreID','{0}');", Url.Content("~/SiteDetailMore/View")) } }, false);
+                var cancelHtml = Html.ActionLinkWithRoles<SiteDetailMoreController>("Cancel", r => r.View(0), null, new Dictionary<string, object>() { { "href", string.Format("javascript:AjaxView(siteDetailMoreID,'divSiteDetailMore_siteDetailMoreID','{0}');", Url.Content("~/SiteDetailMore/View2")) } }, false);
             %>
             <% foreach (var item in Model.SiteDetailMores)
                { %>

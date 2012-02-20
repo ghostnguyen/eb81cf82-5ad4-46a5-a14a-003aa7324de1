@@ -36,7 +36,7 @@ namespace OAMS.Controllers
         }
 
 
-        public PartialViewResult View(int id)
+        public PartialViewResult View2(int id)
         {
             SiteDetailMore r = Repo.Get(id);
 
