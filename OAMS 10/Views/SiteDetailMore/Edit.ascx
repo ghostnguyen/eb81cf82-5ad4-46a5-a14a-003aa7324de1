@@ -15,5 +15,5 @@
 <td>
     <%: Html.ActionLinkWithRoles<SiteDetailMoreController>("Save", r => r.Edit(0), null, new Dictionary<string, object>() { { "href", string.Format("javascript:AjaxSave('divSiteDetailMore_{0}','{1}');", Model.ID.ToString(), Url.Content("~/SiteDetailMore/Edit")) } }, true) %>
     |
-    <%: Html.ActionLinkWithRoles<SiteDetailMoreController>("Cancel", r => r.View(0), null, new Dictionary<string, object>() { { "href", string.Format("javascript:AjaxView({0},'divSiteDetailMore_{0}','{1}');", Model.ID.ToString(), Url.Content("~/SiteDetailMore/View")) } }, false)%>
+    <%: Html.ActionLinkWithRoles<SiteDetailMoreController>("Cancel", r => r.View(0), null, new Dictionary<string, object>() { { "href", string.Format("javascript:AjaxView({0},'divSiteDetailMore_{0}','{1}');", Model.ID.ToString(), Url.Content("~/SiteDetailMore/View2")) } }, false)%>
 </td>
