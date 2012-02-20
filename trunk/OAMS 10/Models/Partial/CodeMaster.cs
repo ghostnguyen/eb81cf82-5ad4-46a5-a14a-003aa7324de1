@@ -27,7 +27,7 @@ namespace OAMS.Models
                     case "Rooftop":
                         url += "covermarket.png"; break;
                     case "Wall":
-                        url = "elevator.png"; break;
+                        url += "elevator.png"; break;
                 }
             }
             else
