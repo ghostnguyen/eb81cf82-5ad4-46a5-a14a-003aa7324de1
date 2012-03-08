@@ -1,6 +1,14 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl" %>
 <%= Html.TextBox("", ViewData.TemplateInfo.FormattedModelValue, new { @class = "text-box single-line" }) %>
+<a href="javascript:RemoveContractor();">X</a>
 <script type="text/javascript" language="javascript">
+    function RemoveContractor() {
+        if (confirm('Clear?')) {
+            $("#<%= ViewData.ModelMetadata.PropertyName %>").val('');
+            $("#ContractorID").val('');
+        }
+    }
+    
     $(function () {
         $("#<%= ViewData.ModelMetadata.PropertyName %>").autocomplete({
             select: function (event, ui) { $("#ContractorID").val(ui.item.id); },
@@ -18,10 +26,6 @@
         });
     });
 
-    //    $(function () {
-    //        var c = "<%= ViewData.ModelMetadata.PropertyName %>";
-    //        
-    //        SetAutoCompleteForContractor(c, 'ContractorID');
-    //    });
+    
 
 </script>

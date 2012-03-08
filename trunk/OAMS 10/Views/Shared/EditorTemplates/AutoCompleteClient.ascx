@@ -27,10 +27,4 @@
         });
     });
 
-    //    $(function () {
-    //        var c = "<%= ViewData.ModelMetadata.PropertyName %>";
-    //        
-    //        SetAutoCompleteForContractor(c, 'ContractorID');
-    //    });
-
 </script>
