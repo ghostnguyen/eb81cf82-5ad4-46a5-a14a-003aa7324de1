@@ -1,4 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<OAMS.Models.Rpt01_Model_SiteMonitoring>" %>
+<%@ Import Namespace="OAMS.Models" %>
+
 <table class="notable" width="100%">
     <tr>
         <td>
@@ -30,7 +32,7 @@
         </td>
         <td>
             <div style="text-align: right;">
-                <img src="<%= Url.Content("~/Content/Image/ambient.png")%>" alt="Ambient" />
+                <img src="<%= Url.Content("~/Content/Image/" + AppSetting.Logo)%>" alt="Ambient" />
                 <h2>
                     MONITORING</h2>
             </div>

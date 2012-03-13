@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 @using OAMS
+@using OAMS.Models
 @using OAMS.Controllers
 <head>
     <title>@ViewBag.Title</title>
@@ -38,7 +39,7 @@
     <div class="page">
         <div id="header">
             <div id="title">
-                <img src="@Url.Content("~/Content/Image/ambient.png")" alt="Ambient" />
+                <img src="@Url.Content("~/Content/Image/" + AppSetting.Logo)" alt="Ambient" />
             </div>
             <div id="logindisplay">
                 @Html.Partial("LogOnUserControl")
