@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<OAMS.Models.Contract>" %>
+<%@ Import Namespace="OAMS.Models" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
     Edit
@@ -41,10 +42,16 @@
             </script>
             of
             <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("View", r => r.ViewReport(0, null, null), null, new Dictionary<string, object>() { { "href", "javascript:btnView_Click();" } }, false)%>
+            <% if (AppSetting.ContractSummaryRptNumber == 1)
+               { %>
             |
-            <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("View detail", r => r.ViewReportDetail(0, null, null,null), null, new Dictionary<string, object>() { { "href", "javascript:btnViewDetail_Click('true');" } }, false)%>
+            <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("View detail", r => r.ViewReportDetail(0, null, null, null), null, new Dictionary<string, object>() { { "href", "javascript:btnViewDetail_Click('true');" } }, false)%>
+            <% }
+               else
+               { %>
             |
-            <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("View detail - BlueTrak", r => r.ViewReportDetail(0, null, null,null), null, new Dictionary<string, object>() { { "href", "javascript:btnViewDetail_Click('');" } }, false)%>
+            <%: Html.ActionLinkWithRoles<OAMS.Controllers.ContractController>("View detail - BlueTrak", r => r.ViewReportDetail(0, null, null, null), null, new Dictionary<string, object>() { { "href", "javascript:btnViewDetail_Click('');" } }, false)%>
+            <%} %>
             |
             <%: Html.ActionLinkWithRoles<OAMS.Controllers.RptController>("Report for Accounting", r => r._140(0, null, null), null, new Dictionary<string, object>() { { "href", "javascript:btnView2_Click('');" } }, false)%>
         </div>

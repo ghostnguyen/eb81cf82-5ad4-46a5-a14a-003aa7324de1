@@ -32,6 +32,10 @@ namespace OAMS.Models
         static public bool IsPOSTAR { get; set; }
         static public string Realm { get; set; }
 
+        static public string Logo { get; set; }
+        
+        static public int ContractSummaryRptNumber  { get; set; }
+
         /// <summary>
         /// Valid range in meter
         /// </summary>
