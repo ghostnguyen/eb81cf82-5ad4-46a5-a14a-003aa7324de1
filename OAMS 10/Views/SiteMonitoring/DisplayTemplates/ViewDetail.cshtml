@@ -22,7 +22,7 @@
             @(Model.ContractDetail.Site.AddressLine1 + " " + Model.ContractDetail.Site.AddressLine2)
             <br />
             @((Model.ContractDetail.Site.Geo3 == null ? "" : Model.ContractDetail.Site.Geo3.Name + ", ")
-            + Model.ContractDetail.Site.Geo2.Name)
+            + (Model.ContractDetail.Site.Geo2 == null ? "" : Model.ContractDetail.Site.Geo2.Name))
             <br />
             @Model.ContractDetail.Site.Geo1.Name
             <br />
