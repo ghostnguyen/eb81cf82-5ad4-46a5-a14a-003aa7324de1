@@ -109,6 +109,13 @@
                         @Html.TextBoxFor(model => model.ContractorID, new { @style = "visibility:collapse;" })
                     </div>
                     <div class="editor-label">
+                        @Html.LabelFor(model => model.CBDViewed)
+                    </div>
+                    <div class="editor-field">
+                        @Html.CodeMasterDropDownListFor(r => r.CBDViewed)
+                        @Html.ValidationMessageFor(model => model.CBDViewed)
+                    </div>
+                    <div class="editor-label">
                         Height
                     </div>
                     <div class="editor-field">
