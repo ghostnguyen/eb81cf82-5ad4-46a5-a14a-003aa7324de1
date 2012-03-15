@@ -8,12 +8,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -608,6 +609,7 @@ namespace OAMS.Models
         private ObjectSet<Site> _Sites;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -859,11 +861,11 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -888,6 +890,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -966,6 +969,7 @@ namespace OAMS.Models
         partial void OnValueChanged();
 
         #endregion
+
     
     }
     
@@ -997,6 +1001,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1123,6 +1128,7 @@ namespace OAMS.Models
         partial void OnDescriptionChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1171,6 +1177,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1205,6 +1212,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1379,6 +1387,7 @@ namespace OAMS.Models
         partial void OnLastActivityDateChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1427,6 +1436,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1451,6 +1461,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1649,6 +1660,7 @@ namespace OAMS.Models
         partial void OnProductionCostChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1713,6 +1725,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1737,6 +1750,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1935,6 +1949,7 @@ namespace OAMS.Models
         partial void OnNoteChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2015,6 +2030,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2039,6 +2055,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2189,6 +2206,7 @@ namespace OAMS.Models
         partial void OnFullNameNoDiacriticsChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2319,6 +2337,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2343,6 +2362,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2565,6 +2585,7 @@ namespace OAMS.Models
         partial void OnNoteChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2679,6 +2700,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2703,6 +2725,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2829,6 +2852,7 @@ namespace OAMS.Models
         partial void OnNoteChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2893,6 +2917,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2917,6 +2942,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3043,6 +3069,7 @@ namespace OAMS.Models
         partial void OnNoteChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -3085,6 +3112,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -3109,6 +3137,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3283,6 +3312,7 @@ namespace OAMS.Models
         partial void OnScoreChanged();
 
         #endregion
+
     
     }
     
@@ -3308,6 +3338,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3746,6 +3777,7 @@ namespace OAMS.Models
         partial void OnContactName2Changed();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -3870,6 +3902,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -3894,6 +3927,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4260,6 +4294,7 @@ namespace OAMS.Models
         partial void OnHeightChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -4444,6 +4479,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -4468,6 +4504,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4594,6 +4631,7 @@ namespace OAMS.Models
         partial void OnToDateChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -4636,6 +4674,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -4660,6 +4699,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4882,6 +4922,7 @@ namespace OAMS.Models
         partial void OnNoteChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -4974,6 +5015,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -4998,6 +5040,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -5124,6 +5167,7 @@ namespace OAMS.Models
         partial void OnContractorIDChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -5188,6 +5232,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -5212,6 +5257,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -5338,6 +5384,7 @@ namespace OAMS.Models
         partial void OnNoteChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -5380,6 +5427,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -5404,6 +5452,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -5530,6 +5579,7 @@ namespace OAMS.Models
         partial void OnToDateChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -5572,6 +5622,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -5596,6 +5647,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -5722,6 +5774,7 @@ namespace OAMS.Models
         partial void OnParametersChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -5748,6 +5801,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -5772,6 +5826,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -5922,6 +5977,7 @@ namespace OAMS.Models
         partial void OnFullNameNoDiacriticsChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -6052,6 +6108,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -6076,6 +6133,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -6178,6 +6236,7 @@ namespace OAMS.Models
         partial void OnRoleIdChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -6296,6 +6355,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -6320,6 +6380,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -6494,6 +6555,7 @@ namespace OAMS.Models
         partial void OnClientIDChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -6738,6 +6800,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -6762,6 +6825,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -7224,6 +7288,7 @@ namespace OAMS.Models
         partial void OnNoteChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -7326,6 +7391,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -7350,6 +7416,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -7668,6 +7735,7 @@ namespace OAMS.Models
         partial void OnTypeChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -7808,6 +7876,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -7832,6 +7901,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -8078,6 +8148,7 @@ namespace OAMS.Models
         partial void OnNoteChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -8120,6 +8191,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -8144,6 +8216,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -9926,6 +9999,7 @@ namespace OAMS.Models
         partial void OnMonthlyMediaChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -10170,6 +10244,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -10194,6 +10269,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -10536,6 +10612,7 @@ namespace OAMS.Models
         partial void OnCreatedByChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -10622,6 +10699,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -10646,6 +10724,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -10844,6 +10923,7 @@ namespace OAMS.Models
         partial void OnCreatedByChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -10924,6 +11004,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -10948,6 +11029,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -11194,6 +11276,7 @@ namespace OAMS.Models
         partial void OnCreatedDateChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -11236,6 +11319,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -11260,6 +11344,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -11864,8 +11949,33 @@ namespace OAMS.Models
         private Nullable<global::System.Int32> _IssuesCount;
         partial void OnIssuesCountChanging(Nullable<global::System.Int32> value);
         partial void OnIssuesCountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CurrentCreative
+        {
+            get
+            {
+                return _CurrentCreative;
+            }
+            set
+            {
+                OnCurrentCreativeChanging(value);
+                ReportPropertyChanging("CurrentCreative");
+                _CurrentCreative = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CurrentCreative");
+                OnCurrentCreativeChanged();
+            }
+        }
+        private global::System.String _CurrentCreative;
+        partial void OnCurrentCreativeChanging(global::System.String value);
+        partial void OnCurrentCreativeChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -11968,6 +12078,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -11992,6 +12103,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -12262,6 +12374,7 @@ namespace OAMS.Models
         partial void OnCreatedDateChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -12304,6 +12417,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -12328,6 +12442,7 @@ namespace OAMS.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -12574,6 +12689,7 @@ namespace OAMS.Models
         partial void OnCreatedDateChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -12616,8 +12732,10 @@ namespace OAMS.Models
         }
 
         #endregion
+
     }
 
     #endregion
+
     
 }

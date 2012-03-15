@@ -679,6 +679,7 @@
           <Property Name="Order" Type="int" />
           <Property Name="ProductID" Type="int" />
           <Property Name="IssuesCount" Type="int" />
+          <Property Name="CurrentCreative" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="SiteMonitoringPhoto">
           <Key>
@@ -1550,6 +1551,7 @@
           <Property Type="Int32" Name="IssuesCount" />
           <NavigationProperty Name="ContractDetail" Relationship="OAMSModel.FK_SiteMonitoring_ContractDetail" FromRole="SiteMonitoring" ToRole="ContractDetail" />
           <NavigationProperty Name="Product" Relationship="OAMSModel.FK_SiteMonitoring_Product" FromRole="SiteMonitoring" ToRole="Product" />
+          <Property Type="String" Name="CurrentCreative" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SiteMonitoringPhoto">
           <Key>
@@ -2574,6 +2576,7 @@
           <EntitySetMapping Name="SiteMonitorings">
             <EntityTypeMapping TypeName="OAMSModel.SiteMonitoring">
               <MappingFragment StoreEntitySet="SiteMonitoring">
+                <ScalarProperty Name="CurrentCreative" ColumnName="CurrentCreative" />
                 <ScalarProperty Name="IssuesCount" ColumnName="IssuesCount" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="Order" ColumnName="Order" />

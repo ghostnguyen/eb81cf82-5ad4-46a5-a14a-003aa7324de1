@@ -103,6 +103,13 @@
                         <%: Html.EditorFor(model => model.Working) %>
                         <%: Html.ValidationMessageFor(model => model.Working) %>
                     </div>
+                    <div class="editor-label">
+                        <%: Html.LabelFor(model => model.CurrentCreative) %>
+                    </div>
+                    <div class="editor-field">
+                        <%: Html.EditorFor(model => model.CurrentCreative)%>
+                        <%: Html.ValidationMessageFor(model => model.CurrentCreative)%>
+                    </div>
                     <% if (Model.Site.FrontlitNumerOfLamps.HasValue
                            && Model.Site.FrontlitNumerOfLamps > 0)
                        {%>
