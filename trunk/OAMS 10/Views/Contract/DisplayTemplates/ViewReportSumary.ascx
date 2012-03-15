@@ -67,7 +67,7 @@
             <td>
             </td>
             <td colspan="2">
-                Latest Dates
+                Viewing Date
             </td>
             <td colspan="5">
                 Lighting
@@ -115,10 +115,10 @@
                 Creative
             </td>
             <td>
-                Advertising Type
+                Media Type
             </td>
             <td>
-                Format Execution
+                Format
             </td>
             <td>
                 Inspect
