@@ -34,6 +34,12 @@
             <%: Html.ValidationMessageFor(model => model.ProductionPrice) %>
         </div>
         <div class="editor-label">
+            Media Type
+        </div>
+        <div class="editor-field">
+            <%: Html.CodeMasterDropDownListFor(r => r.Type) %>
+        </div>
+        <div class="editor-label">
             <%: Html.LabelFor(model => model.CurrentProductName)%>
         </div>
         <div class="editor-field">

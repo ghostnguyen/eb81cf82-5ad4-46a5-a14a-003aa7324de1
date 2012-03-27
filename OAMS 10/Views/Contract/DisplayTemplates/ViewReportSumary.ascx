@@ -1,6 +1,5 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<OAMS.Models.Rpt01_Model_SiteMonitoring>" %>
 <%@ Import Namespace="OAMS.Models" %>
-
 <table class="notable" width="100%">
     <tr>
         <td>
@@ -42,6 +41,8 @@
 <table>
     <thead>
         <tr style="background-color: #0000FF; color: #FFFFFF; text-align: center;">
+            <td>
+            </td>
             <td>
             </td>
             <td>
@@ -119,6 +120,9 @@
             </td>
             <td>
                 Format
+            </td>
+            <td>
+                Score
             </td>
             <td>
                 Inspect
@@ -212,12 +216,16 @@
             <%: cd.Product%>
         </td>
         <td>
+            <%: cd.CurrentCreative %>
         </td>
         <td>
             <%: cd.SiteType%>
         </td>
         <td>
             <%: cd.SiteFormat%>
+        </td>
+        <td>
+            <%: cd.SiteScore %>
         </td>
         <td>
             <%: cd.LastestPhotoDate.ToShortDateString()%>
@@ -279,6 +287,8 @@
     <tr style="background-color: #0000FF; color: #FFFFFF; text-align: center;">
         <td>
             Total
+        </td>
+        <td>
         </td>
         <td>
         </td>

@@ -32,8 +32,10 @@ namespace OAMS.Models
         public string Size { get; set; }
         public string Client { get; set; }
         public string Product { get; set; }
+        public string CurrentCreative { get; set; }
         public string SiteType { get; set; }
         public string SiteFormat { get; set; }
+        public int? SiteScore { get; set; }
         public string Inspection { get; set; }
         public int PhotoCount { get; set; }
         public string BackFront { get; set; }
@@ -51,13 +53,13 @@ namespace OAMS.Models
         public string FollowUp { get; set; }
         public bool? RequiredFollowUp { get; set; }
         public bool? NowFixed { get; set; }
-        
+
         public string Action { get; set; }
         public DateTime? LastestPhotoDate { get; set; }
         public DateTime? DateOfProblem { get; set; }
         public DateTime? DateFixed { get; set; }
-        
-        
+
+
         public string Comments { get; set; }
     }
 }

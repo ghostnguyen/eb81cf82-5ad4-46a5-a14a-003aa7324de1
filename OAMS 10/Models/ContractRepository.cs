@@ -118,7 +118,9 @@ namespace OAMS.Models
                     detail.Product = sm.Product == null ? "" : sm.Product.Name;
                     detail.Client = sm.Product == null ? "" : sm.Product.NewClientName;
                     detail.SiteType = cd.Type;
+                    detail.CurrentCreative = sm.CurrentCreative;
                     detail.SiteFormat = cd.Format;
+                    detail.SiteScore = cd.Site.Score;
                     detail.LastestPhotoDate = lastDate;
                     detail.BackFront = cd.Site.BacklitFormat != null ? "Backlit" : "Frontlit";
                     detail.Working = sm.Working;
