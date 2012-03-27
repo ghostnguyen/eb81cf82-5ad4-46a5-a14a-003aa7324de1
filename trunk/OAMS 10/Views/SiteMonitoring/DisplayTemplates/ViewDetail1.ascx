@@ -373,7 +373,7 @@
     </tr>
 </table>
 <footer>
-    <img src="../../../Content/Image/bni_logo.jpg" style="float:right;width:150px;" />
+    <img src="<%= Url.Content("~/Content/Image/bni_logo.jpg")%>" style="float:right;width:150px;" />
 </footer>
 <div class="pageBreak">
 </div>
