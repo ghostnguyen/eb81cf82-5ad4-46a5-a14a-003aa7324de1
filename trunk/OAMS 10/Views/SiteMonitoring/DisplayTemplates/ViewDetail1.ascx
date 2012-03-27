@@ -18,8 +18,10 @@
                         <table class="notable" style="vertical-align: top;">
                             <tr>
                                 <td style="width: 120px;">
+                                    Site Monitoring ID:
                                 </td>
                                 <td style="width: 90px;">
+                                    <%: Model.ID %>
                                 </td>
                                 <td style="width: 140px;">
                                     Site location:
@@ -30,8 +32,10 @@
                             </tr>
                             <tr>
                                 <td>
+                                    Score
                                 </td>
                                 <td>
+                                    <%: Model.ContractDetail.Site.Score %>
                                 </td>
                                 <td>
                                     Province:
@@ -42,10 +46,8 @@
                             </tr>
                             <tr>
                                 <td>
-                                    Site Monitoring ID:
                                 </td>
                                 <td>
-                                    <%: Model.ID %>
                                 </td>
                                 <td>
                                     District:
@@ -271,7 +273,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <b>Status of ContractDetail.Site</b>
+                                    <b>Status of Site</b>
                                 </td>
                                 <td>
                                 </td>
@@ -370,5 +372,8 @@
         </td>
     </tr>
 </table>
+<footer>
+    <img src="../../../Content/Image/bni_logo.jpg" style="float:right;width:150px;" />
+</footer>
 <div class="pageBreak">
 </div>

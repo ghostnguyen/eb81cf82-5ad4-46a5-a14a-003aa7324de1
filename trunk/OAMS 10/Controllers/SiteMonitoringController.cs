@@ -61,7 +61,7 @@ namespace OAMS.Controllers
 
             ContractDetailRepository cdrepo = new ContractDetailRepository();
             ContractDetail cd = cdrepo.Get(e.ContractDetailID.ToInt());
-            e.Site = cd.Site;
+            //e.Site = cd.Site;
 
             return View(e);
         }

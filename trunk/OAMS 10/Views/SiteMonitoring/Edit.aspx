@@ -80,13 +80,13 @@
                         Address
                     </div>
                     <div class="editor-field">
-                        <%: Html.DisplayFor(model => model.Site.AddressLine1)%>&nbsp;<%: Html.DisplayFor(model => model.Site.AddressLine2)%>
+                        <%: Html.DisplayFor(model => model.ContractDetail.Site.AddressLine1)%>&nbsp;<%: Html.DisplayFor(model => model.ContractDetail.Site.AddressLine2)%>
                     </div>
                     <div class="editor-label">
-                        <%: Html.LabelFor(model => model.Site.GeoFullName)%>
+                        <%: Html.LabelFor(model => model.ContractDetail.Site.GeoFullName)%>
                     </div>
                     <div class="editor-field">
-                        <%: Html.DisplayFor(model => model.Site.GeoFullName)%>
+                        <%: Html.DisplayFor(model => model.ContractDetail.Site.GeoFullName)%>
                     </div>
                     <div class="editor-label">
                         <%: Html.LabelFor(model => model.CurrentProductName)%>
@@ -110,8 +110,8 @@
                         <%: Html.EditorFor(model => model.CurrentCreative)%>
                         <%: Html.ValidationMessageFor(model => model.CurrentCreative)%>
                     </div>
-                    <% if (Model.Site.FrontlitNumerOfLamps.HasValue
-                           && Model.Site.FrontlitNumerOfLamps > 0)
+                    <% if (Model.ContractDetail.Site.FrontlitNumerOfLamps.HasValue
+                           && Model.ContractDetail.Site.FrontlitNumerOfLamps > 0)
                        {%>
                     <div class="editor-label">
                         <%: Html.LabelFor(model => model.NoOfBullbs)%>
@@ -241,10 +241,10 @@
                         <%: Html.ValidationMessageFor(model => model.LastUpdatedBy) %>
                     </div>
                     <div class="editor-field">
-                        <%: Html.HiddenFor(model => model.Site.Lat)%>
+                        <%: Html.HiddenFor(model => model.ContractDetail.Site.Lat)%>
                     </div>
                     <div class="editor-field">
-                        <%: Html.HiddenFor(model => model.Site.Lng)%>
+                        <%: Html.HiddenFor(model => model.ContractDetail.Site.Lng)%>
                     </div>
                     <div class="editor-label">
                         <%: Html.LabelFor(model => model.ContractDetail.Type)%>
@@ -282,7 +282,7 @@
                        string AlbumID = "";
                        string AuthID = "";
 
-                       var sd = Model.Site.SiteDetails.Where(r => r.Name == Model.ContractDetail.SiteDetailName).FirstOrDefault();
+                       var sd = Model.ContractDetail.Site.SiteDetails.Where(r => r.Name == Model.ContractDetail.SiteDetailName).FirstOrDefault();
                        if (sd != null && sd.SiteDetailPhotoes.Count > 0)
                        {
                            albumUrl = sd.AlbumUrl;

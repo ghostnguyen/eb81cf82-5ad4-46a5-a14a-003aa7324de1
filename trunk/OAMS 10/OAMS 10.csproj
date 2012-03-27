@@ -327,6 +327,7 @@
     <Content Include="Content\Image\BlueTrak.png" />
     <Content Include="Content\Image\BluetrakLogo.png" />
     <Content Include="Content\Image\BluetrakLogo_org.png" />
+    <Content Include="Content\Image\bni_logo.jpg" />
     <Content Include="Content\Image\britelite.png" />
     <Content Include="Content\Image\busshelter.png" />
     <Content Include="Content\Image\covermarket.png" />

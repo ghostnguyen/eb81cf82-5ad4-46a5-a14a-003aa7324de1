@@ -67,7 +67,7 @@ namespace OAMS.Models
             ContractDetail cd = cdrepo.Get(ContractDetailID.ToInt());
             e.ContractDetail = cd;
             e.NoOfBullbs = cd.Site.FrontlitNumerOfLamps;
-            e.Site = cd.Site;
+            //e.Site = cd.Site;
             e.ProductID = cd.ProductID;
             e.Product = cd.Product;
             return e;

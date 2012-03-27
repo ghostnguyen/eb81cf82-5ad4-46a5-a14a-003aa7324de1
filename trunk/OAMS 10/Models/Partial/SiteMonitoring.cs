@@ -10,7 +10,7 @@ namespace OAMS.Models
 
     public partial class SiteMonitoring
     {
-        public Site Site;
+        //public Site Site;
         public string CurrentProductName
         {
             get
