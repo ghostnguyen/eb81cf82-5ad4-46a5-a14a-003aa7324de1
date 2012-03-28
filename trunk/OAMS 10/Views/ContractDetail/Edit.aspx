@@ -44,8 +44,19 @@
         </div>
         <div class="editor-field">
             <%: Html.EditorFor(model => model.CurrentProductName, "AutoCompleteProduct")%>
-            <%: Html.ValidationMessageFor(r => r.CurrentProductName)%>
             <%: Html.TextBoxFor(model => model.ProductID, new { @style = "visibility:collapse;" })%>
+        </div>
+        <div>
+            <%: Html.LabelFor(model => model.Height)%>
+        </div>
+        <div>
+            <%: Html.EditorFor(model => model.Height)%>
+        </div>
+        <div>
+            <%: Html.LabelFor(model => model.Width)%>
+        </div>
+        <div>
+            <%: Html.EditorFor(model => model.Width)%>
         </div>
         <div class="editor-label">
             <%: Html.LabelFor(model => model.EffectiveDate) %>
