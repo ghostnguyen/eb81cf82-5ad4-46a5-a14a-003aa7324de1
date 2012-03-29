@@ -8,6 +8,8 @@
         </td>
         <td align="right">
             <img src="<%= Url.Content("~/Content/Image/" + AppSetting.Logo)%>" alt="Ambient" />
+            <img src="<%= Url.Content("~/Content/Image/bni_logo.jpg")%>" style="float: right;
+                width: 150px;" />
         </td>
     </tr>
     <tr>
@@ -372,8 +374,5 @@
         </td>
     </tr>
 </table>
-<footer>
-    <img src="<%= Url.Content("~/Content/Image/bni_logo.jpg")%>" style="float:right;width:150px;" />
-</footer>
 <div class="pageBreak">
 </div>
