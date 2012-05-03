@@ -13,63 +13,67 @@ namespace OAMS.Models
 
         public override int SaveChanges(System.Data.Objects.SaveOptions options)
         {
-            foreach (ObjectStateEntry entry in ObjectStateManager.GetObjectStateEntries(EntityState.Added | EntityState.Modified))
+            if (AppSetting.Offline)
+            { }
+            else
             {
-                dynamic e = entry.Entity;
-
-                if (entry.State == EntityState.Added)
+                foreach (ObjectStateEntry entry in ObjectStateManager.GetObjectStateEntries(EntityState.Added | EntityState.Modified))
                 {
-                    try
-                    {
-                        e.CreatedDate = DateTime.Now;
-                        e.CreatedBy = OAMSSetting.Username;
-                    }
-                    catch (Exception)
-                    {
-                    }
+                    dynamic e = entry.Entity;
 
-                    if (e is Site)
-                    {
-                        var site = e as Site;
-                        site.UpdateScore();
-                    }
-                }
-
-                if (entry.State == EntityState.Modified)
-                {
-                    int count = entry.CountPropertiesChanged();
-
-                    if (e is Site)
-                    {                        
-                        if (count > AppSetting.PropertiesCount)
-                        {
-                            throw new Exception("Site is modified with many properties.");
-                        }
-
-                        var site = e as Site;
-                        site.UpdateScore();
-                    }
-
-                    if (count == 0)
-                    {
-                        this.ObjectStateManager.ChangeObjectState(e, EntityState.Unchanged);
-                    }
-                    else
+                    if (entry.State == EntityState.Added)
                     {
                         try
                         {
-                            e.LastUpdatedDate = DateTime.Now;
-                            e.LastUpdatedBy = OAMSSetting.Username;
+                            e.CreatedDate = DateTime.Now;
+                            e.CreatedBy = OAMSSetting.Username;
                         }
                         catch (Exception)
                         {
                         }
+
+                        if (e is Site)
+                        {
+                            var site = e as Site;
+                            site.UpdateScore();
+                        }
                     }
+
+                    if (entry.State == EntityState.Modified)
+                    {
+                        int count = entry.CountPropertiesChanged();
+
+                        if (e is Site)
+                        {
+                            if (count > AppSetting.PropertiesCount)
+                            {
+                                throw new Exception("Site is modified with many properties.");
+                            }
+
+                            var site = e as Site;
+                            site.UpdateScore();
+                        }
+
+                        if (count == 0)
+                        {
+                            this.ObjectStateManager.ChangeObjectState(e, EntityState.Unchanged);
+                        }
+                        else
+                        {
+                            try
+                            {
+                                e.LastUpdatedDate = DateTime.Now;
+                                e.LastUpdatedBy = OAMSSetting.Username;
+                            }
+                            catch (Exception)
+                            {
+                            }
+                        }
+                    }
+
+                    // Validate the objects in the Added and Modified state
+                    // if the validation fails throw an exeption.
                 }
-
-
-                // Validate the objects in the Added and Modified state
-                // if the validation fails throw an exeption.
             }
             return base.SaveChanges(options);
         }

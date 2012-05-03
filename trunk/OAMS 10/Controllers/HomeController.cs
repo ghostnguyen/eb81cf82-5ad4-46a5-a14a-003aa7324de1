@@ -41,42 +41,12 @@ namespace OAMS.Controllers
 
         public ActionResult About2()
         {
-            List<Item> itemL = new List<Item>() {
-            new Item(){Name = "Client",Values = new List<object>(){"Unilever"}},
-            //new Item(){Name = "Type"},
-            new Item(){Name = "Type",Values= new List<object>(){"BBR"},Count=true},
-            new Item(){Name = "Total"},
-            };
-
             OAMSEntities db = new OAMSEntities();
 
+            var v = db.Sites.Where(r => r.Score < 50).ToList();
+            v.ForEach(r => r.UpdateScore());
 
-            var v = db.SiteDetailMores.Select(r => new Row()
-            {
-                Client = r.Product.Client.Name,
-                Type = r.SiteDetail.Type,
-            });
-
-            foreach (var item in itemL.Where(r => r.Values != null && r.Count == false))
-            {
-                //v = v.Where("@0.Contains(Client)", item.Values);
-            }
-
-
-            //db.SiteDetailMores.Where
-
-
-
-            //foreach (var item in itemL.Where(r => r.Values != null))
-            //{
-
-            //}
-
-            //foreach (var item in itemL.Where(r => r.Values == null))
-            //{
-
-            //}
-
+            db.SaveChanges();
 
             return View();
         }
