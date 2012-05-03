@@ -40,5 +40,7 @@ namespace OAMS.Models
         /// Valid range in meter
         /// </summary>
         static public int ValidRange { get; set; }
+
+        static public bool Offline { get; set; }
     }
 }
