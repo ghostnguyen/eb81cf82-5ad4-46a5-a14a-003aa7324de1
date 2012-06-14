@@ -37,7 +37,7 @@
                                     Score
                                 </td>
                                 <td>
-                                    <span style="font-size: large;">
+                                    <span style="font-size: x-large;">
                                         <%: Model.ContractDetail.Site.Score %></span>
                                 </td>
                                 <td>
