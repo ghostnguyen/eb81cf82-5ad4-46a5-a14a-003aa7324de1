@@ -37,7 +37,8 @@
                                     Score
                                 </td>
                                 <td>
-                                    <%: Model.ContractDetail.Site.Score %>
+                                    <span style="font-size: large;">
+                                        <%: Model.ContractDetail.Site.Score %></span>
                                 </td>
                                 <td>
                                     Province:
