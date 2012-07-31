@@ -56,5 +56,19 @@ namespace OAMS.Controllers
             ViewBag.Id = id;
             return View();
         }
+
+        public ViewResult CreativeTool(int? id)
+        {
+            if (id > 0)
+            {
+                SiteDetailPhotoRepository rep = new SiteDetailPhotoRepository();
+                var v = rep.DB.SiteDetailPhotoes.SingleOrDefault(r => r.ID == id);
+                if (v != null)
+                {
+                    ViewBag.Url = v.Url;
+                }
+            }
+            return View();
+        }
     }
 }
