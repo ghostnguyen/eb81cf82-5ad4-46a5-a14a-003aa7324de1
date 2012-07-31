@@ -255,6 +255,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\BitmapTransformer.swf" />
     <Content Include="Content\copy_cvs_xls.swf" />
     <Content Include="Content\copy_cvs_xls_pdf.swf" />
     <Content Include="Content\css\ColVis.css" />
@@ -362,6 +363,7 @@
     <Content Include="Content\smoothness\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\smoothness\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\smoothness\jquery-ui-1.8.1.custom.css" />
+    <Content Include="Scripts\swfobject.js" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\autoNumeric-1.7.1.min.js" />
     <Content Include="Scripts\ColVis.min.js" />
@@ -607,6 +609,7 @@
     <Content Include="Views\Site\CreatePOSTAR.cshtml">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Views\Home\CreativeTool.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
