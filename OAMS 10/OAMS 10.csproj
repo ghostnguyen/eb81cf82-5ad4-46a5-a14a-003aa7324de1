@@ -484,7 +484,7 @@
     <Content Include="Views\SiteMonitoring\Edit.aspx" />
     <Content Include="Views\SiteMonitoring\View.aspx" />
     <Content Include="Views\Site\ManageSiteDetailPOSTAR.ascx" />
-    <Content Include="Views\FindSite\Copy of FindOutdate.cshtml" />
+    <Content Include="Views\FindSite\FindOutdate2.cshtml" />
     <Content Include="Views\Site\Create.aspx" />
     <Content Include="Views\Site\GMap.ascx" />
     <Content Include="Views\Site\ManageSiteDetail.ascx" />
@@ -599,7 +599,7 @@
     <Content Include="Views\Rpt\_152.cshtml" />
     <Content Include="Views\Rpt\_153.cshtml" />
     <Content Include="Views\Rpt\_130.cshtml" />
-    <Content Include="Views\FindSite\FindOutdate2.cshtml" />
+    <Content Include="Views\FindSite\FindOutdate.cshtml" />
     <Content Include="Views\Site\ShowMap.cshtml" />
     <Content Include="Views\Site\Edit.cshtml">
       <SubType>Code</SubType>
