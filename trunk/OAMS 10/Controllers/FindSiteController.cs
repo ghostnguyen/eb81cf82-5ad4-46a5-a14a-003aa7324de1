@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using OAMS.Models;
+using System.Dynamic;
 
 namespace OAMS.Controllers
 {
@@ -232,6 +233,13 @@ namespace OAMS.Controllers
             }));
         }
 
+        public class C1
+        {
+            public string url { get; set; }
+            public string id { get; set; }
+        }
+
+
         [HttpPost]
         public JsonResult GetSiteInfo(int ID)
         {
@@ -240,16 +248,44 @@ namespace OAMS.Controllers
 
             CodeMasterRepository codeMasterRepo = new CodeMasterRepository();
 
-            Func<Site, List<string>> f = r =>
+            Func<Site, List<C1>> f = r =>
             {
-                var v = r.SiteDetails.SelectMany(r1 => r1.SiteDetailPhotoes).Select(r1 => r1.Url.ToUrlPicasaPhotoResize()).ToList();
-                if (v.Count == 0)
-                {
-                    v = r.SitePhotoes.Select(r1 => r1.Url.ToUrlPicasaPhotoResize()).ToList();
-                }
+                var v = r.SiteDetails.SelectMany(r1 => r1.SiteDetailPhotoes)
+                    .Select(r1 => new C1
+                    {
+                        url = r1.Url.ToUrlPicasaPhotoResize(),
+                        id = r1.ID.ToString()
+                    })
+                    .ToList();
+
+                //if (v.Count == 0)
+                //{
+                //    var v1 = r.SitePhotoes.Select(r1 => new
+                //    {
+                //        url = r1.Url.ToUrlPicasaPhotoResize(),
+                //        id = r1.ID
+                //    }.ToExpando()).ToList();
+
+                //    return v1;
+                //}
 
                 return v;
             };
+
+            //Func<Site, List<string>> f = r =>
+            //{
+            //    var v = r.SiteDetails.SelectMany(r1 => r1.SiteDetailPhotoes)
+            //        .Select(r1 => r1.Url.ToUrlPicasaPhotoResize()).ToList();
+
+            //    if (v.Count == 0)
+            //    {
+            //        v = r.SitePhotoes.Select(r1 => 
+            //            r1.Url.ToUrlPicasaPhotoResize()
+            //        ).ToList();
+            //    }
+
+            //    return v;
+            //};
 
             return Json(l.Distinct().Select(r => new
             {

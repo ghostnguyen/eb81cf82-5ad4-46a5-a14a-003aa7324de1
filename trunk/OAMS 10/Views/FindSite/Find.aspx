@@ -256,11 +256,12 @@
             <tr>
                 <td>
                     <div style='height:300px;'>
-                        {{each(i, url) PhotoUrlList}}
-                            <img src='${url}' alt="" />
+                        {{each(i, url,id) PhotoUrlList}}
+                            <img src='${url}' alt="" />                            
                             <br />
+                            <a href='<%= Url.Content("~/Home/CreativeTool/${id}")%>'>Creative</a>
                         {{/each}}
-                    </div>                
+                    </div> 
                 </td>
             </tr>
         </table>

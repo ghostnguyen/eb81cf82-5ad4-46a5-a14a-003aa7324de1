@@ -224,9 +224,10 @@
             <tr>
                 <td>
                     <div style='height:300px;'>
-                        {{each(i, url) PhotoUrlList}}
-                            <img src='${url}' alt="" />
+                        {{each(i, item,id) PhotoUrlList}}
+                            <img src='${$item.url}' alt="" />                                                       
                             <br />
+                            <a href='@(Url.Content("~/Home/CreativeTool/${ID}"))'>Creative</a>
                         {{/each}}
                     </div>                
                 </td>

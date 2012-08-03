@@ -5,9 +5,9 @@
 <h2>@ViewBag.Title</h2>
 @using (Html.BeginForm())
 {
-    <table id="tblAll" style="width: 100%;">
+    <table width="100%" id="tblAll">
         <tr>
-            <td style="width: 230px; vertical-align: top;" id="SearchPane">
+            <td style="width: 230px;" valign="top" id="SearchPane">
                 Geo1:
                 <br />
                 @(Html.EditorFor(model => model.Geo1FullName, "AutoCompleteGeo", new { level = 1 }))
@@ -103,20 +103,29 @@
                 <input type="text" id="ScoreTo" name="ScoreTo" value="100" style="width: 30px;" />
                 <br />
                 <br />
-                No Photo:
+                @*No Photo:
                 <input name="NoPhoto" type="checkbox" value="true" />
                 <br />
                 Has last photo from
                 <input name="LastPhotoFrom" type="date" />
                 to
-                <input name="LastPhotoTo" type="date" />
-                @*Outdate from
-                <input type="text" id="OutdateInDaysFrom" name="OutdateInDaysFrom" value="" style="width: 30px;" />
-                days to
-                <input type="text" id="OutdateInDaysTo" name="OutdateInDaysTo" value="" style="width: 30px;" />
-                days*@
+                <input name="LastPhotoTo" type="date" />*@
+                <fieldset>
+                    <legend>No Photo </legend>from
+                    <input name="NoPhotoFrom" type="date" />
+                    <br />
+                    to
+                    <input name="NoPhotoTo" type="date" />
+                </fieldset>
+                <fieldset>
+                    <legend>Has Photo </legend>from
+                    <input name="HasPhotoFrom" type="date" />
+                    <br />
+                    to
+                    <input name="HasPhotoTo" type="date" />
+                </fieldset>
             </td>
-            <td style="vertical-align: top;">
+            <td valign="top">
                 <input id="btnFind" type="button" onclick="search(this);" value="Find" />
                 <a href="javascript:toggleSearchPane();">Show/Hide Search Criteria</a>
                 <table width="100%">
@@ -209,14 +218,17 @@
                     Contractor: ${Contractor}
                     <br />
                     CurrentProduct: ${CurrentProduct}
+                    <br />
+                    TrafficCount: ${TrafficCount}
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style='height:300px;'>
-                        {{each(i, url) PhotoUrlList}}
+                        {{each(i, url,id) PhotoUrlList}}
                             <img src='${url}' alt="" />
                             <br />
+                            <a href='@(Url.Content("~/Home/CreativeTool/${ID}"))'>Creative</a>
                         {{/each}}
                     </div>                
                 </td>
@@ -272,7 +284,7 @@
 </div>
 
 </script>
-<script type="text/javascript" lang="javascript" >
+<script type="text/javascript" language="javascript">
     $(document).ready(function () {
         init();
         $("#divMoreProduct").manyTxt();
@@ -403,7 +415,7 @@
                         profileImageUrl = '@Url.Content("~/Content/Image/other.png")';
                     }
 
-                                var image = new google.maps.MarkerImage(profileImageUrl
+                    var image = new google.maps.MarkerImage(profileImageUrl
 //                        ,new google.maps.Size(48, 48)
 //                        ,new google.maps.Point(0, 0)
 //                        ,new google.maps.Point(24, 24)
@@ -616,8 +628,4 @@
             }
             google.maps.event.trigger(map, 'resize');
         }
-
-
-
-
 </script>
